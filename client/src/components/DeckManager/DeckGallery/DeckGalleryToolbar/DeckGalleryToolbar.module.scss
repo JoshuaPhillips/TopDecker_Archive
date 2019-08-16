@@ -1,0 +1,11 @@
+.DeckGalleryToolbar {
+  display: flex;
+  align-items: center;
+
+  div,
+  h1 {
+    flex-basis: 0;
+    flex-grow: 1;
+    text-align: center;
+  }
+}

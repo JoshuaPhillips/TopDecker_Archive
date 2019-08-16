@@ -1,0 +1,11 @@
+.TextViewCardContainer {
+  display: flex;
+  width: 25%;
+  margin: 0 0.5rem;
+  align-self: flex-start;
+  border: 1px solid black;
+  justify-content: center;
+  p {
+    margin: 0.5rem;
+  }
+}
