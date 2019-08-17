@@ -70,7 +70,6 @@ const DeckResolvers = {
 
         const response = await populateCards(cardList);
 
-        console.log(response.length);
         return response;
       } catch (error) {
         return error;

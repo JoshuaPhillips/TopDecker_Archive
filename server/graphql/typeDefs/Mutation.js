@@ -40,8 +40,9 @@ const MutationType = gql`
     createDeck(deckDetails: CreateDeckInput!): Deck!
     editDeck(deckId: ID!, newDetails: DeckDetailsInput!): Deck!
     deleteDeck(deckId: ID!): Boolean!
-    addCardToDeck(deckId: ID!, cardScryfallId: ID!): CardOverview!
-    deleteCard(deckId: ID!, scryfallId: ID!): Boolean
+
+    addCardToDeck(deckId: ID!, scryfallId: ID!): Boolean!
+    deleteCard(deckId: ID!, scryfallId: ID!): Boolean!
 
     createComment(deckId: ID!, commentText: String!): Comment!
     editComment(commentId: ID!, newText: String!): Comment!
