@@ -2,17 +2,19 @@ import gql from 'graphql-tag';
 
 export const GET_DECK_LIST = gql`
   query GetDeckList {
-    getUserById {
-      decks {
+    getAllDecks {
+      id
+      name
+      format
+      owner {
         id
+        username
+      }
+      commander {
         name
-        format
-        commander {
-          name
-        }
-        cardList {
-          quantity
-        }
+      }
+      cardList {
+        quantity
       }
     }
   }

@@ -37,6 +37,7 @@ const DeckListItem = props => {
           {capitalise(deck.format)}
           {deck.format === 'commander' && ` (${deck.commander.name})`}
         </p>
+        <p>{deck.owner.username}</p>
         <p>
           {cardCount} / {cardLimitMap[deck.format]}
         </p>

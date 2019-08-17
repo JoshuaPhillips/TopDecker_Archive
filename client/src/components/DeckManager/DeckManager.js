@@ -18,6 +18,7 @@ const DeckManager = props => {
   const GetDeckDetailsQueryResponse = useQuery(GET_DECK_DETAILS, {
     skip: !currentDeckId,
     variables: { deckId: currentDeckId },
+    fetchPolicy: 'cache-and-network',
     onCompleted() {
       setDeck(GetDeckDetailsQueryResponse.data.getDeckById);
     }
