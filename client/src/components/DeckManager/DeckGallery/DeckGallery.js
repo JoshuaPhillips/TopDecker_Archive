@@ -18,7 +18,12 @@ const DeckGallery = props => {
         deleteMode={deleteMode}
         toggleDeleteMode={toggleDeleteMode}
       />
-      <DeckGalleryCardList cardList={deck.cardList} deleteMode={deleteMode} />
+      <DeckGalleryCardList
+        cardList={deck.cardList}
+        deleteMode={deleteMode}
+        deckId={deck.id}
+        deleteCardHandler={props.deleteCardHandler}
+      />
     </div>
   );
 };

@@ -13,6 +13,7 @@ export const GET_DECK_DETAILS = gql`
         card {
           scryfall_id
           name
+          layout
           image_uris {
             large
           }
@@ -33,5 +34,11 @@ export const ADD_CARD_TO_DECK = gql`
       scryfallId
       quantity
     }
+  }
+`;
+
+export const DELETE_CARD = gql`
+  mutation DeleteCard($deckId: ID!, $scryfallId: ID!) {
+    deleteCard(deckId: $deckId, scryfallId: $scryfallId)
   }
 `;

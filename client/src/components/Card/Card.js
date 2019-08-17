@@ -9,7 +9,7 @@ const Card = props => {
   // extract card details under the alias card
   const { card, quantity = 1, withQuantityIndicator = false } = props;
 
-  let visibleFace = card.image_uris ? card.image_uris.large : null;
+  let visibleFace = card.image_uris ? card.image_uris.large : card.card_faces[0].image_uris.large;
   let buttonAction = null;
   let buttonText = null;
 
