@@ -1,11 +1,6 @@
 const { gql } = require('apollo-server');
 
 const DeckType = gql`
-  type CardList {
-    scryfallId: ID!
-    quantity: Int!
-  }
-
   enum Format {
     standard
     future
@@ -26,8 +21,8 @@ const DeckType = gql`
     owner: User!
     format: Format!
     commander: Card
-    cardList: [CardList!]!
-    sideboard: [CardList!]!
+    cardList: [CardWithQuantity!]!
+    sideboard: [CardWithQuantity!]!
     comments: [Comment!]!
   }
 `;

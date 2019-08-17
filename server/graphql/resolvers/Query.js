@@ -83,7 +83,8 @@ const QueryResolvers = {
         }
 
         return {
-          ...matchedDeck._doc
+          ...matchedDeck._doc,
+          id: matchedDeck._id
         };
       } catch (error) {
         return error;

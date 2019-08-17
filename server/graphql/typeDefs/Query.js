@@ -113,7 +113,7 @@ const QueryType = gql`
     quantity: Int!
   }
 
-  type CardListResponse {
+  type CardWithQuantity {
     card: Card!
     quantity: Int!
   }
@@ -130,7 +130,7 @@ const QueryType = gql`
     getRandomCard: Card!
     getCardByScryfallId(scryfallId: ID!): Card!
     # TODO #001: re-factor getCardsByScryfallIds so it doesn't include quantity
-    getCardsByScryfallIds(cardList: [CardListInput!]!): [CardListResponse!]!
+    getCardsByScryfallIds(cardList: [CardListInput!]!): [CardWithQuantity!]!
     searchCards(searchParams: SearchParamsInput, url: String): SearchResponse!
 
     getAllSets: [Set!]!

@@ -3,14 +3,25 @@ import gql from 'graphql-tag';
 export const GET_DECK_DETAILS = gql`
   query GetDeckDetails($deckId: ID!) {
     getDeckById(deckId: $deckId) {
+      id
       name
       format
       commander {
         name
       }
       cardList {
-        scryfallId
-        quantity
+        card {
+          scryfall_id
+          name
+          image_uris {
+            large
+          }
+          card_faces {
+            image_uris {
+              large
+            }
+          }
+        }
       }
     }
   }

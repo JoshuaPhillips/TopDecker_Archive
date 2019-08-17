@@ -6,7 +6,6 @@ import DeckGalleryCardList from './DeckGalleryCardList/DeckGalleryCardList';
 import classes from './DeckGallery.module.scss';
 
 const DeckGallery = props => {
-  // deck.cardList is an array of objects with structure {quantity: int, scryfallId: string}
   const { deck } = props;
   const [deleteMode, toggleDeleteMode] = useState(false);
 
@@ -19,7 +18,7 @@ const DeckGallery = props => {
         deleteMode={deleteMode}
         toggleDeleteMode={toggleDeleteMode}
       />
-      <DeckGalleryCardList cardList={deck.cardList} deleteMode={deleteMode} currentDeckId={props.currentDeckId} />
+      <DeckGalleryCardList cardList={deck.cardList} deleteMode={deleteMode} />
     </div>
   );
 };

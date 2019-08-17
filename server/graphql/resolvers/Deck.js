@@ -50,6 +50,33 @@ const DeckResolvers = {
       }
     },
 
+    cardList: async parent => {
+      try {
+        const { cardList } = parent;
+
+        const populateCards = async cardList => {
+          // cardList.map will return an array of Promises here, so we need to wait for them all to resolve before we can
+          // use the result of map.
+          const populatedCards = await Promise.all(
+            cardList.map(async card => {
+              const matchedCard = await axios.get(`https://api.scryfall.com/cards/${card.scryfallId}`);
+
+              return { card: filterCardData(matchedCard.data), quantity: card.quantity };
+            })
+          );
+
+          return populatedCards;
+        };
+
+        const response = await populateCards(cardList);
+
+        console.log(response.length);
+        return response;
+      } catch (error) {
+        return error;
+      }
+    },
+
     comments: async parent => {
       try {
         const matchedComments = await Comment.find({ relatedDeck: parent._id });
