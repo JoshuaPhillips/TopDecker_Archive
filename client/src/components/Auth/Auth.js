@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import { useQuery, useLazyQuery, useMutation, useApolloClient } from '@apollo/react-hooks';
+import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks';
 import { LOGIN, SIGN_UP_USER } from './graphql';
 import { GET_AUTH_DATA } from '../../graphql';
 
@@ -21,27 +21,30 @@ const Auth = props => {
 
   const GetAuthDataQueryResponse = useQuery(GET_AUTH_DATA, { fetchPolicy: 'cache-only' });
 
-  const [LoginQuery, LoginQueryResponse] = useLazyQuery(LOGIN, {
-    variables: { email: authDetails.email, password: authDetails.password },
-    // we don't want the user's password stored in the cache, so we don't record the query or the response.
-    fetchPolicy: 'no-cache',
-    onCompleted() {
-      // instead, we save the response in localStorage and the 'AuthData' query. The latter can then be used to check authentication.
-      const { client, data } = LoginQueryResponse;
-      localStorage.setItem('token', data.login.token);
-      localStorage.setItem('currentUserId', data.login.currentUserId);
-      client.writeQuery({
-        query: GET_AUTH_DATA,
-        data: {
-          AuthData: {
-            __typename: 'AuthData',
-            token: data.login.token,
-            currentUserId: data.login.currentUserId
-          }
+  const LoginQuery = async () => {
+    const { data } = await client.query({
+      query: LOGIN,
+      variables: {
+        email: authDetails.email,
+        password: authDetails.password
+      },
+      fetchPolicy: 'no-cache'
+    });
+
+    const { token, currentUserId } = data.login;
+    localStorage.setItem('token', token);
+    localStorage.setItem('currentUserId', currentUserId);
+    client.writeQuery({
+      query: GET_AUTH_DATA,
+      data: {
+        AuthData: {
+          __typename: 'AuthData',
+          token: token,
+          currentUserId: currentUserId
         }
-      });
-    }
-  });
+      }
+    });
+  };
 
   const [SignUpMutation] = useMutation(SIGN_UP_USER, {
     variables: { userDetails: authDetails },
