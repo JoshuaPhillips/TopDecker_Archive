@@ -23,17 +23,15 @@ export const GET_DECK_DETAILS = gql`
             }
           }
         }
+        quantity
       }
     }
   }
 `;
 
 export const ADD_CARD_TO_DECK = gql`
-  mutation AddCardToDeck($deckId: ID!, $cardScryfallId: ID!) {
-    addCardToDeck(deckId: $deckId, cardScryfallId: $cardScryfallId) {
-      scryfallId
-      quantity
-    }
+  mutation AddCardToDeck($deckId: ID!, $scryfallId: ID!) {
+    addCardToDeck(deckId: $deckId, scryfallId: $scryfallId)
   }
 `;
 

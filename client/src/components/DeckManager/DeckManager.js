@@ -30,14 +30,39 @@ const DeckManager = props => {
   });
 
   const onAddCard = newCard => {
+    const maximumCardAllowance = deck.format === 'commander' ? 1 : 4;
+
+    const matchedCardIndex = deck.cardList.findIndex(({ card }) => {
+      return card.scryfall_id === newCard.scryfall_id;
+    });
+
+    if (matchedCardIndex === -1) {
+      const newDeck = {
+        ...deck,
+        cardList: [...deck.cardList, { card: newCard, quantity: 1 }]
+      };
+
+      setDeck(newDeck);
+
+      AddCardMutation({ variables: { scryfallId: newCard.scryfall_id } });
+      return;
+    }
+
+    if (deck.cardList[matchedCardIndex].quantity === maximumCardAllowance) {
+      console.log("Can't add more cards.");
+      return;
+    }
+
     const newDeck = {
       ...deck,
-      cardList: [...deck.cardList, { card: newCard, quantity: 1 }]
+      cardList: [...deck.cardList]
     };
+
+    newDeck.cardList[matchedCardIndex].quantity += 1;
 
     setDeck(newDeck);
 
-    AddCardMutation({ variables: { cardScryfallId: newCard.scryfall_id } });
+    AddCardMutation({ variables: { scryfallId: newCard.scryfall_id } });
   };
 
   // ========== DELETING CARDS ========== //
