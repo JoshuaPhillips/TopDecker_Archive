@@ -60,7 +60,6 @@ const MutationResolvers = {
 
         return { ...updatedUser._doc, id: updatedUser._doc._id };
       } catch (error) {
-        console.log(error);
         return error;
       }
     },
@@ -244,12 +243,16 @@ const MutationResolvers = {
         }
 
         const { cardList } = matchedDeck._doc;
-        console.log(cardList);
 
         // Check if that card already exists (i.e. in case of multiple copies) and return its index.
         const matchingCardIndex = cardList.findIndex(card => {
           return card.scryfallId === cardScryfallId;
         });
+
+        let response = {
+          scryfallId: cardScryfallId,
+          quantity: 1
+        };
 
         if (matchingCardIndex === -1) {
           // Card does not exist in the CardList already. Add a new object with that card ID and set quantity to 1.
@@ -260,9 +263,12 @@ const MutationResolvers = {
         } else {
           // Card already exists in the CardList. Increase the quantity by 1.
           matchedDeck.cardList[matchingCardIndex].quantity += 1;
+          response.quantity = matchedDeck.cardList[matchingCardIndex].quantity + 1;
         }
 
         await matchedDeck.save();
+
+        return response;
       } catch (error) {
         return error;
       }
@@ -280,17 +286,11 @@ const MutationResolvers = {
 
         let cardList = matchedDeck._doc.cardList;
 
-        console.log('BEFORE: ', cardList);
-
-        cardList = cardList.filter(card => {
+        const newCardList = cardList.filter(card => {
           return card.scryfallId !== scryfallId;
         });
 
-        console.log('AFTER: ', cardList);
-
-        matchedDeck._doc.cardList = cardList;
-        console.log(matchedDeck._doc.cardList);
-        await matchedDeck.save();
+        await Deck.findByIdAndUpdate(deckId, { cardList: newCardList });
 
         return null;
       } catch (error) {

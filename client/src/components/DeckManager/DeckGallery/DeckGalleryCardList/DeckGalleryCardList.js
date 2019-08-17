@@ -29,14 +29,12 @@ const DeckGalleryCardList = props => {
     refetchQueries: [
       {
         query: GET_DECK_DETAILS,
-        variables: {
-          deckId: props.currentDeckId
-        }
+        variables: { deckId: props.currentDeckId }
       }
     ]
   });
 
-  if (GetCardsDetailsQueryResponse.loading) {
+  if (!GetCardsDetailsQueryResponse.called) {
     return <h1>Loading...</h1>;
   }
 

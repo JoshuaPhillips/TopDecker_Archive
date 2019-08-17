@@ -108,6 +108,11 @@ const QueryType = gql`
     quantity: Int!
   }
 
+  type CardOverview {
+    scryfallId: ID!
+    quantity: Int!
+  }
+
   type CardListResponse {
     card: Card!
     quantity: Int!

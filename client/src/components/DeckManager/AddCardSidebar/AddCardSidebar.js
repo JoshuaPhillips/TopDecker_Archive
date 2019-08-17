@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import { useApolloClient } from '@apollo/react-hooks';
 import { SEARCH_CARDS } from './graphql';
+import { GET_DECK_DETAILS } from '../graphql';
 
 import Card from '../../Card/Card';
 
@@ -27,7 +28,6 @@ const AddCardSidebar = props => {
       <div>
         {searchResults.length !== 0 &&
           searchResults.map(result => {
-            console.log(result);
             return <Card key={result.scryfall_id} card={result} onClick={() => setSelectedCard(result.scryfall_id)} />;
           })}
       </div>
@@ -48,7 +48,31 @@ const AddCardSidebar = props => {
       <button
         type='button'
         disabled={!selectedCard}
-        onClick={() => props.onAddCard({ variables: { cardScryfallId: selectedCard } })}>
+        onClick={() =>
+          props.onAddCard({
+            variables: { cardScryfallId: selectedCard },
+            optimisticResponse: {
+              __typename: 'Mutation',
+              addCardToDeck: {
+                __typename: 'CardOverview',
+                scryfallId: selectedCard,
+                quantity: 1
+              }
+            },
+            update: (store, { data: { addCardToDeck } }) => {
+              const data = store.readQuery({ query: GET_DECK_DETAILS, variables: { deckId: props.deckId } });
+
+              const newData = {
+                ...data,
+                getDeckById: {
+                  ...data.getDeckById,
+                  cardList: [...data.getDeckById.cardList, addCardToDeck]
+                }
+              };
+              store.writeQuery({ query: GET_DECK_DETAILS, variables: { deckId: props.deckId }, data: newData });
+            }
+          })
+        }>
         Add Card
       </button>
     </div>

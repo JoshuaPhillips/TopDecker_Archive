@@ -17,15 +17,8 @@ const DeckManager = props => {
     variables: { deckId: currentDeckId }
   });
 
-  const [AddCardMutation, AddCardMutationResponse] = useMutation(ADD_CARD_TO_DECK, {
-    variables: { deckId: currentDeckId },
-    onCompleted() {
-      if (AddCardMutationResponse.loading) {
-        return;
-      }
-      console.log(AddCardMutationResponse);
-    },
-    refetchQueries: [{ query: GET_DECK_DETAILS, variables: { deckId: currentDeckId } }]
+  const [AddCardMutation] = useMutation(ADD_CARD_TO_DECK, {
+    variables: { deckId: currentDeckId }
   });
 
   if (GetDeckDetailsQueryResponse.loading) {
@@ -36,7 +29,7 @@ const DeckManager = props => {
 
   return (
     <main className={classes.DeckManager}>
-      <AddCardSidebar onAddCard={AddCardMutation} />
+      <AddCardSidebar onAddCard={AddCardMutation} deckId={currentDeckId} />
       <DeckGallery deck={deck} currentDeckId={currentDeckId} />
     </main>
   );
