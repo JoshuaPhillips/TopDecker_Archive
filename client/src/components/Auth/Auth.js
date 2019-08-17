@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import { useQuery, useLazyQuery } from '@apollo/react-hooks';
-import { LOGIN } from './graphql';
+import { useQuery, useLazyQuery, useMutation, useApolloClient } from '@apollo/react-hooks';
+import { LOGIN, SIGN_UP_USER } from './graphql';
 import { GET_AUTH_DATA } from '../../graphql';
 
 import classes from './Auth.module.scss';
 
 const Auth = props => {
+  const client = useApolloClient();
   const [isLogin, toggleLogin] = useState(true);
-  const [loginDetails, setLoginDetails] = useState({
+  const [authDetails, setAuthDetails] = useState({
     firstName: '',
     lastName: '',
     username: '',
@@ -21,7 +22,7 @@ const Auth = props => {
   const GetAuthDataQueryResponse = useQuery(GET_AUTH_DATA, { fetchPolicy: 'cache-only' });
 
   const [LoginQuery, LoginQueryResponse] = useLazyQuery(LOGIN, {
-    variables: { email: loginDetails.email, password: loginDetails.password },
+    variables: { email: authDetails.email, password: authDetails.password },
     // we don't want the user's password stored in the cache, so we don't record the query or the response.
     fetchPolicy: 'no-cache',
     onCompleted() {
@@ -36,6 +37,27 @@ const Auth = props => {
             __typename: 'AuthData',
             token: data.login.token,
             currentUserId: data.login.currentUserId
+          }
+        }
+      });
+    }
+  });
+
+  const [SignUpMutation] = useMutation(SIGN_UP_USER, {
+    variables: { userDetails: authDetails },
+    // we don't want the user's password stored in the cache, so we don't record the query or the response.
+    fetchPolicy: 'no-cache',
+    onCompleted(data) {
+      // instead, we save the response in localStorage and the 'AuthData' query. The latter can then be used to check authentication.
+      localStorage.setItem('token', data.createUser.token);
+      localStorage.setItem('currentUserId', data.createUser.currentUserId);
+      client.writeQuery({
+        query: GET_AUTH_DATA,
+        data: {
+          AuthData: {
+            __typename: 'AuthData',
+            token: data.createUser.token,
+            currentUserId: data.createUser.currentUserId
           }
         }
       });
@@ -57,24 +79,24 @@ const Auth = props => {
             <input
               type='text'
               id='firstName'
-              value={loginDetails.firstName}
-              onChange={e => setLoginDetails({ ...loginDetails, firstName: e.target.value })}
+              value={authDetails.firstName}
+              onChange={e => setAuthDetails({ ...authDetails, firstName: e.target.value })}
             />
 
             <label htmlFor='lastName'>Last Name:</label>
             <input
               type='text'
               id='lastName'
-              value={loginDetails.lastName}
-              onChange={e => setLoginDetails({ ...loginDetails, lastName: e.target.value })}
+              value={authDetails.lastName}
+              onChange={e => setAuthDetails({ ...authDetails, lastName: e.target.value })}
             />
 
             <label htmlFor='username'>Username:</label>
             <input
               type='text'
               id='username'
-              value={loginDetails.username}
-              onChange={e => setLoginDetails({ ...loginDetails, username: e.target.value })}
+              value={authDetails.username}
+              onChange={e => setAuthDetails({ ...authDetails, username: e.target.value })}
             />
           </React.Fragment>
         )}
@@ -83,16 +105,16 @@ const Auth = props => {
         <input
           type='email'
           id='email'
-          value={loginDetails.email}
-          onChange={e => setLoginDetails({ ...loginDetails, email: e.target.value })}
+          value={authDetails.email}
+          onChange={e => setAuthDetails({ ...authDetails, email: e.target.value })}
         />
 
         <label htmlFor='password'>Password:</label>
         <input
           type='password'
           id='password'
-          value={loginDetails.password}
-          onChange={e => setLoginDetails({ ...loginDetails, password: e.target.value })}
+          value={authDetails.password}
+          onChange={e => setAuthDetails({ ...authDetails, password: e.target.value })}
         />
 
         {!isLogin && (
@@ -101,14 +123,14 @@ const Auth = props => {
             <input
               type='url'
               id='avatarUrl'
-              value={loginDetails.avatarUrl}
-              onChange={e => setLoginDetails({ ...loginDetails, avatarUrl: e.target.value })}
+              value={authDetails.avatarUrl}
+              onChange={e => setAuthDetails({ ...authDetails, avatarUrl: e.target.value })}
             />
           </React.Fragment>
         )}
 
-        <button type='button' onClick={() => LoginQuery()}>
-          Login
+        <button type='button' onClick={isLogin ? () => LoginQuery() : () => SignUpMutation()}>
+          {isLogin ? 'Login' : 'Sign Up'}
         </button>
       </form>
 
