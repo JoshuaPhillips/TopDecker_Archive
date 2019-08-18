@@ -274,6 +274,26 @@ const MutationResolvers = {
       }
     },
 
+    updateCardList: async (_, args) => {
+      try {
+        const { deckId, cardList } = args;
+
+        const matchedDeck = await Deck.findById(deckId);
+
+        if (!matchedDeck) {
+          throw new ApolloError('Deck not found.', 'DECK_NOT_FOUND');
+        }
+
+        matchedDeck.cardList = cardList;
+
+        await matchedDeck.save();
+
+        return true;
+      } catch (error) {
+        return error;
+      }
+    },
+
     deleteCard: async (_, args) => {
       try {
         const { deckId, scryfallId } = args;

@@ -24,11 +24,17 @@ const MutationType = gql`
     commander: String
   }
 
+  input CardWithQuantityInput {
+    scryfallId: ID!
+    quantity: Int!
+  }
+
   input DeckDetailsInput {
     owner: ID
     name: String
     format: Format
     commander: String
+    cardList: [CardWithQuantityInput]
   }
 
   type Mutation {
@@ -42,6 +48,7 @@ const MutationType = gql`
     deleteDeck(deckId: ID!): Boolean!
 
     addCardToDeck(deckId: ID!, scryfallId: ID!): Boolean!
+    updateCardList(deckId: ID!, cardList: [CardWithQuantityInput]!): Boolean!
     deleteCard(deckId: ID!, scryfallId: ID!): Boolean!
 
     createComment(deckId: ID!, commentText: String!): Comment!

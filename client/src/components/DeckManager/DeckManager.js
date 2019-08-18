@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { GET_DECK_DETAILS, ADD_CARD_TO_DECK, DELETE_CARD } from './graphql';
+import { GET_DECK_DETAILS, ADD_CARD_TO_DECK, DELETE_CARD, UPDATE_CARD_LIST } from './graphql';
 
 import AddCardSidebar from './AddCardSidebar/AddCardSidebar';
 import DeckGallery from './DeckGallery/DeckGallery';
@@ -29,6 +29,8 @@ const DeckManager = props => {
   const [AddCardMutation] = useMutation(ADD_CARD_TO_DECK, {
     variables: { deckId: currentDeckId }
   });
+
+  const [UpdateCardListMutation] = useMutation(UPDATE_CARD_LIST);
 
   const onAddCard = newCard => {
     const maximumCardAllowance = deck.format === 'commander' ? 1 : 4;
@@ -66,6 +68,30 @@ const DeckManager = props => {
     AddCardMutation({ variables: { scryfallId: newCard.scryfall_id } });
   };
 
+  // ========== UPDATE CARD QUANTITY ========== //
+
+  const changeCardQuantity = (changeDirection, scryfallId) => {
+    const matchedCardIndex = deck.cardList.findIndex(({ card }) => {
+      return card.scryfall_id === scryfallId;
+    });
+
+    const newDeck = {
+      ...deck,
+      cardList: [...deck.cardList]
+    };
+
+    changeDirection === 'decrement'
+      ? (newDeck.cardList[matchedCardIndex].quantity -= 1)
+      : (newDeck.cardList[matchedCardIndex].quantity += 1);
+
+    const dbCardList = newDeck.cardList.map(({ card, quantity }) => {
+      return { scryfallId: card.scryfall_id, quantity: quantity };
+    });
+
+    setDeck(newDeck);
+    UpdateCardListMutation({ variables: { deckId: currentDeckId, cardList: dbCardList } });
+  };
+
   // ========== DELETING CARDS ========== //
 
   const [DeleteCardMutation] = useMutation(DELETE_CARD, {
@@ -95,7 +121,7 @@ const DeckManager = props => {
   return (
     <main className={classes.DeckManager}>
       {deck && <AddCardSidebar addCardHandler={onAddCard} deck={deck} />}
-      {deck && <DeckGallery deleteCardHandler={onDeleteCard} deck={deck} />}
+      {deck && <DeckGallery changeCardQuantity={changeCardQuantity} deleteCardHandler={onDeleteCard} deck={deck} />}
     </main>
   );
 };

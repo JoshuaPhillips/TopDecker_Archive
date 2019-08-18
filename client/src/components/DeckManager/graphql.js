@@ -8,6 +8,7 @@ export const GET_DECK_DETAILS = gql`
       format
       commander {
         name
+        color_identity
       }
       cardList {
         card {
@@ -38,5 +39,11 @@ export const ADD_CARD_TO_DECK = gql`
 export const DELETE_CARD = gql`
   mutation DeleteCard($deckId: ID!, $scryfallId: ID!) {
     deleteCard(deckId: $deckId, scryfallId: $scryfallId)
+  }
+`;
+
+export const UPDATE_CARD_LIST = gql`
+  mutation UpdateCardList($deckId: ID!, $cardList: [CardWithQuantityInput!]!) {
+    updateCardList(deckId: $deckId, cardList: $cardList)
   }
 `;

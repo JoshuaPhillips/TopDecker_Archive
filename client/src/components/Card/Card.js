@@ -6,8 +6,7 @@ const Card = props => {
   const [transformed, toggleTransform] = useState(false);
   const [flipped, toggleFlip] = useState(false);
 
-  // extract card details under the alias card
-  const { card, quantity = 1, withQuantityIndicator = false } = props;
+  const { card, withQuantityIndicator = false, quantity } = props;
 
   let visibleFace = card.image_uris ? card.image_uris.large : card.card_faces[0].image_uris.large;
   let buttonAction = null;
@@ -45,21 +44,25 @@ const Card = props => {
       />
 
       {withQuantityIndicator && (
-        <div style={{ display: 'flex' }}>
-          {[...Array(quantity)].map((_, n) => (
-            <div
-              key={`${card.scryfall_id}_${n}`}
-              style={{ border: '1px solid black', backgroundColor: 'blue', width: '25%', height: '30px' }}
-            />
-          ))}
-          {[...Array(4 - quantity)].map((_, n) => (
-            <div
-              key={`${card.scryfall_id}_${n}`}
-              style={{ border: '1px solid black', backgroundColor: 'red', width: '25%', height: '30px' }}
-            />
-          ))}
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <button
+            type='button'
+            disabled={quantity === 1}
+            onClick={() => props.changeCardQuantity('decrement', card.scryfall_id)}
+            style={{ flexGrow: '1', flexBasis: '0' }}>
+            -
+          </button>
+          <p style={{ flexGrow: '1', flexBasis: '0', textAlign: 'center' }}>{quantity}</p>
+          <button
+            type='button'
+            disabled={quantity === 4}
+            onClick={() => props.changeCardQuantity('increment', card.scryfall_id)}
+            style={{ flexGrow: '1', flexBasis: '0' }}>
+            +
+          </button>
         </div>
       )}
+
       {buttonAction !== null && (
         <button type='button' onClick={buttonAction}>
           {buttonText}
