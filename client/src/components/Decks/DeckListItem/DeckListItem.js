@@ -15,31 +15,34 @@ const cardLimitMap = {
 };
 
 const DeckListItem = props => {
+  const {
+    deck: { id, cardList, name, format, commander, owner }
+  } = props;
+
   const [DeleteDeckMutation] = useMutation(DELETE_DECK, {
     variables: {
-      deckId: props.deck.id
+      deckId: id
     },
     refetchQueries: [{ query: GET_DECK_LIST }]
   });
 
-  const { deck } = props;
-  let cardCount = 0;
+  let mainCount = 0;
 
-  deck.cardList.map(card => {
-    return (cardCount += card.quantity);
+  cardList.map(card => {
+    return (mainCount += card.mainDeckCount + card.sideboardCount);
   });
 
   return (
     <div className={classes.DeckListItem}>
-      <Link to={`/decks/${deck.id}`}>
-        <h2>{deck.name}</h2>
+      <Link to={`/decks/${id}`}>
+        <h2>{name}</h2>
         <p>
-          {capitalise(deck.format)}
-          {deck.format === 'commander' && ` (${deck.commander.name})`}
+          {capitalise(format)}
+          {format === 'commander' && ` (${commander.name})`}
         </p>
-        <p>{deck.owner.username}</p>
+        <p>{owner.username}</p>
         <p>
-          {cardCount} / {cardLimitMap[deck.format]}
+          {mainCount} / {mainCount > cardLimitMap[format] ? cardLimitMap[format] + 15 : cardLimitMap[format]}
         </p>
       </Link>
       <button type='button' onClick={() => DeleteDeckMutation()}>

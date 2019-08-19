@@ -101,32 +101,12 @@ const QueryResolvers = {
         return error;
       }
     },
+
     getCardByScryfallId: async (_, args) => {
       try {
         const card = await axios.get(`https://api.scryfall.com/cards/${args.scryfallId}`);
 
         return filterCardData(card.data);
-      } catch (error) {
-        return error;
-      }
-    },
-
-    getCardsByScryfallIds: async (_, args) => {
-      try {
-        let results = [];
-        const { cardList } = args;
-
-        for (var i = 0; i < cardList.length; i++) {
-          const result = await axios.get(`https://api.scryfall.com/cards/${cardList[i].scryfallId}`);
-
-          if (!result) {
-            continue;
-          }
-
-          results.push({ card: filterCardData(result.data), quantity: args.cardList[i].quantity });
-        }
-
-        return results;
       } catch (error) {
         return error;
       }

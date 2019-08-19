@@ -14,7 +14,8 @@ export const GET_DECK_LIST = gql`
         name
       }
       cardList {
-        quantity
+        mainDeckCount
+        sideboardCount
       }
     }
   }

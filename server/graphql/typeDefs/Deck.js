@@ -21,8 +21,7 @@ const DeckType = gql`
     owner: User!
     format: Format!
     commander: Card
-    cardList: [CardWithQuantity!]!
-    sideboard: [CardWithQuantity!]!
+    cardList: [CardSummary!]!
     comments: [Comment!]!
   }
 `;

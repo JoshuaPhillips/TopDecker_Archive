@@ -6,7 +6,12 @@ const cardListSchema = new Schema({
     type: String,
     required: true
   },
-  quantity: {
+  mainDeckCount: {
+    type: Number,
+    required: true,
+    default: 0
+  },
+  sideboardCount: {
     type: Number,
     required: true,
     default: 0
@@ -31,7 +36,6 @@ const deckSchema = new Schema({
     type: String
   },
   cardList: [cardListSchema],
-  sideboard: [cardListSchema],
   comments: [
     {
       type: Schema.Types.ObjectId,

@@ -162,7 +162,8 @@ const MutationResolvers = {
           newDeck.commander = deckDetails.commander;
           newDeck.cardList.push({
             scryfallId: deckDetails.commander,
-            quantity: 1
+            mainDeckCount: 1,
+            sideboardCount: 0
           });
         }
 
@@ -232,48 +233,6 @@ const MutationResolvers = {
       }
     },
 
-    addCardToDeck: async (_, args) => {
-      try {
-        const { deckId, scryfallId } = args;
-
-        const matchedDeck = await Deck.findById(deckId);
-
-        if (!matchedDeck) {
-          throw new ApolloError('Deck not found.', 'DECK_NOT_FOUND');
-        }
-
-        const format = matchedDeck._doc.format;
-        const maximumCardAllowance = format === 'commander' ? 1 : 4;
-
-        const { cardList } = matchedDeck._doc;
-
-        // Check if that card already exists (i.e. in case of multiple copies) and return its index.
-        const matchingCardIndex = cardList.findIndex(card => {
-          return card.scryfallId === scryfallId;
-        });
-
-        if (matchingCardIndex === -1) {
-          // Card does not exist in the CardList already. Add a new object with that card ID and set quantity to 1.
-          matchedDeck.cardList.push({
-            scryfallId: scryfallId,
-            quantity: 1
-          });
-        } else {
-          if (matchedDeck.cardList[matchingCardIndex].quantity === maximumCardAllowance) {
-            return false;
-          }
-          // Card already exists in the CardList, and is not at maximum. Increase the quantity by 1.
-          matchedDeck.cardList[matchingCardIndex].quantity += 1;
-        }
-
-        await matchedDeck.save();
-
-        return true;
-      } catch (error) {
-        return error;
-      }
-    },
-
     updateCardList: async (_, args) => {
       try {
         const { deckId, cardList } = args;
@@ -287,30 +246,6 @@ const MutationResolvers = {
         matchedDeck.cardList = cardList;
 
         await matchedDeck.save();
-
-        return true;
-      } catch (error) {
-        return error;
-      }
-    },
-
-    deleteCard: async (_, args) => {
-      try {
-        const { deckId, scryfallId } = args;
-
-        const matchedDeck = await Deck.findById(deckId);
-
-        if (!matchedDeck) {
-          throw new ApolloError('Deck not found.', 'DECK_NOT_FOUND');
-        }
-
-        let cardList = matchedDeck._doc.cardList;
-
-        const newCardList = cardList.filter(card => {
-          return card.scryfallId !== scryfallId;
-        });
-
-        await Deck.findByIdAndUpdate(deckId, { cardList: newCardList });
 
         return true;
       } catch (error) {

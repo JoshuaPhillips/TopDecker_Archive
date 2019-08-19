@@ -24,14 +24,15 @@ export const GET_DECK_DETAILS = gql`
             }
           }
         }
-        quantity
+        mainDeckCount
+        sideboardCount
       }
     }
   }
 `;
 
 export const UPDATE_CARD_LIST = gql`
-  mutation UpdateCardList($deckId: ID!, $cardList: [CardWithQuantityInput!]!) {
+  mutation UpdateCardList($deckId: ID!, $cardList: [CardSummaryInput!]!) {
     updateCardList(deckId: $deckId, cardList: $cardList)
   }
 `;

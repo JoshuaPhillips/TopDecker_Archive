@@ -61,7 +61,11 @@ const DeckResolvers = {
             cardList.map(async card => {
               const matchedCard = await axios.get(`https://api.scryfall.com/cards/${card.scryfallId}`);
 
-              return { card: filterCardData(matchedCard.data), quantity: card.quantity };
+              return {
+                card: filterCardData(matchedCard.data),
+                mainDeckCount: card.mainDeckCount,
+                sideboardCount: card.sideboardCount
+              };
             })
           );
 

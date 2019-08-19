@@ -6,7 +6,7 @@ const Card = props => {
   const [transformed, toggleTransform] = useState(false);
   const [flipped, toggleFlip] = useState(false);
 
-  const { card, withQuantityIndicator = false, quantity } = props;
+  const { card } = props;
 
   let visibleFace = card.image_uris ? card.image_uris.large : card.card_faces[0].image_uris.large;
   let buttonAction = null;
@@ -42,26 +42,6 @@ const Card = props => {
           width: '100%'
         }}
       />
-
-      {withQuantityIndicator && (
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <button
-            type='button'
-            disabled={quantity === 0}
-            onClick={() => props.updateCardListHandler(card, quantity - 1)}
-            style={{ flexGrow: '1', flexBasis: '0' }}>
-            -
-          </button>
-          <p style={{ flexGrow: '1', flexBasis: '0', textAlign: 'center' }}>{quantity}</p>
-          <button
-            type='button'
-            disabled={quantity === 4}
-            onClick={() => props.updateCardListHandler(card, quantity + 1)}
-            style={{ flexGrow: '1', flexBasis: '0' }}>
-            +
-          </button>
-        </div>
-      )}
 
       {buttonAction !== null && (
         <button type='button' onClick={buttonAction}>

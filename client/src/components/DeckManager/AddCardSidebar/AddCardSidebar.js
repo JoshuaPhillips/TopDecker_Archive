@@ -39,14 +39,19 @@ const AddCardSidebar = props => {
     searchParams.commander = commander.color_identity;
   }
 
-  let matchedCardQuantity = 0;
+  let matchedCardCounts = {
+    mainDeckCount: 0,
+    sideboardCount: 0
+  };
 
   if (selectedCard) {
     const matchedCard = cardList.find(({ card }) => {
       return card.scryfall_id === selectedCard.scryfall_id;
     });
+
     if (matchedCard) {
-      matchedCardQuantity = matchedCard.quantity;
+      matchedCardCounts.mainDeckCount = matchedCard.mainDeckCount;
+      matchedCardCounts.sideboardCount = matchedCard.sideboardCount;
     }
   }
 
@@ -78,26 +83,33 @@ const AddCardSidebar = props => {
           Search
         </button>
       </form>
-
       <button
         type='button'
-        disabled={!selectedCard || matchedCardQuantity === maxCardAllowance}
+        disabled={
+          !selectedCard || matchedCardCounts.mainDeckCount + matchedCardCounts.sideboardCount === maxCardAllowance
+        }
         onClick={() => {
-          props.updateCardListHandler(selectedCard, matchedCardQuantity === 0 ? 1 : matchedCardQuantity + 1);
+          props.updateCardListHandler(selectedCard, {
+            mainDeckCount: matchedCardCounts.mainDeckCount + 1,
+            sideboardCount: matchedCardCounts.sideboardCount
+          });
         }}>
         Add Card
       </button>
 
-      {format !== 'commander' ? (
-        <button
-          type='button'
-          disabled={!selectedCard || matchedCardQuantity === maxCardAllowance}
-          onClick={() => {
-            props.updateCardListHandler(selectedCard, 4);
-          }}>
-          Add Playset (4)
-        </button>
-      ) : null}
+      <button
+        type='button'
+        disabled={
+          !selectedCard || matchedCardCounts.mainDeckCount + matchedCardCounts.sideboardCount === maxCardAllowance
+        }
+        onClick={() => {
+          props.updateCardListHandler(selectedCard, {
+            mainDeckCount: matchedCardCounts.mainDeckCount,
+            sideboardCount: matchedCardCounts.sideboardCount + 1
+          });
+        }}>
+        Add Card to Sideboard
+      </button>
     </div>
   );
 };

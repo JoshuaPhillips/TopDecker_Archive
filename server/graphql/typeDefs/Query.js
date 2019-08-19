@@ -103,14 +103,10 @@ const QueryType = gql`
     total_cards: Int!
   }
 
-  input CardListInput {
-    scryfallId: ID!
-    quantity: Int!
-  }
-
-  type CardWithQuantity {
+  type CardSummary {
     card: Card!
-    quantity: Int!
+    mainDeckCount: Int!
+    sideboardCount: Int!
   }
 
   type Query {
@@ -124,8 +120,7 @@ const QueryType = gql`
 
     getRandomCard: Card!
     getCardByScryfallId(scryfallId: ID!): Card!
-    # TODO #001: re-factor getCardsByScryfallIds so it doesn't include quantity
-    getCardsByScryfallIds(cardList: [CardListInput!]!): [CardWithQuantity!]!
+
     searchCards(searchParams: SearchParamsInput, url: String): SearchResponse!
 
     getAllSets: [Set!]!
