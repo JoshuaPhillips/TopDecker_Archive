@@ -47,8 +47,8 @@ const Card = props => {
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <button
             type='button'
-            disabled={quantity === 1}
-            onClick={() => props.changeCardQuantity('decrement', card.scryfall_id)}
+            disabled={quantity === 0}
+            onClick={() => props.updateCardListHandler(card, quantity - 1)}
             style={{ flexGrow: '1', flexBasis: '0' }}>
             -
           </button>
@@ -56,7 +56,7 @@ const Card = props => {
           <button
             type='button'
             disabled={quantity === 4}
-            onClick={() => props.changeCardQuantity('increment', card.scryfall_id)}
+            onClick={() => props.updateCardListHandler(card, quantity + 1)}
             style={{ flexGrow: '1', flexBasis: '0' }}>
             +
           </button>

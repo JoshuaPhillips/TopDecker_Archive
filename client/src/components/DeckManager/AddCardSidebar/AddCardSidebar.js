@@ -66,9 +66,17 @@ const AddCardSidebar = props => {
         type='button'
         disabled={!selectedCard}
         onClick={() => {
-          props.addCardHandler(selectedCard);
+          props.updateCardListHandler(selectedCard, 1);
         }}>
         Add Card
+      </button>
+      <button
+        type='button'
+        disabled={!selectedCard}
+        onClick={() => {
+          props.updateCardListHandler(selectedCard, 4);
+        }}>
+        Add Playset (4)
       </button>
     </div>
   );
