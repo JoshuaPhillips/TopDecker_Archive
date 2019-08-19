@@ -30,18 +30,6 @@ export const GET_DECK_DETAILS = gql`
   }
 `;
 
-export const ADD_CARD_TO_DECK = gql`
-  mutation AddCardToDeck($deckId: ID!, $scryfallId: ID!) {
-    addCardToDeck(deckId: $deckId, scryfallId: $scryfallId)
-  }
-`;
-
-export const DELETE_CARD = gql`
-  mutation DeleteCard($deckId: ID!, $scryfallId: ID!) {
-    deleteCard(deckId: $deckId, scryfallId: $scryfallId)
-  }
-`;
-
 export const UPDATE_CARD_LIST = gql`
   mutation UpdateCardList($deckId: ID!, $cardList: [CardWithQuantityInput!]!) {
     updateCardList(deckId: $deckId, cardList: $cardList)

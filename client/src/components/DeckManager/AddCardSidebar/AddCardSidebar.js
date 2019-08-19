@@ -6,18 +6,15 @@ import { SEARCH_CARDS } from './graphql';
 import Card from '../../Card/Card';
 
 const AddCardSidebar = props => {
+  const {
+    deck: { cardList, commander, format }
+  } = props;
+  const maxCardAllowance = format === 'commander' ? 1 : 4;
+
   const client = useApolloClient();
+
   const [searchResults, setSearchResults] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
-
-  const searchParams = {
-    formats: [
-      {
-        format: props.deck.format,
-        legality: 'legal'
-      }
-    ]
-  };
 
   const searchCards = async () => {
     const { data } = await client.query({
@@ -29,8 +26,28 @@ const AddCardSidebar = props => {
     setSearchResults(data.searchCards.cards);
   };
 
-  if (props.deck.format === 'commander') {
-    searchParams.commander = props.deck.commander.color_identity;
+  const searchParams = {
+    formats: [
+      {
+        format: format,
+        legality: 'legal'
+      }
+    ]
+  };
+
+  if (format === 'commander') {
+    searchParams.commander = commander.color_identity;
+  }
+
+  let matchedCardQuantity = 0;
+
+  if (selectedCard) {
+    const matchedCard = cardList.find(({ card }) => {
+      return card.scryfall_id === selectedCard.scryfall_id;
+    });
+    if (matchedCard) {
+      matchedCardQuantity = matchedCard.quantity;
+    }
   }
 
   return (
@@ -64,20 +81,23 @@ const AddCardSidebar = props => {
 
       <button
         type='button'
-        disabled={!selectedCard}
+        disabled={!selectedCard || matchedCardQuantity === maxCardAllowance}
         onClick={() => {
-          props.updateCardListHandler(selectedCard, 1);
+          props.updateCardListHandler(selectedCard, matchedCardQuantity === 0 ? 1 : matchedCardQuantity + 1);
         }}>
         Add Card
       </button>
-      <button
-        type='button'
-        disabled={!selectedCard}
-        onClick={() => {
-          props.updateCardListHandler(selectedCard, 4);
-        }}>
-        Add Playset (4)
-      </button>
+
+      {format !== 'commander' ? (
+        <button
+          type='button'
+          disabled={!selectedCard || matchedCardQuantity === maxCardAllowance}
+          onClick={() => {
+            props.updateCardListHandler(selectedCard, 4);
+          }}>
+          Add Playset (4)
+        </button>
+      ) : null}
     </div>
   );
 };
