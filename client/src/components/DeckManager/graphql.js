@@ -12,6 +12,7 @@ export const GET_DECK_DETAILS = gql`
         color_identity
         layout
         image_uris {
+          art_crop
           large
         }
         card_faces {

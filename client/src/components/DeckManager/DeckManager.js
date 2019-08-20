@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { GET_DECK_DETAILS, UPDATE_CARD_LIST } from './graphql';
 
-import AddCardSidebar from './AddCardSidebar/AddCardSidebar';
+import AddCardSidebar from './QuickSearchSidebar/QuickSearchSidebar';
 import DeckGallery from './DeckGallery/DeckGallery';
 import { sortCardList } from '../../utils/sortCardList';
 

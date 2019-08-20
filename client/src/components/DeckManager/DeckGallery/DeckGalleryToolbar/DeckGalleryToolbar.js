@@ -26,6 +26,7 @@ const DeckGalleryToolbar = props => {
       </div>
 
       <div>
+        <p>Sort by:</p>
         <button
           type='button'
           disabled={sortMode === 'alphabetical'}
