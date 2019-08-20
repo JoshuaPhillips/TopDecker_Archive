@@ -30,7 +30,7 @@ const Card = props => {
   }
 
   return (
-    <div className={classes.Card} style={{ border: '1px solid black', maxWidth: '100%' }}>
+    <div className={classes.Card}>
       <img
         src={visibleFace}
         alt={card.name}

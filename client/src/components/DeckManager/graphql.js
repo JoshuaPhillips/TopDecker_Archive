@@ -9,6 +9,17 @@ export const GET_DECK_DETAILS = gql`
       commander {
         name
         color_identity
+        scryfall_id
+
+        layout
+        image_uris {
+          large
+        }
+        card_faces {
+          image_uris {
+            large
+          }
+        }
       }
       cardList {
         card {

@@ -1,0 +1,14 @@
+.DeckGalleryCardList {
+  border: 1px solid blue;
+}
+
+.GalleryCardListContainer {
+  border: 1px solid red;
+  padding: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  & > div {
+    margin: 0.5rem;
+    max-width: calc(20% - 1rem);
+  }
+}

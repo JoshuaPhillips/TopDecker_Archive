@@ -97,19 +97,21 @@ const AddCardSidebar = props => {
         Add Card
       </button>
 
-      <button
-        type='button'
-        disabled={
-          !selectedCard || matchedCardCounts.mainDeckCount + matchedCardCounts.sideboardCount === maxCardAllowance
-        }
-        onClick={() => {
-          props.updateCardListHandler(selectedCard, {
-            mainDeckCount: matchedCardCounts.mainDeckCount,
-            sideboardCount: matchedCardCounts.sideboardCount + 1
-          });
-        }}>
-        Add Card to Sideboard
-      </button>
+      {format !== 'commander' && (
+        <button
+          type='button'
+          disabled={
+            !selectedCard || matchedCardCounts.mainDeckCount + matchedCardCounts.sideboardCount === maxCardAllowance
+          }
+          onClick={() => {
+            props.updateCardListHandler(selectedCard, {
+              mainDeckCount: matchedCardCounts.mainDeckCount,
+              sideboardCount: matchedCardCounts.sideboardCount + 1
+            });
+          }}>
+          Add Card to Sideboard
+        </button>
+      )}
     </div>
   );
 };
