@@ -57,27 +57,21 @@ const AddCardSidebar = props => {
 
   return (
     <div style={{ width: '15%', overflowX: 'scroll' }}>
-      <h1>AddCardSidebar</h1>
+      <h1>Quick Search</h1>
       <div>
         {searchResults.length !== 0 &&
           searchResults.map(result => {
             return <Card key={result.scryfall_id} card={result} onClick={() => setSelectedCard(result)} />;
           })}
       </div>
+
       <form>
-        <label htmlFor='name'>Card Name</label>
-        <input type='text' id='name' value={searchParams.name} onChange={e => (searchParams.name = e.target.value)} />
-
-        <label htmlFor='text'>Text</label>
-        <input type='text' id='text' value={searchParams.text} onChange={e => (searchParams.text = e.target.value)} />
-
-        <label htmlFor='type'>Type</label>
-        <select id='type' defaultValue='default' onChange={e => (searchParams.type = e.target.value)}>
-          <option value='default' disabled>
-            Select a type
-          </option>
-          <option value='creature'>Creature</option>
-        </select>
+        <input
+          type='text'
+          placeholder='Card Name...'
+          value={searchParams.name}
+          onChange={e => (searchParams.name = e.target.value)}
+        />
 
         <button type='button' onClick={() => searchCards()}>
           Search

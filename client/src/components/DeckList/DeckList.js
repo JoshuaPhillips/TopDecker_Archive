@@ -7,7 +7,7 @@ import { GET_AUTH_DATA } from '../../graphql';
 import DeckListItem from './DeckListItem/DeckListItem';
 import AddDeckForm from './AddDeckForm/AddDeckForm';
 
-import classes from './Decks.module.scss';
+import classes from './DeckList.module.scss';
 
 const Decks = props => {
   const [addDeck, toggleAddDeck] = useState(false);

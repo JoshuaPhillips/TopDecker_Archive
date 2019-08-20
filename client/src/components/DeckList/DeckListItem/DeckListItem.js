@@ -32,6 +32,10 @@ const DeckListItem = props => {
     return (mainCount += card.mainDeckCount + card.sideboardCount);
   });
 
+  if (format === 'commander') {
+    mainCount += 1;
+  }
+
   return (
     <div className={classes.DeckListItem}>
       <Link to={`/decks/${id}`}>
@@ -42,7 +46,10 @@ const DeckListItem = props => {
         </p>
         <p>{owner.username}</p>
         <p>
-          {mainCount} / {mainCount > cardLimitMap[format] ? cardLimitMap[format] + 15 : cardLimitMap[format]}
+          {mainCount} /{' '}
+          {mainCount > cardLimitMap[format] && format !== 'commander'
+            ? cardLimitMap[format] + 15
+            : cardLimitMap[format]}
         </p>
       </Link>
       <button type='button' onClick={() => DeleteDeckMutation()}>

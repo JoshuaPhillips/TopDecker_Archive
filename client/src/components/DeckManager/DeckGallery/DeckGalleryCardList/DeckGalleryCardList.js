@@ -89,13 +89,14 @@ const DeckGalleryCardList = props => {
                 </button>
               )}
 
-              {deleteMode && (
-                <button
-                  type='button'
-                  onClick={() => props.updateCardListHandler(card, { mainDeckCount: 0, sideboardCount: 0 })}>
-                  Delete
-                </button>
-              )}
+              {deleteMode ||
+                (format === 'commander' && (
+                  <button
+                    type='button'
+                    onClick={() => props.updateCardListHandler(card, { mainDeckCount: 0, sideboardCount: 0 })}>
+                    Delete
+                  </button>
+                ))}
             </div>
           );
         })}

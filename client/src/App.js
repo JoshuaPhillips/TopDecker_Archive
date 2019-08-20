@@ -7,7 +7,7 @@ import { GET_AUTH_DATA } from './graphql';
 import Header from './components/Header/Header';
 import Auth from './components/Auth/Auth';
 import Account from './components/Account/Account';
-import Decks from './components/Decks/Decks';
+import DeckList from './components/DeckList/DeckList';
 import DeckManager from './components/DeckManager/DeckManager';
 import Sandbox from './components/Sandbox/Sandbox';
 
@@ -24,7 +24,7 @@ const App = () => {
         {(!token || !currentUserId) && <Redirect to='/login' />}
 
         <Route path='/account' component={Account} />
-        <Route path='/decks' exact component={Decks} />
+        <Route path='/decks' exact component={DeckList} />
         <Route path='/decks/:deckId' component={DeckManager} />
         <Route path='/sandbox' component={Sandbox} />
         <Redirect to='/decks' />

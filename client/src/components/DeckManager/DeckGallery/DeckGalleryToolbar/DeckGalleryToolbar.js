@@ -7,20 +7,23 @@ import { capitalise } from '../../../../utils';
 import classes from './DeckGalleryToolbar.module.scss';
 
 const DeckGalleryToolbar = props => {
+  const { name, format, commander } = props;
   return (
     <div className={classes.DeckGalleryToolbar}>
-      <DeckViewModeMenu style={{ border: '1px solid red' }} />
+      <DeckViewModeMenu />
       <div>
-        <h1>{props.name}</h1>
+        <h1>{name}</h1>
 
         <p>
-          {capitalise(props.format)} {props.format === 'commander' ? <em>{` (${props.commander.name})`}</em> : null}
+          {capitalise(format)} {format === 'commander' ? <em>{` (${commander.name})`}</em> : null}
         </p>
       </div>
       <div>
-        <button type='button' onClick={() => props.toggleDeleteMode(!props.deleteMode)}>
-          Delete Cards
-        </button>
+        {format !== 'commander' && (
+          <button type='button' onClick={() => props.toggleDeleteMode(!props.deleteMode)}>
+            Delete Cards
+          </button>
+        )}
       </div>
     </div>
   );
