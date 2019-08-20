@@ -15,18 +15,23 @@ const AddCardSidebar = props => {
 
   const [searchResults, setSearchResults] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
+  const [nameSearch, setNameSearch] = useState('');
 
   const searchCards = async () => {
     const { data } = await client.query({
       query: SEARCH_CARDS,
+      skip: nameSearch.length < 3,
       variables: {
-        searchParams
+        searchParams: {
+          name: nameSearch,
+          ...defaultParams
+        }
       }
     });
     setSearchResults(data.searchCards.cards);
   };
 
-  const searchParams = {
+  const defaultParams = {
     formats: [
       {
         format: format,
@@ -36,7 +41,7 @@ const AddCardSidebar = props => {
   };
 
   if (format === 'commander') {
-    searchParams.commander = commander.color_identity;
+    defaultParams.commander = commander.color_identity;
   }
 
   let matchedCardCounts = {
@@ -59,21 +64,31 @@ const AddCardSidebar = props => {
     <div style={{ width: '15%', overflowX: 'scroll' }}>
       <h1>Quick Search</h1>
       <div>
-        {searchResults.length !== 0 &&
-          searchResults.map(result => {
-            return <Card key={result.scryfall_id} card={result} onClick={() => setSelectedCard(result)} />;
-          })}
+        {searchResults.length !== 0 && (
+          <React.Fragment>
+            {searchResults.map(result => {
+              return <Card key={result.scryfall_id} card={result} onClick={() => setSelectedCard(result)} />;
+            })}
+            <button
+              type='button'
+              onClick={() => {
+                setSearchResults([]);
+              }}>
+              Clear Results
+            </button>
+          </React.Fragment>
+        )}
       </div>
 
       <form>
         <input
           type='text'
           placeholder='Card Name...'
-          value={searchParams.name}
-          onChange={e => (searchParams.name = e.target.value)}
+          value={nameSearch}
+          onChange={e => setNameSearch(e.target.value)}
         />
 
-        <button type='button' onClick={() => searchCards()}>
+        <button type='button' disabled={nameSearch.length < 3} onClick={() => searchCards()}>
           Search
         </button>
       </form>

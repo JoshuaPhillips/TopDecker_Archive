@@ -7,6 +7,10 @@ export const SEARCH_CARDS = gql`
       cards {
         scryfall_id
         name
+        cmc
+        colors
+        type_line
+        rarity
         image_uris {
           large
         }
