@@ -122,11 +122,23 @@ export const sortCardList = (cardList, sortMode) => {
       };
 
       for (var j = 0; j < cardList.length; j++) {
+        // for each card, split that card's typeline into words
         const typeLineWordArray = cardList[j].card.type_line.split(' ');
+
         for (var i = 0; i < typeLineWordArray.length; i++) {
+          // for each of those words, check if it's included in the 'types' array above
           const matchingTypeIndex = types.indexOf(typeLineWordArray[i]);
+
           if (matchingTypeIndex !== -1) {
-            cardTypeMatchMap[types[matchingTypeIndex].toLowerCase()].push(cardList[j]);
+            if (typeLineWordArray[i] === 'Artifact' && typeLineWordArray[i + 1] === 'Creature') {
+              cardTypeMatchMap.creature.push(cardList[j]);
+              break;
+            } else if (typeLineWordArray[i] === 'Enchantment' && typeLineWordArray[i + 1] === 'Creature') {
+              cardTypeMatchMap.creature.push(cardList[j]);
+              break;
+            } else {
+              cardTypeMatchMap[types[matchingTypeIndex].toLowerCase()].push(cardList[j]);
+            }
           }
         }
       }
