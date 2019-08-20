@@ -6,12 +6,14 @@ import { GET_DECK_DETAILS, UPDATE_CARD_LIST } from './graphql';
 
 import AddCardSidebar from './AddCardSidebar/AddCardSidebar';
 import DeckGallery from './DeckGallery/DeckGallery';
+import { sortCardList } from '../../utils/sortCardList';
 
 import classes from './DeckManager.module.scss';
 
 const DeckManager = props => {
   const { deckId: currentDeckId } = props.match.params;
   const [deck, setDeck] = useState(null);
+  const [sortMode, setSortMode] = useState('alphabetical');
 
   // ========== GET THE CARD DETAILS ========== //
 
@@ -20,9 +22,26 @@ const DeckManager = props => {
     variables: { deckId: currentDeckId },
     fetchPolicy: 'cache-and-network',
     onCompleted() {
-      setDeck(GetDeckDetailsQueryResponse.data.getDeckById);
+      const sortedDeck = {
+        ...GetDeckDetailsQueryResponse.data.getDeckById,
+        cardList: sortCardList(GetDeckDetailsQueryResponse.data.getDeckById.cardList, sortMode)
+      };
+
+      setDeck(sortedDeck);
     }
   });
+
+  // ========== SORTING CARDS ========== //
+
+  const changeSortMode = newSortMode => {
+    setSortMode(newSortMode);
+    const newDeck = {
+      ...deck,
+      cardList: sortCardList(deck.cardList, newSortMode)
+    };
+
+    setDeck(newDeck);
+  };
 
   // ========== UPDATING CARDS ========== //
 
@@ -88,8 +107,15 @@ const DeckManager = props => {
 
   return (
     <main className={classes.DeckManager}>
-      {deck && <AddCardSidebar updateCardListHandler={updateCardList} deck={deck} />}
-      {deck && <DeckGallery updateCardListHandler={updateCardList} deck={deck} />}
+      {deck && <AddCardSidebar deck={deck} updateCardListHandler={updateCardList} />}
+      {deck && (
+        <DeckGallery
+          deck={deck}
+          sortMode={sortMode}
+          changeSortModeHandler={changeSortMode}
+          updateCardListHandler={updateCardList}
+        />
+      )}
     </main>
   );
 };

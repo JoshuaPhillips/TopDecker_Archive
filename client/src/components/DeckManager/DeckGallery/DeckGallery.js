@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import DeckGalleryToolbar from './DeckGalleryToolbar/DeckGalleryToolbar';
 import DeckGalleryCardList from './DeckGalleryCardList/DeckGalleryCardList';
@@ -6,19 +6,12 @@ import DeckGalleryCardList from './DeckGalleryCardList/DeckGalleryCardList';
 import classes from './DeckGallery.module.scss';
 
 const DeckGallery = props => {
-  const { deck } = props;
-  const [deleteMode, toggleDeleteMode] = useState(false);
+  const { deck, sortMode } = props;
 
   return (
     <div className={classes.DeckGallery}>
-      <DeckGalleryToolbar
-        name={deck.name}
-        format={deck.format}
-        commander={deck.commander}
-        deleteMode={deleteMode}
-        toggleDeleteMode={toggleDeleteMode}
-      />
-      <DeckGalleryCardList deck={deck} deleteMode={deleteMode} updateCardListHandler={props.updateCardListHandler} />
+      <DeckGalleryToolbar deck={deck} sortMode={sortMode} changeSortModeHandler={props.changeSortModeHandler} />
+      <DeckGalleryCardList deck={deck} updateCardListHandler={props.updateCardListHandler} />
     </div>
   );
 };

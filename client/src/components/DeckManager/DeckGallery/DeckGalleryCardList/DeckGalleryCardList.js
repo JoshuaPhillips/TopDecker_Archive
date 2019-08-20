@@ -18,7 +18,7 @@ const DeckGalleryCardList = props => {
     return card.sideboardCount !== 0;
   });
 
-  const maxMainDeckCards = format === 'commander' ? 100 : 60;
+  const maxMainDeckCards = format === 'commander' ? 99 : 60;
 
   let mainDeckTotal = 0;
   let sideboardTotal = 0;

@@ -8,9 +8,8 @@ export const GET_DECK_DETAILS = gql`
       format
       commander {
         name
-        color_identity
         scryfall_id
-
+        color_identity
         layout
         image_uris {
           large
@@ -25,7 +24,11 @@ export const GET_DECK_DETAILS = gql`
         card {
           scryfall_id
           name
+          type_line
+          colors
+          rarity
           layout
+          cmc
           image_uris {
             large
           }
