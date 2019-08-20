@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import DeckViewModeMenu from './DeckViewModeMenu/DeckViewModeMenu';
 
@@ -21,7 +22,9 @@ const DeckGalleryToolbar = props => {
         <p>
           {capitalise(format)} {format === 'commander' ? <em>{` (${commander.name})`}</em> : null}
         </p>
-        <button type='button'>Search for Cards</button>
+        <Link to='/search'>
+          <button type='button'>Search for Cards</button>
+        </Link>
         <button type='button'>Delete Deck</button>
       </div>
 

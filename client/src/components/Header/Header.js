@@ -21,6 +21,7 @@ const Header = props => {
             <React.Fragment>
               <Link to='/account'>Account</Link>
               <Link to='/decks'>Decks</Link>
+              <Link to='/search'>Search</Link>
               <Link to='/sandbox'>Sandbox</Link>
 
               <button type='button' onClick={() => LogoutMutation()}>
