@@ -113,7 +113,7 @@ const QueryType = gql`
     test: String!
 
     login(email: String!, password: String!): AuthResponse!
-    getUserById: User!
+    getCurrentUser: User!
 
     getAllDecks: [Deck!]!
     getDeckById(deckId: ID!): Deck!

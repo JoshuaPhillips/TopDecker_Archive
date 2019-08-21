@@ -22,7 +22,13 @@ const DeckGalleryToolbar = props => {
         <p>
           {capitalise(format)} {format === 'commander' ? <em>{` (${commander.name})`}</em> : null}
         </p>
-        <Link to='/search'>
+        <Link
+          to={{
+            pathname: '/search',
+            state: {
+              deck: props.deck
+            }
+          }}>
           <button type='button'>Search for Cards</button>
         </Link>
         <button type='button'>Delete Deck</button>

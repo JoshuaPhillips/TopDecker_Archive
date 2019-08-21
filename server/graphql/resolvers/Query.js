@@ -49,7 +49,7 @@ const QueryResolvers = {
     },
 
     // User-related Queries
-    getUserById: async (_, __, context) => {
+    getCurrentUser: async (_, __, context) => {
       try {
         const { currentUserId } = context.authenticationStatus;
         const matchedUser = await User.findById(currentUserId);
@@ -129,8 +129,8 @@ const QueryResolvers = {
         }
 
         const response = await axios.get(url).catch(error => {
-          const { status, statusText, data } = error.response;
-          throw new ApolloError(`Error ${status}: ${statusText} - ${data.details}`, `SCRYFALL_ERROR_${status}`);
+          // throw new ApolloError(`Error ${status}: ${statusText} - ${data.details}`, `SCRYFALL_ERROR_${status}`);
+          throw new ApolloError('Server Error.', 'SERVER_ERROR');
         });
 
         let results = response.data.data;
