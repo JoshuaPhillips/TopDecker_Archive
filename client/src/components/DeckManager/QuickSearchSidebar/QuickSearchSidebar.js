@@ -98,10 +98,7 @@ const AddCardSidebar = props => {
           !selectedCard || matchedCardCounts.mainDeckCount + matchedCardCounts.sideboardCount === maxCardAllowance
         }
         onClick={() => {
-          props.updateCardListHandler(selectedCard, {
-            mainDeckCount: matchedCardCounts.mainDeckCount + 1,
-            sideboardCount: matchedCardCounts.sideboardCount
-          });
+          props.updateCardListHandler(props.deck, 'mainDeck', 'add', selectedCard);
         }}>
         Add Card
       </button>
@@ -113,10 +110,7 @@ const AddCardSidebar = props => {
             !selectedCard || matchedCardCounts.mainDeckCount + matchedCardCounts.sideboardCount === maxCardAllowance
           }
           onClick={() => {
-            props.updateCardListHandler(selectedCard, {
-              mainDeckCount: matchedCardCounts.mainDeckCount,
-              sideboardCount: matchedCardCounts.sideboardCount + 1
-            });
+            props.updateCardListHandler(props.deck, 'sideboard', 'add', selectedCard);
           }}>
           Add Card to Sideboard
         </button>

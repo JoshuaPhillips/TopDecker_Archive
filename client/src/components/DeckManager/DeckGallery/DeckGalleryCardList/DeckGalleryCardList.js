@@ -53,12 +53,7 @@ const DeckGalleryCardList = props => {
                     <button
                       type='button'
                       disabled={mainDeckCount === 0}
-                      onClick={() =>
-                        props.updateCardListHandler(card, {
-                          mainDeckCount: mainDeckCount - 1,
-                          sideboardCount: sideboardCount
-                        })
-                      }
+                      onClick={() => props.updateCardListHandler(props.deck, 'mainDeck', 'remove', card)}
                       style={{ flexGrow: '1', flexBasis: '0' }}>
                       -
                     </button>
@@ -66,12 +61,7 @@ const DeckGalleryCardList = props => {
                     <button
                       type='button'
                       disabled={mainDeckCount + sideboardCount === 4 || mainDeckTotal === maxMainDeckCards}
-                      onClick={() =>
-                        props.updateCardListHandler(card, {
-                          mainDeckCount: mainDeckCount + 1,
-                          sideboardCount: sideboardCount
-                        })
-                      }
+                      onClick={() => props.updateCardListHandler(props.deck, 'mainDeck', 'add', card)}
                       style={{ flexGrow: '1', flexBasis: '0' }}>
                       +
                     </button>
@@ -81,12 +71,7 @@ const DeckGalleryCardList = props => {
                 {format !== 'commander' && (
                   <button
                     type='button'
-                    onClick={() =>
-                      props.updateCardListHandler(card, {
-                        mainDeckCount: mainDeckCount - 1,
-                        sideboardCount: sideboardCount + 1
-                      })
-                    }>
+                    onClick={() => props.updateCardListHandler(props.deck, 'sideboard', 'transferToSideboard', card)}>
                     Transfer to Sideboard
                   </button>
                 )}
@@ -95,7 +80,7 @@ const DeckGalleryCardList = props => {
                   (format === 'commander' && (
                     <button
                       type='button'
-                      onClick={() => props.updateCardListHandler(card, { mainDeckCount: 0, sideboardCount: 0 })}>
+                      onClick={() => props.updateCardListHandler(props.deck, 'mainDeck', 'delete', card)}>
                       Delete
                     </button>
                   ))}
@@ -122,12 +107,7 @@ const DeckGalleryCardList = props => {
                           <button
                             type='button'
                             disabled={sideboardCount === 0}
-                            onClick={() =>
-                              props.updateCardListHandler(card, {
-                                mainDeckCount: mainDeckCount,
-                                sideboardCount: sideboardCount - 1
-                              })
-                            }
+                            onClick={() => props.updateCardListHandler(props.deck, 'sideboard', 'remove', card)}
                             style={{ flexGrow: '1', flexBasis: '0' }}>
                             -
                           </button>
@@ -135,12 +115,7 @@ const DeckGalleryCardList = props => {
                           <button
                             type='button'
                             disabled={mainDeckCount + sideboardCount === 4 || sideboardTotal === 15}
-                            onClick={() =>
-                              props.updateCardListHandler(card, {
-                                mainDeckCount: mainDeckCount,
-                                sideboardCount: sideboardCount + 1
-                              })
-                            }
+                            onClick={() => props.updateCardListHandler(props.deck, 'sideboard', 'add', card)}
                             style={{ flexGrow: '1', flexBasis: '0' }}>
                             +
                           </button>
@@ -148,12 +123,7 @@ const DeckGalleryCardList = props => {
                       )}
                       <button
                         type='button'
-                        onClick={() =>
-                          props.updateCardListHandler(card, {
-                            mainDeckCount: mainDeckCount + 1,
-                            sideboardCount: sideboardCount - 1
-                          })
-                        }>
+                        onClick={() => props.updateCardListHandler(props.deck, 'mainDeck', 'transferToMainDeck', card)}>
                         Transfer to Main Deck
                       </button>
 

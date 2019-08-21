@@ -7,10 +7,12 @@ import { SEARCH_CARDS } from '../DeckManager/QuickSearchSidebar/graphql';
 import { GET_USER_DECKS } from './graphql';
 
 import classes from './Search.module.scss';
+import { generateCardList } from '../../utils/generateNewDeck';
+import { UPDATE_CARD_LIST } from '../DeckManager/graphql';
 
 const Search = props => {
-  const [deck, setDeck] = useState(props.location.state ? props.location.state.deck.id : 'default');
   const [deckList, setDeckList] = useState([]);
+  const [selectedDeckId, setDeck] = useState(props.location.state ? props.location.state.deck.id : 'default');
   const [searchResults, setSearchResults] = useState([]);
   const [searchParams, setSearchParams] = useState({
     name: ''
@@ -34,55 +36,20 @@ const Search = props => {
     }
   });
 
-  const updateCardList = (deck, updatedCard, cardCounts) => {
-    const cardList = deck.cardList;
-    let newDeck = {
-      ...deck,
-      cardList: [...deck.cardList]
-    };
+  const [UpdateCardListMutation] = useMutation(UPDATE_CARD_LIST);
 
-    const maximumCardAllowance = deck.format === 'commander' ? 1 : 4;
-    const totalCount = cardCounts.mainDeckCount + cardCounts.sideboardCount;
-
-    if (
-      cardCounts.mainDeckCount + cardCounts.sideboardCount > maximumCardAllowance ||
-      cardCounts.mainDeckCount < 0 ||
-      cardCounts.sideboardCount < 0
-    ) {
-      return;
-    }
-
-    // Find matching card, if it exists.
-    const matchedCardIndex = cardList.findIndex(({ card }) => {
-      return card.scryfall_id === updatedCard.scryfall_id;
+  const addCardToDeck = (listToUpdate, updatedCard) => {
+    const deck = deckList.find(({ id }) => {
+      return id === selectedDeckId;
     });
 
-    // Card does not exist and we want a non-zero quantity, add the card.
-    if (matchedCardIndex === -1 && totalCount !== 0) {
-      newDeck.cardList.push({
-        card: updatedCard,
-        mainDeckCount: cardCounts.mainDeckCount,
-        sideboardCount: cardCounts.sideboardCount
-      });
-    }
+    const newDeck = generateCardList(deck, listToUpdate, 'add', updatedCard);
 
-    // Card exists and we want a non-zero quantity, set the quantity.
-    if (matchedCardIndex !== -1 && totalCount !== 0) {
-      newDeck.cardList[matchedCardIndex].mainDeckCount = cardCounts.mainDeckCount;
-      newDeck.cardList[matchedCardIndex].sideboardCount = cardCounts.sideboardCount;
-    }
+    const filteredCardList = newDeck.cardList.map(({ card, mainDeckCount, sideboardCount }) => {
+      return { scryfallId: card.scryfall_id, mainDeckCount, sideboardCount };
+    });
 
-    // Card exists and we want zero. Delete the card.
-    if (matchedCardIndex !== -1 && totalCount === 0) {
-      newDeck.cardList = deck.cardList.filter(({ card }) => {
-        return card.scryfall_id !== updatedCard.scryfall_id;
-      });
-    }
-
-    // const filteredCardList = newDeck.cardList.map(({ card, mainDeckCount, sideboardCount }) => {
-    //   return { scryfallId: card.scryfall_id, mainDeckCount, sideboardCount };
-    // });
-    // UpdateCardListMutation({ variables: { deckId: currentDeckId, cardList: filteredCardList } });
+    UpdateCardListMutation({ variables: { deckId: selectedDeckId, cardList: filteredCardList } });
   };
 
   return (
@@ -104,7 +71,7 @@ const Search = props => {
       <div className={classes.SearchResultsContainer}>
         <h1>Search Results</h1>
         <p>Add Cards to: </p>
-        <select value={deck} onChange={e => setDeck(e.target.value)}>
+        <select value={selectedDeckId} onChange={e => setDeck(e.target.value)}>
           <option value='default' disabled>
             {GetUserDecksQueryResponse.loading && GetUserDecksQueryResponse.called
               ? 'Loading decks...'
@@ -124,7 +91,10 @@ const Search = props => {
             return (
               <div key={result.scryfall_id}>
                 <Card card={result} />
-                <button type='button' disabled={deck === 'default'}>
+                <button
+                  type='button'
+                  disabled={selectedDeckId === 'default'}
+                  onClick={() => addCardToDeck('mainDeck', result)}>
                   Add to Deck
                 </button>
               </div>

@@ -8,6 +8,9 @@ export const GET_USER_DECKS = gql`
         name
         format
         cardList {
+          card {
+            scryfall_id
+          }
           mainDeckCount
           sideboardCount
         }

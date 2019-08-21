@@ -167,8 +167,6 @@ export const sortCardList = (cardList, sortMode) => {
         ...cardTypeMatchMap.land
       ];
 
-      console.log(result);
-
       sortedCardList = result;
 
       break;
