@@ -21,7 +21,26 @@ const Decks = props => {
   const GetDeckListQueryResponse = useQuery(GET_DECK_LIST, {
     fetchPolicy: 'cache-and-network',
     onCompleted() {
-      setDeckList(GetDeckListQueryResponse.data.getAllDecks);
+      const deckList = GetDeckListQueryResponse.data.getAllDecks.sort((a, b) => {
+        if (a.format.toLowerCase() < b.format.toLowerCase()) {
+          return -1;
+        }
+
+        if (a.format.toLowerCase() > b.format.toLowerCase()) {
+          return 1;
+        }
+
+        if (a.name < b.name) {
+          return -1;
+        }
+
+        if (a.name > b.name) {
+          return 1;
+        }
+
+        return 0;
+      });
+      setDeckList(deckList);
     }
   });
 
@@ -53,7 +72,7 @@ const Decks = props => {
       ) : (
         filteredDeckList.length > 0 &&
         filteredDeckList.map(deck => {
-          return <DeckListItem deck={deck} key={deck.id} />;
+          return <DeckListItem deck={deck} key={deck.id} currentUserId={currentUserId} />;
         })
       )}
       <hr />

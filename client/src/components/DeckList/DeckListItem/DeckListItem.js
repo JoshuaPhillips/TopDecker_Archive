@@ -16,7 +16,8 @@ const cardLimitMap = {
 
 const DeckListItem = props => {
   const {
-    deck: { id, cardList, name, format, commander, owner }
+    deck: { id, cardList, name, format, commander, owner },
+    currentUserId
   } = props;
 
   const [DeleteDeckMutation] = useMutation(DELETE_DECK, {
@@ -52,9 +53,11 @@ const DeckListItem = props => {
             : cardLimitMap[format]}
         </p>
       </Link>
-      <button type='button' onClick={() => DeleteDeckMutation()}>
-        Delete{' '}
-      </button>
+      {owner.id === currentUserId && (
+        <button type='button' onClick={() => DeleteDeckMutation()}>
+          Delete{' '}
+        </button>
+      )}
     </div>
   );
 };

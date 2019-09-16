@@ -26,7 +26,7 @@ const Account = props => {
       if (GetAccountDetailsQueryResponse.loading) {
         return;
       } else {
-        const { firstName, lastName, username, email, avatarUrl } = GetAccountDetailsQueryResponse.data.getUserById;
+        const { firstName, lastName, username, email, avatarUrl } = GetAccountDetailsQueryResponse.data.getCurrentUser;
         setAccountDetails({
           firstName,
           lastName,

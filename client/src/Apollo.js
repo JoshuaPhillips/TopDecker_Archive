@@ -24,6 +24,7 @@ const authLink = setContext((_, { headers, ...context }) => {
     ...context,
     headers: {
       ...headers,
+      'Access-Control-Allow-Origin': '*',
       currentuserid: currentUserId ? currentUserId : '',
       authorization: token ? `Bearer ${token}` : ''
     }

@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 export const GET_ACCOUNT_DETAILS = gql`
   query GetAccountDetails {
-    getUserById {
+    getCurrentUser {
       firstName
       lastName
       username
