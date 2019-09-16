@@ -11,6 +11,12 @@ export const SEARCH_CARDS = gql`
         colors
         type_line
         rarity
+        color_identity
+        legalities {
+          standard
+          modern
+          commander
+        }
         image_uris {
           large
         }

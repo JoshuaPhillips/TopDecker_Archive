@@ -12,7 +12,7 @@ import { UPDATE_CARD_LIST } from '../DeckManager/graphql';
 
 const Search = props => {
   const [deckList, setDeckList] = useState([]);
-  const [selectedDeckId, setDeck] = useState(props.location.state ? props.location.state.deck.id : 'default');
+  const [selectedDeckId, setSelectedDeckId] = useState(props.location.state ? props.location.state.deck.id : 'default');
   const [searchResults, setSearchResults] = useState([]);
   const [searchParams, setSearchParams] = useState({
     name: ''
@@ -49,7 +49,51 @@ const Search = props => {
       return { scryfallId: card.scryfall_id, mainDeckCount, sideboardCount };
     });
 
-    UpdateCardListMutation({ variables: { deckId: selectedDeckId, cardList: filteredCardList } });
+    UpdateCardListMutation({
+      variables: { deckId: selectedDeckId, cardList: filteredCardList },
+      refetchQueries: [{ query: GET_USER_DECKS }]
+    });
+  };
+
+  const validateCardLegality = card => {
+    const deck = deckList.find(({ id }) => {
+      return id === selectedDeckId;
+    });
+    const { format, cardList } = deck;
+    const { legalities } = card;
+
+    const deckCard = cardList.find(cardInDeck => {
+      return cardInDeck.card.scryfall_id === card.scryfall_id;
+    });
+
+    if (deckCard === undefined) {
+      return true;
+    }
+
+    if (format === 'commander') {
+      if (legalities['commander'] !== 'legal') {
+        return false;
+      }
+
+      if (deckCard !== undefined) {
+        return false;
+      }
+
+      const combinedColorIdentity = [...deck.commander.color_identity, ...card.color_identity];
+      const uniques = [...new Set(combinedColorIdentity)];
+
+      if (uniques.length > deck.commander.color_identity.length) {
+        // card is adding new colors to the list, therefore doesn't match the commander's colors
+        return false;
+      }
+
+      return true;
+    } else {
+      if (deckCard.mainDeckCount + deckCard.sideboardCount === 4) {
+        return false;
+      }
+      return legalities[format] === 'legal';
+    }
   };
 
   return (
@@ -71,7 +115,7 @@ const Search = props => {
       <div className={classes.SearchResultsContainer}>
         <h1>Search Results</h1>
         <p>Add Cards to: </p>
-        <select value={selectedDeckId} onChange={e => setDeck(e.target.value)}>
+        <select value={selectedDeckId} onChange={e => setSelectedDeckId(e.target.value)}>
           <option value='default' disabled>
             {GetUserDecksQueryResponse.loading && GetUserDecksQueryResponse.called
               ? 'Loading decks...'
@@ -93,9 +137,15 @@ const Search = props => {
                 <Card card={result} />
                 <button
                   type='button'
-                  disabled={selectedDeckId === 'default'}
+                  disabled={selectedDeckId === 'default' || !validateCardLegality(result)}
                   onClick={() => addCardToDeck('mainDeck', result)}>
-                  Add to Deck
+                  Add to Main Deck
+                </button>
+                <button
+                  type='button'
+                  disabled={selectedDeckId === 'default' || !validateCardLegality(result)}
+                  onClick={() => addCardToDeck('sideboard', result)}>
+                  Add to Sideboard
                 </button>
               </div>
             );
