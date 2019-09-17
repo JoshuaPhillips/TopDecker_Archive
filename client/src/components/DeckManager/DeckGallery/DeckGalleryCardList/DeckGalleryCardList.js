@@ -7,8 +7,9 @@ import classes from './DeckGalleryCardList.module.scss';
 
 const DeckGalleryCardList = props => {
   const {
-    deck: { cardList, format },
-    deleteMode
+    deck: { cardList, format, commander },
+    filters,
+    updateCardListHandler
   } = props;
 
   const mainDeckList = cardList.filter(card => {
@@ -18,6 +19,23 @@ const DeckGalleryCardList = props => {
   const sideboardList = cardList.filter(card => {
     return card.sideboardCount !== 0;
   });
+
+  const filterCardList = cardList =>
+    cardList.filter(({ card }) => {
+      let selected = false;
+      const typeLineWordArray = card.type_line.split(' ');
+
+      for (var i = 0; i < typeLineWordArray.length; i++) {
+        if (filters[typeLineWordArray[i].toLowerCase()]) {
+          selected = true;
+        }
+      }
+
+      return selected;
+    });
+
+  const filteredMainDeckList = filterCardList(mainDeckList);
+  const filteredSideboardList = filterCardList(sideboardList);
 
   const maxMainDeckCards = format === 'commander' ? 99 : 60;
 
@@ -36,15 +54,15 @@ const DeckGalleryCardList = props => {
     <div className={classes.DeckGalleryCardList}>
       <h1>Main Deck</h1>
       <div className={classes.GalleryCardListContainer}>
-        {mainDeckList.length === 0 && format !== 'commander' && <h1>No Cards Found</h1>}
+        {filteredMainDeckList.length === 0 && format !== 'commander' && <h1>No Cards Found</h1>}
 
         {format === 'commander' && (
           <div className={classes.DeckGalleryCommanderContainer}>
-            <Card card={props.deck.commander} />
+            <Card card={commander} />
           </div>
         )}
         <FlipMove typeName={null} staggerDelayBy={20} staggerDurationBy={20}>
-          {mainDeckList.map(({ card, mainDeckCount, sideboardCount }) => {
+          {filteredMainDeckList.map(({ card, mainDeckCount, sideboardCount }) => {
             return (
               <div key={card.scryfall_id}>
                 <Card card={card} />
@@ -53,7 +71,7 @@ const DeckGalleryCardList = props => {
                     <button
                       type='button'
                       disabled={mainDeckCount === 0}
-                      onClick={() => props.updateCardListHandler(props.deck, 'mainDeck', 'remove', card)}
+                      onClick={() => updateCardListHandler(props.deck, 'mainDeck', 'remove', card)}
                       style={{ flexGrow: '1', flexBasis: '0' }}>
                       -
                     </button>
@@ -61,7 +79,7 @@ const DeckGalleryCardList = props => {
                     <button
                       type='button'
                       disabled={mainDeckCount + sideboardCount === 4 || mainDeckTotal === maxMainDeckCards}
-                      onClick={() => props.updateCardListHandler(props.deck, 'mainDeck', 'add', card)}
+                      onClick={() => updateCardListHandler(props.deck, 'mainDeck', 'add', card)}
                       style={{ flexGrow: '1', flexBasis: '0' }}>
                       +
                     </button>
@@ -71,19 +89,16 @@ const DeckGalleryCardList = props => {
                 {format !== 'commander' && (
                   <button
                     type='button'
-                    onClick={() => props.updateCardListHandler(props.deck, 'sideboard', 'transferToSideboard', card)}>
+                    onClick={() => updateCardListHandler(props.deck, 'sideboard', 'transferToSideboard', card)}>
                     Transfer to Sideboard
                   </button>
                 )}
 
-                {deleteMode ||
-                  (format === 'commander' && (
-                    <button
-                      type='button'
-                      onClick={() => props.updateCardListHandler(props.deck, 'mainDeck', 'delete', card)}>
-                      Delete
-                    </button>
-                  ))}
+                {format === 'commander' && (
+                  <button type='button' onClick={() => updateCardListHandler(props.deck, 'mainDeck', 'delete', card)}>
+                    Delete
+                  </button>
+                )}
               </div>
             );
           })}
@@ -94,11 +109,11 @@ const DeckGalleryCardList = props => {
           <hr />
           <h1>Sideboard</h1>
           <div className={classes.GalleryCardListContainer}>
-            {sideboardList.length === 0 ? (
+            {filteredSideboardList.length === 0 ? (
               <h1>No Cards Found</h1>
             ) : (
               <FlipMove typeName={null} staggerDelayBy={20} staggerDurationBy={20}>
-                {sideboardList.map(({ card, mainDeckCount, sideboardCount }) => {
+                {filteredSideboardList.map(({ card, mainDeckCount, sideboardCount }) => {
                   return (
                     <div key={card.scryfall_id}>
                       <Card card={card} />
@@ -107,7 +122,7 @@ const DeckGalleryCardList = props => {
                           <button
                             type='button'
                             disabled={sideboardCount === 0}
-                            onClick={() => props.updateCardListHandler(props.deck, 'sideboard', 'remove', card)}
+                            onClick={() => updateCardListHandler(props.deck, 'sideboard', 'remove', card)}
                             style={{ flexGrow: '1', flexBasis: '0' }}>
                             -
                           </button>
@@ -115,7 +130,7 @@ const DeckGalleryCardList = props => {
                           <button
                             type='button'
                             disabled={mainDeckCount + sideboardCount === 4 || sideboardTotal === 15}
-                            onClick={() => props.updateCardListHandler(props.deck, 'sideboard', 'add', card)}
+                            onClick={() => updateCardListHandler(props.deck, 'sideboard', 'add', card)}
                             style={{ flexGrow: '1', flexBasis: '0' }}>
                             +
                           </button>
@@ -123,17 +138,17 @@ const DeckGalleryCardList = props => {
                       )}
                       <button
                         type='button'
-                        onClick={() => props.updateCardListHandler(props.deck, 'mainDeck', 'transferToMainDeck', card)}>
+                        onClick={() => updateCardListHandler(props.deck, 'mainDeck', 'transferToMainDeck', card)}>
                         Transfer to Main Deck
                       </button>
 
-                      {deleteMode && (
+                      {
                         <button
                           type='button'
-                          onClick={() => props.updateCardListHandler(card, { mainDeckCount: 0, sideboardCount: 0 })}>
+                          onClick={() => updateCardListHandler(card, { mainDeckCount: 0, sideboardCount: 0 })}>
                           Delete
                         </button>
-                      )}
+                      }
                     </div>
                   );
                 })}

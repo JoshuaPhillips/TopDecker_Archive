@@ -23,6 +23,7 @@ const Header = props => {
               <Link to='/decks'>Decks</Link>
               <Link to='/search'>Search</Link>
               <Link to='/sandbox'>Sandbox</Link>
+              <Link to='/library'>Library</Link>
 
               <button type='button' onClick={() => LogoutMutation()}>
                 Logout

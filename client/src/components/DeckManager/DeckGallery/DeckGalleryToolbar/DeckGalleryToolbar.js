@@ -10,12 +10,73 @@ import classes from './DeckGalleryToolbar.module.scss';
 const DeckGalleryToolbar = props => {
   const {
     sortMode,
-    deck: { name, format, commander }
+    deck: { name, format, commander },
+    filters = {
+      creatures: true,
+      planeswalkers: true,
+      artifacts: true,
+      enchantments: true,
+      sorceries: true,
+      instants: true,
+      lands: true
+    },
+    changeSortModeHandler,
+    toggleFilterHandler
   } = props;
 
   return (
     <div className={classes.DeckGalleryToolbar}>
-      <DeckViewModeMenu />
+      <div>
+        <p>Filters:</p>
+        <form>
+          <label>
+            CRE
+            <input
+              type='checkbox'
+              defaultChecked={filters.creatures}
+              onChange={() => toggleFilterHandler('creature')}></input>
+          </label>
+          <label>
+            PLA
+            <input
+              type='checkbox'
+              defaultChecked={filters.planeswalkers}
+              onChange={() => toggleFilterHandler('planeswalker')}></input>
+          </label>
+          <label>
+            ART
+            <input
+              type='checkbox'
+              defaultChecked={filters.artifacts}
+              onChange={() => toggleFilterHandler('artifact')}></input>
+          </label>
+          <label>
+            ENC
+            <input
+              type='checkbox'
+              defaultChecked={filters.enchantments}
+              onChange={() => toggleFilterHandler('enchantment')}></input>
+          </label>
+          <label>
+            SOR
+            <input
+              type='checkbox'
+              defaultChecked={filters.sorceries}
+              onChange={() => toggleFilterHandler('sorcery')}></input>
+          </label>
+          <label>
+            INS
+            <input
+              type='checkbox'
+              defaultChecked={filters.instants}
+              onChange={() => toggleFilterHandler('instant')}></input>
+          </label>
+          <label>
+            LAN
+            <input type='checkbox' defaultChecked={filters.lands} onChange={() => toggleFilterHandler('land')}></input>
+          </label>
+        </form>
+      </div>
       <div>
         <h1>{name}</h1>
 
@@ -33,49 +94,52 @@ const DeckGalleryToolbar = props => {
         </Link>
         <button type='button'>Delete Deck</button>
       </div>
-
       <div>
-        <p>Sort by:</p>
-        <button
-          type='button'
-          disabled={sortMode === 'alphabetical'}
-          onClick={() => {
-            props.changeSortModeHandler('alphabetical');
-          }}>
-          A - Z
-        </button>
-        <button
-          type='button'
-          disabled={sortMode === 'rarity'}
-          onClick={() => {
-            props.changeSortModeHandler('rarity');
-          }}>
-          Rarity
-        </button>
-        <button
-          type='button'
-          disabled={sortMode === 'color'}
-          onClick={() => {
-            props.changeSortModeHandler('color');
-          }}>
-          Color
-        </button>
-        <button
-          type='button'
-          disabled={sortMode === 'cmc'}
-          onClick={() => {
-            props.changeSortModeHandler('cmc');
-          }}>
-          CMC
-        </button>
-        <button
-          type='button'
-          disabled={sortMode === 'type'}
-          onClick={() => {
-            props.changeSortModeHandler('type');
-          }}>
-          Type
-        </button>
+        <DeckViewModeMenu />
+
+        <div>
+          <p>Sort by:</p>
+          <button
+            type='button'
+            disabled={sortMode === 'alphabetical'}
+            onClick={() => {
+              changeSortModeHandler('alphabetical');
+            }}>
+            A - Z
+          </button>
+          <button
+            type='button'
+            disabled={sortMode === 'rarity'}
+            onClick={() => {
+              changeSortModeHandler('rarity');
+            }}>
+            Rarity
+          </button>
+          <button
+            type='button'
+            disabled={sortMode === 'color'}
+            onClick={() => {
+              changeSortModeHandler('color');
+            }}>
+            Color
+          </button>
+          <button
+            type='button'
+            disabled={sortMode === 'cmc'}
+            onClick={() => {
+              changeSortModeHandler('cmc');
+            }}>
+            CMC
+          </button>
+          <button
+            type='button'
+            disabled={sortMode === 'type'}
+            onClick={() => {
+              changeSortModeHandler('type');
+            }}>
+            Type
+          </button>
+        </div>
       </div>
     </div>
   );

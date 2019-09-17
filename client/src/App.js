@@ -11,6 +11,9 @@ import Search from './components/Search/Search';
 import DeckList from './components/DeckList/DeckList';
 import DeckManager from './components/DeckManager/DeckManager';
 import Sandbox from './components/Sandbox/Sandbox';
+import ComponentLibrary from './components/ComponentLibrary/ComponentLibrary';
+
+import './App.css';
 
 const App = () => {
   const GetAuthDataQueryResponse = useQuery(GET_AUTH_DATA, { fetchPolicy: 'cache-only' });
@@ -29,6 +32,7 @@ const App = () => {
         <Route path='/decks/:deckId' component={DeckManager} />
         <Route path='/search/' component={Search} />
         <Route path='/sandbox' component={Sandbox} />
+        <Route path='/library' component={ComponentLibrary} />
         <Redirect to='/decks' />
       </Switch>
     </div>

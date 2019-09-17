@@ -14,6 +14,15 @@ import classes from './DeckManager.module.scss';
 const DeckManager = props => {
   const { deckId: currentDeckId } = props.match.params;
   const [deck, setDeck] = useState(null);
+  const [filters, setFilters] = useState({
+    creature: true,
+    planeswalker: true,
+    artifact: true,
+    enchantment: true,
+    sorcery: true,
+    instant: true,
+    land: true
+  });
   const [sortMode, setSortMode] = useState('alphabetical');
 
   // ========== GET THE CARD DETAILS ========== //
@@ -59,6 +68,12 @@ const DeckManager = props => {
     UpdateCardListMutation({ variables: { deckId: currentDeckId, cardList: filteredCardList } });
   };
 
+  // ========== TOGGLE FILTERS ========== //
+
+  const toggleFilter = filter => {
+    setFilters({ ...filters, [filter]: !filters[filter] });
+  };
+
   // ========== RENDER ========== //
 
   if (!deck) {
@@ -71,9 +86,11 @@ const DeckManager = props => {
       {deck && (
         <DeckGallery
           deck={deck}
+          filters={filters}
           sortMode={sortMode}
           changeSortModeHandler={changeSortMode}
           updateCardListHandler={updateCardList}
+          toggleFilterHandler={toggleFilter}
         />
       )}
     </main>
