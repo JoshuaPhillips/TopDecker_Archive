@@ -60,22 +60,22 @@ const QueryType = gql`
 
   input PowerSearch {
     comparison: ComparisonOptions!
-    value: Int!
+    value: String!
   }
 
   input ToughnessSearch {
     comparison: ComparisonOptions!
-    value: Int!
+    value: String!
   }
 
   input LoyaltySearch {
     comparison: ComparisonOptions!
-    value: Int!
+    value: String!
   }
 
   input CmcSearch {
     comparison: ComparisonOptions!
-    value: Int!
+    value: String!
   }
 
   input SearchParamsInput {
@@ -88,7 +88,7 @@ const QueryType = gql`
     mana_cost: String
     cmc: CmcSearch
     formats: [FormatSearch]
-    set: String
+    set: [String]
     rarity: [Rarity]
     power: PowerSearch
     toughness: ToughnessSearch

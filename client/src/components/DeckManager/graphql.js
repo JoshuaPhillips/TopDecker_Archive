@@ -42,6 +42,9 @@ export const GET_DECK_DETAILS = gql`
         mainDeckCount
         sideboardCount
       }
+      owner {
+        id
+      }
     }
   }
 `;
@@ -49,5 +52,14 @@ export const GET_DECK_DETAILS = gql`
 export const UPDATE_CARD_LIST = gql`
   mutation UpdateCardList($deckId: ID!, $cardList: [CardSummaryInput!]!) {
     updateCardList(deckId: $deckId, cardList: $cardList)
+  }
+`;
+
+export const GET_AUTH_DATA = gql`
+  query GetAuthData {
+    AuthData @client {
+      token
+      currentUserId
+    }
   }
 `;

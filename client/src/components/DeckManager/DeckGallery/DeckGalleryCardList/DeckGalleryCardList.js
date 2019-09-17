@@ -9,6 +9,7 @@ const DeckGalleryCardList = props => {
   const {
     deck: { cardList, format, commander },
     filters,
+    currentUserOwnsDeck,
     updateCardListHandler
   } = props;
 
@@ -68,36 +69,46 @@ const DeckGalleryCardList = props => {
                 <Card card={card} />
                 {format !== 'commander' && (
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <button
-                      type='button'
-                      disabled={mainDeckCount === 0}
-                      onClick={() => updateCardListHandler(props.deck, 'mainDeck', 'remove', card)}
-                      style={{ flexGrow: '1', flexBasis: '0' }}>
-                      -
-                    </button>
+                    {currentUserOwnsDeck && (
+                      <button
+                        type='button'
+                        disabled={mainDeckCount === 0}
+                        onClick={() => updateCardListHandler(props.deck, 'mainDeck', 'remove', card)}
+                        style={{ flexGrow: '1', flexBasis: '0' }}>
+                        -
+                      </button>
+                    )}
                     <p style={{ flexGrow: '1', flexBasis: '0', textAlign: 'center' }}>{mainDeckCount}</p>
-                    <button
-                      type='button'
-                      disabled={mainDeckCount + sideboardCount === 4 || mainDeckTotal === maxMainDeckCards}
-                      onClick={() => updateCardListHandler(props.deck, 'mainDeck', 'add', card)}
-                      style={{ flexGrow: '1', flexBasis: '0' }}>
-                      +
-                    </button>
+                    {currentUserOwnsDeck && (
+                      <button
+                        type='button'
+                        disabled={mainDeckCount + sideboardCount === 4 || mainDeckTotal === maxMainDeckCards}
+                        onClick={() => updateCardListHandler(props.deck, 'mainDeck', 'add', card)}
+                        style={{ flexGrow: '1', flexBasis: '0' }}>
+                        +
+                      </button>
+                    )}
                   </div>
                 )}
 
-                {format !== 'commander' && (
-                  <button
-                    type='button'
-                    onClick={() => updateCardListHandler(props.deck, 'sideboard', 'transferToSideboard', card)}>
-                    Transfer to Sideboard
-                  </button>
-                )}
+                {currentUserOwnsDeck && (
+                  <React.Fragment>
+                    {format !== 'commander' && (
+                      <button
+                        type='button'
+                        onClick={() => updateCardListHandler(props.deck, 'sideboard', 'transferToSideboard', card)}>
+                        Transfer to Sideboard
+                      </button>
+                    )}
 
-                {format === 'commander' && (
-                  <button type='button' onClick={() => updateCardListHandler(props.deck, 'mainDeck', 'delete', card)}>
-                    Delete
-                  </button>
+                    {format === 'commander' && (
+                      <button
+                        type='button'
+                        onClick={() => updateCardListHandler(props.deck, 'mainDeck', 'delete', card)}>
+                        Delete
+                      </button>
+                    )}
+                  </React.Fragment>
                 )}
               </div>
             );
@@ -119,36 +130,43 @@ const DeckGalleryCardList = props => {
                       <Card card={card} />
                       {format !== 'commander' && (
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                          <button
-                            type='button'
-                            disabled={sideboardCount === 0}
-                            onClick={() => updateCardListHandler(props.deck, 'sideboard', 'remove', card)}
-                            style={{ flexGrow: '1', flexBasis: '0' }}>
-                            -
-                          </button>
+                          {currentUserOwnsDeck && (
+                            <button
+                              type='button'
+                              disabled={sideboardCount === 0}
+                              onClick={() => updateCardListHandler(props.deck, 'sideboard', 'remove', card)}
+                              style={{ flexGrow: '1', flexBasis: '0' }}>
+                              -
+                            </button>
+                          )}
                           <p style={{ flexGrow: '1', flexBasis: '0', textAlign: 'center' }}>{sideboardCount}</p>
-                          <button
-                            type='button'
-                            disabled={mainDeckCount + sideboardCount === 4 || sideboardTotal === 15}
-                            onClick={() => updateCardListHandler(props.deck, 'sideboard', 'add', card)}
-                            style={{ flexGrow: '1', flexBasis: '0' }}>
-                            +
-                          </button>
+                          {currentUserOwnsDeck && (
+                            <button
+                              type='button'
+                              disabled={mainDeckCount + sideboardCount === 4 || sideboardTotal === 15}
+                              onClick={() => updateCardListHandler(props.deck, 'sideboard', 'add', card)}
+                              style={{ flexGrow: '1', flexBasis: '0' }}>
+                              +
+                            </button>
+                          )}
                         </div>
                       )}
-                      <button
-                        type='button'
-                        onClick={() => updateCardListHandler(props.deck, 'mainDeck', 'transferToMainDeck', card)}>
-                        Transfer to Main Deck
-                      </button>
 
-                      {
-                        <button
-                          type='button'
-                          onClick={() => updateCardListHandler(card, { mainDeckCount: 0, sideboardCount: 0 })}>
-                          Delete
-                        </button>
-                      }
+                      {currentUserOwnsDeck && (
+                        <React.Fragment>
+                          <button
+                            type='button'
+                            onClick={() => updateCardListHandler(props.deck, 'mainDeck', 'transferToMainDeck', card)}>
+                            Transfer to Main Deck
+                          </button>
+
+                          <button
+                            type='button'
+                            onClick={() => updateCardListHandler(card, { mainDeckCount: 0, sideboardCount: 0 })}>
+                            Delete
+                          </button>
+                        </React.Fragment>
+                      )}
                     </div>
                   );
                 })}

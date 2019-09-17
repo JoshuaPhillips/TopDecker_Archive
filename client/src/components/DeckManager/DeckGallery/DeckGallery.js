@@ -13,10 +13,16 @@ const DeckGallery = props => {
       <DeckGalleryToolbar
         deck={deck}
         sortMode={sortMode}
+        currentUserOwnsDeck={props.currentUserOwnsDeck}
         changeSortModeHandler={props.changeSortModeHandler}
         toggleFilterHandler={props.toggleFilterHandler}
       />
-      <DeckGalleryCardList deck={deck} filters={filters} updateCardListHandler={props.updateCardListHandler} />
+      <DeckGalleryCardList
+        deck={deck}
+        filters={filters}
+        currentUserOwnsDeck={props.currentUserOwnsDeck}
+        updateCardListHandler={props.updateCardListHandler}
+      />
     </div>
   );
 };

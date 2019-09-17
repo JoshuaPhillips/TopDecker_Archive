@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { GET_DECK_DETAILS, UPDATE_CARD_LIST } from './graphql';
+import { GET_AUTH_DATA, GET_DECK_DETAILS, UPDATE_CARD_LIST } from './graphql';
 
 import AddCardSidebar from './QuickSearchSidebar/QuickSearchSidebar';
 import DeckGallery from './DeckGallery/DeckGallery';
@@ -24,6 +24,11 @@ const DeckManager = props => {
     land: true
   });
   const [sortMode, setSortMode] = useState('alphabetical');
+
+  const GetAuthDataQueryResponse = useQuery(GET_AUTH_DATA, { fetchPolicy: 'cache-only' });
+  const { currentUserId } = GetAuthDataQueryResponse.data.AuthData;
+  const deckOwnerId = deck ? deck.owner.id : null;
+  const currentUserOwnsDeck = currentUserId === deckOwnerId;
 
   // ========== GET THE CARD DETAILS ========== //
 
@@ -82,9 +87,10 @@ const DeckManager = props => {
 
   return (
     <main className={classes.DeckManager}>
-      {deck && <AddCardSidebar deck={deck} updateCardListHandler={updateCardList} />}
+      {deck && currentUserOwnsDeck && <AddCardSidebar deck={deck} updateCardListHandler={updateCardList} />}
       {deck && (
         <DeckGallery
+          currentUserOwnsDeck={currentUserOwnsDeck}
           deck={deck}
           filters={filters}
           sortMode={sortMode}

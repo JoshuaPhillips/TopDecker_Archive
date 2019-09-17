@@ -7,11 +7,18 @@ const comparisonMap = {
 };
 
 const generateNameString = nameParam => {
+  if (nameParam === '') {
+    return '';
+  }
   return `${nameParam.toLowerCase()} `;
 };
 
 const generateOracleTextString = oracleTextParam => {
   const { type, text } = oracleTextParam;
+  if (text === '') {
+    return '';
+  }
+
   let oracleTextString = '(';
   let searchTerms = text
     .trim()
@@ -44,6 +51,10 @@ const generateOracleTextString = oracleTextParam => {
 };
 
 const generateTypeLineString = typeLineParam => {
+  if (typeLineParam.text === '') {
+    return '';
+  }
+
   let typeLineString = '(';
   let searchWords = typeLineParam.text
     .trim()
@@ -71,6 +82,10 @@ const generateTypeLineString = typeLineParam => {
 };
 
 const generateColorsString = colorsParam => {
+  if (colorsParam.colors.length === 0) {
+    return '';
+  }
+
   let colorString = '(';
 
   switch (colorsParam.type) {
@@ -127,10 +142,16 @@ const generateManaCostString = manaCostParam => {
 };
 
 const generateCmcString = cmcParam => {
-  return `(cmc${comparisonMap[cmcParam.comparison]}${cmcParam})`;
+  if (cmcParam.value === '') {
+    return '';
+  }
+  return `(cmc${comparisonMap[cmcParam.comparison]}${cmcParam.value})`;
 };
 
 const generateFormatsString = formatsParam => {
+  if (formatsParam.length === 0) {
+    return '';
+  }
   let formatsString = '(';
 
   formatsParam.map(item => {
@@ -143,10 +164,27 @@ const generateFormatsString = formatsParam => {
 };
 
 const generateSetString = setParam => {
-  return `(set:${setParam})`;
+  if (setParam.length === 0) {
+    return '';
+  }
+
+  let setString = '(';
+
+  setString += setParam
+    .map(set => {
+      return `set:${set}`;
+    })
+    .join(' OR ');
+
+  setString += ')';
+
+  return setString;
 };
 
 const generateRarityString = rarityParam => {
+  if (rarityParam.length === 0) {
+    return '';
+  }
   let rarityString = '(';
 
   rarityTerms = rarityParam.map(rarity => {
@@ -160,18 +198,31 @@ const generateRarityString = rarityParam => {
 };
 
 const generatePowerString = powerParam => {
+  if (powerParam.value === '') {
+    return '';
+  }
   return `(pow${comparisonMap[powerParam.comparison]}${powerParam.value})`;
 };
 
 const generateToughnessString = toughnessParam => {
+  if (toughnessParam.value === '') {
+    return '';
+  }
   return `(tou${comparisonMap[toughnessParam.comparison]}${toughnessParam.value})`;
 };
 
 const generateLoyaltyString = loyaltyParam => {
+  if (loyaltyParam.value === '') {
+    return '';
+  }
   return `(loy${comparisonMap[loyaltyParam.comparison]}${loyaltyParam.value})`;
 };
 
 const generateIsString = isParam => {
+  if (isParam.length === 0) {
+    return '';
+  }
+
   let isString = '(';
 
   isTerms = isParam.map(term => {
