@@ -57,7 +57,8 @@ const Search = props => {
       uncommon: false,
       rare: false,
       mythic: false
-    }
+    },
+    is: []
   });
 
   const client = useApolloClient();
@@ -75,6 +76,10 @@ const Search = props => {
       return rawSearchParams.rarity[rarity];
     });
 
+    formattedSearchParams.is = Object.keys(rawSearchParams.is).filter(is => {
+      return rawSearchParams.is[is];
+    });
+
     formattedSearchParams.set === ''
       ? delete formattedSearchParams.set
       : (formattedSearchParams.set = rawSearchParams.set.split(','));
@@ -89,11 +94,13 @@ const Search = props => {
 
     formattedSearchParams.colors.colors.length === 0 && delete formattedSearchParams.colors;
     formattedSearchParams.rarity.length === 0 && delete formattedSearchParams.rarity;
+    formattedSearchParams.is.length === 0 && delete formattedSearchParams.is;
 
     return formattedSearchParams;
   };
 
-  const searchCards = async () => {
+  const searchCards = async submitEvent => {
+    submitEvent.preventDefault();
     const { data } = await client.query({
       query: SEARCH_CARDS,
       variables: {
@@ -173,7 +180,7 @@ const Search = props => {
     <main className={classes.Search}>
       <div className={classes.SearchFormContainer}>
         <h1>Search</h1>
-        <form>
+        <form onSubmit={searchCards}>
           <input
             type='text'
             placeholder='Card Name'
@@ -515,9 +522,21 @@ const Search = props => {
             onChange={e => setRawSearchParams({ ...rawSearchParams, mana_cost: e.target.value })}
           />
 
-          <button type='button' onClick={() => searchCards()}>
-            Search
-          </button>
+          <label>
+            {' '}
+            <input
+              type='checkbox'
+              onChange={e =>
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  is: { ...rawSearchParams.is, funny: !rawSearchParams.is.funny }
+                })
+              }
+            />
+            Include Un-Sets?
+          </label>
+
+          <button type='submit'>Search</button>
 
           <hr />
           <button type='button' onClick={() => console.log(rawSearchParams)}>

@@ -62,7 +62,7 @@ const DeckGalleryCardList = props => {
             <Card card={commander} />
           </div>
         )}
-        <FlipMove typeName={null} staggerDelayBy={20} staggerDurationBy={20}>
+        <FlipMove typeName={null}>
           {filteredMainDeckList.map(({ card, mainDeckCount, sideboardCount }) => {
             return (
               <div key={card.scryfall_id}>

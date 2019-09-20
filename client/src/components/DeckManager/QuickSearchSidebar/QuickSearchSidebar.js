@@ -17,7 +17,8 @@ const AddCardSidebar = props => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [nameSearch, setNameSearch] = useState('');
 
-  const searchCards = async () => {
+  const searchCards = async submitEvent => {
+    submitEvent.preventDefault();
     const { data } = await client.query({
       query: SEARCH_CARDS,
       skip: nameSearch.length < 3,
@@ -80,7 +81,7 @@ const AddCardSidebar = props => {
         )}
       </div>
 
-      <form>
+      <form onSubmit={searchCards}>
         <input
           type='text'
           placeholder='Card Name...'
@@ -88,7 +89,7 @@ const AddCardSidebar = props => {
           onChange={e => setNameSearch(e.target.value)}
         />
 
-        <button type='button' disabled={nameSearch.length < 3} onClick={() => searchCards()}>
+        <button type='submit' disabled={nameSearch.length < 3}>
           Search
         </button>
       </form>
