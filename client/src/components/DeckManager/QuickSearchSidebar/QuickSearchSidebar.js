@@ -3,18 +3,17 @@ import React, { useState } from 'react';
 import { useApolloClient } from '@apollo/react-hooks';
 import { SEARCH_CARDS } from './graphql';
 
-import Card from '../../Card/Card';
+import QuickSearchResult from './QuickSearchResult/QuickSearchResult';
 
 const AddCardSidebar = props => {
   const {
     deck: { cardList, commander, format }
   } = props;
-  const maxCardAllowance = format === 'commander' ? 1 : 4;
 
   const client = useApolloClient();
 
   const [searchResults, setSearchResults] = useState([]);
-  const [selectedCard, setSelectedCard] = useState(null);
+  const [selectedList, setSelectedList] = useState('mainDeck');
   const [nameSearch, setNameSearch] = useState('');
 
   const searchCards = async submitEvent => {
@@ -32,6 +31,37 @@ const AddCardSidebar = props => {
     setSearchResults(data.searchCards.cards);
   };
 
+  const isCardSelectable = resultCard => {
+    const maxCardAllowance = format === 'commander' ? 1 : 4;
+
+    const matchedCard = cardList.findIndex(({ card }) => {
+      return card.scryfall_id === resultCard.scryfall_id;
+    });
+
+    if (format === 'commander' && resultCard.scryfall_id === commander.scryfall_id) {
+      return false;
+    }
+
+    if (format === 'commander' && selectedList === 'sideboard') {
+      return false;
+    }
+
+    if (matchedCard === -1) {
+      return true;
+    }
+
+    const { mainDeckCount, sideboardCount } = cardList[matchedCard];
+    if (mainDeckCount + sideboardCount >= maxCardAllowance) {
+      return false;
+    }
+
+    return true;
+  };
+
+  const addCardHandler = card => {
+    props.updateCardListHandler(props.deck, selectedList, 'add', card);
+  };
+
   const defaultParams = {
     formats: [
       {
@@ -45,30 +75,31 @@ const AddCardSidebar = props => {
     defaultParams.commander = commander.color_identity;
   }
 
-  let matchedCardCounts = {
-    mainDeckCount: 0,
-    sideboardCount: 0
-  };
-
-  if (selectedCard) {
-    const matchedCard = cardList.find(({ card }) => {
-      return card.scryfall_id === selectedCard.scryfall_id;
-    });
-
-    if (matchedCard) {
-      matchedCardCounts.mainDeckCount = matchedCard.mainDeckCount;
-      matchedCardCounts.sideboardCount = matchedCard.sideboardCount;
-    }
-  }
-
   return (
     <div style={{ width: '15%', overflowX: 'scroll' }}>
       <h1>Quick Search</h1>
+      {format !== 'commander' && (
+        <React.Fragment>
+          <button type='button' disabled={selectedList === 'mainDeck'} onClick={() => setSelectedList('mainDeck')}>
+            Main Deck
+          </button>
+          <button type='button' disabled={selectedList === 'sideboard'} onClick={() => setSelectedList('sideboard')}>
+            Sideboard
+          </button>
+        </React.Fragment>
+      )}
       <div>
         {searchResults.length !== 0 && (
           <React.Fragment>
             {searchResults.map(result => {
-              return <Card key={result.scryfall_id} card={result} onClick={() => setSelectedCard(result)} />;
+              return (
+                <QuickSearchResult
+                  key={result.scryfall_id}
+                  card={result}
+                  isSelectable={isCardSelectable(result)}
+                  addCardHandler={addCardHandler}
+                />
+              );
             })}
             <button
               type='button'
@@ -80,7 +111,6 @@ const AddCardSidebar = props => {
           </React.Fragment>
         )}
       </div>
-
       <form onSubmit={searchCards}>
         <input
           type='text'
@@ -93,7 +123,7 @@ const AddCardSidebar = props => {
           Search
         </button>
       </form>
-      <button
+      {/* <button
         type='button'
         disabled={
           !selectedCard || matchedCardCounts.mainDeckCount + matchedCardCounts.sideboardCount === maxCardAllowance
@@ -115,7 +145,7 @@ const AddCardSidebar = props => {
           }}>
           Add Card to Sideboard
         </button>
-      )}
+      )} */}
     </div>
   );
 };

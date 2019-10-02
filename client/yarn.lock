@@ -8668,6 +8668,11 @@ react-select@^3.0.4:
     react-input-autosize "^2.2.1"
     react-transition-group "^2.2.1"
 
+react-slide-toggle@^0.2.6:
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/react-slide-toggle/-/react-slide-toggle-0.2.6.tgz#6f3d757e60038b1cbf172edc6b0c990b045aaacd"
+  integrity sha512-5+AiFWma9T74xwpTrreINogPW8Npw+6VgH0VRARwObl8nK3ipMoxPSi/dsZXokKe9Lli74M/Bx/I32F7Sm/YcQ==
+
 react-swipeable@^5.2.0:
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/react-swipeable/-/react-swipeable-5.4.0.tgz#3c2421296a993b8fc6cb05051b9bf025cb6af9e4"

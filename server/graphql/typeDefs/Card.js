@@ -34,6 +34,7 @@ const CardType = gql`
   type CardFace {
     name: String!
     colors: [String]
+    mana_cost: String
     image_uris: ImageUris
     loyalty: String
     oracle_text: String!

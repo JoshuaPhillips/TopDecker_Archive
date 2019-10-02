@@ -3,7 +3,7 @@ import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
-import Card from '../Card/Card';
+import QuickSearchResult from '../DeckManager/QuickSearchSidebar/QuickSearchResult/QuickSearchResult';
 
 const GET_CARD_DETAILS = gql`
   query GetCardDetails {
@@ -11,8 +11,10 @@ const GET_CARD_DETAILS = gql`
       name
       scryfall_id
       layout
+      mana_cost
       card_faces {
         name
+        mana_cost
         image_uris {
           large
         }
@@ -32,11 +34,7 @@ const Sandbox = props => {
   }
   const card = GetCardDetailsQueryResponse.data.getCardByScryfallId;
 
-  return (
-    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-      <Card card={card} withTransformButton withQuantityIndicator />
-    </div>
-  );
+  return <QuickSearchResult card={card} />;
 };
 
 export default Sandbox;
