@@ -4,11 +4,24 @@ import DeckInspectorToolbar from './DeckInspectorToolbar/DeckInspectorToolbar';
 import GalleryModeContainer from './GalleryModeContainer/GalleryModeContainer';
 import ListModeContainer from './ListModeContainer/ListModeContainer';
 
+import filterCardList from '../../../utils/filterCardList';
+
 import classes from './DeckInspector.module.scss';
 
 const DeckInspector = props => {
   const { deck, sortMode, filters } = props;
-  const [viewMode, setViewMode] = useState('gallery');
+  const [viewMode, setViewMode] = useState('list');
+
+  const mainDeckList = deck.cardList.filter(card => {
+    return card.mainDeckCount !== 0;
+  });
+
+  const sideboardList = deck.cardList.filter(card => {
+    return card.sideboardCount !== 0;
+  });
+
+  const filteredMainDeckList = filterCardList(mainDeckList, filters);
+  const filteredSideboardList = filterCardList(sideboardList, filters);
 
   let cardListContainer;
 
@@ -16,8 +29,10 @@ const DeckInspector = props => {
     case 'gallery':
       cardListContainer = (
         <GalleryModeContainer
-          deck={deck}
-          filters={filters}
+          mainDeckList={filteredMainDeckList}
+          sideboardList={filteredSideboardList}
+          format={deck.format}
+          commander={deck.commander}
           currentUserOwnsDeck={props.currentUserOwnsDeck}
           updateCardListHandler={props.updateCardListHandler}
         />
@@ -27,8 +42,10 @@ const DeckInspector = props => {
     case 'list':
       cardListContainer = (
         <ListModeContainer
-          deck={deck}
-          filters={filters}
+          mainDeckList={filteredMainDeckList}
+          sideboardList={filteredSideboardList}
+          format={deck.format}
+          commander={deck.commander}
           currentUserOwnsDeck={props.currentUserOwnsDeck}
           updateCardListHandler={props.updateCardListHandler}
         />

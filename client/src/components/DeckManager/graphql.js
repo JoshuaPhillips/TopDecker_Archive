@@ -10,6 +10,9 @@ export const GET_DECK_DETAILS = gql`
         name
         scryfall_id
         color_identity
+        mana_cost
+        type_line
+        rarity
         layout
         image_uris {
           art_crop
@@ -27,6 +30,7 @@ export const GET_DECK_DETAILS = gql`
           name
           type_line
           colors
+          mana_cost
           rarity
           layout
           cmc

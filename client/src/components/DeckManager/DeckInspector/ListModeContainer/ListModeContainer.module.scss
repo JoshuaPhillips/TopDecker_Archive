@@ -1,0 +1,41 @@
+.ListModeContainer {
+  margin: 2rem;
+
+  & > div {
+    margin: 2rem 0;
+  }
+}
+
+.ListModeCardWrapper,
+.ListModeCommanderWrapper {
+  display: flex;
+  padding: 0.5rem 0;
+  border-bottom: 2px solid lightgrey;
+}
+
+.ListModeCardDetails,
+.ListModeCommanderDetails {
+  flex-basis: 0;
+  flex-grow: 8;
+  display: flex;
+  justify-content: space-between;
+
+  & > p {
+    flex-basis: 0;
+    flex-grow: 1;
+  }
+}
+
+.ListModeCardQuantityModifiers {
+  display: flex;
+  justify-content: flex-end;
+  flex-basis: 0;
+  flex-grow: 2;
+  p {
+    margin-left: 1rem;
+  }
+
+  p:first-child {
+    margin-right: 2rem;
+  }
+}

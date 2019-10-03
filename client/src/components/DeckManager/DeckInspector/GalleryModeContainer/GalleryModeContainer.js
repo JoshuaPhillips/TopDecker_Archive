@@ -3,28 +3,10 @@ import React from 'react';
 import Card from '../../../Card/Card';
 import FlipMove from 'react-flip-move';
 
-import filterCardList from '../../../../utils/filterCardList';
-
 import classes from './GalleryModeContainer.module.scss';
 
 const GalleryModeContainer = props => {
-  const {
-    deck: { cardList, format, commander },
-    filters,
-    currentUserOwnsDeck,
-    updateCardListHandler
-  } = props;
-
-  const mainDeckList = cardList.filter(card => {
-    return card.mainDeckCount !== 0;
-  });
-
-  const sideboardList = cardList.filter(card => {
-    return card.sideboardCount !== 0;
-  });
-
-  const filteredMainDeckList = filterCardList(mainDeckList, filters);
-  const filteredSideboardList = filterCardList(sideboardList, filters);
+  const { format, commander, mainDeckList, sideboardList, currentUserOwnsDeck, updateCardListHandler } = props;
 
   const maxMainDeckCards = format === 'commander' ? 99 : 60;
 
@@ -43,7 +25,7 @@ const GalleryModeContainer = props => {
     <div className={classes.GalleryModeContainer}>
       <h1>Main Deck</h1>
       <div className={classes.GalleryCardListContainer}>
-        {filteredMainDeckList.length === 0 && format !== 'commander' && <h1>No Cards Found</h1>}
+        {mainDeckList.length === 0 && format !== 'commander' && <h1>No Cards Found</h1>}
 
         {format === 'commander' && (
           <div className={classes.DeckInspectorCommanderContainer}>
@@ -51,7 +33,7 @@ const GalleryModeContainer = props => {
           </div>
         )}
         <FlipMove typeName={null}>
-          {filteredMainDeckList.map(({ card, mainDeckCount, sideboardCount }) => {
+          {mainDeckList.map(({ card, mainDeckCount, sideboardCount }) => {
             return (
               <div key={card.scryfall_id}>
                 <Card card={card} />
@@ -108,11 +90,11 @@ const GalleryModeContainer = props => {
           <hr />
           <h1>Sideboard</h1>
           <div className={classes.GalleryCardListContainer}>
-            {filteredSideboardList.length === 0 ? (
+            {sideboardList.length === 0 ? (
               <h1>No Cards Found</h1>
             ) : (
               <FlipMove typeName={null} staggerDelayBy={20} staggerDurationBy={20}>
-                {filteredSideboardList.map(({ card, mainDeckCount, sideboardCount }) => {
+                {sideboardList.map(({ card, mainDeckCount, sideboardCount }) => {
                   return (
                     <div key={card.scryfall_id}>
                       <Card card={card} />
