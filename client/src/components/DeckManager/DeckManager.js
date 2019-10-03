@@ -5,7 +5,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { GET_AUTH_DATA, GET_DECK_DETAILS, UPDATE_CARD_LIST } from './graphql';
 
 import AddCardSidebar from './QuickSearchSidebar/QuickSearchSidebar';
-import DeckGallery from './DeckGallery/DeckGallery';
+import DeckInspector from './DeckInspector/DeckInspector';
 import { sortCardList } from '../../utils/sortCardList';
 import { generateCardList } from '../../utils/generateNewDeck';
 
@@ -89,7 +89,7 @@ const DeckManager = props => {
     <main className={classes.DeckManager}>
       {deck && currentUserOwnsDeck && <AddCardSidebar deck={deck} updateCardListHandler={updateCardList} />}
       {deck && (
-        <DeckGallery
+        <DeckInspector
           currentUserOwnsDeck={currentUserOwnsDeck}
           deck={deck}
           filters={filters}

@@ -3,9 +3,11 @@ import React from 'react';
 import Card from '../../../Card/Card';
 import FlipMove from 'react-flip-move';
 
-import classes from './DeckGalleryCardList.module.scss';
+import filterCardList from '../../../../utils/filterCardList';
 
-const DeckGalleryCardList = props => {
+import classes from './GalleryModeContainer.module.scss';
+
+const GalleryModeContainer = props => {
   const {
     deck: { cardList, format, commander },
     filters,
@@ -21,22 +23,8 @@ const DeckGalleryCardList = props => {
     return card.sideboardCount !== 0;
   });
 
-  const filterCardList = cardList =>
-    cardList.filter(({ card }) => {
-      let selected = false;
-      const typeLineWordArray = card.type_line.split(' ');
-
-      for (var i = 0; i < typeLineWordArray.length; i++) {
-        if (filters[typeLineWordArray[i].toLowerCase()]) {
-          selected = true;
-        }
-      }
-
-      return selected;
-    });
-
-  const filteredMainDeckList = filterCardList(mainDeckList);
-  const filteredSideboardList = filterCardList(sideboardList);
+  const filteredMainDeckList = filterCardList(mainDeckList, filters);
+  const filteredSideboardList = filterCardList(sideboardList, filters);
 
   const maxMainDeckCards = format === 'commander' ? 99 : 60;
 
@@ -52,13 +40,13 @@ const DeckGalleryCardList = props => {
   });
 
   return (
-    <div className={classes.DeckGalleryCardList}>
+    <div className={classes.GalleryModeContainer}>
       <h1>Main Deck</h1>
       <div className={classes.GalleryCardListContainer}>
         {filteredMainDeckList.length === 0 && format !== 'commander' && <h1>No Cards Found</h1>}
 
         {format === 'commander' && (
-          <div className={classes.DeckGalleryCommanderContainer}>
+          <div className={classes.DeckInspectorCommanderContainer}>
             <Card card={commander} />
           </div>
         )}
@@ -179,4 +167,4 @@ const DeckGalleryCardList = props => {
   );
 };
 
-export default DeckGalleryCardList;
+export default GalleryModeContainer;

@@ -1,13 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import DeckViewModeMenu from './DeckViewModeMenu/DeckViewModeMenu';
-
 import { capitalise } from '../../../../utils';
 
-import classes from './DeckGalleryToolbar.module.scss';
+import classes from './DeckInspectorToolbar.module.scss';
 
-const DeckGalleryToolbar = props => {
+const DeckInspectorToolbar = props => {
   const {
     sortMode,
     deck: { name, format, commander },
@@ -21,12 +19,14 @@ const DeckGalleryToolbar = props => {
       lands: true
     },
     currentUserOwnsDeck,
+    viewMode,
     changeSortModeHandler,
+    changeViewModeHandler,
     toggleFilterHandler
   } = props;
 
   return (
-    <div className={classes.DeckGalleryToolbar}>
+    <div className={classes.DeckInspectorToolbar}>
       <div>
         <p>Filters:</p>
         <form>
@@ -100,7 +100,21 @@ const DeckGalleryToolbar = props => {
         )}
       </div>
       <div>
-        <DeckViewModeMenu />
+        <div>
+          <p>View as:</p>
+          <button type='button' disabled={viewMode === 'gallery'} onClick={() => changeViewModeHandler('gallery')}>
+            Gallery
+          </button>
+          <button type='button' disabled={viewMode === 'text'} onClick={() => changeViewModeHandler('text')}>
+            Text
+          </button>
+          <button type='button' disabled={viewMode === 'stack'} onClick={() => changeViewModeHandler('stack')}>
+            Stack
+          </button>
+          <button type='button' disabled={viewMode === 'list'} onClick={() => changeViewModeHandler('list')}>
+            List
+          </button>
+        </div>
 
         <div>
           <p>Sort by:</p>
@@ -150,4 +164,4 @@ const DeckGalleryToolbar = props => {
   );
 };
 
-export default DeckGalleryToolbar;
+export default DeckInspectorToolbar;
