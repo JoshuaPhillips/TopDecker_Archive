@@ -4,7 +4,7 @@ import FlipMove from 'react-flip-move';
 import classes from './ListModeContainer.module.scss';
 
 import { capitalise } from '../../../../utils/capitalise';
-import convertManaCost from '../../../../utils/convertManaCost';
+import convertManaCost from '../../../../utils/convertTextToSymbols';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCrown, faPlus, faMinus, faSync, faTimes } from '@fortawesome/free-solid-svg-icons';
 

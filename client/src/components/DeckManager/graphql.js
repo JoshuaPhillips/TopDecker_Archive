@@ -14,6 +14,7 @@ export const GET_DECK_DETAILS = gql`
         type_line
         rarity
         layout
+        oracle_text
         image_uris {
           art_crop
           large
@@ -34,6 +35,7 @@ export const GET_DECK_DETAILS = gql`
           rarity
           layout
           cmc
+          oracle_text
           image_uris {
             large
           }

@@ -7,10 +7,11 @@ import ListModeContainer from './ListModeContainer/ListModeContainer';
 import filterCardList from '../../../utils/filterCardList';
 
 import classes from './DeckInspector.module.scss';
+import TextModeContainer from './TextModeContainer/TextModeContainer';
 
 const DeckInspector = props => {
   const { deck, sortMode, filters } = props;
-  const [viewMode, setViewMode] = useState('list');
+  const [viewMode, setViewMode] = useState('text');
 
   const mainDeckList = deck.cardList.filter(card => {
     return card.mainDeckCount !== 0;
@@ -43,6 +44,20 @@ const DeckInspector = props => {
     case 'list':
       cardListContainer = (
         <ListModeContainer
+          deck={deck}
+          mainDeckList={filteredMainDeckList}
+          sideboardList={filteredSideboardList}
+          format={deck.format}
+          commander={deck.commander}
+          currentUserOwnsDeck={props.currentUserOwnsDeck}
+          updateCardListHandler={props.updateCardListHandler}
+        />
+      );
+      break;
+
+    case 'text':
+      cardListContainer = (
+        <TextModeContainer
           deck={deck}
           mainDeckList={filteredMainDeckList}
           sideboardList={filteredSideboardList}

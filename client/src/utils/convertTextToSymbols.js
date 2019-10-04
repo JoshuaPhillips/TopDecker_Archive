@@ -1,7 +1,7 @@
 import React from 'react';
 import { Mana } from '@saeris/react-mana';
 
-const regex = /\{[\w/]+\}/gm;
+const regex = /(\{[\w/]+\})/gm;
 
 const conversionMap = {
   '{0}': '0',
@@ -61,18 +61,35 @@ const conversionMap = {
   '{G/P}': 'gp'
 };
 
-const convertManaCost = (manaCostString, cost = true, shadow = false) => {
-  let icons = [];
-  let manaCostArray = manaCostString.match(regex);
+const convertTextToSymbol = (fullString, cost = true, shadow = false) => {
+  if (fullString === null || fullString === undefined) {
+    return null;
+  }
 
-  manaCostArray.forEach((costSymbol, index) => {
-    icons.push(
-      <Mana key={`${manaCostString}__${index}`} symbol={conversionMap[costSymbol]} cost={cost} shadow={shadow} />
+  let newLineArray = fullString.split('\n');
+
+  const result = newLineArray.map((line, index) => {
+    const test = rawString => {
+      let rawStringArray = rawString.split(regex);
+
+      let convertedStringArray = rawStringArray.map((item, index) => {
+        if (item.match(regex) === null) {
+          return item;
+        }
+
+        return <Mana key={`${item}__${index}`} symbol={conversionMap[item]} cost={cost} shadow={shadow} />;
+      });
+
+      return convertedStringArray;
+    };
+    return (
+      <p style={{ lineHeight: '150%' }} key={`${line}__line${index}`}>
+        {test(line)}
+      </p>
     );
-    return;
   });
 
-  return <span>{icons}</span>;
+  return result;
 };
 
-export default convertManaCost;
+export default convertTextToSymbol;
