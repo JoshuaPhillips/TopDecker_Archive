@@ -3,6 +3,9 @@ import React from 'react';
 import Card from '../../../Card/Card';
 import SlideToggle from 'react-slide-toggle';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye } from '@fortawesome/free-solid-svg-icons';
+
 const QuickSearchResult = props => {
   const { card, isSelectable, addCardHandler } = props;
 
@@ -18,10 +21,8 @@ const QuickSearchResult = props => {
                 {card.name}
               </p>
             </div>
-            <div>
-              <p onClick={toggle} style={{ cursor: 'pointer' }}>
-                Eye-con
-              </p>
+            <div onClick={toggle}>
+              <FontAwesomeIcon icon={faEye} />
             </div>
           </div>
           <div ref={setCollapsibleElement}>

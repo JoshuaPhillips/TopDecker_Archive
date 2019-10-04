@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-import { useApolloClient } from '@apollo/react-hooks';
-import { SEARCH_CARDS } from './graphql';
+import { useApolloClient, useQuery } from '@apollo/react-hooks';
+import { SEARCH_CARDS, GET_USER_DECKS } from './graphql';
 
 import QuickSearchResult from './QuickSearchResult/QuickSearchResult';
 
@@ -30,6 +31,8 @@ const AddCardSidebar = props => {
     });
     setSearchResults(data.searchCards.cards);
   };
+
+  const GetUserDecksQueryResponse = useQuery(GET_USER_DECKS);
 
   const isCardSelectable = resultCard => {
     const maxCardAllowance = format === 'commander' ? 1 : 4;
@@ -123,29 +126,21 @@ const AddCardSidebar = props => {
           Search
         </button>
       </form>
-      {/* <button
-        type='button'
-        disabled={
-          !selectedCard || matchedCardCounts.mainDeckCount + matchedCardCounts.sideboardCount === maxCardAllowance
-        }
-        onClick={() => {
-          props.updateCardListHandler(props.deck, 'mainDeck', 'add', selectedCard);
-        }}>
-        Add Card
-      </button>
-
-      {format !== 'commander' && (
-        <button
-          type='button'
-          disabled={
-            !selectedCard || matchedCardCounts.mainDeckCount + matchedCardCounts.sideboardCount === maxCardAllowance
-          }
-          onClick={() => {
-            props.updateCardListHandler(props.deck, 'sideboard', 'add', selectedCard);
-          }}>
-          Add Card to Sideboard
-        </button>
-      )} */}
+      <hr />
+      <div>
+        {GetUserDecksQueryResponse.loading && <h1>Loading other decks...</h1>}
+        {GetUserDecksQueryResponse.data && (
+          <div>
+            {GetUserDecksQueryResponse.data.getCurrentUser.decks.map(deck => {
+              return (
+                <Link key={deck.id} to={`/decks/${deck.id}`}>
+                  <p key={deck.id}>{deck.name}</p>
+                </Link>
+              );
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

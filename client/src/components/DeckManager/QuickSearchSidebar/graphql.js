@@ -9,6 +9,7 @@ export const SEARCH_CARDS = gql`
         name
         cmc
         colors
+        mana_cost
         type_line
         rarity
         color_identity
@@ -26,6 +27,18 @@ export const SEARCH_CARDS = gql`
             large
           }
         }
+      }
+    }
+  }
+`;
+
+export const GET_USER_DECKS = gql`
+  query GetCurrentUsersDecks {
+    getCurrentUser {
+      firstName
+      decks {
+        id
+        name
       }
     }
   }

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { Mana } from '@saeris/react-mana';
+
 import { capitalise } from '../../../../utils';
 
 import classes from './DeckInspectorToolbar.module.scss';
@@ -31,49 +33,49 @@ const DeckInspectorToolbar = props => {
         <p>Filters:</p>
         <form>
           <label>
-            CRE
+            <Mana symbol='creature' fixed />
             <input
               type='checkbox'
               defaultChecked={filters.creatures}
               onChange={() => toggleFilterHandler('creature')}></input>
           </label>
           <label>
-            PLA
+            <Mana symbol={'planeswalker'} fixed />
             <input
               type='checkbox'
               defaultChecked={filters.planeswalkers}
               onChange={() => toggleFilterHandler('planeswalker')}></input>
           </label>
           <label>
-            ART
+            <Mana symbol={'artifact'} fixed />
             <input
               type='checkbox'
               defaultChecked={filters.artifacts}
               onChange={() => toggleFilterHandler('artifact')}></input>
           </label>
           <label>
-            ENC
+            <Mana symbol={'enchantment'} fixed />
             <input
               type='checkbox'
               defaultChecked={filters.enchantments}
               onChange={() => toggleFilterHandler('enchantment')}></input>
           </label>
           <label>
-            SOR
+            <Mana symbol={'sorcery'} fixed />
             <input
               type='checkbox'
               defaultChecked={filters.sorceries}
               onChange={() => toggleFilterHandler('sorcery')}></input>
           </label>
           <label>
-            INS
+            <Mana symbol={'instant'} fixed />
             <input
               type='checkbox'
               defaultChecked={filters.instants}
               onChange={() => toggleFilterHandler('instant')}></input>
           </label>
           <label>
-            LAN
+            <Mana symbol={'land'} fixed />
             <input type='checkbox' defaultChecked={filters.lands} onChange={() => toggleFilterHandler('land')}></input>
           </label>
         </form>

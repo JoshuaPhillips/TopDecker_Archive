@@ -15,10 +15,10 @@
 
 .ListModeCardDetails,
 .ListModeCommanderDetails {
-  flex-basis: 0;
-  flex-grow: 8;
+  width: 80%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   & > p {
     flex-basis: 0;
@@ -29,13 +29,22 @@
 .ListModeCardQuantityModifiers {
   display: flex;
   justify-content: flex-end;
-  flex-basis: 0;
-  flex-grow: 2;
-  p {
+  align-items: center;
+  width: 20%;
+
+  p,
+  button {
     margin-left: 1rem;
   }
 
-  p:first-child {
+  p {
     margin-right: 2rem;
+  }
+
+  button {
+    font-size: 1rem;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
   }
 }

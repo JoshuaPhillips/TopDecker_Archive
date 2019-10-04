@@ -29,6 +29,7 @@ const DeckInspector = props => {
     case 'gallery':
       cardListContainer = (
         <GalleryModeContainer
+          deck={deck}
           mainDeckList={filteredMainDeckList}
           sideboardList={filteredSideboardList}
           format={deck.format}
@@ -42,6 +43,7 @@ const DeckInspector = props => {
     case 'list':
       cardListContainer = (
         <ListModeContainer
+          deck={deck}
           mainDeckList={filteredMainDeckList}
           sideboardList={filteredSideboardList}
           format={deck.format}

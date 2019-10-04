@@ -9,7 +9,7 @@ import AddDeckForm from './AddDeckForm/AddDeckForm';
 
 import classes from './DeckList.module.scss';
 
-const Decks = props => {
+const Decks = () => {
   const [addDeck, toggleAddDeck] = useState(false);
   const [deckFilter, setDeckFilter] = useState('myDecks');
   const [deckList, setDeckList] = useState([]);
