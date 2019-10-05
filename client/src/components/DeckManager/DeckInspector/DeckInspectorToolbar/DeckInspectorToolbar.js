@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import { Mana } from '@saeris/react-mana';
 
 import { capitalise } from '../../../../utils';
@@ -110,9 +109,7 @@ const DeckInspectorToolbar = props => {
           <button type='button' disabled={viewMode === 'text'} onClick={() => changeViewModeHandler('text')}>
             Text
           </button>
-          <button type='button' disabled={viewMode === 'stack'} onClick={() => changeViewModeHandler('stack')}>
-            Stack
-          </button>
+
           <button type='button' disabled={viewMode === 'list'} onClick={() => changeViewModeHandler('list')}>
             List
           </button>
