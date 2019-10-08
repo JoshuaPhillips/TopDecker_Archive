@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 import { useApolloClient, useQuery } from '@apollo/react-hooks';
 import { SEARCH_CARDS, GET_USER_DECKS } from './graphql';
 
-import QuickSearchResult from './QuickSearchResult/QuickSearchResult';
+import SidebarSearchResult from './SidebarSearchResult/SidebarSearchResult';
+
+import classes from './DeckManagerSidebar.module.scss';
 
 const AddCardSidebar = props => {
   const {
@@ -79,53 +81,55 @@ const AddCardSidebar = props => {
   }
 
   return (
-    <div style={{ width: '15%', overflowX: 'scroll' }}>
-      <h1>Quick Search</h1>
-      {format !== 'commander' && (
-        <React.Fragment>
-          <button type='button' disabled={selectedList === 'mainDeck'} onClick={() => setSelectedList('mainDeck')}>
-            Main Deck
-          </button>
-          <button type='button' disabled={selectedList === 'sideboard'} onClick={() => setSelectedList('sideboard')}>
-            Sideboard
-          </button>
-        </React.Fragment>
-      )}
+    <div className={classes.DeckManagerSidebar}>
       <div>
-        {searchResults.length !== 0 && (
+        <h1>Quick Search</h1>
+        {format !== 'commander' && (
           <React.Fragment>
-            {searchResults.map(result => {
-              return (
-                <QuickSearchResult
-                  key={result.scryfall_id}
-                  card={result}
-                  isSelectable={isCardSelectable(result)}
-                  addCardHandler={addCardHandler}
-                />
-              );
-            })}
-            <button
-              type='button'
-              onClick={() => {
-                setSearchResults([]);
-              }}>
-              Clear Results
+            <button type='button' disabled={selectedList === 'mainDeck'} onClick={() => setSelectedList('mainDeck')}>
+              Main Deck
+            </button>
+            <button type='button' disabled={selectedList === 'sideboard'} onClick={() => setSelectedList('sideboard')}>
+              Sideboard
             </button>
           </React.Fragment>
         )}
-      </div>
-      <form onSubmit={searchCards}>
-        <input
-          type='text'
-          placeholder='Card Name...'
-          value={nameSearch}
-          onChange={e => setNameSearch(e.target.value)}
-        />
+        <div>
+          {searchResults.length !== 0 && (
+            <React.Fragment>
+              {searchResults.map(result => {
+                return (
+                  <SidebarSearchResult
+                    key={result.scryfall_id}
+                    card={result}
+                    isSelectable={isCardSelectable(result)}
+                    addCardHandler={addCardHandler}
+                  />
+                );
+              })}
+              <button
+                type='button'
+                onClick={() => {
+                  setSearchResults([]);
+                }}>
+                Clear Results
+              </button>
+            </React.Fragment>
+          )}
+        </div>
+        <form onSubmit={searchCards}>
+          <input
+            type='text'
+            placeholder='Card Name...'
+            value={nameSearch}
+            onChange={e => setNameSearch(e.target.value)}
+          />
 
-        <button type='submit' disabled={nameSearch.length < 3}>
-          Search
-        </button>
-      </form>
+          <button type='submit' disabled={nameSearch.length < 3}>
+            Search
+          </button>
+        </form>
+      </div>
       <hr />
       <div>
         {GetUserDecksQueryResponse.loading && <h1>Loading other decks...</h1>}

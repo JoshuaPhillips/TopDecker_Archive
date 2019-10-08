@@ -6,7 +6,8 @@
 }
 
 .ListModeCardDetails {
-  width: 80%;
+  flex-grow: 8;
+  flex-basis: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -14,6 +15,7 @@
   & > p {
     flex-basis: 0;
     flex-grow: 1;
+    margin: 0 0.5rem;
   }
 }
 
@@ -21,7 +23,8 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  width: 20%;
+  flex-grow: 2;
+  flex-basis: 0;
 
   p,
   button {

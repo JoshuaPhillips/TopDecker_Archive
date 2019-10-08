@@ -32,6 +32,7 @@ const TextModeCardItem = props => {
   };
 
   const renderMainDeckItem = () => {
+    console.log('RENDERED');
     return (
       <React.Fragment>
         <div className={classes.TextModeCardItemHeader}>
@@ -42,40 +43,39 @@ const TextModeCardItem = props => {
           <p>{card.type_line}</p>
           {convertTextToSymbols(card.oracle_text)}
         </div>
-        {currentUserOwnsDeck && (
-          <div className={classes.TextModeCardItemControls}>
-            {deck.format === 'commander' && currentUserOwnsDeck ? (
-              <button type='button' onClick={() => updateCardListHandler(deck, 'mainDeck', 'remove', card)}>
-                <FontAwesomeIcon fixedWidth icon={faTimes} />
-              </button>
-            ) : (
-              <React.Fragment>
-                {deck.format !== 'commander' && <p>x {mainDeckCount}</p>}
-                {currentUserOwnsDeck && (
-                  <React.Fragment>
-                    <button
-                      type='button'
-                      disabled={mainDeckCount + sideboardCount === 4 || totalMainDeckCount >= 60}
-                      onClick={() => updateCardListHandler(deck, 'mainDeck', 'add', card)}>
-                      <FontAwesomeIcon fixedWidth icon={faPlus} />
-                    </button>
-                    <button
-                      type='button'
-                      disabled={mainDeckCount === 0}
-                      onClick={() => updateCardListHandler(deck, 'mainDeck', 'remove', card)}>
-                      <FontAwesomeIcon fixedWidth icon={faMinus} />
-                    </button>
-                    <button
-                      type='button'
-                      onClick={() => updateCardListHandler(deck, 'sideboard', 'transferToSideboard', card)}>
-                      <FontAwesomeIcon fixedWidth icon={faSync} />
-                    </button>
-                  </React.Fragment>
-                )}
-              </React.Fragment>
-            )}
-          </div>
-        )}
+
+        <div className={classes.TextModeCardItemControls}>
+          {deck.format === 'commander' && currentUserOwnsDeck ? (
+            <button type='button' onClick={() => updateCardListHandler(deck, 'mainDeck', 'remove', card)}>
+              <FontAwesomeIcon fixedWidth icon={faTimes} />
+            </button>
+          ) : (
+            <React.Fragment>
+              {deck.format !== 'commander' && <p>x {mainDeckCount}</p>}
+              {currentUserOwnsDeck && (
+                <React.Fragment>
+                  <button
+                    type='button'
+                    disabled={mainDeckCount + sideboardCount === 4 || totalMainDeckCount >= 60}
+                    onClick={() => updateCardListHandler(deck, 'mainDeck', 'add', card)}>
+                    <FontAwesomeIcon fixedWidth icon={faPlus} />
+                  </button>
+                  <button
+                    type='button'
+                    disabled={mainDeckCount === 0}
+                    onClick={() => updateCardListHandler(deck, 'mainDeck', 'remove', card)}>
+                    <FontAwesomeIcon fixedWidth icon={faMinus} />
+                  </button>
+                  <button
+                    type='button'
+                    onClick={() => updateCardListHandler(deck, 'sideboard', 'transferToSideboard', card)}>
+                    <FontAwesomeIcon fixedWidth icon={faSync} />
+                  </button>
+                </React.Fragment>
+              )}
+            </React.Fragment>
+          )}
+        </div>
       </React.Fragment>
     );
   };

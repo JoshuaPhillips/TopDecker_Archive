@@ -1,0 +1,9 @@
+.DeckManagerSidebar {
+  border: 3px solid blue;
+  width: 15%;
+  overflow-x: scroll;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
