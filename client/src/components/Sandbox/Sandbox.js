@@ -3,8 +3,6 @@ import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
-import QuickSearchResult from '../DeckManager/QuickSearchSidebar/QuickSearchResult/QuickSearchResult';
-
 const GET_CARD_DETAILS = gql`
   query GetCardDetails {
     getCardByScryfallId(scryfallId: "9f25e1cf-eeb4-458d-8fb2-b3a2f86bdd54") {
@@ -32,9 +30,9 @@ const Sandbox = props => {
   if (GetCardDetailsQueryResponse.loading) {
     return <h1>Loading...</h1>;
   }
-  const card = GetCardDetailsQueryResponse.data.getCardByScryfallId;
+  // const card = GetCardDetailsQueryResponse.data.getCardByScryfallId;
 
-  return <QuickSearchResult card={card} />;
+  return <h1>Sandbox</h1>;
 };
 
 export default Sandbox;

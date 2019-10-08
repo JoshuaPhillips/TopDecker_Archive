@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Card from '../Card/Card';
 
 import { useApolloClient, useQuery, useMutation } from '@apollo/react-hooks';
-import { SEARCH_CARDS } from '../DeckManager/QuickSearchSidebar/graphql';
+import { SEARCH_CARDS } from '../DeckManager/DeckManagerSidebar/graphql';
 import { GET_USER_DECKS } from './graphql';
 
 import classes from './Search.module.scss';
