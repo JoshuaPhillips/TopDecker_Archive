@@ -1,0 +1,31 @@
+.GalleryModeCardItem {
+  width: calc(20%);
+
+  margin: 0.5rem;
+  box-shadow: 2px 2px 5px lightgrey;
+  border: 1px solid grey;
+  border-radius: 4.2%;
+}
+
+.GalleryModeCardItemFooter {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0.5rem;
+
+  p,
+  button {
+    margin-left: 0.5rem;
+  }
+
+  p {
+    margin-right: auto;
+  }
+
+  button {
+    font-size: 1rem;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+  }
+}

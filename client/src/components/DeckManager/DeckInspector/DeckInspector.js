@@ -33,8 +33,6 @@ const DeckInspector = props => {
           deck={deck}
           mainDeckList={filteredMainDeckList}
           sideboardList={filteredSideboardList}
-          format={deck.format}
-          commander={deck.commander}
           currentUserOwnsDeck={props.currentUserOwnsDeck}
           updateCardListHandler={props.updateCardListHandler}
         />
@@ -47,8 +45,6 @@ const DeckInspector = props => {
           deck={deck}
           mainDeckList={filteredMainDeckList}
           sideboardList={filteredSideboardList}
-          format={deck.format}
-          commander={deck.commander}
           currentUserOwnsDeck={props.currentUserOwnsDeck}
           updateCardListHandler={props.updateCardListHandler}
         />
@@ -61,8 +57,6 @@ const DeckInspector = props => {
           deck={deck}
           mainDeckList={filteredMainDeckList}
           sideboardList={filteredSideboardList}
-          format={deck.format}
-          commander={deck.commander}
           currentUserOwnsDeck={props.currentUserOwnsDeck}
           updateCardListHandler={props.updateCardListHandler}
         />
@@ -73,19 +67,17 @@ const DeckInspector = props => {
       cardListContainer = <h2>Sorry, there was a problem viewing your cards.</h2>;
   }
 
-  const changeViewModeHandler = newMode => {
-    setViewMode(newMode);
-  };
-
   return (
     <div className={classes.DeckInspector}>
       <DeckInspectorToolbar
         deck={deck}
         sortMode={sortMode}
         viewMode={viewMode}
-        changeViewModeHandler={changeViewModeHandler}
-        changeSortModeHandler={props.changeSortModeHandler}
         currentUserOwnsDeck={props.currentUserOwnsDeck}
+        changeViewModeHandler={newMode => {
+          setViewMode(newMode);
+        }}
+        changeSortModeHandler={props.changeSortModeHandler}
         toggleFilterHandler={props.toggleFilterHandler}
       />
       {cardListContainer}

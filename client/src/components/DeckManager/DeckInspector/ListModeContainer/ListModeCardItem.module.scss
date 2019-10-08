@@ -1,0 +1,41 @@
+.ListModeCardItem {
+  display: flex;
+  width: 100%;
+  padding: 0.5rem 0;
+  border-bottom: 2px solid lightgrey;
+}
+
+.ListModeCardDetails {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & > p {
+    flex-basis: 0;
+    flex-grow: 1;
+  }
+}
+
+.ListModeCardQuantityModifiers {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 20%;
+
+  p,
+  button {
+    margin-left: 1rem;
+  }
+
+  p {
+    margin-right: 2rem;
+  }
+
+  button {
+    font-size: 1rem;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+  }
+}

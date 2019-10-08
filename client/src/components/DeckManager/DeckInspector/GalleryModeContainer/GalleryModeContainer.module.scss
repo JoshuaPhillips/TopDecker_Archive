@@ -1,9 +1,9 @@
-.GalleryCardListContainer {
-  padding: 0.5rem;
+.GalleryModeContainer {
+  padding: 1rem;
+}
+
+.GalleryModeCardListContainer {
+  margin: 1rem 0 2rem;
   display: flex;
   flex-wrap: wrap;
-  & > div {
-    margin: 0.5rem;
-    max-width: calc(20% - 1rem);
-  }
 }
