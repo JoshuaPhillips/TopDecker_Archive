@@ -10,10 +10,13 @@ import classes from './Search.module.scss';
 import { generateCardList } from '../../utils/generateNewDeck';
 import { UPDATE_CARD_LIST } from '../DeckManager/graphql';
 
+import { toast } from 'react-toastify';
+
 const Search = props => {
   const [deckList, setDeckList] = useState([]);
   const [selectedDeckId, setSelectedDeckId] = useState(props.location.state ? props.location.state.deck.id : 'default');
   const [searchResults, setSearchResults] = useState([]);
+  const [loadingResults, setLoadingResults] = useState(false);
   const [rawSearchParams, setRawSearchParams] = useState({
     name: '',
     oracle: {
@@ -101,13 +104,24 @@ const Search = props => {
 
   const searchCards = async submitEvent => {
     submitEvent.preventDefault();
-    const { data } = await client.query({
+    setLoadingResults(true);
+    const { data, errors } = await client.query({
       query: SEARCH_CARDS,
       variables: {
         searchParams: formatSearchParams()
-      }
+      },
+      errorPolicy: 'all'
     });
-    setSearchResults(data.searchCards.cards);
+
+    if (errors) {
+      setLoadingResults(false);
+      errors.forEach(error => {
+        return toast.error(error.message);
+      });
+    } else {
+      setLoadingResults(false);
+      setSearchResults(data.searchCards.cards);
+    }
   };
 
   const GetUserDecksQueryResponse = useQuery(GET_USER_DECKS, {
@@ -536,7 +550,7 @@ const Search = props => {
             Include Un-Sets?
           </label>
 
-          <button type='submit'>Search</button>
+          <button type='submit'>{loadingResults ? 'Searching...' : 'Search'}</button>
 
           <hr />
           <button type='button' onClick={() => console.log(rawSearchParams)}>

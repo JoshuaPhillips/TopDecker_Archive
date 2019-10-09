@@ -25,7 +25,8 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "react-select": "^3.0.4",
-    "react-slide-toggle": "^0.2.6"
+    "react-slide-toggle": "^0.2.6",
+    "react-toastify": "^5.4.0"
   },
   "scripts": {
     "start": "react-scripts start",

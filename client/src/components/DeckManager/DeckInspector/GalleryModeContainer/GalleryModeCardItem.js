@@ -21,9 +21,11 @@ const GalleryModeCardItem = props => {
     return (
       <React.Fragment>
         <Card card={card} />
-        <div className={classes.GalleryModeCardItemControls}>
-          <FontAwesomeIcon icon={faCrown} fixedWidth />
-        </div>
+        {currentUserOwnsDeck && (
+          <div className={classes.GalleryModeCardItemControls}>
+            <FontAwesomeIcon icon={faCrown} fixedWidth />
+          </div>
+        )}
       </React.Fragment>
     );
   };
@@ -33,13 +35,13 @@ const GalleryModeCardItem = props => {
       <React.Fragment>
         <Card card={card} />
 
-        {deck.format === 'commander' ? (
+        {deck.format === 'commander' && currentUserOwnsDeck ? (
           <div className={classes.GalleryModeCardItemControls}>
             <button type='button' onClick={() => updateCardListHandler(deck, 'mainDeck', 'remove', card)}>
               <FontAwesomeIcon fixedWidth icon={faTimes} />
             </button>
           </div>
-        ) : (
+        ) : deck.format !== 'commander' ? (
           <div className={classes.GalleryModeCardItemControls}>
             {deck.format !== 'commander' && <p>x {mainDeckCount}</p>}
             {currentUserOwnsDeck && (
@@ -67,7 +69,7 @@ const GalleryModeCardItem = props => {
               </React.Fragment>
             )}
           </div>
-        )}
+        ) : null}
       </React.Fragment>
     );
   };

@@ -129,8 +129,11 @@ const QueryResolvers = {
         }
 
         const response = await axios.get(url).catch(error => {
-          // throw new ApolloError(`Error ${status}: ${statusText} - ${data.details}`, `SCRYFALL_ERROR_${status}`);
-          throw new ApolloError('Server Error.', 'SERVER_ERROR');
+          const { status } = error.response;
+          throw new ApolloError(
+            "Sorry, we couldn't find any cards that matched your search.",
+            `SCRYFALL_ERROR_${status}`
+          );
         });
 
         let results = response.data.data;

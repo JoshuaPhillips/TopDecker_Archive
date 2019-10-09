@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { useQuery } from '@apollo/react-hooks';
 import { GET_AUTH_DATA } from './graphql';
@@ -14,6 +15,14 @@ import Sandbox from './components/Sandbox/Sandbox';
 import ComponentLibrary from './components/ComponentLibrary/ComponentLibrary';
 
 import './App.css';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure({
+  position: 'bottom-left',
+  hideProgressBar: true,
+  autoClose: 4000,
+  delay: 0
+});
 
 const App = () => {
   const GetAuthDataQueryResponse = useQuery(GET_AUTH_DATA, { fetchPolicy: 'cache-only' });

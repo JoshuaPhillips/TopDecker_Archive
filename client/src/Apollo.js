@@ -42,7 +42,7 @@ const cleanTypeNameLink = new ApolloLink((operation, forward) => {
   });
 });
 
-export const client = new ApolloClient({
+const client = new ApolloClient({
   link: ApolloLink.from([authLink, cleanTypeNameLink, httpLink]),
   cache,
   resolvers: {
@@ -51,6 +51,17 @@ export const client = new ApolloClient({
         await localStorage.clear();
         await client.resetStore();
       }
+    }
+  },
+  defaultOptions: {
+    watchQuery: {
+      errorPolicy: 'all'
+    },
+    query: {
+      errorPolicy: 'all'
+    },
+    mutation: {
+      errorPolicy: 'all'
     }
   }
 });
@@ -79,3 +90,5 @@ client.onResetStore(() =>
     }
   })
 );
+
+export default client;

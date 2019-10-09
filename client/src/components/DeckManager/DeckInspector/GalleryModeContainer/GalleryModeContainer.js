@@ -29,6 +29,7 @@ const GalleryModeContainer = props => {
             cardWithCounts={{ card: deck.commander, mainDeckCount: 1, sideboardCount: 0 }}
             deck={deck}
             type={'commander'}
+            currentUserOwnsDeck={currentUserOwnsDeck}
           />
         )}
         {mainDeckList.map(cardWithCounts => {

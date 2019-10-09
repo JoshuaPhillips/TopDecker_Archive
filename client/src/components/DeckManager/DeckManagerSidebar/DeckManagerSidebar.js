@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { useApolloClient, useQuery } from '@apollo/react-hooks';
 import { SEARCH_CARDS, GET_USER_DECKS } from './graphql';
@@ -18,10 +19,13 @@ const AddCardSidebar = props => {
   const [searchResults, setSearchResults] = useState([]);
   const [selectedList, setSelectedList] = useState('mainDeck');
   const [nameSearch, setNameSearch] = useState('');
+  const [loadingResults, setLoadingResults] = useState(false);
 
   const searchCards = async submitEvent => {
     submitEvent.preventDefault();
-    const { data } = await client.query({
+    setLoadingResults(true);
+
+    const { data, errors } = await client.query({
       query: SEARCH_CARDS,
       skip: nameSearch.length < 3,
       variables: {
@@ -31,7 +35,15 @@ const AddCardSidebar = props => {
         }
       }
     });
-    setSearchResults(data.searchCards.cards);
+    if (errors) {
+      errors.forEach(error => {
+        setLoadingResults(false);
+        toast.error(error.message);
+      });
+    } else {
+      setSearchResults(data.searchCards.cards);
+      setLoadingResults(false);
+    }
   };
 
   const GetUserDecksQueryResponse = useQuery(GET_USER_DECKS);
@@ -126,7 +138,7 @@ const AddCardSidebar = props => {
           />
 
           <button type='submit' disabled={nameSearch.length < 3}>
-            Search
+            {loadingResults ? 'Searching...' : 'Search'}
           </button>
         </form>
       </div>

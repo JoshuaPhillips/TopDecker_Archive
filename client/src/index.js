@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 //Apollo
 import { ApolloProvider } from 'react-apollo';
-import { client } from './Apollo.js';
+import client from './Apollo.js';
 
 ReactDOM.render(
   <BrowserRouter>
