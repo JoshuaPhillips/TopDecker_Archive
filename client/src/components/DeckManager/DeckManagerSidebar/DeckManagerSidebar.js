@@ -6,6 +6,7 @@ import { useApolloClient, useQuery } from '@apollo/react-hooks';
 import { SEARCH_CARDS, GET_USER_DECKS } from './graphql';
 
 import SidebarSearchResult from './SidebarSearchResult/SidebarSearchResult';
+import Spinner from '../../Spinner/Spinner';
 
 import classes from './DeckManagerSidebar.module.scss';
 
@@ -107,26 +108,30 @@ const AddCardSidebar = props => {
           </React.Fragment>
         )}
         <div>
-          {searchResults.length !== 0 && (
-            <React.Fragment>
-              {searchResults.map(result => {
-                return (
-                  <SidebarSearchResult
-                    key={result.scryfall_id}
-                    card={result}
-                    isSelectable={isCardSelectable(result)}
-                    addCardHandler={addCardHandler}
-                  />
-                );
-              })}
-              <button
-                type='button'
-                onClick={() => {
-                  setSearchResults([]);
-                }}>
-                Clear Results
-              </button>
-            </React.Fragment>
+          {loadingResults ? (
+            <Spinner />
+          ) : (
+            searchResults.length !== 0 && (
+              <React.Fragment>
+                {searchResults.map(result => {
+                  return (
+                    <SidebarSearchResult
+                      key={result.scryfall_id}
+                      card={result}
+                      isSelectable={isCardSelectable(result)}
+                      addCardHandler={addCardHandler}
+                    />
+                  );
+                })}
+                <button
+                  type='button'
+                  onClick={() => {
+                    setSearchResults([]);
+                  }}>
+                  Clear Results
+                </button>
+              </React.Fragment>
+            )
           )}
         </div>
         <form onSubmit={searchCards}>

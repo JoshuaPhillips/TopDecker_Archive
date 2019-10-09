@@ -4,6 +4,8 @@ export const SEARCH_CARDS = gql`
   query SearchCards($searchParams: SearchParamsInput!) {
     searchCards(searchParams: $searchParams) {
       total_cards
+      has_more
+      next_page
       cards {
         scryfall_id
         name

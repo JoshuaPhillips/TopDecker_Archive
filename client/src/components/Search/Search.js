@@ -553,12 +553,6 @@ const Search = props => {
           <button type='submit'>{loadingResults ? 'Searching...' : 'Search'}</button>
 
           <hr />
-          <button type='button' onClick={() => console.log(rawSearchParams)}>
-            Raw
-          </button>
-          <button type='button' onClick={() => console.log(formatSearchParams(rawSearchParams))}>
-            Formatted
-          </button>
         </form>
       </div>
       <div className={classes.SearchResultsContainer}>

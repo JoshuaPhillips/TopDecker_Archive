@@ -6,6 +6,7 @@ import { GET_AUTH_DATA } from '../../graphql';
 
 import DeckListItem from './DeckListItem/DeckListItem';
 import AddDeckForm from './AddDeckForm/AddDeckForm';
+import Spinner from '../Spinner/Spinner';
 
 import classes from './DeckList.module.scss';
 
@@ -53,7 +54,7 @@ const Decks = () => {
   }
 
   if (GetDeckListQueryResponse.loading) {
-    return <h1>Loading...</h1>;
+    return <Spinner />;
   }
 
   return (

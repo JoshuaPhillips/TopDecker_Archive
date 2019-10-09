@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { GET_ACCOUNT_DETAILS, SAVE_ACCOUNT_DETAILS, CHANGE_PASSWORD } from './graphql';
 
+import Spinner from '../Spinner/Spinner';
+
 import classes from './Account.module.scss';
 
 const Account = props => {
@@ -60,7 +62,7 @@ const Account = props => {
   });
 
   if (GetAccountDetailsQueryResponse.loading) {
-    return <h1>Loading...</h1>;
+    return <Spinner />;
   }
 
   return (

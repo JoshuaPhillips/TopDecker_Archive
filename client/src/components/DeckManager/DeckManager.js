@@ -6,6 +6,8 @@ import { GET_AUTH_DATA, GET_DECK_DETAILS, UPDATE_CARD_LIST } from './graphql';
 
 import DeckManagerSidebar from './DeckManagerSidebar/DeckManagerSidebar';
 import DeckInspector from './DeckInspector/DeckInspector';
+import Spinner from '../Spinner/Spinner';
+
 import { sortCardList } from '../../utils/sortCardList';
 import { generateCardList } from '../../utils/generateNewDeck';
 
@@ -82,7 +84,7 @@ const DeckManager = props => {
   // ========== RENDER ========== //
 
   if (!deck) {
-    return <h1>Loading...</h1>;
+    return <Spinner />;
   }
 
   return (
