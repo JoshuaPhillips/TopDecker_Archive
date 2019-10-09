@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faPlus, faMinus, faSync } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faPlus, faMinus, faSync, faCrown } from '@fortawesome/free-solid-svg-icons';
 
 import convertTextToSymbols from '../../../../utils/convertTextToSymbols';
 import classes from './TextModeCardItem.module.scss';
@@ -27,12 +27,14 @@ const TextModeCardItem = props => {
           <p>{card.type_line}</p>
           {convertTextToSymbols(card.oracle_text)}
         </div>
+        <div className={classes.TextModeCardItemControls}>
+          <FontAwesomeIcon icon={faCrown} fixedWidth />
+        </div>
       </React.Fragment>
     );
   };
 
   const renderMainDeckItem = () => {
-    console.log('RENDERED');
     return (
       <React.Fragment>
         <div className={classes.TextModeCardItemHeader}>

@@ -21,7 +21,7 @@ const GalleryModeCardItem = props => {
     return (
       <React.Fragment>
         <Card card={card} />
-        <div className={classes.GalleryModeCardItemFooter}>
+        <div className={classes.GalleryModeCardItemControls}>
           <FontAwesomeIcon icon={faCrown} fixedWidth />
         </div>
       </React.Fragment>
@@ -33,20 +33,23 @@ const GalleryModeCardItem = props => {
       <React.Fragment>
         <Card card={card} />
 
-        {deck.format === 'commander' && currentUserOwnsDeck ? (
-          <div className={classes.GalleryModeCardItemFooter}>
-            <p onClick={() => updateCardListHandler(deck, 'mainDeck', 'remove', card)}>
+        {deck.format === 'commander' ? (
+          <div className={classes.GalleryModeCardItemControls}>
+            <button type='button' onClick={() => updateCardListHandler(deck, 'mainDeck', 'remove', card)}>
               <FontAwesomeIcon fixedWidth icon={faTimes} />
-            </p>
+            </button>
           </div>
         ) : (
-          <div className={classes.GalleryModeCardItemFooter}>
+          <div className={classes.GalleryModeCardItemControls}>
             {deck.format !== 'commander' && <p>x {mainDeckCount}</p>}
             {currentUserOwnsDeck && (
               <React.Fragment>
                 <button
                   type='button'
-                  disabled={mainDeckCount + sideboardCount === 4 || totalMainDeckCount >= 60}
+                  disabled={
+                    mainDeckCount + sideboardCount === 4 ||
+                    totalMainDeckCount >= (deck.format === 'commander' ? 100 : 60)
+                  }
                   onClick={() => updateCardListHandler(deck, 'mainDeck', 'add', card)}>
                   <FontAwesomeIcon fixedWidth icon={faPlus} />
                 </button>
@@ -75,13 +78,13 @@ const GalleryModeCardItem = props => {
         <Card card={card} />
         <div>
           {deck.format === 'commander' ? (
-            <div className={classes.GalleryModeCardItemFooter}>
+            <div className={classes.GalleryModeCardItemControls}>
               <p onClick={() => updateCardListHandler(deck, 'sideboard', 'remove', card)}>
                 <FontAwesomeIcon fixedWidth icon={faTimes} />
               </p>
             </div>
           ) : (
-            <div className={classes.GalleryModeCardItemFooter}>
+            <div className={classes.GalleryModeCardItemControls}>
               <p>x {sideboardCount}</p>
               {currentUserOwnsDeck && (
                 <React.Fragment>

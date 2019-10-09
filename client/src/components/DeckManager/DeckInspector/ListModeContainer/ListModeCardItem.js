@@ -28,10 +28,10 @@ const ListModeCardItem = props => {
           <p>{capitalise(card.rarity)}</p>
         </div>
 
-        <div className={classes.ListModeCardQuantityModifiers}>
-          <p>
+        <div className={classes.ListModeCardItemControls}>
+          <button type='button'>
             <FontAwesomeIcon fixedWidth icon={faCrown} />
-          </p>
+          </button>
         </div>
       </React.Fragment>
     );
@@ -47,13 +47,13 @@ const ListModeCardItem = props => {
           <p>{capitalise(card.rarity)}</p>
         </div>
         {deck.format === 'commander' && currentUserOwnsDeck ? (
-          <div className={classes.ListModeCardQuantityModifiers}>
-            <p onClick={() => updateCardListHandler(deck, 'mainDeck', 'remove', card)}>
+          <div className={classes.ListModeCardItemControls}>
+            <button type='button' onClick={() => updateCardListHandler(deck, 'mainDeck', 'remove', card)}>
               <FontAwesomeIcon fixedWidth icon={faTimes} />
-            </p>
+            </button>
           </div>
         ) : (
-          <div className={classes.ListModeCardQuantityModifiers}>
+          <div className={classes.ListModeCardItemControls}>
             {deck.format !== 'commander' && <p>x {mainDeckCount}</p>}
             {currentUserOwnsDeck && (
               <React.Fragment>
@@ -91,7 +91,7 @@ const ListModeCardItem = props => {
           {card.mana_cost === null ? '-' : convertTextToSymbols(card.mana_cost)}
           <p>{capitalise(card.rarity)}</p>
         </div>
-        <div className={classes.ListModeCardQuantityModifiers}>
+        <div className={classes.ListModeCardItemControls}>
           <p>x {sideboardCount}</p>
           {currentUserOwnsDeck && (
             <React.Fragment>
