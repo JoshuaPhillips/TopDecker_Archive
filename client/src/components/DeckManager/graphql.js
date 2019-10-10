@@ -40,6 +40,8 @@ export const GET_DECK_DETAILS = gql`
             large
           }
           card_faces {
+            mana_cost
+            oracle_text
             image_uris {
               large
             }

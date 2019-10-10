@@ -20,3 +20,9 @@ export const GET_DECK_LIST = gql`
     }
   }
 `;
+
+export const DELETE_DECK = gql`
+  mutation DeleteDeck($deckId: ID!) {
+    deleteDeck(deckId: $deckId)
+  }
+`;

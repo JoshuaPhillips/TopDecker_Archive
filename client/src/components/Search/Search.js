@@ -530,14 +530,16 @@ const Search = props => {
             onChange={e => setRawSearchParams({ ...rawSearchParams, set: e.target.value })}
           />
 
-          <input
-            type='text'
-            placeholder='e.g. {1}{W}{W}'
-            onChange={e => setRawSearchParams({ ...rawSearchParams, mana_cost: e.target.value })}
-          />
+          <label>
+            Mana Cost:
+            <input
+              type='text'
+              placeholder='e.g. {1}{W}{W}'
+              onChange={e => setRawSearchParams({ ...rawSearchParams, mana_cost: e.target.value })}
+            />
+          </label>
 
           <label>
-            {' '}
             <input
               type='checkbox'
               onChange={e =>

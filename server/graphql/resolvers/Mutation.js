@@ -224,10 +224,10 @@ const MutationResolvers = {
         const success = await deckOwner.save();
 
         if (success) {
-          return true;
+          return matchedDeck._id;
         }
 
-        return false;
+        throw new ApolloError('Sorry, there was a problem deleting the deck.', 'DECK_NOT_DELETED');
       } catch (error) {
         return error;
       }

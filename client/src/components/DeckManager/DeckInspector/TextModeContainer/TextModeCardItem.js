@@ -4,6 +4,7 @@ import { faTimes, faPlus, faMinus, faSync, faCrown } from '@fortawesome/free-sol
 
 import convertTextToSymbols from '../../../../utils/convertTextToSymbols';
 import classes from './TextModeCardItem.module.scss';
+import convertTextToSymbol from '../../../../utils/convertTextToSymbols';
 
 const TextModeCardItem = props => {
   const {
@@ -16,16 +17,43 @@ const TextModeCardItem = props => {
     currentUserOwnsDeck
   } = props;
 
+  const renderManaCost = () => {
+    if (card.mana_cost === null) {
+      return card.card_faces ? convertTextToSymbols(card.card_faces[0].mana_cost) : <p>-</p>;
+    } else {
+      return convertTextToSymbols(card.mana_cost);
+    }
+  };
+
+  const renderOracleText = () => {
+    // Normal layout cards with no oracle text.
+    if (card.oracle_text === null && card.card_faces.length === 0) {
+      return null;
+    }
+
+    // Non-normal layout cards.
+    if (card.oracle_text === null) {
+      let oracleStringArray = [];
+      card.card_faces.forEach(card_face => {
+        oracleStringArray.push(card_face.oracle_text);
+      });
+      return convertTextToSymbols(oracleStringArray.join('\n\n\n'));
+    } else {
+      // Normal layout cards with oracle text.
+      return convertTextToSymbol(card.oracle_text);
+    }
+  };
+
   const renderCommanderItem = () => {
     return (
       <React.Fragment>
         <div className={classes.TextModeCardItemHeader}>
           <p>{card.name}</p>
-          {convertTextToSymbols(card.mana_cost)}
+          {renderManaCost()}
         </div>
         <div className={classes.TextModeCardItemContent}>
           <p>{card.type_line}</p>
-          {convertTextToSymbols(card.oracle_text)}
+          {renderOracleText()}
         </div>
         <div className={classes.TextModeCardItemControls}>
           <FontAwesomeIcon icon={faCrown} fixedWidth />
@@ -39,11 +67,11 @@ const TextModeCardItem = props => {
       <React.Fragment>
         <div className={classes.TextModeCardItemHeader}>
           <p>{card.name}</p>
-          {convertTextToSymbols(card.mana_cost)}
+          {renderManaCost()}
         </div>
         <div className={classes.TextModeCardItemContent}>
           <p>{card.type_line}</p>
-          {convertTextToSymbols(card.oracle_text)}
+          {renderOracleText()}
         </div>
 
         <div className={classes.TextModeCardItemControls}>
@@ -87,11 +115,11 @@ const TextModeCardItem = props => {
       <React.Fragment>
         <div className={classes.TextModeCardItemHeader}>
           <p>{card.name}</p>
-          {convertTextToSymbols(card.mana_cost)}
+          {renderManaCost()}
         </div>
         <div className={classes.TextModeCardItemContent}>
           <p>{card.type_line}</p>
-          {convertTextToSymbols(card.oracle_text)}
+          {renderOracleText()}
         </div>
         <div className={classes.TextModeCardItemControls}>
           <p>x {sideboardCount}</p>

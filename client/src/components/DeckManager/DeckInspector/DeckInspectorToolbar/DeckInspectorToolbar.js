@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mana } from '@saeris/react-mana';
 
-import { capitalise } from '../../../../utils';
+import { capitalise } from '../../../../utils/capitalise';
 
 import classes from './DeckInspectorToolbar.module.scss';
 

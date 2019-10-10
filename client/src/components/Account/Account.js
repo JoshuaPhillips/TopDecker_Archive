@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { GET_ACCOUNT_DETAILS, SAVE_ACCOUNT_DETAILS, CHANGE_PASSWORD } from './graphql';
@@ -22,21 +23,20 @@ const Account = props => {
     newPassword: '',
     confirmationPassword: ''
   });
+  const [deletingAccount, toggleDeletingAccount] = useState(false);
+  const [deleteConfirmationPassword, setDeleteConfirmationPassword] = useState('');
+  const [deleteConfirmationCheckbox, setDeleteConfirmationCheckbox] = useState(false);
 
   const GetAccountDetailsQueryResponse = useQuery(GET_ACCOUNT_DETAILS, {
     onCompleted() {
-      if (GetAccountDetailsQueryResponse.loading) {
-        return;
-      } else {
-        const { firstName, lastName, username, email, avatarUrl } = GetAccountDetailsQueryResponse.data.getCurrentUser;
-        setAccountDetails({
-          firstName,
-          lastName,
-          username,
-          email,
-          avatarUrl
-        });
-      }
+      const { firstName, lastName, username, email, avatarUrl } = GetAccountDetailsQueryResponse.data.getCurrentUser;
+      setAccountDetails({
+        firstName,
+        lastName,
+        username,
+        email,
+        avatarUrl
+      });
     }
   });
 
@@ -47,6 +47,7 @@ const Account = props => {
       }
     },
     onCompleted() {
+      toast.success('Account details saved.');
       toggleEditing(false);
     }
   });
@@ -57,9 +58,21 @@ const Account = props => {
       ...passwordDetails
     },
     onCompleted() {
+      toast.success('Password saved.');
       setPasswordDetails({ currentPassword: '', newPassword: '', confirmationPassword: '' });
     }
   });
+
+  const resetPasswordChange = () => {
+    toggleEditingPassword(false);
+    setPasswordDetails({ currentPassword: '', newPassword: '', confirmationPassword: '' });
+  };
+
+  const resetAccountDeletion = () => {
+    toggleDeletingAccount(false);
+    setDeleteConfirmationPassword('');
+    setDeleteConfirmationCheckbox(false);
+  };
 
   if (GetAccountDetailsQueryResponse.loading) {
     return <Spinner />;
@@ -88,7 +101,7 @@ const Account = props => {
           readOnly={!editing}
         />
 
-        <label htmlFor='username'>Username</label>
+        <label htmlFor='username'>Username:</label>
         <input
           type='text'
           id='username'
@@ -115,23 +128,18 @@ const Account = props => {
           readOnly={!editing}
         />
 
-        {!editing && (
-          <button type='button' onClick={() => toggleEditing(true)}>
-            Edit
-          </button>
-        )}
-
-        {editing && (
-          <button type='button' onClick={() => SaveAccountDetailsMutation()}>
-            Save
-          </button>
-        )}
-
-        <button type='button'>Delete</button>
-        <hr />
-        <button type='button' onClick={() => toggleEditingPassword(!editingPassword)}>
-          Change Password
+        <button type='button' onClick={editing ? () => SaveAccountDetailsMutation() : () => toggleEditing(true)}>
+          {editing ? 'Save' : 'Edit'}
         </button>
+      </form>
+
+      <form>
+        <h1>Danger Zone</h1>
+        {!editingPassword && (
+          <button type='button' onClick={() => toggleEditingPassword(true)}>
+            Change Password
+          </button>
+        )}
 
         {editingPassword && (
           <React.Fragment>
@@ -161,6 +169,41 @@ const Account = props => {
 
             <button type='button' onClick={() => ChangePasswordMutation()}>
               Confirm
+            </button>
+            <button type='button' onClick={() => resetPasswordChange()}>
+              Cancel
+            </button>
+          </React.Fragment>
+        )}
+
+        <button type='button' onClick={() => toggleDeletingAccount(true)}>
+          Delete Account
+        </button>
+        {deletingAccount && (
+          <React.Fragment>
+            <label htmlFor='accountDeleteConfirmationPassword'>Enter Your Password:</label>
+            <input
+              type='text'
+              id='accountDeleteConfirmationPassword'
+              disabled={!deletingAccount}
+              onChange={e => setDeleteConfirmationPassword(e.target.value)}
+            />
+
+            <label htmlFor='accountDeleteConfirmationCheckbox'>Do you really want to delete your account?</label>
+            <input
+              type='checkbox'
+              id='accountDeleteConfirmationCheckbox'
+              disabled={!deletingAccount}
+              onChange={e => setDeleteConfirmationCheckbox(e.target.value)}
+            />
+            <button
+              type='button'
+              disabled={!deletingAccount || deleteConfirmationPassword.length === 0 || !deleteConfirmationCheckbox}
+              onClick={() => console.log(deleteConfirmationPassword, deleteConfirmationCheckbox)}>
+              Delete Forever
+            </button>
+            <button type='button' onClick={() => resetAccountDeletion()}>
+              Cancel
             </button>
           </React.Fragment>
         )}

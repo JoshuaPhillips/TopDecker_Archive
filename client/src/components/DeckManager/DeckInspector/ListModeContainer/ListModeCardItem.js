@@ -18,13 +18,22 @@ const ListModeCardItem = props => {
     currentUserOwnsDeck
   } = props;
 
+  const renderManaCost = () => {
+    if (card.mana_cost === null) {
+      return card.card_faces ? convertTextToSymbols(card.card_faces[0].mana_cost) : <p>-</p>;
+    } else {
+      return convertTextToSymbols(card.mana_cost);
+    }
+  };
+
   const renderCommanderItem = () => {
     return (
       <React.Fragment>
         <div className={classes.ListModeCardDetails}>
           <p>{card.name}</p>
           <p>{card.type_line}</p>
-          {card.mana_cost === null ? '-' : convertTextToSymbols(card.mana_cost)}
+
+          {renderManaCost()}
           <p>{capitalise(card.rarity)}</p>
         </div>
 
@@ -37,13 +46,15 @@ const ListModeCardItem = props => {
     );
   };
 
+  renderManaCost();
+
   const renderMainDeckItem = () => {
     return (
       <React.Fragment>
         <div className={classes.ListModeCardDetails}>
           <p>{card.name}</p>
           <p>{card.type_line}</p>
-          {card.mana_cost === null ? '-' : convertTextToSymbols(card.mana_cost)}
+          {renderManaCost()}
           <p>{capitalise(card.rarity)}</p>
         </div>
         {deck.format === 'commander' && currentUserOwnsDeck ? (
@@ -88,7 +99,7 @@ const ListModeCardItem = props => {
         <div className={classes.ListModeCardDetails}>
           <p>{card.name}</p>
           <p>{card.type_line}</p>
-          {card.mana_cost === null ? '-' : convertTextToSymbols(card.mana_cost)}
+          {renderManaCost()}
           <p>{capitalise(card.rarity)}</p>
         </div>
         <div className={classes.ListModeCardItemControls}>

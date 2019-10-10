@@ -1,10 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { capitalise } from '../../../utils';
-
-import { useMutation } from '@apollo/react-hooks';
-import { DELETE_DECK } from './graphql';
-import { GET_DECK_LIST } from '../graphql';
+import { capitalise } from '../../../utils/capitalise';
 
 import classes from './DeckListItem.module.scss';
 
@@ -17,15 +13,9 @@ const cardLimitMap = {
 const DeckListItem = props => {
   const {
     deck: { id, cardList, name, format, commander, owner },
-    currentUserId
+    currentUserId,
+    deleteDeckHandler
   } = props;
-
-  const [DeleteDeckMutation] = useMutation(DELETE_DECK, {
-    variables: {
-      deckId: id
-    },
-    refetchQueries: [{ query: GET_DECK_LIST }]
-  });
 
   let mainCount = 0;
 
@@ -54,8 +44,8 @@ const DeckListItem = props => {
         </p>
       </Link>
       {owner.id === currentUserId && (
-        <button type='button' onClick={() => DeleteDeckMutation()}>
-          Delete{' '}
+        <button type='button' onClick={() => deleteDeckHandler(id)}>
+          Delete
         </button>
       )}
     </div>

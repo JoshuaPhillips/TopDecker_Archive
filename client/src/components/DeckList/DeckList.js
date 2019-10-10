@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
-import { useQuery } from '@apollo/react-hooks';
-import { GET_DECK_LIST } from './graphql';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { GET_DECK_LIST, DELETE_DECK } from './graphql';
 import { GET_AUTH_DATA } from '../../graphql';
 
 import DeckListItem from './DeckListItem/DeckListItem';
@@ -12,7 +13,6 @@ import classes from './DeckList.module.scss';
 
 const Decks = () => {
   const [addDeck, toggleAddDeck] = useState(false);
-  const [deckFilter, setDeckFilter] = useState('myDecks');
   const [deckList, setDeckList] = useState([]);
 
   const GetAuthDataQueryResponse = useQuery(GET_AUTH_DATA, { fetchPolicy: 'cache-only' });
@@ -45,13 +45,33 @@ const Decks = () => {
     }
   });
 
-  let filteredDeckList = deckList;
+  const [DeleteDeckMutation] = useMutation(DELETE_DECK, {
+    refetchQueries: [{ query: GET_DECK_LIST }],
+    onCompleted(data) {
+      if (data) {
+        const { deleteDeck: deletedDeckId } = data;
+        const newDeckList = deckList.filter(deck => {
+          return deck.id !== deletedDeckId;
+        });
+        setDeckList(newDeckList);
+        toast.success('Deck deleted.');
+      }
+    }
+  });
 
-  if (deckFilter === 'myDecks') {
-    filteredDeckList = deckList.filter(deck => {
-      return deck.owner.id === currentUserId;
+  const deleteDeck = deckId => {
+    DeleteDeckMutation({
+      variables: { deckId: deckId }
     });
-  }
+  };
+
+  const currentUserDecks = deckList.filter(deck => {
+    return deck.owner.id === currentUserId;
+  });
+
+  const otherDecks = deckList.filter(deck => {
+    return deck.owner.id !== currentUserId;
+  });
 
   if (GetDeckListQueryResponse.loading) {
     return <Spinner />;
@@ -59,22 +79,24 @@ const Decks = () => {
 
   return (
     <main className={classes.DeckList}>
-      <div>
-        <button type='button' disabled={deckFilter === 'myDecks'} onClick={() => setDeckFilter('myDecks')}>
-          My Decks
-        </button>
-        <button type='button' disabled={deckFilter === 'allDecks'} onClick={() => setDeckFilter('allDecks')}>
-          All Decks
-        </button>
-      </div>
-      <h1>DeckList</h1>
-      {filteredDeckList.length === 0 ? (
-        <h1>No Decks Found</h1>
+      {deckList.length === 0 ? (
+        <h1>No Decks Found.</h1>
       ) : (
-        filteredDeckList.length > 0 &&
-        filteredDeckList.map(deck => {
-          return <DeckListItem deck={deck} key={deck.id} currentUserId={currentUserId} />;
-        })
+        <React.Fragment>
+          <h1>Your Decks</h1>
+
+          {currentUserDecks.map(deck => {
+            return (
+              <DeckListItem deck={deck} key={deck.id} currentUserId={currentUserId} deleteDeckHandler={deleteDeck} />
+            );
+          })}
+
+          <h1>Other People's Decks</h1>
+
+          {otherDecks.map(deck => {
+            return <DeckListItem deck={deck} key={deck.id} currentUserId={currentUserId} />;
+          })}
+        </React.Fragment>
       )}
       <hr />
       {!addDeck && (

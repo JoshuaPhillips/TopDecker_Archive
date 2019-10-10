@@ -138,6 +138,7 @@ export const sortCardList = (cardList, sortMode) => {
               break;
             } else {
               cardTypeMatchMap[types[matchingTypeIndex].toLowerCase()].push(cardList[j]);
+              break;
             }
           }
         }
