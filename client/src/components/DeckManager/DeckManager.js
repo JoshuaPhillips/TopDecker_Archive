@@ -83,7 +83,7 @@ const DeckManager = props => {
 
   // ========== RENDER ========== //
 
-  if (!deck) {
+  if (!deck || GetDeckDetailsQueryResponse.loading) {
     return <Spinner />;
   }
 
