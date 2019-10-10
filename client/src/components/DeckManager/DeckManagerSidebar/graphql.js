@@ -25,6 +25,10 @@ export const SEARCH_CARDS = gql`
         }
         layout
         card_faces {
+          mana_cost
+          type_line
+          name
+          oracle_text
           image_uris {
             large
           }

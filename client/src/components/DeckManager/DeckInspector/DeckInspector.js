@@ -11,7 +11,7 @@ import TextModeContainer from './TextModeContainer/TextModeContainer';
 
 const DeckInspector = props => {
   const { deck, sortMode, filters } = props;
-  const [viewMode, setViewMode] = useState('gallery');
+  const [viewMode, setViewMode] = useState('text');
 
   const mainDeckList = deck.cardList.filter(card => {
     return card.mainDeckCount !== 0;
