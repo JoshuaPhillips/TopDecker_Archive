@@ -21,27 +21,29 @@ const Decks = () => {
 
   const GetDeckListQueryResponse = useQuery(GET_DECK_LIST, {
     fetchPolicy: 'cache-and-network',
-    onCompleted() {
-      const deckList = GetDeckListQueryResponse.data.getAllDecks.sort((a, b) => {
-        if (a.format.toLowerCase() < b.format.toLowerCase()) {
-          return -1;
-        }
+    onCompleted(data) {
+      if (data) {
+        const deckList = data.getAllDecks.sort((a, b) => {
+          if (a.format.toLowerCase() < b.format.toLowerCase()) {
+            return -1;
+          }
 
-        if (a.format.toLowerCase() > b.format.toLowerCase()) {
-          return 1;
-        }
+          if (a.format.toLowerCase() > b.format.toLowerCase()) {
+            return 1;
+          }
 
-        if (a.name < b.name) {
-          return -1;
-        }
+          if (a.name < b.name) {
+            return -1;
+          }
 
-        if (a.name > b.name) {
-          return 1;
-        }
+          if (a.name > b.name) {
+            return 1;
+          }
 
-        return 0;
-      });
-      setDeckList(deckList);
+          return 0;
+        });
+        setDeckList(deckList);
+      }
     }
   });
 

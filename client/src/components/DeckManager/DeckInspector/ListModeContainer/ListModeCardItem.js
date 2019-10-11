@@ -26,114 +26,69 @@ const ListModeCardItem = props => {
     }
   };
 
-  const renderCommanderItem = () => {
-    return (
+  const renderCardControls = () => {
+    return type === 'commander' ? (
+      <div className={classes.ListModeCardItemControls}>
+        <FontAwesomeIcon icon={faCrown} fixedWidth />
+      </div>
+    ) : (
       <React.Fragment>
-        <div className={classes.ListModeCardDetails}>
-          <p>{card.name}</p>
-          <p>{card.type_line}</p>
-
-          {renderManaCost()}
-          <p>{capitalise(card.rarity)}</p>
-        </div>
-
         <div className={classes.ListModeCardItemControls}>
-          <button type='button'>
-            <FontAwesomeIcon fixedWidth icon={faCrown} />
-          </button>
-        </div>
-      </React.Fragment>
-    );
-  };
-
-  renderManaCost();
-
-  const renderMainDeckItem = () => {
-    return (
-      <React.Fragment>
-        <div className={classes.ListModeCardDetails}>
-          <p>{card.name}</p>
-          <p>{card.type_line}</p>
-          {renderManaCost()}
-          <p>{capitalise(card.rarity)}</p>
-        </div>
-        {deck.format === 'commander' && currentUserOwnsDeck ? (
-          <div className={classes.ListModeCardItemControls}>
-            <button type='button' onClick={() => updateCardListHandler(deck, 'mainDeck', 'remove', card)}>
+          {deck.format === 'commander' && currentUserOwnsDeck ? (
+            <button type='button' onClick={() => updateCardListHandler(deck, type, 'remove', card)}>
               <FontAwesomeIcon fixedWidth icon={faTimes} />
             </button>
-          </div>
-        ) : (
-          <div className={classes.ListModeCardItemControls}>
-            {deck.format !== 'commander' && <p>x {mainDeckCount}</p>}
-            {currentUserOwnsDeck && (
-              <React.Fragment>
-                <button
-                  type='button'
-                  disabled={mainDeckCount + sideboardCount === 4 || totalMainDeckCount >= 60}
-                  onClick={() => updateCardListHandler(deck, 'mainDeck', 'add', card)}>
-                  <FontAwesomeIcon fixedWidth icon={faPlus} />
-                </button>
-                <button
-                  type='button'
-                  disabled={mainDeckCount === 0}
-                  onClick={() => updateCardListHandler(deck, 'mainDeck', 'remove', card)}>
-                  <FontAwesomeIcon fixedWidth icon={faMinus} />
-                </button>
-                <button
-                  type='button'
-                  onClick={() => updateCardListHandler(deck, 'sideboard', 'transferToSideboard', card)}>
-                  <FontAwesomeIcon fixedWidth icon={faSync} />
-                </button>
-              </React.Fragment>
-            )}
-          </div>
-        )}
-      </React.Fragment>
-    );
-  };
-
-  const renderSideboardItem = () => {
-    return (
-      <React.Fragment>
-        <div className={classes.ListModeCardDetails}>
-          <p>{card.name}</p>
-          <p>{card.type_line}</p>
-          {renderManaCost()}
-          <p>{capitalise(card.rarity)}</p>
-        </div>
-        <div className={classes.ListModeCardItemControls}>
-          <p>x {sideboardCount}</p>
-          {currentUserOwnsDeck && (
+          ) : (
             <React.Fragment>
-              <button
-                type='button'
-                disabled={mainDeckCount + sideboardCount === 4 || totalSideboardCount >= 60}
-                onClick={() => updateCardListHandler(deck, 'sideboard', 'add', card)}>
-                <FontAwesomeIcon fixedWidth icon={faPlus} />
-              </button>
-              <button
-                type='button'
-                disabled={sideboardCount === 0}
-                onClick={() => updateCardListHandler(deck, 'sideboard', 'remove', card)}>
-                <FontAwesomeIcon fixedWidth icon={faMinus} />
-              </button>
-              <button type='button' onClick={() => updateCardListHandler(deck, 'mainDeck', 'transferToMainDeck', card)}>
-                <FontAwesomeIcon fixedWidth icon={faSync} />
-              </button>
+              {deck.format !== 'commander' && <p>x {type === 'mainDeck' ? mainDeckCount : sideboardCount}</p>}
+              {currentUserOwnsDeck && (
+                <React.Fragment>
+                  <button
+                    type='button'
+                    disabled={
+                      mainDeckCount + sideboardCount === 4 ||
+                      (type === 'mainDeck' ? totalMainDeckCount >= 60 : totalSideboardCount >= 15)
+                    }
+                    onClick={() => updateCardListHandler(deck, type, 'add', card)}>
+                    <FontAwesomeIcon fixedWidth icon={faPlus} />
+                  </button>
+                  <button
+                    type='button'
+                    disabled={type === 'mainDeck' ? mainDeckCount === 0 : sideboardCount === 0}
+                    onClick={() => updateCardListHandler(deck, type, 'remove', card)}>
+                    <FontAwesomeIcon fixedWidth icon={faMinus} />
+                  </button>
+                  <button
+                    type='button'
+                    onClick={() =>
+                      updateCardListHandler(
+                        deck,
+                        type === 'mainDeck' ? 'sideboard' : 'mainDeck',
+                        type === 'mainDeck' ? 'transferToSideboard' : 'transferToMainDeck',
+                        card
+                      )
+                    }>
+                    <FontAwesomeIcon fixedWidth icon={faSync} />
+                  </button>
+                </React.Fragment>
+              )}
             </React.Fragment>
           )}
         </div>
       </React.Fragment>
     );
   };
+
   return (
     <div key={card.scryfall_id} className={classes.ListModeCardItem}>
-      {type === 'commander'
-        ? renderCommanderItem()
-        : type === 'mainDeck'
-        ? renderMainDeckItem()
-        : renderSideboardItem()}
+      <div className={classes.ListModeCardDetails}>
+        <p>{card.name}</p>
+        <p>{card.type_line}</p>
+
+        {renderManaCost()}
+        <p>{capitalise(card.rarity)}</p>
+      </div>
+      {renderCardControls()}
     </div>
   );
 };
