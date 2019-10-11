@@ -12,7 +12,8 @@ import classes from './DeckManagerSidebar.module.scss';
 
 const AddCardSidebar = props => {
   const {
-    deck: { cardList, commander, format }
+    deck: { commander, format },
+    updateCardListHandler
   } = props;
 
   const client = useApolloClient();
@@ -48,37 +49,6 @@ const AddCardSidebar = props => {
   };
 
   const GetUserDecksQueryResponse = useQuery(GET_USER_DECKS);
-
-  const isCardSelectable = resultCard => {
-    const maxCardAllowance = format === 'commander' ? 1 : 4;
-
-    const matchedCard = cardList.findIndex(({ card }) => {
-      return card.scryfall_id === resultCard.scryfall_id;
-    });
-
-    if (format === 'commander' && resultCard.scryfall_id === commander.scryfall_id) {
-      return false;
-    }
-
-    if (format === 'commander' && selectedList === 'sideboard') {
-      return false;
-    }
-
-    if (matchedCard === -1) {
-      return true;
-    }
-
-    const { mainDeckCount, sideboardCount } = cardList[matchedCard];
-    if (mainDeckCount + sideboardCount >= maxCardAllowance) {
-      return false;
-    }
-
-    return true;
-  };
-
-  const addCardHandler = card => {
-    props.updateCardListHandler(props.deck, selectedList, 'add', card);
-  };
 
   const defaultParams = {
     formats: [
@@ -117,9 +87,10 @@ const AddCardSidebar = props => {
                   return (
                     <SidebarSearchResult
                       key={result.scryfall_id}
+                      deck={props.deck}
                       card={result}
-                      isSelectable={isCardSelectable(result)}
-                      addCardHandler={addCardHandler}
+                      list={selectedList}
+                      addCardHandler={updateCardListHandler}
                     />
                   );
                 })}
@@ -149,7 +120,7 @@ const AddCardSidebar = props => {
       </div>
       <hr />
       <div>
-        {GetUserDecksQueryResponse.loading && <h1>Loading other decks...</h1>}
+        {GetUserDecksQueryResponse.loading && <Spinner />}
         {GetUserDecksQueryResponse.data && (
           <div>
             {GetUserDecksQueryResponse.data.getCurrentUser.decks.map(deck => {

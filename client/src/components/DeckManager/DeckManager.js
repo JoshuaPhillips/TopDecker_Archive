@@ -38,13 +38,15 @@ const DeckManager = props => {
     skip: !currentDeckId,
     variables: { deckId: currentDeckId },
     fetchPolicy: 'cache-and-network',
-    onCompleted() {
-      const sortedDeck = {
-        ...GetDeckDetailsQueryResponse.data.getDeckById,
-        cardList: sortCardList(GetDeckDetailsQueryResponse.data.getDeckById.cardList, sortMode)
-      };
+    onCompleted(data) {
+      if (data) {
+        const sortedDeck = {
+          ...GetDeckDetailsQueryResponse.data.getDeckById,
+          cardList: sortCardList(GetDeckDetailsQueryResponse.data.getDeckById.cardList, sortMode)
+        };
 
-      setDeck(sortedDeck);
+        setDeck(sortedDeck);
+      }
     }
   });
 
