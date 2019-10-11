@@ -17,112 +17,69 @@ const GalleryModeCardItem = props => {
     updateCardListHandler
   } = props;
 
-  const renderCommanderItem = () => {
+  const renderCardControls = () => {
     return (
       <React.Fragment>
-        <Card card={card} />
-        {currentUserOwnsDeck && (
+        {type === 'commander' && (
           <div className={classes.GalleryModeCardItemControls}>
             <FontAwesomeIcon icon={faCrown} fixedWidth />
           </div>
         )}
-      </React.Fragment>
-    );
-  };
-
-  const renderMainDeckItem = () => {
-    return (
-      <React.Fragment>
-        <Card card={card} />
-
-        {deck.format === 'commander' && currentUserOwnsDeck ? (
-          <div className={classes.GalleryModeCardItemControls}>
-            <button type='button' onClick={() => updateCardListHandler(deck, 'mainDeck', 'remove', card)}>
-              <FontAwesomeIcon fixedWidth icon={faTimes} />
-            </button>
-          </div>
-        ) : deck.format !== 'commander' ? (
-          <div className={classes.GalleryModeCardItemControls}>
-            {deck.format !== 'commander' && <p>x {mainDeckCount}</p>}
-            {currentUserOwnsDeck && (
-              <React.Fragment>
-                <button
-                  type='button'
-                  disabled={
-                    mainDeckCount + sideboardCount === 4 ||
-                    totalMainDeckCount >= (deck.format === 'commander' ? 100 : 60)
-                  }
-                  onClick={() => updateCardListHandler(deck, 'mainDeck', 'add', card)}>
-                  <FontAwesomeIcon fixedWidth icon={faPlus} />
-                </button>
-                <button
-                  type='button'
-                  disabled={mainDeckCount === 0}
-                  onClick={() => updateCardListHandler(deck, 'mainDeck', 'remove', card)}>
-                  <FontAwesomeIcon fixedWidth icon={faMinus} />
-                </button>
-                <button
-                  type='button'
-                  onClick={() => updateCardListHandler(deck, 'sideboard', 'transferToSideboard', card)}>
-                  <FontAwesomeIcon fixedWidth icon={faSync} />
-                </button>
-              </React.Fragment>
-            )}
-          </div>
-        ) : null}
-      </React.Fragment>
-    );
-  };
-
-  const renderSideboardItem = () => {
-    return (
-      <React.Fragment>
-        <Card card={card} />
-        <div>
-          {deck.format === 'commander' ? (
+        {type !== 'commander' &&
+          (deck.format === 'commander' && currentUserOwnsDeck ? (
             <div className={classes.GalleryModeCardItemControls}>
-              <p onClick={() => updateCardListHandler(deck, 'sideboard', 'remove', card)}>
+              <button type='button' onClick={() => updateCardListHandler(deck, type, 'remove', card)}>
                 <FontAwesomeIcon fixedWidth icon={faTimes} />
-              </p>
+              </button>
             </div>
-          ) : (
+          ) : deck.format !== 'commander' ? (
             <div className={classes.GalleryModeCardItemControls}>
-              <p>x {sideboardCount}</p>
+              {deck.format !== 'commander' && <p>x {type === 'mainDeck' ? mainDeckCount : sideboardCount}</p>}
               {currentUserOwnsDeck && (
                 <React.Fragment>
                   <button
                     type='button'
-                    disabled={mainDeckCount + sideboardCount === 4 || totalSideboardCount >= 60}
-                    onClick={() => updateCardListHandler(deck, 'sideboard', 'add', card)}>
+                    disabled={
+                      mainDeckCount + sideboardCount === 4 ||
+                      (type === 'mainDeck'
+                        ? totalMainDeckCount >= (deck.format === 'commander' ? 100 : 60)
+                        : totalSideboardCount >= 15)
+                    }
+                    onClick={() => updateCardListHandler(deck, type, 'add', card)}>
                     <FontAwesomeIcon fixedWidth icon={faPlus} />
                   </button>
                   <button
                     type='button'
-                    disabled={mainDeckCount === 0}
-                    onClick={() => updateCardListHandler(deck, 'sideboard', 'remove', card)}>
+                    disabled={type === 'mainDeck' ? mainDeckCount === 0 : sideboardCount === 0}
+                    onClick={() => updateCardListHandler(deck, type, 'remove', card)}>
                     <FontAwesomeIcon fixedWidth icon={faMinus} />
                   </button>
                   <button
                     type='button'
-                    onClick={() => updateCardListHandler(deck, 'mainDeck', 'transferToMainDeck', card)}>
+                    onClick={() =>
+                      updateCardListHandler(
+                        deck,
+                        type === 'mainDeck' ? 'sideboard' : 'mainDeck',
+                        type === 'mainDeck' ? 'transferToSideboard' : 'transferToMainDeck',
+                        card
+                      )
+                    }>
                     <FontAwesomeIcon fixedWidth icon={faSync} />
                   </button>
                 </React.Fragment>
               )}
             </div>
-          )}
-        </div>
+          ) : null)}
       </React.Fragment>
     );
   };
 
   return (
     <div className={classes.GalleryModeCardItem}>
-      {type === 'commander'
-        ? renderCommanderItem()
-        : type === 'mainDeck'
-        ? renderMainDeckItem()
-        : renderSideboardItem()}
+      <React.Fragment>
+        <Card card={card} />
+        {renderCardControls()}
+      </React.Fragment>
     </div>
   );
 };
