@@ -28,6 +28,7 @@ const conversionMap = {
   '{100}': '100',
   '{1000000}': '1000000',
   '{∞}': 'infinity',
+  '{1-2}': '1-2',
   '{W}': 'w',
   '{U}': 'u',
   '{B}': 'b',
@@ -58,7 +59,10 @@ const conversionMap = {
   '{U/P}': 'up',
   '{B/P}': 'bp',
   '{R/P}': 'rp',
-  '{G/P}': 'gp'
+  '{G/P}': 'gp',
+  '{E}': 'e',
+  '{T}': 'tap',
+  '{Q}': 'untap'
 };
 
 const convertTextToSymbol = (fullString, cost = true, shadow = false) => {
@@ -77,7 +81,14 @@ const convertTextToSymbol = (fullString, cost = true, shadow = false) => {
           return item;
         }
 
-        return <Mana key={`${item}__${index}`} symbol={conversionMap[item]} cost={cost} shadow={shadow} />;
+        return (
+          <Mana
+            key={`${item}__${index}`}
+            symbol={conversionMap[item]}
+            cost={item === '{E}' ? false : cost}
+            shadow={shadow}
+          />
+        );
       });
 
       return convertedStringArray;

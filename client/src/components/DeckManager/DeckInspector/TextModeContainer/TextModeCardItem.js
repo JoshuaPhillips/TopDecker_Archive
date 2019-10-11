@@ -36,9 +36,8 @@ const TextModeCardItem = props => {
                   <button
                     type='button'
                     disabled={
-                      mainDeckCount + sideboardCount === 4 || type === 'mainDeck'
-                        ? totalMainDeckCount >= 60
-                        : totalSideboardCount >= 15
+                      mainDeckCount + sideboardCount === 4 ||
+                      (type === 'mainDeck' ? totalMainDeckCount >= 60 : totalSideboardCount >= 15)
                     }
                     onClick={() => updateCardListHandler(deck, type, 'add', card)}>
                     <FontAwesomeIcon fixedWidth icon={faPlus} />
@@ -55,7 +54,7 @@ const TextModeCardItem = props => {
                       updateCardListHandler(
                         deck,
                         type === 'mainDeck' ? 'sideboard' : 'mainDeck',
-                        'transferToSideboard',
+                        type === 'mainDeck' ? 'transferToSideboard' : 'transferToMainDeck',
                         card
                       )
                     }>
@@ -76,24 +75,55 @@ const TextModeCardItem = props => {
         <React.Fragment>
           <div className={classes.TextModeCardItemHeader}>
             <p>{card.name}</p>
-            {convertTextToSymbols(card.mana_cost)}
+            {card.mana_cost && card.mana_cost.length !== 0 && convertTextToSymbols(card.mana_cost)}
           </div>
           <div className={classes.TextModeCardItemContent}>
-            <p>{card.type_line}</p>
-            {convertTextToSymbols(card.oracle_text)}
+            <div>
+              <p>{card.type_line}</p>
+            </div>
+            {card.oracle_text !== null && (
+              <div className={classes.TextModeCardItemOracleText}>{convertTextToSymbols(card.oracle_text)}</div>
+            )}
+            {card.power && card.toughness ? (
+              <div>
+                <p>
+                  {card.power} / {card.toughness}
+                </p>
+                {card.loyalty && <p>{card.loyalty}</p>}
+              </div>
+            ) : null}
           </div>
         </React.Fragment>
       ) : (
         card.card_faces.map(card_face => {
+          console.log(card_face);
           return (
-            <React.Fragment>
+            <React.Fragment key={`${card.scryfall_id}__${card_face.name}`}>
               <div className={classes.TextModeCardItemHeader}>
                 <p>{card_face.name}</p>
-                {convertTextToSymbols(card_face.mana_cost)}
+                {card_face.mana_cost.length !== 0 && convertTextToSymbols(card_face.mana_cost)}
               </div>
               <div className={classes.TextModeCardItemContent}>
-                <p>{card_face.type_line}</p>
-                {convertTextToSymbols(card_face.oracle_text)}
+                <div>
+                  <p>{card_face.type_line}</p>
+                </div>
+                {card_face.oracle_text !== null && (
+                  <div className={classes.TextModeCardItemOracleText}>
+                    {convertTextToSymbols(card_face.oracle_text)}
+                  </div>
+                )}
+                {card_face.power && card_face.toughness && (
+                  <div>
+                    <p>
+                      {card_face.power} / {card_face.toughness}
+                    </p>
+                  </div>
+                )}
+                {card_face.loyalty && (
+                  <div>
+                    <p>Starting Loyalty: {card_face.loyalty}</p>
+                  </div>
+                )}
               </div>
             </React.Fragment>
           );

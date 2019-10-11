@@ -14,6 +14,9 @@ export const GET_DECK_DETAILS = gql`
         type_line
         rarity
         layout
+        power
+        toughness
+        loyalty
         oracle_text
         image_uris {
           art_crop
@@ -35,6 +38,9 @@ export const GET_DECK_DETAILS = gql`
           rarity
           layout
           cmc
+          power
+          toughness
+          loyalty
           oracle_text
           image_uris {
             large
@@ -44,6 +50,9 @@ export const GET_DECK_DETAILS = gql`
             type_line
             mana_cost
             oracle_text
+            power
+            toughness
+            loyalty
             image_uris {
               large
             }

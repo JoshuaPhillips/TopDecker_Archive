@@ -12,9 +12,14 @@ export const SEARCH_CARDS = gql`
         cmc
         colors
         mana_cost
+        oracle_text
+        power
+        toughness
+        loyalty
         type_line
         rarity
         color_identity
+        layout
         legalities {
           standard
           modern
@@ -23,7 +28,6 @@ export const SEARCH_CARDS = gql`
         image_uris {
           large
         }
-        layout
         card_faces {
           mana_cost
           type_line

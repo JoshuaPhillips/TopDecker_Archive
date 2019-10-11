@@ -1,26 +1,35 @@
 .TextModeCardItem {
-  border: 2px solid lightgrey;
+  border-top: 3px solid darkblue;
+  border-right: 1px solid lightgrey;
+  border-bottom: 3px solid darkblue;
+  border-left: 1px solid lightgrey;
+  border-radius: 5px;
   margin: 0.5rem;
-  padding: 0.5rem;
+
   width: calc(25% - 1rem);
   display: flex;
   flex-direction: column;
-}
-
-.TextModeCardItemCardFace {
-  border: 2px solid black;
 }
 
 .TextModeCardItemHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid lightgrey;
+  padding: 0.5rem;
+  border-bottom: 1px solid lightgrey;
+  margin-top: 2rem;
+  border-top: 2px solid darkblue;
+
+  &:first-child {
+    margin-top: 0;
+    border-top: none;
+  }
 
   p {
     font-weight: bold;
     min-width: 40%;
+    border: none;
+    padding: none;
 
     &:last-child {
       text-align: right;
@@ -29,11 +38,23 @@
 }
 
 .TextModeCardItemContent {
-  p {
-    margin: 0.5rem 0;
+  div {
+    padding: 0.5rem;
+    border-bottom: 1px solid lightgrey;
 
-    &:first-child {
-      margin-bottom: 1rem;
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+}
+
+.TextModeCardItemOracleText {
+  p {
+    margin-bottom: 1rem;
+    line-height: 150%;
+
+    &:last-child {
+      margin-bottom: 0;
     }
   }
 }
@@ -42,6 +63,7 @@
   margin-top: auto;
   display: flex;
   justify-content: flex-end;
+  padding: 0.5rem;
 
   p {
     margin-right: auto;
@@ -53,5 +75,6 @@
     font-size: 1rem;
     border: none;
     outline: none;
+    cursor: pointer;
   }
 }
