@@ -74,7 +74,7 @@ const TextModeCardItem = props => {
       {card.card_faces.length === 0 ? (
         <React.Fragment>
           <div className={classes.TextModeCardItemHeader}>
-            <p>{card.name}</p>
+            <p>{card.name.trim()}</p>
             {card.mana_cost && card.mana_cost.length !== 0 && convertTextToSymbols(card.mana_cost)}
           </div>
           <div className={classes.TextModeCardItemContent}>
@@ -92,11 +92,15 @@ const TextModeCardItem = props => {
                 {card.loyalty && <p>{card.loyalty}</p>}
               </div>
             ) : null}
+            {card.flavor_text && card.flavor_text.length !== 0 && (
+              <div className={classes.TextModeCardItemFlavorText}>
+                <p>{card.flavor_text}</p>
+              </div>
+            )}
           </div>
         </React.Fragment>
       ) : (
         card.card_faces.map(card_face => {
-          console.log(card_face);
           return (
             <React.Fragment key={`${card.scryfall_id}__${card_face.name}`}>
               <div className={classes.TextModeCardItemHeader}>
@@ -122,6 +126,11 @@ const TextModeCardItem = props => {
                 {card_face.loyalty && (
                   <div>
                     <p>Starting Loyalty: {card_face.loyalty}</p>
+                  </div>
+                )}
+                {card_face.flavor_text && card_face.flavor_text.length !== 0 && (
+                  <div className={classes.TextModeCardItemFlavorText}>
+                    <p>{card_face.flavor_text}</p>
                   </div>
                 )}
               </div>

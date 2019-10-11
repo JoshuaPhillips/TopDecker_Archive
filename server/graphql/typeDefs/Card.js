@@ -38,6 +38,7 @@ const CardType = gql`
     image_uris: ImageUris
     loyalty: String
     oracle_text: String!
+    flavor_text: String
     power: String
     toughness: String
     type_line: String
@@ -55,6 +56,7 @@ const CardType = gql`
     mana_cost: String
     lang: String!
     oracle_text: String
+    flavor_text: String
     power: String
     toughness: String
     type_line: String!

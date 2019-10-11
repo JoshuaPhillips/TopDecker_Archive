@@ -20,7 +20,7 @@ const ListModeCardItem = props => {
 
   const renderManaCost = () => {
     if (card.mana_cost === null) {
-      return card.card_faces ? convertTextToSymbols(card.card_faces[0].mana_cost) : <p>-</p>;
+      return card.card_faces.length !== 0 ? convertTextToSymbols(card.card_faces[0].mana_cost) : <p>-</p>;
     } else {
       return convertTextToSymbols(card.mana_cost);
     }

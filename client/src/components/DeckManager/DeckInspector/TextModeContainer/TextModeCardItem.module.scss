@@ -59,6 +59,14 @@
   }
 }
 
+.TextModeCardItemFlavorText {
+  margin-top: auto;
+  p {
+    font-style: italic;
+    line-height: 150%;
+  }
+}
+
 .TextModeCardItemControls {
   margin-top: auto;
   display: flex;

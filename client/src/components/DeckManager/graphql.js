@@ -18,6 +18,7 @@ export const GET_DECK_DETAILS = gql`
         toughness
         loyalty
         oracle_text
+        flavor_text
         image_uris {
           art_crop
           large
@@ -42,6 +43,7 @@ export const GET_DECK_DETAILS = gql`
           toughness
           loyalty
           oracle_text
+          flavor_text
           image_uris {
             large
           }
@@ -50,6 +52,7 @@ export const GET_DECK_DETAILS = gql`
             type_line
             mana_cost
             oracle_text
+            flavor_text
             power
             toughness
             loyalty

@@ -13,6 +13,7 @@ export const SEARCH_CARDS = gql`
         colors
         mana_cost
         oracle_text
+        flavor_text
         power
         toughness
         loyalty
@@ -33,6 +34,7 @@ export const SEARCH_CARDS = gql`
           type_line
           name
           oracle_text
+          flavor_text
           image_uris {
             large
           }

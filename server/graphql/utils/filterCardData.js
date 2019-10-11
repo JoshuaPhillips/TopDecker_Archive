@@ -17,7 +17,8 @@ const filterCardData = fullCardData => {
     'image_uris',
     'rarity',
     'set_name',
-    'card_faces'
+    'card_faces',
+    'flavor_text'
   ];
 
   let filteredData = {
@@ -38,6 +39,7 @@ const filterCardData = fullCardData => {
     image_uris: null,
     rarity: null,
     set_name: null,
+    flavor_text: null,
     card_faces: []
   };
 
