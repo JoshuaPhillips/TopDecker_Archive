@@ -10,6 +10,7 @@ const SearchForm = props => {
   const { setSearchResults } = props;
   const client = useApolloClient();
   const [loadingResults, setLoadingResults] = useState(false);
+
   const [rawSearchParams, setRawSearchParams] = useState({
     name: '',
     oracle: {
@@ -32,6 +33,7 @@ const SearchForm = props => {
         colorless: false
       }
     },
+    mana_cost: '',
     power: {
       comparison: 'less_than',
       value: ''
@@ -54,61 +56,83 @@ const SearchForm = props => {
       rare: false,
       mythic: false
     },
-    is: []
+    is: {
+      funny: false,
+      commander: false
+    }
   });
 
-  const formatColorParams = () => {
-    const { colors } = rawSearchParams.colors;
-    let result = [];
-
-    const colorAbbreviationMap = {
-      white: 'W',
-      blue: 'U',
-      black: 'B',
-      red: 'R',
-      green: 'G',
-      colorless: 'C'
-    };
-
-    Object.keys(colors).map(color => {
-      return colors[color] ? result.push(colorAbbreviationMap[color]) : null;
-    });
-
-    return result;
+  const colorAbbreviationMap = {
+    white: 'W',
+    blue: 'U',
+    black: 'B',
+    red: 'R',
+    green: 'G',
+    colorless: 'C'
   };
 
   const formatSearchParams = () => {
-    const formattedSearchParams = {
-      ...rawSearchParams
-    };
+    let {
+      name,
+      oracle,
+      type_line,
+      set,
+      colors,
+      mana_cost,
+      power,
+      toughness,
+      loyalty,
+      cmc,
+      rarity: rarities,
+      is
+    } = rawSearchParams;
+    let formattedSearchParams = {};
 
-    formattedSearchParams.colors.colors = formatColorParams();
+    // format the simpler params
 
-    formattedSearchParams.rarity = Object.keys(rawSearchParams.rarity).filter(rarity => {
-      return rawSearchParams.rarity[rarity];
+    if (name) formattedSearchParams.name = name;
+    if (oracle.text) formattedSearchParams.oracle = { ...oracle };
+    if (type_line.text) formattedSearchParams.type_line = { ...type_line };
+    if (set) formattedSearchParams.set = set;
+    if (mana_cost) formattedSearchParams.mana_cost = mana_cost;
+    if (power.value) formattedSearchParams.power = { ...power };
+    if (toughness.value) formattedSearchParams.toughness = { ...toughness };
+    if (loyalty.value) formattedSearchParams.loyalty = { ...loyalty };
+    if (cmc.value) formattedSearchParams.cmc = { ...cmc };
+
+    // format colors
+
+    let formattedColors = [];
+
+    Object.keys(colors.colors).map(color => {
+      if (colors.colors[color]) formattedColors.push(colorAbbreviationMap[color]);
+      return null;
     });
 
-    formattedSearchParams.is = Object.keys(rawSearchParams.is).filter(is => {
-      return rawSearchParams.is[is];
+    if (formattedColors.length !== 0) formattedSearchParams.colors = { type: colors.type, colors: formattedColors };
+
+    // format rarity
+
+    let formattedRarities = [];
+
+    Object.keys(rarities).map(rarity => {
+      if (rarities[rarity]) formattedRarities.push(rarity);
+      return null;
     });
 
-    formattedSearchParams.set === ''
-      ? delete formattedSearchParams.set
-      : (formattedSearchParams.set = rawSearchParams.set.split(','));
+    if (formattedRarities.length !== 0) formattedSearchParams.rarity = formattedRarities;
 
-    rawSearchParams.name === '' && delete formattedSearchParams.name;
-    rawSearchParams.type_line.text === '' && delete formattedSearchParams.type_line;
-    rawSearchParams.cmc.value === '' && delete formattedSearchParams.cmc;
-    rawSearchParams.power.value === '' && delete formattedSearchParams.power;
-    rawSearchParams.toughness.value === '' && delete formattedSearchParams.toughness;
-    rawSearchParams.loyalty.value === '' && delete formattedSearchParams.loyalty;
-    rawSearchParams.oracle.text === '' && delete formattedSearchParams.oracle;
+    // format 'is'
 
-    formattedSearchParams.colors.colors.length === 0 && delete formattedSearchParams.colors;
-    formattedSearchParams.rarity.length === 0 && delete formattedSearchParams.rarity;
-    formattedSearchParams.is.length === 0 && delete formattedSearchParams.is;
+    let formattedIs = [];
 
-    console.log(formattedSearchParams);
+    Object.keys(is).map(option => {
+      if (is[option]) formattedIs.push(option);
+      return null;
+    });
+
+    if (formattedIs.length !== 0) formattedSearchParams.is = formattedIs;
+
     return formattedSearchParams;
   };
 
@@ -133,7 +157,6 @@ const SearchForm = props => {
       setSearchResults(data.searchCards.cards);
     }
   };
-  console.log(rawSearchParams.colors.colors);
 
   return (
     <div className={classes.SearchFormContainer}>
@@ -173,15 +196,15 @@ const SearchForm = props => {
           <input
             type='checkbox'
             defaultChecked={rawSearchParams.colors.colors.white}
-            onChange={() =>
+            onChange={() => {
               setRawSearchParams({
                 ...rawSearchParams,
                 colors: {
                   type: rawSearchParams.colors.type,
                   colors: { ...rawSearchParams.colors.colors, white: !rawSearchParams.colors.colors.white }
                 }
-              })
-            }
+              });
+            }}
           />
           White
         </label>
