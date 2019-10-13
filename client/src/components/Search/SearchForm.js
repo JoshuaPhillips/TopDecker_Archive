@@ -57,14 +57,32 @@ const SearchForm = props => {
     is: []
   });
 
+  const formatColorParams = () => {
+    const { colors } = rawSearchParams.colors;
+    let result = [];
+
+    const colorAbbreviationMap = {
+      white: 'W',
+      blue: 'U',
+      black: 'B',
+      red: 'R',
+      green: 'G',
+      colorless: 'C'
+    };
+
+    Object.keys(colors).map(color => {
+      return colors[color] ? result.push(colorAbbreviationMap[color]) : null;
+    });
+
+    return result;
+  };
+
   const formatSearchParams = () => {
     const formattedSearchParams = {
       ...rawSearchParams
     };
 
-    formattedSearchParams.colors.colors = Object.keys(rawSearchParams.colors.colors).filter(color => {
-      return rawSearchParams.colors.colors[color];
-    });
+    formattedSearchParams.colors.colors = formatColorParams();
 
     formattedSearchParams.rarity = Object.keys(rawSearchParams.rarity).filter(rarity => {
       return rawSearchParams.rarity[rarity];
@@ -90,6 +108,7 @@ const SearchForm = props => {
     formattedSearchParams.rarity.length === 0 && delete formattedSearchParams.rarity;
     formattedSearchParams.is.length === 0 && delete formattedSearchParams.is;
 
+    console.log(formattedSearchParams);
     return formattedSearchParams;
   };
 
@@ -114,6 +133,7 @@ const SearchForm = props => {
       setSearchResults(data.searchCards.cards);
     }
   };
+  console.log(rawSearchParams.colors.colors);
 
   return (
     <div className={classes.SearchFormContainer}>
@@ -174,7 +194,7 @@ const SearchForm = props => {
                 ...rawSearchParams,
                 colors: {
                   type: rawSearchParams.colors.type,
-                  colors: { ...rawSearchParams.colors.colors, white: !rawSearchParams.colors.colors.blue }
+                  colors: { ...rawSearchParams.colors.colors, blue: !rawSearchParams.colors.colors.blue }
                 }
               })
             }
@@ -190,7 +210,7 @@ const SearchForm = props => {
                 ...rawSearchParams,
                 colors: {
                   type: rawSearchParams.colors.type,
-                  colors: { ...rawSearchParams.colors.colors, white: !rawSearchParams.colors.colors.black }
+                  colors: { ...rawSearchParams.colors.colors, black: !rawSearchParams.colors.colors.black }
                 }
               })
             }
@@ -206,7 +226,7 @@ const SearchForm = props => {
                 ...rawSearchParams,
                 colors: {
                   type: rawSearchParams.colors.type,
-                  colors: { ...rawSearchParams.colors.colors, white: !rawSearchParams.colors.colors.red }
+                  colors: { ...rawSearchParams.colors.colors, red: !rawSearchParams.colors.colors.red }
                 }
               })
             }
@@ -222,7 +242,7 @@ const SearchForm = props => {
                 ...rawSearchParams,
                 colors: {
                   type: rawSearchParams.colors.type,
-                  colors: { ...rawSearchParams.colors.colors, white: !rawSearchParams.colors.colors.green }
+                  colors: { ...rawSearchParams.colors.colors, green: !rawSearchParams.colors.colors.green }
                 }
               })
             }
@@ -238,7 +258,7 @@ const SearchForm = props => {
                 ...rawSearchParams,
                 colors: {
                   type: rawSearchParams.colors.type,
-                  colors: { ...rawSearchParams.colors.colors, white: !rawSearchParams.colors.colors.colorless }
+                  colors: { ...rawSearchParams.colors.colors, colorless: !rawSearchParams.colors.colors.colorless }
                 }
               })
             }
