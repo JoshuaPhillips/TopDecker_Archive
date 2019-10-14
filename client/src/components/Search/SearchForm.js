@@ -21,7 +21,7 @@ const SearchForm = props => {
       type: 'any',
       text: ''
     },
-    set: '',
+    set: [],
     colors: {
       type: 'exactly',
       colors: {
@@ -93,12 +93,12 @@ const SearchForm = props => {
     if (name) formattedSearchParams.name = name;
     if (oracle.text) formattedSearchParams.oracle = { ...oracle };
     if (type_line.text) formattedSearchParams.type_line = { ...type_line };
-    if (set) formattedSearchParams.set = set;
     if (mana_cost) formattedSearchParams.mana_cost = mana_cost;
     if (power.value) formattedSearchParams.power = { ...power };
     if (toughness.value) formattedSearchParams.toughness = { ...toughness };
     if (loyalty.value) formattedSearchParams.loyalty = { ...loyalty };
     if (cmc.value) formattedSearchParams.cmc = { ...cmc };
+    if (set.length !== 0) formattedSearchParams.set = set.split(',');
 
     // format colors
 

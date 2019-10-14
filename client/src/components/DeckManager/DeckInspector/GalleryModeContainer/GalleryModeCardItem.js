@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faMinus, faPlus, faSync, faCrown } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faMinus, faPlus, faExchangeAlt, faCrown, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar as faRegularStar } from '@fortawesome/free-regular-svg-icons';
 
 import Card from '../../../Card/Card';
 
@@ -34,7 +35,16 @@ const GalleryModeCardItem = props => {
             </div>
           ) : deck.format !== 'commander' ? (
             <div className={classes.GalleryModeCardItemControls}>
-              {deck.format !== 'commander' && <p>x {type === 'mainDeck' ? mainDeckCount : sideboardCount}</p>}
+              {deck.format !== 'commander' && (
+                <div className={classes.GalleryModeCardQuantityIndicators}>
+                  {[...Array(type === 'mainDeck' ? mainDeckCount : sideboardCount)].map(() => {
+                    return <FontAwesomeIcon icon={faStar} fixedWidth />;
+                  })}
+                  {[...Array(type === 'mainDeck' ? 4 - mainDeckCount : 4 - sideboardCount)].map(() => {
+                    return <FontAwesomeIcon icon={faRegularStar} fixedWidth />;
+                  })}
+                </div>
+              )}
               {currentUserOwnsDeck && (
                 <React.Fragment>
                   <button
@@ -64,7 +74,7 @@ const GalleryModeCardItem = props => {
                         card
                       )
                     }>
-                    <FontAwesomeIcon fixedWidth icon={faSync} />
+                    <FontAwesomeIcon fixedWidth icon={faExchangeAlt} />
                   </button>
                 </React.Fragment>
               )}

@@ -47,5 +47,6 @@ export const validateAddCard = (deck, card, list) => {
   if (matchedCard !== undefined && matchedCard.mainDeckCount + matchedCard.sideboardCount >= maxCardAllowance) {
     return false;
   }
+
   return true;
 };

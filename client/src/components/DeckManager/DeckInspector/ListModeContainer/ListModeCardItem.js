@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faPlus, faMinus, faSync, faCrown } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faPlus, faMinus, faExchangeAlt, faCrown, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar as faRegularStar } from '@fortawesome/free-regular-svg-icons';
 
 import convertTextToSymbols from '../../../../utils/convertTextToSymbols';
 import { capitalise } from '../../../../utils/capitalise';
@@ -40,7 +41,16 @@ const ListModeCardItem = props => {
             </button>
           ) : (
             <React.Fragment>
-              {deck.format !== 'commander' && <p>x {type === 'mainDeck' ? mainDeckCount : sideboardCount}</p>}
+              {deck.format !== 'commander' && (
+                <div className={classes.ListModeCardQuantityIndicators}>
+                  {[...Array(type === 'mainDeck' ? mainDeckCount : sideboardCount)].map(() => {
+                    return <FontAwesomeIcon icon={faStar} fixedWidth />;
+                  })}
+                  {[...Array(type === 'mainDeck' ? 4 - mainDeckCount : 4 - sideboardCount)].map(() => {
+                    return <FontAwesomeIcon icon={faRegularStar} fixedWidth />;
+                  })}
+                </div>
+              )}
               {currentUserOwnsDeck && (
                 <React.Fragment>
                   <button
@@ -68,7 +78,7 @@ const ListModeCardItem = props => {
                         card
                       )
                     }>
-                    <FontAwesomeIcon fixedWidth icon={faSync} />
+                    <FontAwesomeIcon fixedWidth icon={faExchangeAlt} />
                   </button>
                 </React.Fragment>
               )}

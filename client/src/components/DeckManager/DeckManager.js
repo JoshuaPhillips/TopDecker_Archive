@@ -9,7 +9,7 @@ import DeckInspector from './DeckInspector/DeckInspector';
 import Spinner from '../Spinner/Spinner';
 
 import { sortCardList } from '../../utils/sortCardList';
-import { generateCardList } from '../../utils/generateNewDeck';
+import { generateCardList } from '../../utils/generateCardList';
 
 import classes from './DeckManager.module.scss';
 

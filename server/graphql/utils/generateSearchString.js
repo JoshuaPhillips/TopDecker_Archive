@@ -172,7 +172,7 @@ const generateSetString = setParam => {
 
   setString += setParam
     .map(set => {
-      return `set:${set}`;
+      return `set:${set.trim()}`;
     })
     .join(' OR ');
 
