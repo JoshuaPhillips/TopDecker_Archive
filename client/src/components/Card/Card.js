@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import ReactImage from 'react-image';
+import Spinner from '../Spinner/Spinner';
 
 import classes from './Card.module.scss';
 
@@ -31,10 +33,9 @@ const Card = props => {
 
   return (
     <div className={classes.Card}>
-      <img
+      <ReactImage
         src={visibleFace}
-        alt={card.name}
-        onClick={props.onClick}
+        loader={<Spinner />}
         style={{
           display: 'block',
           transform: flipped ? 'rotateZ(180deg)' : 'rotateZ(0deg)',
