@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
-import Select from 'react-select';
 import { withRouter } from 'react-router-dom';
+import Select from 'react-select';
 
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { GET_COMMANDER_SEARCH_RESULTS, CREATE_NEW_DECK } from './graphql';
 import { GET_DECK_LIST } from '../graphql';
+
+import { ReactSelectStyles } from './styles';
+import { FormRow } from '../../../shared/FormRow';
+import { Button } from '../../../shared/Button';
 
 const AddDeckForm = props => {
   const [name, setName] = useState('');
   const [format, setFormat] = useState('standard');
   const [commander, setCommander] = useState({ name: '', id: '' });
   const [commanderSearchResults, setCommanderSearchResults] = useState([]);
+
+  const { cancelAddDeckHandler } = props;
 
   const GetCommanderSearchResultsQueryResponse = useQuery(GET_COMMANDER_SEARCH_RESULTS, {
     skip: !commander.name || commander.name.length <= 2,
@@ -98,20 +104,25 @@ const AddDeckForm = props => {
 
   return (
     <form>
-      <label htmlFor='name'>Name</label>
-      <input type='text' id='name' value={name} onChange={e => setName(e.target.value)} />
+      <FormRow>
+        <label htmlFor='name'>Name</label>
+        <input type='text' id='name' value={name} onChange={e => setName(e.target.value)} />
+      </FormRow>
 
-      <label htmlFor='format'>Format</label>
-      <select id='format' value={format} onChange={e => setFormat(e.target.value)}>
-        <option value='standard'>Standard</option>
-        <option value='modern'>Modern</option>
-        <option value='commander'>Commander</option>
-      </select>
+      <FormRow>
+        <label htmlFor='format'>Format</label>
+        <select id='format' value={format} onChange={e => setFormat(e.target.value)}>
+          <option value='standard'>Standard</option>
+          <option value='modern'>Modern</option>
+          <option value='commander'>Commander</option>
+        </select>
+      </FormRow>
 
       {format === 'commander' && (
-        <React.Fragment>
+        <FormRow>
           <label htmlFor='commander'>Commander</label>
           <Select
+            styles={ReactSelectStyles}
             id='commander'
             onChange={handleCommanderOptionSelect}
             onInputChange={handleCommanderInputChange}
@@ -120,12 +131,15 @@ const AddDeckForm = props => {
             placeholder='Name of your Commander?'
             noOptionsMessage={() => 'No Results Found.'}
           />
-        </React.Fragment>
+        </FormRow>
       )}
 
-      <button type='button' disabled={!checkFormValidity()} onClick={() => CreateNewDeckMutation()}>
+      <Button type='button' disabled={!checkFormValidity()} onClick={() => CreateNewDeckMutation()}>
         Create
-      </button>
+      </Button>
+      <Button type='button' onClick={() => cancelAddDeckHandler()}>
+        Cancel
+      </Button>
     </form>
   );
 };

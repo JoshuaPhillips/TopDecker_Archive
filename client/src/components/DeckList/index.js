@@ -5,14 +5,17 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { GET_DECK_LIST, DELETE_DECK } from './graphql';
 import { GET_AUTH_DATA } from '../../graphql';
 
-import DeckListItem from './DeckListItem/DeckListItem';
-import AddDeckForm from './AddDeckForm/AddDeckForm';
+import DeckListItem from './DeckListItem';
+import AddDeckForm from './AddDeckForm';
 import Spinner from '../Spinner/Spinner';
 
-import classes from './DeckList.module.scss';
+import { DeckListContainer, DeckList } from './styles';
+import { Button } from '../../shared/Button';
+import { SectionHeader } from '../../shared/SectionHeader';
+import { SubSectionHeader } from '../../shared/SubSectionHeader';
 
 const Decks = () => {
-  const [addDeck, toggleAddDeck] = useState(false);
+  const [addingDeck, toggleAddingDeck] = useState(false);
   const [deckList, setDeckList] = useState([]);
 
   const GetAuthDataQueryResponse = useQuery(GET_AUTH_DATA, { fetchPolicy: 'cache-only' });
@@ -80,41 +83,41 @@ const Decks = () => {
   }
 
   return (
-    <main className={classes.DeckList}>
-      {deckList.length === 0 ? (
-        <h1>No Decks Found.</h1>
-      ) : (
-        <React.Fragment>
-          <h1>Your Decks</h1>
+    <DeckListContainer>
+      <SectionHeader>Your Decks</SectionHeader>
 
-          {currentUserDecks.map(deck => {
+      <DeckList>
+        {currentUserDecks.length === 0 ? (
+          <SubSectionHeader>No Decks Found</SubSectionHeader>
+        ) : (
+          currentUserDecks.map(deck => {
             return (
               <DeckListItem deck={deck} key={deck.id} currentUserId={currentUserId} deleteDeckHandler={deleteDeck} />
             );
-          })}
+          })
+        )}
 
-          <h1>Other People's Decks</h1>
+        {!addingDeck ? (
+          <Button type='button' onClick={() => toggleAddingDeck(true)}>
+            Add Deck
+          </Button>
+        ) : (
+          <AddDeckForm cancelAddDeckHandler={() => toggleAddingDeck(false)} />
+        )}
+      </DeckList>
 
-          {otherDecks.map(deck => {
+      <SectionHeader>Other People's Decks</SectionHeader>
+
+      <DeckList>
+        {otherDecks.length === 0 ? (
+          <SubSectionHeader>No Decks Found</SubSectionHeader>
+        ) : (
+          otherDecks.map(deck => {
             return <DeckListItem deck={deck} key={deck.id} currentUserId={currentUserId} />;
-          })}
-        </React.Fragment>
-      )}
-      <hr />
-      {!addDeck && (
-        <button type='button' onClick={() => toggleAddDeck(true)}>
-          Add Deck
-        </button>
-      )}
-      {addDeck && (
-        <React.Fragment>
-          <AddDeckForm />
-          <button type='button' onClick={() => toggleAddDeck(false)}>
-            Cancel
-          </button>
-        </React.Fragment>
-      )}
-    </main>
+          })
+        )}
+      </DeckList>
+    </DeckListContainer>
   );
 };
 

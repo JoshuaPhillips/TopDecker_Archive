@@ -1,21 +1,28 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 import { useQuery } from '@apollo/react-hooks';
 import { GET_AUTH_DATA } from './graphql';
 
-import Header from './components/Header/Header';
+import Header from './components/Header';
 import Auth from './components/Auth/Auth';
-import Account from './components/Account/Account';
+import Account from './components/Account';
 import Search from './components/Search/Search';
-import DeckList from './components/DeckList/DeckList';
+import DeckList from './components/DeckList';
 import DeckManager from './components/DeckManager/DeckManager';
 import Sandbox from './components/Sandbox/Sandbox';
 import ComponentLibrary from './components/ComponentLibrary/ComponentLibrary';
 
-import './App.css';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+import styled from 'styled-components';
+
+const StyledApp = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
 
 toast.configure({
   position: 'bottom-left',
@@ -30,7 +37,7 @@ const App = () => {
   const { token, currentUserId } = GetAuthDataQueryResponse.data.AuthData;
 
   return (
-    <div className='App'>
+    <StyledApp className='App'>
       <Header />
       <Switch>
         <Route path='/login' component={Auth} />
@@ -44,7 +51,7 @@ const App = () => {
         <Route path='/library' component={ComponentLibrary} />
         <Redirect to='/decks' />
       </Switch>
-    </div>
+    </StyledApp>
   );
 };
 
