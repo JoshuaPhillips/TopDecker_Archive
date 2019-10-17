@@ -1,7 +1,8 @@
 import React from 'react';
 
-import classes from './ListModeContainer.module.scss';
+import { StyledListModeContainer, StyledListModeCardListContainer } from './styles';
 import ListModeCardItem from './ListModeCardItem';
+import { SubSectionHeader } from '../../../../shared/Headers';
 
 const ListModeContainer = props => {
   const { deck, mainDeckList, sideboardList, updateCardListHandler, currentUserOwnsDeck } = props;
@@ -18,12 +19,12 @@ const ListModeContainer = props => {
   });
 
   return (
-    <div className={classes.ListModeContainer}>
-      <h1>
+    <StyledListModeContainer>
+      <SubSectionHeader>
         Main Deck ({totalMainDeckCount} / {deck.format === 'commander' ? 100 : 60})
-      </h1>
+      </SubSectionHeader>
 
-      <div className={classes.ListModeCardListContainer}>
+      <StyledListModeCardListContainer>
         {deck.format === 'commander' && (
           <ListModeCardItem
             cardWithCounts={{ card: deck.commander, mainDeckCount: 1, sideboardCount: 0 }}
@@ -46,12 +47,12 @@ const ListModeContainer = props => {
             />
           );
         })}
-      </div>
+      </StyledListModeCardListContainer>
 
       {deck.format !== 'commander' && (
         <React.Fragment>
-          <h1>Sideboard ({totalSideboardCount} / 15)</h1>
-          <div className={classes.ListModeCardListContainer}>
+          <SubSectionHeader>Sideboard ({totalSideboardCount} / 15)</SubSectionHeader>
+          <StyledListModeCardListContainer>
             {sideboardList.map(cardWithCounts => {
               return (
                 <ListModeCardItem
@@ -66,10 +67,10 @@ const ListModeContainer = props => {
                 />
               );
             })}
-          </div>
+          </StyledListModeCardListContainer>
         </React.Fragment>
       )}
-    </div>
+    </StyledListModeContainer>
   );
 };
 

@@ -47,6 +47,7 @@ export const OtherDecksContainer = styled.div`
   border-top: 2px solid ${props => props.theme.colors.primary};
   padding: 0.5rem 0;
   min-height: 15%;
+  overflow-y: scroll;
 
   p {
     margin-bottom: 0.25rem;

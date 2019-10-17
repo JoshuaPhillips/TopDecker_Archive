@@ -69,6 +69,7 @@ const DeckInspectorToolbar = props => {
           {filterNames.map(filter => {
             return (
               <CardTypeFilterIcon
+                key={`filterIcon__${filter}`}
                 symbol={filter}
                 fixed
                 size='2x'
