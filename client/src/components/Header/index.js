@@ -14,7 +14,7 @@ const Header = () => {
 
   return (
     <StyledHeader>
-      <h1>Welcome to TopDeckr</h1>
+      <h1>Welcome to TopDecker</h1>
       {currentUserId && (
         <Nav>
           <React.Fragment>

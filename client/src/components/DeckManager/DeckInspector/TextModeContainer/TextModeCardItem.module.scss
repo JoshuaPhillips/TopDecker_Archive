@@ -1,6 +1,6 @@
 .TextModeCardItem {
   border: 1px solid lightgrey;
-  border-top: 3px solid darkblue;
+  border-top: 3px solid #385170;
   border-radius: 5px;
   box-shadow: 0 4px 2px -3px;
   margin: 0.5rem;
@@ -17,7 +17,7 @@
   padding: 0.5rem;
   border-bottom: 1px solid lightgrey;
   margin-top: 2rem;
-  border-top: 2px solid darkblue;
+  border-top: 2px solid #385170;
 
   &:first-child {
     margin-top: 0;

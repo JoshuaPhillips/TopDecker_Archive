@@ -2,12 +2,13 @@ import styled from 'styled-components';
 
 export const StyledSidebarSearchResult = styled.div`
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  flex-direction: column;
   padding: 0.5rem 1rem;
   border-top: 1px dashed lightgrey;
   cursor: pointer;
   transition: 0.1s all ease-in-out;
+  color: ${props => (props.unavailable ? 'lightgrey' : props.theme.colors.primary)}
+  user-select: none;
 
   &:first-child {
     border-top: 0;
@@ -19,9 +20,12 @@ export const StyledSidebarSearchResult = styled.div`
   }
 
   .SidebarSearchResultHeader {
-    flex-grow: 1;
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+
+  .SidebarSearchResultCardContainer {
+    border: 1px solid red;
   }
 `;
