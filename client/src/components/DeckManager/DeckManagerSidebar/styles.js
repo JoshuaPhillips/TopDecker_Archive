@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const StyledDeckManagerSidebar = styled.aside`
   width: 30%;
   max-width: 300px;
+  max-height: 92vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -15,7 +16,7 @@ export const StyledDeckManagerSidebar = styled.aside`
 export const QuickSearchContainer = styled.div`
   display: flex;
   flex-direction: column;
-  flex-grow: 8;
+  flex-grow: 1;
 
   .QuickSearchHeaderContainer {
     h1 {
@@ -43,13 +44,13 @@ export const QuickSearchContainer = styled.div`
 
   .QuickSearchFormContainer {
     input {
+      width: 100%;
       margin-bottom: 0.5rem;
     }
   }
 `;
 
 export const OtherDecksContainer = styled.div`
-  flex-grow: 2;
   border-top: 2px solid ${props => props.theme.colors.primary};
   padding: 0.5rem 0;
 

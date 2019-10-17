@@ -7,6 +7,7 @@ import { SEARCH_CARDS, GET_USER_DECKS } from './graphql';
 
 import SidebarSearchResult from './SidebarSearchResult';
 import Spinner from '../../Spinner/Spinner';
+import Card from '../../Card/Card';
 
 import { StyledDeckManagerSidebar, QuickSearchContainer, OtherDecksContainer } from './styles';
 import { SectionHeader } from '../../../shared/Headers';
@@ -28,6 +29,7 @@ const DeckManagerSidebar = props => {
   const [selectedList, setSelectedList] = useState('mainDeck');
   const [nameSearch, setNameSearch] = useState('');
   const [loadingResults, setLoadingResults] = useState(false);
+  const [selectedResult, setSelectedResult] = useState(null);
 
   const searchCards = async submitEvent => {
     submitEvent.preventDefault();
@@ -89,7 +91,9 @@ const DeckManagerSidebar = props => {
           )}
         </div>
         <div className='QuickSearchResultsContainer'>
-          {searchResults.length === 0 ? (
+          {selectedResult ? (
+            <Card card={selectedResult} />
+          ) : searchResults.length === 0 ? (
             <h1>Search for a card name below.</h1>
           ) : (
             <React.Fragment>
@@ -106,6 +110,7 @@ const DeckManagerSidebar = props => {
                           card={result}
                           list={selectedList}
                           addCardHandler={updateCardListHandler}
+                          selectResult={setSelectedResult}
                         />
                       );
                     })}
@@ -127,11 +132,17 @@ const DeckManagerSidebar = props => {
             <Button inverted type='submit' disabled={nameSearch.length < 3}>
               {loadingResults ? 'Searching...' : 'Search'}
             </Button>
+            {selectedResult && (
+              <Button type='button' onClick={() => setSelectedResult(null)}>
+                Back
+              </Button>
+            )}
             {searchResults.length !== 0 && (
               <Button
                 type='button'
                 onClick={() => {
                   setNameSearch('');
+                  setSelectedResult(null);
                   setSearchResults([]);
                 }}>
                 Clear Results
