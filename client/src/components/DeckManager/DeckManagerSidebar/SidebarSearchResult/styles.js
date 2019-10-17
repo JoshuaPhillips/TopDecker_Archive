@@ -15,8 +15,8 @@ export const StyledSidebarSearchResult = styled.div`
   }
 
   &:hover {
-    background-color: ${props => props.theme.colors.primary};
-    color: ${props => props.theme.colors.background};
+    background-color: ${props => (props.unavailable ? props.theme.colors.background : props.theme.colors.primary)};
+    color: ${props => (props.unavailable ? 'lightgrey' : props.theme.colors.background)};
   }
 
   .SidebarSearchResultHeader {

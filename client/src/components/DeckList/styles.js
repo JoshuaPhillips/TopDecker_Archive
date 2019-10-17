@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const DeckListContainer = styled.main`
   display: flex;
   flex-wrap: wrap;
+  background-color: white;
   margin: 1rem auto;
   padding: 3rem;
   border: 1px solid lightgrey;

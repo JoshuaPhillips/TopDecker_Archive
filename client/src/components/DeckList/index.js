@@ -22,7 +22,7 @@ const Decks = () => {
   const { currentUserId } = GetAuthDataQueryResponse.data.AuthData;
 
   const GetDeckListQueryResponse = useQuery(GET_DECK_LIST, {
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
     onCompleted(data) {
       if (data) {
         const deckList = data.getAllDecks.sort((a, b) => {

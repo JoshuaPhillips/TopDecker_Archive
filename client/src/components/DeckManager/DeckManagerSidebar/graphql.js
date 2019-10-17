@@ -51,6 +51,7 @@ export const GET_USER_DECKS = gql`
       decks {
         id
         name
+        format
       }
     }
   }

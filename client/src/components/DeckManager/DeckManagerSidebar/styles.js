@@ -2,8 +2,7 @@ import styled from 'styled-components';
 
 export const StyledDeckManagerSidebar = styled.aside`
   width: 30%;
-  max-width: 350px;
-  margin-top: 1rem;
+  max-width: 300px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -18,6 +17,12 @@ export const QuickSearchContainer = styled.div`
   flex-direction: column;
   flex-grow: 8;
 
+  .QuickSearchHeaderContainer {
+    h1 {
+      padding-bottom: 1.6rem; // to line up with the header of the deck inspector
+    }
+  }
+
   .QuickSearchResultsContainer {
     flex-grow: 1;
     border-top: 1px solid lightgrey;
@@ -31,7 +36,8 @@ export const QuickSearchContainer = styled.div`
       font-weight: ${props => props.theme.fonts.weights.bold};
       font-size: ${props => props.theme.fonts.sizes.extraLarge};
       text-align: center;
-      margin-top: 10rem;
+      margin-top: 50%;
+      transform: translateY(-50%);
     }
   }
 
@@ -46,4 +52,8 @@ export const OtherDecksContainer = styled.div`
   flex-grow: 2;
   border-top: 2px solid ${props => props.theme.colors.primary};
   padding: 0.5rem 0;
+
+  p {
+    margin-bottom: 0.25rem;
+  }
 `;

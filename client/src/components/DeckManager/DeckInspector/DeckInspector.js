@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import DeckInspectorToolbar from './DeckInspectorToolbar/DeckInspectorToolbar';
 import GalleryModeContainer from './GalleryModeContainer/GalleryModeContainer';
 import ListModeContainer from './ListModeContainer/ListModeContainer';
+import TextModeContainer from './TextModeContainer/TextModeContainer';
 
 import filterCardList from '../../../utils/filterCardList';
 
-import classes from './DeckInspector.module.scss';
-import TextModeContainer from './TextModeContainer/TextModeContainer';
+import { StyledDeckInspector } from './styles';
 
 const DeckInspector = props => {
   const { deck, sortMode, filters } = props;
@@ -68,7 +68,7 @@ const DeckInspector = props => {
   }
 
   return (
-    <div className={classes.DeckInspector}>
+    <StyledDeckInspector>
       <DeckInspectorToolbar
         deck={deck}
         sortMode={sortMode}
@@ -79,9 +79,10 @@ const DeckInspector = props => {
         }}
         changeSortModeHandler={props.changeSortModeHandler}
         toggleFilterHandler={props.toggleFilterHandler}
+        filters={filters}
       />
       {cardListContainer}
-    </div>
+    </StyledDeckInspector>
   );
 };
 

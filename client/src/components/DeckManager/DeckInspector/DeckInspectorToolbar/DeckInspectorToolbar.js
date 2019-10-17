@@ -1,25 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mana } from '@saeris/react-mana';
 
 import { capitalise } from '../../../../utils/capitalise';
 
-import classes from './DeckInspectorToolbar.module.scss';
+import { StyledDeckInspectorToolbar, CardTypeFilterIcon } from './styles';
+import { DeckInspectorControlGroup } from '../../../../shared/DeckInspectorControlGroup';
+import { Button, DangerButton } from '../../../../shared/Buttons';
 import { ModeToggleContainer } from '../../../../shared/ModeToggles';
 
 const DeckInspectorToolbar = props => {
   const {
     sortMode,
     deck: { name, format, commander },
-    filters = {
-      creatures: true,
-      planeswalkers: true,
-      artifacts: true,
-      enchantments: true,
-      sorceries: true,
-      instants: true,
-      lands: true
-    },
+    filters,
     currentUserOwnsDeck,
     viewMode,
     changeSortModeHandler,
@@ -27,67 +20,20 @@ const DeckInspectorToolbar = props => {
     toggleFilterHandler
   } = props;
 
-  return (
-    <div className={classes.DeckInspectorToolbar}>
-      <div>
-        <p>Filters:</p>
-        <form>
-          <label>
-            <Mana symbol='creature' fixed />
-            <input
-              type='checkbox'
-              defaultChecked={filters.creatures}
-              onChange={() => toggleFilterHandler('creature')}></input>
-          </label>
-          <label>
-            <Mana symbol={'planeswalker'} fixed />
-            <input
-              type='checkbox'
-              defaultChecked={filters.planeswalkers}
-              onChange={() => toggleFilterHandler('planeswalker')}></input>
-          </label>
-          <label>
-            <Mana symbol={'artifact'} fixed />
-            <input
-              type='checkbox'
-              defaultChecked={filters.artifacts}
-              onChange={() => toggleFilterHandler('artifact')}></input>
-          </label>
-          <label>
-            <Mana symbol={'enchantment'} fixed />
-            <input
-              type='checkbox'
-              defaultChecked={filters.enchantments}
-              onChange={() => toggleFilterHandler('enchantment')}></input>
-          </label>
-          <label>
-            <Mana symbol={'sorcery'} fixed />
-            <input
-              type='checkbox'
-              defaultChecked={filters.sorceries}
-              onChange={() => toggleFilterHandler('sorcery')}></input>
-          </label>
-          <label>
-            <Mana symbol={'instant'} fixed />
-            <input
-              type='checkbox'
-              defaultChecked={filters.instants}
-              onChange={() => toggleFilterHandler('instant')}></input>
-          </label>
-          <label>
-            <Mana symbol={'land'} fixed />
-            <input type='checkbox' defaultChecked={filters.lands} onChange={() => toggleFilterHandler('land')}></input>
-          </label>
-        </form>
-      </div>
-      <div>
-        <h1>{name}</h1>
+  const filterNames = ['creature', 'planeswalker', 'artifact', 'enchantment', 'sorcery', 'instant', 'land'];
 
-        <p>
-          {capitalise(format)} {format === 'commander' ? <em>{` (${commander.name})`}</em> : null}
-        </p>
+  return (
+    <StyledDeckInspectorToolbar>
+      <div className='DeckInspectorToolbarHeader'>
+        <div className='DeckInspectorTitle'>
+          <h1>{name}</h1>
+
+          <p>
+            {capitalise(format)} {format === 'commander' ? <em>{` (${commander.name})`}</em> : null}
+          </p>
+        </div>
         {currentUserOwnsDeck && (
-          <React.Fragment>
+          <div className='DeckInspectorHeaderButtons'>
             <Link
               to={{
                 pathname: '/search',
@@ -95,14 +41,14 @@ const DeckInspectorToolbar = props => {
                   deck: props.deck
                 }
               }}>
-              <button type='button'>Search for Cards</button>
+              <Button type='button'>Search for Cards</Button>
             </Link>
-            <button type='button'>Delete Deck</button>
-          </React.Fragment>
+            <DangerButton type='button'>Delete Deck</DangerButton>
+          </div>
         )}
       </div>
-      <div>
-        <div>
+      <div className='DeckInspectorToolbarControls'>
+        <DeckInspectorControlGroup>
           <p>View as:</p>
           <ModeToggleContainer>
             <button type='button' disabled={viewMode === 'gallery'} onClick={() => changeViewModeHandler('gallery')}>
@@ -116,53 +62,70 @@ const DeckInspectorToolbar = props => {
               List
             </button>
           </ModeToggleContainer>
-        </div>
+        </DeckInspectorControlGroup>
 
-        <div>
+        <DeckInspectorControlGroup>
+          <p>Filters:</p>
+          {filterNames.map(filter => {
+            return (
+              <CardTypeFilterIcon
+                symbol={filter}
+                fixed
+                size='2x'
+                onClick={() => toggleFilterHandler(filter)}
+                disabled={!filters[filter]}
+              />
+            );
+          })}
+        </DeckInspectorControlGroup>
+
+        <DeckInspectorControlGroup>
           <p>Sort by:</p>
-          <button
-            type='button'
-            disabled={sortMode === 'alphabetical'}
-            onClick={() => {
-              changeSortModeHandler('alphabetical');
-            }}>
-            A - Z
-          </button>
-          <button
-            type='button'
-            disabled={sortMode === 'rarity'}
-            onClick={() => {
-              changeSortModeHandler('rarity');
-            }}>
-            Rarity
-          </button>
-          <button
-            type='button'
-            disabled={sortMode === 'color'}
-            onClick={() => {
-              changeSortModeHandler('color');
-            }}>
-            Color
-          </button>
-          <button
-            type='button'
-            disabled={sortMode === 'cmc'}
-            onClick={() => {
-              changeSortModeHandler('cmc');
-            }}>
-            CMC
-          </button>
-          <button
-            type='button'
-            disabled={sortMode === 'type'}
-            onClick={() => {
-              changeSortModeHandler('type');
-            }}>
-            Type
-          </button>
-        </div>
+          <ModeToggleContainer>
+            <button
+              type='button'
+              disabled={sortMode === 'alphabetical'}
+              onClick={() => {
+                changeSortModeHandler('alphabetical');
+              }}>
+              A - Z
+            </button>
+            <button
+              type='button'
+              disabled={sortMode === 'rarity'}
+              onClick={() => {
+                changeSortModeHandler('rarity');
+              }}>
+              Rarity
+            </button>
+            <button
+              type='button'
+              disabled={sortMode === 'color'}
+              onClick={() => {
+                changeSortModeHandler('color');
+              }}>
+              Color
+            </button>
+            <button
+              type='button'
+              disabled={sortMode === 'cmc'}
+              onClick={() => {
+                changeSortModeHandler('cmc');
+              }}>
+              CMC
+            </button>
+            <button
+              type='button'
+              disabled={sortMode === 'type'}
+              onClick={() => {
+                changeSortModeHandler('type');
+              }}>
+              Type
+            </button>
+          </ModeToggleContainer>
+        </DeckInspectorControlGroup>
       </div>
-    </div>
+    </StyledDeckInspectorToolbar>
   );
 };
 

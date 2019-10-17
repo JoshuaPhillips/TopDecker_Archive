@@ -14,6 +14,8 @@ import { Button } from '../../../shared/Buttons';
 import { ModeToggleContainer } from '../../../shared/ModeToggles';
 import { TextInput } from '../../../shared/Forms';
 
+import { capitalise } from '../../../utils/capitalise';
+
 const DeckManagerSidebar = props => {
   const {
     deck: { commander, format },
@@ -146,7 +148,9 @@ const DeckManagerSidebar = props => {
             {GetUserDecksQueryResponse.data.getCurrentUser.decks.map(deck => {
               return (
                 <Link key={deck.id} to={`/decks/${deck.id}`}>
-                  <p key={deck.id}>{deck.name}</p>
+                  <p key={deck.id}>
+                    {deck.name} ({capitalise(deck.format)})
+                  </p>
                 </Link>
               );
             })}
