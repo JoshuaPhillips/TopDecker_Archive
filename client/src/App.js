@@ -4,14 +4,12 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 import { GET_AUTH_DATA } from './graphql';
 
-import Header from './components/Header';
-import Auth from './components/Auth/Auth';
+import Auth from './components/Auth';
 import Account from './components/Account';
-import Search from './components/Search/Search';
 import DeckList from './components/DeckList';
-import DeckManager from './components/DeckManager/DeckManager';
-import Sandbox from './components/Sandbox/Sandbox';
-import ComponentLibrary from './components/ComponentLibrary/ComponentLibrary';
+import DeckManager from './components/DeckManager';
+import Header from './components/Header';
+import Search from './components/Search/Search';
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -47,8 +45,7 @@ const App = () => {
         <Route path='/decks' exact component={DeckList} />
         <Route path='/decks/:deckId' component={DeckManager} />
         <Route path='/search/' component={Search} />
-        <Route path='/sandbox' component={Sandbox} />
-        <Route path='/library' component={ComponentLibrary} />
+
         <Redirect to='/decks' />
       </Switch>
     </StyledApp>

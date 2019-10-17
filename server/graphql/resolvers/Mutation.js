@@ -217,6 +217,10 @@ const MutationResolvers = {
 
         const deckOwner = await User.findById(matchedDeck.owner);
 
+        if (!deckOwner) {
+          throw new ApolloError('Error deleting Deck.', 'DECK_OWNER_NOT_FOUND');
+        }
+
         deckOwner.decks = deckOwner.decks.filter(deck => {
           return !deck.equals(matchedDeck._id);
         });

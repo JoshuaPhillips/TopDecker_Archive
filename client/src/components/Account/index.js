@@ -5,11 +5,10 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { GET_ACCOUNT_DETAILS, SAVE_ACCOUNT_DETAILS, CHANGE_PASSWORD } from './graphql';
 
 import Spinner from '../Spinner/Spinner';
-import { StyledAccount, ButtonGroup } from './styles';
-import { SectionHeader } from '../../shared/SectionHeader';
-import { Button, DangerButton } from '../../shared/Button';
-import { Form } from '../../shared/Form';
-import { FormRow } from '../../shared/FormRow';
+import { StyledAccount } from './styles';
+import { SectionHeader } from '../../shared/Headers';
+import { Button, ButtonGroup, DangerButton } from '../../shared/Buttons';
+import { Form, TextInputWithLabel } from '../../shared/Forms';
 
 const Account = () => {
   const [editing, toggleEditing] = useState(false);
@@ -86,8 +85,9 @@ const Account = () => {
       <SectionHeader>Account</SectionHeader>
 
       <Form>
-        <FormRow>
+        <TextInputWithLabel>
           <label htmlFor='firstName'>First Name:</label>
+
           <input
             type='text'
             id='firstName'
@@ -95,10 +95,11 @@ const Account = () => {
             onChange={e => setAccountDetails({ ...accountDetails, firstName: e.target.value })}
             readOnly={!editing}
           />
-        </FormRow>
+        </TextInputWithLabel>
 
-        <FormRow>
+        <TextInputWithLabel>
           <label htmlFor='lastName'>Last Name:</label>
+
           <input
             type='text'
             id='lastName'
@@ -106,10 +107,11 @@ const Account = () => {
             onChange={e => setAccountDetails({ ...accountDetails, lastName: e.target.value })}
             readOnly={!editing}
           />
-        </FormRow>
+        </TextInputWithLabel>
 
-        <FormRow>
+        <TextInputWithLabel>
           <label htmlFor='username'>Username:</label>
+
           <input
             type='text'
             id='username'
@@ -117,10 +119,11 @@ const Account = () => {
             onChange={e => setAccountDetails({ ...accountDetails, username: e.target.value })}
             readOnly={!editing}
           />
-        </FormRow>
+        </TextInputWithLabel>
 
-        <FormRow>
+        <TextInputWithLabel>
           <label htmlFor='email'>Email:</label>
+
           <input
             type='email'
             id='email'
@@ -128,10 +131,11 @@ const Account = () => {
             onChange={e => setAccountDetails({ ...accountDetails, email: e.target.value })}
             readOnly={!editing}
           />
-        </FormRow>
+        </TextInputWithLabel>
 
-        <FormRow>
+        <TextInputWithLabel>
           <label htmlFor='avatarUrl'>Avatar Url:</label>
+
           <input
             type='url'
             id='avatarUrl'
@@ -139,7 +143,7 @@ const Account = () => {
             onChange={e => setAccountDetails({ ...accountDetails, avatarUrl: e.target.value })}
             readOnly={!editing}
           />
-        </FormRow>
+        </TextInputWithLabel>
 
         <Button type='button' onClick={editing ? () => SaveAccountDetailsMutation() : () => toggleEditing(true)}>
           {editing ? 'Save' : 'Edit'}
@@ -148,62 +152,73 @@ const Account = () => {
 
       <SectionHeader danger>Danger Zone</SectionHeader>
       <Form>
-        <ButtonGroup>
-          <Button
-            inverted={editingPassword}
-            type='button'
-            onClick={() => {
-              toggleDeletingAccount(false);
-              toggleEditingPassword(true);
-            }}>
-            Change Password
-          </Button>
+        {!editingPassword && !deletingAccount && (
+          <ButtonGroup>
+            <Button
+              type='button'
+              onClick={() => {
+                toggleDeletingAccount(false);
+                toggleEditingPassword(true);
+              }}>
+              Change Password
+            </Button>
 
-          <DangerButton
-            inverted={deletingAccount}
-            type='button'
-            onClick={() => {
-              toggleEditingPassword(false);
-              toggleDeletingAccount(true);
-            }}>
-            Delete Account
-          </DangerButton>
-        </ButtonGroup>
+            <DangerButton
+              type='button'
+              onClick={() => {
+                toggleEditingPassword(false);
+                toggleDeletingAccount(true);
+              }}>
+              Delete Account
+            </DangerButton>
+          </ButtonGroup>
+        )}
 
         {editingPassword && (
           <React.Fragment>
-            <FormRow>
+            <TextInputWithLabel>
               <label htmlFor='currentPassword'>Current Password:</label>
+
               <input
                 type='password'
                 id='currentPassword'
                 value={passwordDetails.currentPassword}
                 onChange={e => setPasswordDetails({ ...passwordDetails, currentPassword: e.target.value })}
               />
-            </FormRow>
+            </TextInputWithLabel>
 
-            <FormRow>
+            <TextInputWithLabel>
               <label htmlFor='newPassword'>New Password:</label>
+
               <input
                 type='password'
                 id='newPassword'
                 value={passwordDetails.newPassword}
                 onChange={e => setPasswordDetails({ ...passwordDetails, newPassword: e.target.value })}
               />
-            </FormRow>
+            </TextInputWithLabel>
 
-            <FormRow>
+            <TextInputWithLabel>
               <label htmlFor='confirmationPassword'>Confirm New Password:</label>
+
               <input
                 type='password'
                 id='confirmationPassword'
                 value={passwordDetails.confirmationPassword}
                 onChange={e => setPasswordDetails({ ...passwordDetails, confirmationPassword: e.target.value })}
               />
-            </FormRow>
+            </TextInputWithLabel>
 
             <ButtonGroup>
-              <Button inverted type='button' onClick={() => ChangePasswordMutation()}>
+              <Button
+                inverted
+                type='button'
+                onClick={() => ChangePasswordMutation()}
+                disabled={
+                  passwordDetails.currentPassword.length === 0 ||
+                  passwordDetails.newPassword.length === 0 ||
+                  passwordDetails.confirmationPassword.length === 0
+                }>
                 Confirm
               </Button>
               <Button inverted type='button' onClick={() => resetPasswordChange()}>
@@ -216,25 +231,27 @@ const Account = () => {
         <ButtonGroup></ButtonGroup>
         {deletingAccount && (
           <React.Fragment>
-            <FormRow>
-              <label htmlFor='accountDeleteConfirmationPassword'>Enter Your Password:</label>
+            <TextInputWithLabel>
+              <label htmlFor='accountDeleteConfirmationPassword'>Enter your Password:</label>
+
               <input
                 type='text'
                 id='accountDeleteConfirmationPassword'
                 disabled={!deletingAccount}
                 onChange={e => setDeleteConfirmationPassword(e.target.value)}
               />
-            </FormRow>
+            </TextInputWithLabel>
 
-            <FormRow>
+            <TextInputWithLabel>
               <label htmlFor='accountDeleteConfirmationCheckbox'>Do you really want to delete your account?</label>
+
               <input
                 type='checkbox'
                 id='accountDeleteConfirmationCheckbox'
                 disabled={!deletingAccount}
-                onChange={e => setDeleteConfirmationCheckbox(e.target.value)}
+                onChange={e => setDeleteConfirmationCheckbox(e.target.checked)}
               />
-            </FormRow>
+            </TextInputWithLabel>
             <ButtonGroup>
               <DangerButton
                 inverted

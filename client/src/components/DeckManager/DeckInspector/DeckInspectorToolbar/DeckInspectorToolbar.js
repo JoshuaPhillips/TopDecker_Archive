@@ -5,6 +5,7 @@ import { Mana } from '@saeris/react-mana';
 import { capitalise } from '../../../../utils/capitalise';
 
 import classes from './DeckInspectorToolbar.module.scss';
+import { ModeToggleContainer } from '../../../../shared/ModeToggles';
 
 const DeckInspectorToolbar = props => {
   const {
@@ -103,16 +104,18 @@ const DeckInspectorToolbar = props => {
       <div>
         <div>
           <p>View as:</p>
-          <button type='button' disabled={viewMode === 'gallery'} onClick={() => changeViewModeHandler('gallery')}>
-            Gallery
-          </button>
-          <button type='button' disabled={viewMode === 'text'} onClick={() => changeViewModeHandler('text')}>
-            Text
-          </button>
+          <ModeToggleContainer>
+            <button type='button' disabled={viewMode === 'gallery'} onClick={() => changeViewModeHandler('gallery')}>
+              Gallery
+            </button>
+            <button type='button' disabled={viewMode === 'text'} onClick={() => changeViewModeHandler('text')}>
+              Text
+            </button>
 
-          <button type='button' disabled={viewMode === 'list'} onClick={() => changeViewModeHandler('list')}>
-            List
-          </button>
+            <button type='button' disabled={viewMode === 'list'} onClick={() => changeViewModeHandler('list')}>
+              List
+            </button>
+          </ModeToggleContainer>
         </div>
 
         <div>

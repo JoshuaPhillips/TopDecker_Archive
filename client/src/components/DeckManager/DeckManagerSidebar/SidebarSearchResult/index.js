@@ -8,29 +8,28 @@ import { validateAddCard } from '../../../../utils/validateAddCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 
+import { StyledSidebarSearchResult } from './styles';
+
 const QuickSearchResult = props => {
   const { deck, card, list, addCardHandler } = props;
 
   return (
     <SlideToggle collapsed>
       {({ toggle, setCollapsibleElement }) => (
-        <div>
-          <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex' }}>
-              <button
-                onClick={() => addCardHandler(deck, list, 'add', card)}
-                disabled={!validateAddCard(deck, card, list)}>
-                {card.name}
-              </button>
-            </div>
-            <div onClick={toggle}>
+        <StyledSidebarSearchResult>
+          <div className='SidebarSearchResultHeader'>
+            <p onClick={() => addCardHandler(deck, list, 'add', card)} disabled={!validateAddCard(deck, card, list)}>
+              {card.name}
+            </p>
+
+            <div onClick={toggle} style={{ zIndex: '1000' }}>
               <FontAwesomeIcon icon={faEye} />
             </div>
           </div>
           <div ref={setCollapsibleElement}>
             <Card card={card}></Card>
           </div>
-        </div>
+        </StyledSidebarSearchResult>
       )}
     </SlideToggle>
   );

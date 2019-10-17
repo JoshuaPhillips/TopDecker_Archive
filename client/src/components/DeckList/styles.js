@@ -12,8 +12,8 @@ export const DeckListContainer = styled.main`
 `;
 
 export const DeckList = styled.div`
-  margin-bottom: 2rem;
-  width: 100%;
+  margin: 0 auto 2rem;
+  width: 80%;
 
   ButtonGroup {
     color: red;

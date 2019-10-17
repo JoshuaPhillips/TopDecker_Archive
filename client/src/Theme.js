@@ -13,6 +13,10 @@ const calculateFontSize = modifier => {
   return font_size__base + modifier * 0.2 + 'rem';
 };
 
+// sizing
+
+const header__height = 8;
+
 export const Theme = {
   colors: {
     primary: color__primary,
@@ -32,5 +36,8 @@ export const Theme = {
       base: 'normal',
       bold: 'bold'
     }
+  },
+  sizing: {
+    headerHeight: header__height
   }
 };

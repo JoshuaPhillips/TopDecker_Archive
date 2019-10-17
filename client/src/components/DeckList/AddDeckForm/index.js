@@ -7,8 +7,8 @@ import { GET_COMMANDER_SEARCH_RESULTS, CREATE_NEW_DECK } from './graphql';
 import { GET_DECK_LIST } from '../graphql';
 
 import { ReactSelectStyles } from './styles';
-import { FormRow } from '../../../shared/FormRow';
-import { Button } from '../../../shared/Button';
+import { FormRow, TextInputWithLabel } from '../../../shared/Forms';
+import { Button } from '../../../shared/Buttons';
 
 const AddDeckForm = props => {
   const [name, setName] = useState('');
@@ -104,19 +104,42 @@ const AddDeckForm = props => {
 
   return (
     <form>
-      <FormRow>
+      <TextInputWithLabel>
         <label htmlFor='name'>Name</label>
         <input type='text' id='name' value={name} onChange={e => setName(e.target.value)} />
-      </FormRow>
+      </TextInputWithLabel>
 
-      <FormRow>
+      <TextInputWithLabel>
         <label htmlFor='format'>Format</label>
-        <select id='format' value={format} onChange={e => setFormat(e.target.value)}>
+        <label>
+          Standard
+          <input
+            type='radio'
+            value='standard'
+            checked={format === 'standard'}
+            onChange={e => setFormat(e.target.value)}
+          />
+        </label>
+
+        <label>
+          Modern
+          <input type='radio' value='modern' checked={format === 'modern'} onChange={e => setFormat(e.target.value)} />
+        </label>
+        <label>
+          Commander
+          <input
+            type='radio'
+            value='commander'
+            checked={format === 'commander'}
+            onChange={e => setFormat(e.target.value)}
+          />
+        </label>
+        {/* <select id='format' value={format} onChange={e => setFormat(e.target.value)}>
           <option value='standard'>Standard</option>
           <option value='modern'>Modern</option>
           <option value='commander'>Commander</option>
-        </select>
-      </FormRow>
+        </select> */}
+      </TextInputWithLabel>
 
       {format === 'commander' && (
         <FormRow>

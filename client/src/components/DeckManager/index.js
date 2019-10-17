@@ -4,14 +4,14 @@ import { withRouter } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { GET_AUTH_DATA, GET_DECK_DETAILS, UPDATE_CARD_LIST } from './graphql';
 
-import DeckManagerSidebar from './DeckManagerSidebar/DeckManagerSidebar';
+import DeckManagerSidebar from './DeckManagerSidebar';
 import DeckInspector from './DeckInspector/DeckInspector';
 import Spinner from '../Spinner/Spinner';
 
 import { sortCardList } from '../../utils/sortCardList';
 import { generateCardList } from '../../utils/generateCardList';
 
-import classes from './DeckManager.module.scss';
+import { StyledDeckManager } from './styles';
 
 const DeckManager = props => {
   const { deckId: currentDeckId } = props.match.params;
@@ -90,7 +90,7 @@ const DeckManager = props => {
   }
 
   return (
-    <main className={classes.DeckManager}>
+    <StyledDeckManager>
       {deck && currentUserOwnsDeck && <DeckManagerSidebar deck={deck} updateCardListHandler={updateCardList} />}
       {deck && (
         <DeckInspector
@@ -103,7 +103,7 @@ const DeckManager = props => {
           toggleFilterHandler={toggleFilter}
         />
       )}
-    </main>
+    </StyledDeckManager>
   );
 };
 

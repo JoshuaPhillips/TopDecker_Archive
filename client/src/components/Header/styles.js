@@ -8,7 +8,7 @@ export const StyledHeader = styled.header`
   color: ${props => props.theme.colors.background};
 
   padding: 0 5rem;
-  min-height: 8vh;
+  height: ${props => props.theme.sizing.headerHeight + 'vh'}
   font-weight: bold;
 
   h1 {

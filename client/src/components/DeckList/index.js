@@ -10,9 +10,8 @@ import AddDeckForm from './AddDeckForm';
 import Spinner from '../Spinner/Spinner';
 
 import { DeckListContainer, DeckList } from './styles';
-import { Button } from '../../shared/Button';
-import { SectionHeader } from '../../shared/SectionHeader';
-import { SubSectionHeader } from '../../shared/SubSectionHeader';
+import { Button } from '../../shared/Buttons';
+import { SectionHeader, SubSectionHeader } from '../../shared/Headers';
 
 const Decks = () => {
   const [addingDeck, toggleAddingDeck] = useState(false);

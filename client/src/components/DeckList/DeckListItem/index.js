@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { capitalise } from '../../../utils/capitalise';
 
 import { StyledDeckListItem } from './styles';
-import { DangerButton } from '../../../shared/Button';
+import { DangerButton } from '../../../shared/Buttons';
 
 const cardLimitMap = {
   standard: 60,

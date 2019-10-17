@@ -7,7 +7,6 @@ export const StyledDeckListItem = styled.div`
   margin: 1rem 0;
   border: 2px solid ${props => props.theme.colors.primary};
   padding: 1rem;
-  color: ${props => props.theme.colors.primary};
   cursor: pointer;
   transition: 0.2s all ease-in-out;
 
@@ -24,12 +23,18 @@ export const StyledDeckListItem = styled.div`
     }
 
     p {
-      font-style: italic;
       font-size: ${props => props.theme.fonts.sizes.small};
+      margin-bottom: 0.5rem;
+
+      &:last-child {
+        margin-bottom: 0;
+        font-style: italic;
+      }
     }
   }
 
   .DeckListItemCardCount {
     margin-right: 1rem;
+    font-weight: ${props => props.theme.fonts.weights.bold};
   }
 `;
