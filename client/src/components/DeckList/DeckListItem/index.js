@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { capitalise } from '../../../utils/capitalise';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+
 import { StyledDeckListItem } from './styles';
 import { DangerButton } from '../../../shared/Buttons';
 
@@ -55,6 +58,7 @@ const DeckListItem = props => {
                 e.preventDefault();
                 deleteDeckHandler(id);
               }}>
+              <FontAwesomeIcon icon={faTrash} fixedWidth />
               Delete
             </DangerButton>
           </div>

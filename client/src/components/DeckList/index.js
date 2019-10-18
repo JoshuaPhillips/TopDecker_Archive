@@ -12,6 +12,8 @@ import Spinner from '../Spinner/Spinner';
 import { DeckListContainer, DeckList } from './styles';
 import { Button } from '../../shared/Buttons';
 import { SectionHeader, SubSectionHeader } from '../../shared/Headers';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const Decks = () => {
   const [addingDeck, toggleAddingDeck] = useState(false);
@@ -98,6 +100,7 @@ const Decks = () => {
 
         {!addingDeck ? (
           <Button type='button' onClick={() => toggleAddingDeck(true)}>
+            <FontAwesomeIcon icon={faPlus} fixedWidth />
             Add Deck
           </Button>
         ) : (

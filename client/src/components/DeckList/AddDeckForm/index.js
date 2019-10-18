@@ -9,6 +9,8 @@ import { GET_DECK_LIST } from '../graphql';
 import { ReactSelectStyles } from './styles';
 import { FormRow, TextInputWithLabel } from '../../../shared/Forms';
 import { Button } from '../../../shared/Buttons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const AddDeckForm = props => {
   const [name, setName] = useState('');
@@ -158,9 +160,11 @@ const AddDeckForm = props => {
       )}
 
       <Button type='button' disabled={!checkFormValidity()} onClick={() => CreateNewDeckMutation()}>
+        <FontAwesomeIcon icon={faPlus} fixedWidth />
         Create
       </Button>
       <Button type='button' onClick={() => cancelAddDeckHandler()}>
+        <FontAwesomeIcon icon={faTimes} fixedWidth />
         Cancel
       </Button>
     </form>

@@ -10,14 +10,14 @@ export const StyledGalleryModeContainer = styled.div`
 `;
 
 export const GalleryModeCardListContainer = styled.div`
-  padding: 0 0 2rem;
+  padding: 1rem 0 2rem;
   display: flex;
   flex-wrap: wrap;
 `;
 
 export const StyledGalleryModeCardItem = styled.div`
-  width: calc(20% - 0.5rem);
-  margin: 0.25rem 0.25rem 1rem;
-  box-sizing: border-box;
+  width: calc(25% - 0.5rem);
+  margin: 0 0.25rem 1rem;
+
   border-radius: 4.2% 4.2% 5px 5px;
 `;

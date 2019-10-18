@@ -30,4 +30,8 @@ export const NavigationLink = styled.button`
     background-color: ${props => props.theme.colors.background};
     color: ${props => props.theme.colors.primary};
   }
+
+  svg {
+    margin-right: 0.25rem;
+  }
 `;

@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 
 import DeckInspectorToolbar from './DeckInspectorToolbar/DeckInspectorToolbar';
-import GalleryModeContainer from './GalleryModeContainer/GalleryModeContainer';
-import ListModeContainer from './ListModeContainer/ListModeContainer';
-import TextModeContainer from './TextModeContainer/TextModeContainer';
+
+import GalleryModeCardItem from './GalleryModeCardItem/GalleryModeCardItem';
+import TextModeCardItem from './TextModeCardItem/TextModeCardItem';
+import ListModeCardItem from './ListModeCardItem/ListModeCardItem';
 
 import filterCardList from '../../../utils/filterCardList';
 
-import { StyledDeckInspector } from './styles';
+import { StyledDeckInspector, DeckDetails, CardListContainer } from './styles';
+import { SubSectionHeader } from '../../../shared/Headers';
 
 const DeckInspector = props => {
-  const { deck, sortMode, filters } = props;
-  const [viewMode, setViewMode] = useState('list');
+  const { deck, sortMode, filters, currentUserOwnsDeck, updateCardListHandler } = props;
+  const [viewMode, setViewMode] = useState('text');
 
   const mainDeckList = deck.cardList.filter(card => {
     return card.mainDeckCount !== 0;
@@ -24,48 +26,70 @@ const DeckInspector = props => {
   const filteredMainDeckList = filterCardList(mainDeckList, filters);
   const filteredSideboardList = filterCardList(sideboardList, filters);
 
-  let cardListContainer;
+  let totalMainDeckCount = deck.format === 'commander' ? 1 : 0;
+  let totalSideboardCount = 0;
 
-  switch (viewMode) {
-    case 'gallery':
-      cardListContainer = (
-        <GalleryModeContainer
-          deck={deck}
-          mainDeckList={filteredMainDeckList}
-          sideboardList={filteredSideboardList}
-          currentUserOwnsDeck={props.currentUserOwnsDeck}
-          updateCardListHandler={props.updateCardListHandler}
-        />
-      );
-      break;
+  mainDeckList.forEach(({ mainDeckCount }) => {
+    totalMainDeckCount += mainDeckCount;
+  });
 
-    case 'list':
-      cardListContainer = (
-        <ListModeContainer
-          deck={deck}
-          mainDeckList={filteredMainDeckList}
-          sideboardList={filteredSideboardList}
-          currentUserOwnsDeck={props.currentUserOwnsDeck}
-          updateCardListHandler={props.updateCardListHandler}
-        />
-      );
-      break;
+  sideboardList.forEach(({ sideboardCount }) => {
+    totalSideboardCount += sideboardCount;
+  });
 
-    case 'text':
-      cardListContainer = (
-        <TextModeContainer
-          deck={deck}
-          mainDeckList={filteredMainDeckList}
-          sideboardList={filteredSideboardList}
-          currentUserOwnsDeck={props.currentUserOwnsDeck}
-          updateCardListHandler={props.updateCardListHandler}
-        />
-      );
-      break;
+  const renderCardItem = (key, cardWithCounts, type) => {
+    let cardItem;
 
-    default:
-      cardListContainer = <h2>Sorry, there was a problem viewing your cards.</h2>;
-  }
+    switch (viewMode) {
+      case 'gallery':
+        cardItem = (
+          <GalleryModeCardItem
+            key={key}
+            cardWithCounts={cardWithCounts}
+            deck={deck}
+            type={type}
+            totalMainDeckCount={totalMainDeckCount}
+            totalSideboardCount={totalSideboardCount}
+            updateCardListHandler={updateCardListHandler}
+            currentUserOwnsDeck={currentUserOwnsDeck}
+          />
+        );
+        return cardItem;
+
+      case 'text':
+        cardItem = (
+          <TextModeCardItem
+            key={key}
+            cardWithCounts={cardWithCounts}
+            deck={deck}
+            type={type}
+            totalMainDeckCount={totalMainDeckCount}
+            totalSideboardCount={totalSideboardCount}
+            updateCardListHandler={updateCardListHandler}
+            currentUserOwnsDeck={currentUserOwnsDeck}
+          />
+        );
+        return cardItem;
+
+      case 'list':
+        cardItem = (
+          <ListModeCardItem
+            key={key}
+            cardWithCounts={cardWithCounts}
+            deck={deck}
+            type={type}
+            totalMainDeckCount={totalMainDeckCount}
+            totalSideboardCount={totalSideboardCount}
+            updateCardListHandler={updateCardListHandler}
+            currentUserOwnsDeck={currentUserOwnsDeck}
+          />
+        );
+        return cardItem;
+
+      default:
+        return (cardItem = <h2>Sorry, there was a problem loading your cards.</h2>);
+    }
+  };
 
   return (
     <StyledDeckInspector>
@@ -81,7 +105,34 @@ const DeckInspector = props => {
         toggleFilterHandler={props.toggleFilterHandler}
         filters={filters}
       />
-      {cardListContainer}
+      <DeckDetails>
+        <SubSectionHeader>
+          Main Deck ({totalMainDeckCount} / {deck.format === 'commander' ? 100 : 60})
+        </SubSectionHeader>
+        <CardListContainer>
+          {deck.format === 'commander' &&
+            renderCardItem(
+              deck.commander.scryfall_id,
+              { card: deck.commander, mainDeckCount: 1, sideboardCount: 0 },
+              'commander'
+            )}
+
+          {filteredMainDeckList.map(cardWithCounts => {
+            return renderCardItem(cardWithCounts.card.scryfall_id, cardWithCounts, 'mainDeck');
+          })}
+        </CardListContainer>
+
+        {deck.format !== 'commander' && (
+          <React.Fragment>
+            <SubSectionHeader>Sideboard ({totalSideboardCount} / 15)</SubSectionHeader>
+            <CardListContainer>
+              {filteredSideboardList.map(cardWithCounts => {
+                return renderCardItem(cardWithCounts.card.scryfall_id, cardWithCounts, 'sideboard');
+              })}
+            </CardListContainer>
+          </React.Fragment>
+        )}
+      </DeckDetails>
     </StyledDeckInspector>
   );
 };

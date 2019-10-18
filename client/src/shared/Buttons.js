@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Button = styled.button`
   border: 2px solid ${props => props.theme.colors.primary}
-  background-color: ${props => (props.inverted ? props.theme.colors.primary : props.theme.colors.background)}
+  background-color: ${props => (props.inverted ? props.theme.colors.primary : 'inherit')}
   color: ${props => (props.inverted ? props.theme.colors.background : props.theme.colors.primary)}
   padding: 0.5rem;
   border-radius: 3px;
@@ -22,6 +22,11 @@ export const Button = styled.button`
 
   &:disabled:hover {
     color: lightslategrey;
+  }
+  
+  svg {
+    margin-right: .25rem;
+    
   }
 `;
 

@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 export const StyledTextModeContainer = styled.div`
+  max-height: 100%;
+  overflow-y: scroll;
+
   h1 {
     margin: 1rem 0;
   }

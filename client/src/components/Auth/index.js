@@ -5,6 +5,9 @@ import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks';
 import { LOGIN, SIGN_UP_USER } from './graphql';
 import { GET_AUTH_DATA } from '../../graphql';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
+
 import { StyledAuth } from './styles';
 import { SectionHeader } from '../../shared/Headers';
 import { Button } from '../../shared/Buttons';
@@ -154,6 +157,7 @@ const Auth = () => {
         )}
 
         <Button type='button' onClick={isLogin ? () => LoginQuery() : () => SignUpMutation()}>
+          <FontAwesomeIcon icon={faSignInAlt} fixedWidth />
           {isLogin ? 'Login' : 'Sign Up'}
         </Button>
       </Form>

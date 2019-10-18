@@ -4,6 +4,9 @@ import { toast } from 'react-toastify';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { GET_ACCOUNT_DETAILS, SAVE_ACCOUNT_DETAILS, CHANGE_PASSWORD } from './graphql';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faLock, faTimes, faCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
+
 import Spinner from '../Spinner/Spinner';
 import { StyledAccount } from './styles';
 import { SectionHeader } from '../../shared/Headers';
@@ -146,6 +149,7 @@ const Account = () => {
         </TextInputWithLabel>
 
         <Button type='button' onClick={editing ? () => SaveAccountDetailsMutation() : () => toggleEditing(true)}>
+          <FontAwesomeIcon icon={faEdit} fixedWidth />
           {editing ? 'Save' : 'Edit'}
         </Button>
       </Form>
@@ -160,6 +164,7 @@ const Account = () => {
                 toggleDeletingAccount(false);
                 toggleEditingPassword(true);
               }}>
+              <FontAwesomeIcon icon={faLock} fixedWidth />
               Change Password
             </Button>
 
@@ -169,6 +174,7 @@ const Account = () => {
                 toggleEditingPassword(false);
                 toggleDeletingAccount(true);
               }}>
+              <FontAwesomeIcon icon={faTrash} fixedWidth />
               Delete Account
             </DangerButton>
           </ButtonGroup>
@@ -219,9 +225,11 @@ const Account = () => {
                   passwordDetails.newPassword.length === 0 ||
                   passwordDetails.confirmationPassword.length === 0
                 }>
+                <FontAwesomeIcon icon={faCheck} fixedWidth />
                 Confirm
               </Button>
               <Button inverted type='button' onClick={() => resetPasswordChange()}>
+                <FontAwesomeIcon icon={faTimes} fixedWidth />
                 Cancel
               </Button>
             </ButtonGroup>
@@ -259,9 +267,11 @@ const Account = () => {
                 type='button'
                 disabled={!deletingAccount || deleteConfirmationPassword.length === 0 || !deleteConfirmationCheckbox}
                 onClick={() => console.log(deleteConfirmationPassword, deleteConfirmationCheckbox)}>
+                <FontAwesomeIcon icon={faTrash} fixedWidth />
                 Delete Forever
               </DangerButton>
               <Button inverted type='button' onClick={() => resetAccountDeletion()}>
+                <FontAwesomeIcon icon={faTimes} fixedWidth />
                 Cancel
               </Button>
             </ButtonGroup>

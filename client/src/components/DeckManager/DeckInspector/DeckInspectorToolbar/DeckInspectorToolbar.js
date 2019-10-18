@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 
 import { capitalise } from '../../../../utils/capitalise';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
+
 import { StyledDeckInspectorToolbar, CardTypeFilterIcon } from './styles';
 import { DeckInspectorControlGroup } from '../../../../shared/DeckInspectorControlGroup';
 import { Button, DangerButton } from '../../../../shared/Buttons';
@@ -41,9 +44,15 @@ const DeckInspectorToolbar = props => {
                   deck: props.deck
                 }
               }}>
-              <Button type='button'>Search for Cards</Button>
+              <Button type='button'>
+                <FontAwesomeIcon icon={faSearch} fixedWidth />
+                Search for Cards
+              </Button>
             </Link>
-            <DangerButton type='button'>Delete Deck</DangerButton>
+            <DangerButton type='button'>
+              <FontAwesomeIcon icon={faTrash} fixedWidth />
+              Delete Deck
+            </DangerButton>
           </div>
         )}
       </div>

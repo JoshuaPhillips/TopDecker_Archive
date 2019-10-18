@@ -9,13 +9,16 @@ import SidebarSearchResult from './SidebarSearchResult';
 import Spinner from '../../Spinner/Spinner';
 import Card from '../../Card/Card';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch, faArrowLeft, faEraser } from '@fortawesome/free-solid-svg-icons';
+
+import { capitalise } from '../../../utils/capitalise';
+
 import { StyledDeckManagerSidebar, QuickSearchContainer, OtherDecksContainer } from './styles';
 import { SectionHeader } from '../../../shared/Headers';
 import { Button } from '../../../shared/Buttons';
 import { ModeToggleContainer } from '../../../shared/ModeToggles';
 import { TextInput } from '../../../shared/Forms';
-
-import { capitalise } from '../../../utils/capitalise';
 
 const DeckManagerSidebar = props => {
   const {
@@ -130,10 +133,12 @@ const DeckManagerSidebar = props => {
             />
 
             <Button inverted type='submit' disabled={nameSearch.length < 3}>
+              <FontAwesomeIcon icon={faSearch} fixedWidth />
               {loadingResults ? 'Searching...' : 'Search'}
             </Button>
             {selectedResult && (
               <Button type='button' onClick={() => setSelectedResult(null)}>
+                <FontAwesomeIcon icon={faArrowLeft} fixedWidth />
                 Back
               </Button>
             )}
@@ -145,6 +150,7 @@ const DeckManagerSidebar = props => {
                   setSelectedResult(null);
                   setSearchResults([]);
                 }}>
+                <FontAwesomeIcon icon={faEraser} fixedWidth />
                 Clear Results
               </Button>
             )}
