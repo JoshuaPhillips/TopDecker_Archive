@@ -33,11 +33,11 @@ const CardItemControls = props => {
   );
   const quantityIndicators = (
     <div>
-      {[...Array(type === 'mainDeck' ? mainDeckCount : sideboardCount)].map(() => {
-        return <FontAwesomeIcon icon={faStar} fixedWidth />;
+      {[...Array(type === 'mainDeck' ? mainDeckCount : sideboardCount)].map((_, index) => {
+        return <FontAwesomeIcon icon={faStar} fixedWidth key={`${card.scryfall_id}__faStar__${index}`} />;
       })}
-      {[...Array(type === 'mainDeck' ? 4 - mainDeckCount : 4 - sideboardCount)].map(() => {
-        return <FontAwesomeIcon icon={faRegularStar} fixedWidth />;
+      {[...Array(type === 'mainDeck' ? 4 - mainDeckCount : 4 - sideboardCount)].map((_, index) => {
+        return <FontAwesomeIcon icon={faRegularStar} fixedWidth key={`${card.scryfall_id}__faRegularStar__${index}`} />;
       })}
     </div>
   );

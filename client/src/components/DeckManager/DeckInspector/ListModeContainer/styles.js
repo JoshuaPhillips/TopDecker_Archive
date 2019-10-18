@@ -34,6 +34,7 @@ export const ListModeCardDetails = styled.div`
 
   .ListModeName {
     flex-grow: 2;
+    font-weight: ${props => props.theme.fonts.weights.bold};
   }
 
   .ListModeTypeLine {
