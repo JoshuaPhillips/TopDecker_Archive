@@ -6,12 +6,12 @@ export const StyledHeader = styled.header`
   justify-content: space-between;
   background-color: ${props => props.theme.colors.primary};
   color: ${props => props.theme.colors.background};
-
   padding: 0 5rem;
-  // height: ${props => props.theme.sizing.headerHeight + 'vh'}
   font-weight: bold;
 
   h1 {
+    padding: 0.5rem 0;
+    letter-spacing: 0.1rem;
     font-size: ${props => props.theme.fonts.sizes.extraLarge};
   }
 `;
@@ -19,12 +19,17 @@ export const StyledHeader = styled.header`
 export const Nav = styled.nav`
   display: flex;
   align-items: center;
+
+  a.active {
+    color: ${props => props.theme.colors.primary};
+    background-color: ${props => props.theme.colors.background};
+  }
 `;
 
 export const NavigationLink = styled.button`
-  padding: 1rem;
-
+  align-self: center;
   transition: 0.2s all ease-in-out;
+  padding: 1rem;
 
   &:hover {
     background-color: ${props => props.theme.colors.background};

@@ -60,7 +60,7 @@ const Decks = () => {
           return deck.id !== deletedDeckId;
         });
         setDeckList(newDeckList);
-        toast.success('Deck deleted.');
+        toast.info('Deck deleted.');
       }
     }
   });

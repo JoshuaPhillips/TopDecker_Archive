@@ -52,7 +52,7 @@ const Account = () => {
       }
     },
     onCompleted() {
-      toast.success('Account details saved.');
+      toast.info('Account details saved.');
       toggleEditing(false);
     }
   });
@@ -63,7 +63,7 @@ const Account = () => {
       ...passwordDetails
     },
     onCompleted() {
-      toast.success('Password saved.');
+      toast.info('Password saved.');
       setPasswordDetails({ currentPassword: '', newPassword: '', confirmationPassword: '' });
     }
   });

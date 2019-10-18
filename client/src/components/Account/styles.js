@@ -8,4 +8,8 @@ export const StyledAccount = styled.main`
   padding: 3rem 3rem 2rem;
   border-radius: 5px;
   margin: 1rem auto;
+
+  toastify-info-body {
+    color: blue;
+  }
 `;

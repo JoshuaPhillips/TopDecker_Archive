@@ -33,7 +33,7 @@ const Header = () => {
               <FontAwesomeIcon icon={faSearch} fixedWidth />
               Search
             </NavigationLink>
-            <NavigationLink type='button' onClick={() => LogoutMutation()}>
+            <NavigationLink as={NavLink} to='/login' onClick={() => LogoutMutation()}>
               <FontAwesomeIcon icon={faPowerOff} fixedWidth />
               Logout
             </NavigationLink>
