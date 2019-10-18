@@ -1,7 +1,8 @@
 import React from 'react';
 import GalleryModeCardItem from './GalleryModeCardItem';
 
-import classes from './GalleryModeContainer.module.scss';
+import { StyledGalleryModeContainer, GalleryModeCardListContainer } from './styles';
+import { SubSectionHeader } from '../../../../shared/Headers';
 
 const GalleryModeContainer = props => {
   const { deck, mainDeckList, sideboardList, currentUserOwnsDeck, updateCardListHandler } = props;
@@ -18,12 +19,12 @@ const GalleryModeContainer = props => {
   });
 
   return (
-    <div className={classes.GalleryModeContainer}>
-      <h1>
+    <StyledGalleryModeContainer>
+      <SubSectionHeader>
         Main Deck ({totalMainDeckCount} / {deck.format === 'commander' ? 100 : 60})
-      </h1>
+      </SubSectionHeader>
 
-      <div className={classes.GalleryModeCardListContainer}>
+      <GalleryModeCardListContainer>
         {deck.format === 'commander' && (
           <GalleryModeCardItem
             cardWithCounts={{ card: deck.commander, mainDeckCount: 1, sideboardCount: 0 }}
@@ -46,12 +47,12 @@ const GalleryModeContainer = props => {
             />
           );
         })}
-      </div>
+      </GalleryModeCardListContainer>
 
       {deck.format !== 'commander' && (
         <React.Fragment>
           <h1>Sideboard ({totalSideboardCount} / 15)</h1>
-          <div className={classes.GalleryModeCardListContainer}>
+          <GalleryModeCardListContainer>
             {sideboardList.map(cardWithCounts => {
               return (
                 <GalleryModeCardItem
@@ -66,10 +67,10 @@ const GalleryModeContainer = props => {
                 />
               );
             })}
-          </div>
+          </GalleryModeCardListContainer>
         </React.Fragment>
       )}
-    </div>
+    </StyledGalleryModeContainer>
   );
 };
 

@@ -10,14 +10,13 @@ export const TextModeCardListContainer = styled.div`
   margin: 1rem 0 2rem;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
 `;
 
 export const StyledTextModeCardItem = styled.div`
   border: 1px solid lightgrey;
   border-top: 3px solid #385170;
   border-radius: 5px;
-  margin: 0.5rem 0;
+  margin: 0.5rem;
   width: calc(25% - 1rem);
   min-width: 300px;
   display: flex;
@@ -80,26 +79,5 @@ export const TextModeCardItemFlavorText = styled.div`
   p {
     font-style: italic;
     line-height: 150%;
-  }
-`;
-
-export const TextModeCardItemControls = styled.div`
-  margin-top: auto;
-  display: flex;
-  justify-content: flex-end;
-  padding: 0.5rem;
-  border-radius: 0 0 5px 5px;
-
-  p {
-    margin-right: auto;
-    font-weight: bold;
-  }
-
-  button {
-    margin-left: 0.25rem;
-    font-size: 1rem;
-    border: none;
-    outline: none;
-    cursor: pointer;
   }
 `;

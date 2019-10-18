@@ -1,11 +1,8 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faPlus, faMinus, faExchangeAlt, faCrown, faStar } from '@fortawesome/free-solid-svg-icons';
-import { faStar as faRegularStar } from '@fortawesome/free-regular-svg-icons';
+import CardItemControls from '../CardItemControls';
 
 import convertTextToSymbols from '../../../../utils/convertTextToSymbols';
 import {
-  TextModeCardItemControls,
   StyledTextModeCardItem,
   TextModeCardItemHeader,
   TextModeCardItemContent,
@@ -23,68 +20,6 @@ const TextModeCardItem = props => {
     updateCardListHandler,
     currentUserOwnsDeck
   } = props;
-
-  const renderCardControls = () => {
-    return type === 'commander' ? (
-      <TextModeCardItemControls>
-        <FontAwesomeIcon icon={faCrown} fixedWidth />
-      </TextModeCardItemControls>
-    ) : (
-      <React.Fragment>
-        <TextModeCardItemControls>
-          {deck.format === 'commander' && currentUserOwnsDeck ? (
-            <button type='button' onClick={() => updateCardListHandler(deck, type, 'remove', card)}>
-              <FontAwesomeIcon fixedWidth icon={faTimes} />
-            </button>
-          ) : (
-            <React.Fragment>
-              {deck.format !== 'commander' && (
-                <div>
-                  {[...Array(type === 'mainDeck' ? mainDeckCount : sideboardCount)].map(() => {
-                    return <FontAwesomeIcon icon={faStar} fixedWidth />;
-                  })}
-                  {[...Array(type === 'mainDeck' ? 4 - mainDeckCount : 4 - sideboardCount)].map(() => {
-                    return <FontAwesomeIcon icon={faRegularStar} fixedWidth />;
-                  })}
-                </div>
-              )}
-              {currentUserOwnsDeck && (
-                <React.Fragment>
-                  <button
-                    type='button'
-                    disabled={
-                      mainDeckCount + sideboardCount === 4 ||
-                      (type === 'mainDeck' ? totalMainDeckCount >= 60 : totalSideboardCount >= 15)
-                    }
-                    onClick={() => updateCardListHandler(deck, type, 'add', card)}>
-                    <FontAwesomeIcon fixedWidth icon={faPlus} />
-                  </button>
-                  <button
-                    type='button'
-                    disabled={type === 'mainDeck' ? mainDeckCount === 0 : sideboardCount === 0}
-                    onClick={() => updateCardListHandler(deck, type, 'remove', card)}>
-                    <FontAwesomeIcon fixedWidth icon={faMinus} />
-                  </button>
-                  <button
-                    type='button'
-                    onClick={() =>
-                      updateCardListHandler(
-                        deck,
-                        type === 'mainDeck' ? 'sideboard' : 'mainDeck',
-                        type === 'mainDeck' ? 'transferToSideboard' : 'transferToMainDeck',
-                        card
-                      )
-                    }>
-                    <FontAwesomeIcon fixedWidth icon={faExchangeAlt} />
-                  </button>
-                </React.Fragment>
-              )}
-            </React.Fragment>
-          )}
-        </TextModeCardItemControls>
-      </React.Fragment>
-    );
-  };
 
   return (
     <StyledTextModeCardItem>
@@ -153,7 +88,17 @@ const TextModeCardItem = props => {
           );
         })
       )}
-      {renderCardControls()}
+      <CardItemControls
+        type={type}
+        deck={deck}
+        currentUserOwnsDeck={currentUserOwnsDeck}
+        updateCardListHandler={updateCardListHandler}
+        card={card}
+        mainDeckCount={mainDeckCount}
+        sideboardCount={sideboardCount}
+        totalMainDeckCount={totalMainDeckCount}
+        totalSideboardCount={totalSideboardCount}
+      />
     </StyledTextModeCardItem>
   );
 };
