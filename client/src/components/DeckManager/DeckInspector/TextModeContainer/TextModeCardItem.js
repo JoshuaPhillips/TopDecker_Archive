@@ -3,8 +3,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPlus, faMinus, faExchangeAlt, faCrown, faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faRegularStar } from '@fortawesome/free-regular-svg-icons';
 
-import classes from './TextModeCardItem.module.scss';
 import convertTextToSymbols from '../../../../utils/convertTextToSymbols';
+import {
+  TextModeCardItemControls,
+  StyledTextModeCardItem,
+  TextModeCardItemHeader,
+  TextModeCardItemContent,
+  TextModeCardItemOracleText,
+  TextModeCardItemFlavorText
+} from './styles';
 
 const TextModeCardItem = props => {
   const {
@@ -19,12 +26,12 @@ const TextModeCardItem = props => {
 
   const renderCardControls = () => {
     return type === 'commander' ? (
-      <div className={classes.TextModeCardItemControls}>
+      <TextModeCardItemControls>
         <FontAwesomeIcon icon={faCrown} fixedWidth />
-      </div>
+      </TextModeCardItemControls>
     ) : (
       <React.Fragment>
-        <div className={classes.TextModeCardItemControls}>
+        <TextModeCardItemControls>
           {deck.format === 'commander' && currentUserOwnsDeck ? (
             <button type='button' onClick={() => updateCardListHandler(deck, type, 'remove', card)}>
               <FontAwesomeIcon fixedWidth icon={faTimes} />
@@ -32,7 +39,7 @@ const TextModeCardItem = props => {
           ) : (
             <React.Fragment>
               {deck.format !== 'commander' && (
-                <div className={classes.TextModeCardQuantityIndicators}>
+                <div>
                   {[...Array(type === 'mainDeck' ? mainDeckCount : sideboardCount)].map(() => {
                     return <FontAwesomeIcon icon={faStar} fixedWidth />;
                   })}
@@ -74,25 +81,25 @@ const TextModeCardItem = props => {
               )}
             </React.Fragment>
           )}
-        </div>
+        </TextModeCardItemControls>
       </React.Fragment>
     );
   };
 
   return (
-    <div className={classes.TextModeCardItem}>
+    <StyledTextModeCardItem>
       {card.card_faces.length === 0 ? (
         <React.Fragment>
-          <div className={classes.TextModeCardItemHeader}>
+          <TextModeCardItemHeader>
             <p>{card.name.trim()}</p>
             {card.mana_cost && card.mana_cost.length !== 0 && convertTextToSymbols(card.mana_cost)}
-          </div>
-          <div className={classes.TextModeCardItemContent}>
+          </TextModeCardItemHeader>
+          <TextModeCardItemContent>
             <div>
               <p>{card.type_line}</p>
             </div>
             {card.oracle_text !== null && (
-              <div className={classes.TextModeCardItemOracleText}>{convertTextToSymbols(card.oracle_text)}</div>
+              <TextModeCardItemOracleText>{convertTextToSymbols(card.oracle_text)}</TextModeCardItemOracleText>
             )}
             {card.power && card.toughness ? (
               <div>
@@ -103,28 +110,26 @@ const TextModeCardItem = props => {
               </div>
             ) : null}
             {card.flavor_text && card.flavor_text.length !== 0 && (
-              <div className={classes.TextModeCardItemFlavorText}>
+              <TextModeCardItemFlavorText>
                 <p>{card.flavor_text}</p>
-              </div>
+              </TextModeCardItemFlavorText>
             )}
-          </div>
+          </TextModeCardItemContent>
         </React.Fragment>
       ) : (
         card.card_faces.map(card_face => {
           return (
             <React.Fragment key={`${card.scryfall_id}__${card_face.name}`}>
-              <div className={classes.TextModeCardItemHeader}>
+              <TextModeCardItemHeader>
                 <p>{card_face.name}</p>
                 {card_face.mana_cost.length !== 0 && convertTextToSymbols(card_face.mana_cost)}
-              </div>
-              <div className={classes.TextModeCardItemContent}>
+              </TextModeCardItemHeader>
+              <TextModeCardItemContent>
                 <div>
                   <p>{card_face.type_line}</p>
                 </div>
                 {card_face.oracle_text !== null && (
-                  <div className={classes.TextModeCardItemOracleText}>
-                    {convertTextToSymbols(card_face.oracle_text)}
-                  </div>
+                  <TextModeCardItemOracleText>{convertTextToSymbols(card_face.oracle_text)}</TextModeCardItemOracleText>
                 )}
                 {card_face.power && card_face.toughness && (
                   <div>
@@ -139,17 +144,17 @@ const TextModeCardItem = props => {
                   </div>
                 )}
                 {card_face.flavor_text && card_face.flavor_text.length !== 0 && (
-                  <div className={classes.TextModeCardItemFlavorText}>
+                  <TextModeCardItemFlavorText>
                     <p>{card_face.flavor_text}</p>
-                  </div>
+                  </TextModeCardItemFlavorText>
                 )}
-              </div>
+              </TextModeCardItemContent>
             </React.Fragment>
           );
         })
       )}
       {renderCardControls()}
-    </div>
+    </StyledTextModeCardItem>
   );
 };
 

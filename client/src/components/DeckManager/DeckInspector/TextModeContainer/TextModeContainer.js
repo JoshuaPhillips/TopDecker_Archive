@@ -2,7 +2,8 @@ import React from 'react';
 
 import TextModeCardItem from './TextModeCardItem';
 
-import classes from './TextModeContainer.module.scss';
+import { StyledTextModeContainer, TextModeCardListContainer } from './styles';
+import { SubSectionHeader } from '../../../../shared/Headers';
 
 const TextModeContainer = props => {
   const { deck, mainDeckList, sideboardList, updateCardListHandler, currentUserOwnsDeck } = props;
@@ -19,11 +20,11 @@ const TextModeContainer = props => {
   });
 
   return (
-    <div className={classes.TextModeContainer}>
-      <h1>
+    <StyledTextModeContainer>
+      <SubSectionHeader>
         Main Deck ({totalMainDeckCount} / {deck.format === 'commander' ? 100 : 60})
-      </h1>
-      <div className={classes.TextModeCardListContainer}>
+      </SubSectionHeader>
+      <TextModeCardListContainer>
         {deck.format === 'commander' && (
           <TextModeCardItem
             cardWithCounts={{ card: deck.commander, mainDeckCount: 1, sideboardCount: 0 }}
@@ -46,12 +47,12 @@ const TextModeContainer = props => {
             />
           );
         })}
-      </div>
+      </TextModeCardListContainer>
 
       {deck.format !== 'commander' && (
         <React.Fragment>
-          <h1>Sideboard ({totalSideboardCount} / 15)</h1>
-          <div className={classes.TextModeCardListContainer}>
+          <SubSectionHeader>Sideboard ({totalSideboardCount} / 15)</SubSectionHeader>
+          <TextModeCardListContainer>
             {sideboardList.map(cardWithCounts => {
               return (
                 <TextModeCardItem
@@ -66,10 +67,10 @@ const TextModeContainer = props => {
                 />
               );
             })}
-          </div>
+          </TextModeCardListContainer>
         </React.Fragment>
       )}
-    </div>
+    </StyledTextModeContainer>
   );
 };
 

@@ -1,16 +1,30 @@
-.TextModeCardItem {
+import styled from 'styled-components';
+
+export const StyledTextModeContainer = styled.div`
+  h1 {
+    margin: 1rem 0;
+  }
+`;
+
+export const TextModeCardListContainer = styled.div`
+  margin: 1rem 0 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
+
+export const StyledTextModeCardItem = styled.div`
   border: 1px solid lightgrey;
   border-top: 3px solid #385170;
   border-radius: 5px;
-  box-shadow: 0 4px 2px -3px;
-  margin: 0.5rem;
-
+  margin: 0.5rem 0;
   width: calc(25% - 1rem);
+  min-width: 300px;
   display: flex;
   flex-direction: column;
-}
+`;
 
-.TextModeCardItemHeader {
+export const TextModeCardItemHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -18,6 +32,7 @@
   border-bottom: 1px solid lightgrey;
   margin-top: 2rem;
   border-top: 2px solid #385170;
+  border-radius: 5px 5px 0 0;
 
   &:first-child {
     margin-top: 0;
@@ -34,9 +49,11 @@
       text-align: right;
     }
   }
-}
+`;
 
-.TextModeCardItemContent {
+export const TextModeCardItemContent = styled.div`
+  border-radius: 0 0 5px 5px;
+
   div {
     padding: 0.5rem;
     border-bottom: 1px solid lightgrey;
@@ -45,9 +62,9 @@
       border-bottom: 0;
     }
   }
-}
+`;
 
-.TextModeCardItemOracleText {
+export const TextModeCardItemOracleText = styled.div`
   p {
     margin-bottom: 1rem;
     line-height: 150%;
@@ -56,21 +73,22 @@
       margin-bottom: 0;
     }
   }
-}
+`;
 
-.TextModeCardItemFlavorText {
+export const TextModeCardItemFlavorText = styled.div`
   margin-top: auto;
   p {
     font-style: italic;
     line-height: 150%;
   }
-}
+`;
 
-.TextModeCardItemControls {
+export const TextModeCardItemControls = styled.div`
   margin-top: auto;
   display: flex;
   justify-content: flex-end;
   padding: 0.5rem;
+  border-radius: 0 0 5px 5px;
 
   p {
     margin-right: auto;
@@ -84,4 +102,4 @@
     outline: none;
     cursor: pointer;
   }
-}
+`;
