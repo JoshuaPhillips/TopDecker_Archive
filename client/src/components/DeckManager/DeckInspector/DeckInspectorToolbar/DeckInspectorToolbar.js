@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { capitalise } from '../../../../utils/capitalise';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faTrash, faFileExport } from '@fortawesome/free-solid-svg-icons';
 
 import { StyledDeckInspectorToolbar, CardTypeFilterIcon } from './styles';
 import { DeckInspectorControlGroup } from '../../../../shared/DeckInspectorControlGroup';
@@ -49,6 +49,10 @@ const DeckInspectorToolbar = props => {
                 Search for Cards
               </Button>
             </Link>
+            <Button type='button'>
+              <FontAwesomeIcon icon={faFileExport} fixedWidth />
+              Export Deck
+            </Button>
             <DangerButton type='button'>
               <FontAwesomeIcon icon={faTrash} fixedWidth />
               Delete Deck
