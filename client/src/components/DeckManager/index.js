@@ -85,14 +85,12 @@ const DeckManager = props => {
 
   // ========== RENDER ========== //
 
-  if (!deck || GetDeckDetailsQueryResponse.loading) {
-    return <Spinner />;
-  }
-
   return (
     <StyledDeckManager>
       {deck && currentUserOwnsDeck && <DeckManagerSidebar deck={deck} updateCardListHandler={updateCardList} />}
-      {deck && (
+      {!deck || GetDeckDetailsQueryResponse.loading ? (
+        <Spinner />
+      ) : (
         <DeckInspector
           currentUserOwnsDeck={currentUserOwnsDeck}
           deck={deck}

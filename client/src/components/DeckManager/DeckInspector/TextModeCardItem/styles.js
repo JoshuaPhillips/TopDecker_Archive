@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 
 export const StyledTextModeContainer = styled.div`
-  max-height: 100%;
-  overflow-y: scroll;
-
   h1 {
     margin: 1rem 0;
   }
@@ -16,14 +13,22 @@ export const TextModeCardListContainer = styled.div`
 `;
 
 export const StyledTextModeCardItem = styled.div`
-  border: 1px solid lightgrey;
-  border-top: 3px solid #385170;
-  border-radius: 5px;
-  margin: 0.5rem;
-  width: calc(25% - 1rem);
-  min-width: 300px;
   display: flex;
   flex-direction: column;
+  width: calc((100% - 1.5rem) / 4);
+  min-width: 300px;
+  margin: 0 0.5rem 0.5rem 0;
+
+  background-color: white;
+
+  border: 1px solid lightgrey;
+  border-top: 3px solid #385170;
+  border-bottom: 2px solid lightgrey;
+  border-radius: 5px;
+
+  :nth-child(4n) {
+    margin-right: 0;
+  }
 `;
 
 export const TextModeCardItemHeader = styled.div`

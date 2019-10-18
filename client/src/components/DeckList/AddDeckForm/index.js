@@ -108,7 +108,13 @@ const AddDeckForm = props => {
     <form>
       <TextInputWithLabel>
         <label htmlFor='name'>Name</label>
-        <input type='text' id='name' value={name} onChange={e => setName(e.target.value)} />
+        <input
+          type='text'
+          id='name'
+          value={name}
+          placeholder='Mininum 4 characters'
+          onChange={e => setName(e.target.value)}
+        />
       </TextInputWithLabel>
 
       <TextInputWithLabel>

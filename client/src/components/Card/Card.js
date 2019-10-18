@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactImage from 'react-image';
 import Spinner from '../Spinner/Spinner';
 
-import classes from './Card.module.scss';
+import { StyledCard } from './styles';
 
 const Card = props => {
   const [transformed, toggleTransform] = useState(false);
@@ -32,7 +32,7 @@ const Card = props => {
   }
 
   return (
-    <div className={classes.Card}>
+    <StyledCard>
       <ReactImage
         src={visibleFace}
         loader={<Spinner />}
@@ -49,7 +49,7 @@ const Card = props => {
           {buttonText}
         </button>
       )}
-    </div>
+    </StyledCard>
   );
 };
 

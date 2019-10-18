@@ -34,15 +34,9 @@ export const ButtonGroup = styled.div`
   text-align: center;
 `;
 
-export const SuccessButton = styled(Button)`
-  border: 2px solid ${props => props.theme.colors.success}
-  background-color: ${props => (props.inverted ? props.theme.colors.success : props.theme.colors.background)}
-  color: ${props => (props.inverted ? props.theme.colors.background : props.theme.colors.success)}
-`;
-
 export const DangerButton = styled(Button)`
   border: 2px solid ${props => props.theme.colors.danger}
-  background-color: ${props => (props.inverted ? props.theme.colors.danger : props.theme.colors.background)}
+  background-color: ${props => (props.inverted ? props.theme.colors.danger : 'inherit')}
   
   color: ${props => (props.inverted ? props.theme.colors.background : props.theme.colors.danger)}
   

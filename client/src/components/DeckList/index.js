@@ -79,7 +79,7 @@ const Decks = () => {
     return deck.owner.id !== currentUserId;
   });
 
-  console.log(GetDeckListQueryResponse);
+  // console.log(GetDeckListQueryResponse);
 
   if (GetDeckListQueryResponse.loading) {
     return <Spinner />;

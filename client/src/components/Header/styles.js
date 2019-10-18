@@ -8,7 +8,7 @@ export const StyledHeader = styled.header`
   color: ${props => props.theme.colors.background};
 
   padding: 0 5rem;
-  height: ${props => props.theme.sizing.headerHeight + 'vh'}
+  // height: ${props => props.theme.sizing.headerHeight + 'vh'}
   font-weight: bold;
 
   h1 {
@@ -23,7 +23,7 @@ export const Nav = styled.nav`
 
 export const NavigationLink = styled.button`
   padding: 1rem;
-  border-radius: 3px;
+
   transition: 0.2s all ease-in-out;
 
   &:hover {

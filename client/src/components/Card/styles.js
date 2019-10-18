@@ -1,5 +1,8 @@
-.Card {
+import styled from 'styled-components';
+
+export const StyledCard = styled.div`
   position: relative;
+  border-radius: 4.2%;
 
   button {
     opacity: 0;
@@ -19,7 +22,8 @@
 
     transition: opacity 0.2s ease-in;
   }
+
   &:hover button {
     opacity: 1;
   }
-}
+`;

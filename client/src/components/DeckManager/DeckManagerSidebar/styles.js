@@ -7,6 +7,9 @@ export const StyledDeckManagerSidebar = styled.aside`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  ${props => props.theme.borders.standard};
+  background-color: white;
+  padding: 0.5rem 1rem;
 `;
 
 export const QuickSearchContainer = styled.div`
@@ -16,6 +19,7 @@ export const QuickSearchContainer = styled.div`
 
   .QuickSearchHeaderContainer {
     h1 {
+      margin-top: 0.65rem;
       padding-bottom: 1.65rem; // to line up with the header of the deck inspector
     }
   }

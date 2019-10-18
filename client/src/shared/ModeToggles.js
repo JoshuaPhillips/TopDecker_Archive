@@ -12,7 +12,6 @@ export const ModeToggleContainer = styled.div`
     border: 2px solid ${props => props.theme.colors.primary};
     border-right: 0;
     color: ${props => props.theme.colors.primary};
-    background-color: ${props => props.theme.colors.background};
 
     &:disabled {
       background-color: ${props => props.theme.colors.primary};

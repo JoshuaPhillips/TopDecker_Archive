@@ -13,11 +13,20 @@ const calculateFontSize = modifier => {
   return font_size__base + modifier * 0.2 + 'rem';
 };
 
+// borders
+
+const standardBorderMixin = () => {
+  return 'border: 1px solid lightgrey; border-bottom: 2px solid lightgrey;';
+};
+
 // sizing
 
 const header__height = 8;
 
 export const Theme = {
+  borders: {
+    standard: standardBorderMixin()
+  },
   colors: {
     primary: color__primary,
     background: color__background,

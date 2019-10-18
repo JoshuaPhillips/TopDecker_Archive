@@ -5,6 +5,10 @@ export const StyledDeckInspectorToolbar = styled.div.attrs(props => ({ disabled:
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  padding: 1rem;
+  background-color: white;
+  border: 1px solid lightgrey;
+  border-bottom: 2px solid lightgrey;
 
   .DeckInspectorToolbarHeader {
     width: 100%;

@@ -7,9 +7,6 @@ export const StyledDeckInspector = styled.main`
 `;
 
 export const DeckDetails = styled.div`
-  max-height: 100%;
-  overflow-y: scroll;
-
   h1 {
     margin: 1rem 0;
   }

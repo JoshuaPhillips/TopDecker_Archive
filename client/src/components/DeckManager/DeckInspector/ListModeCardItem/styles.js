@@ -18,8 +18,10 @@ export const StyledListModeCardListContainer = styled.div`
 export const StyledListModeCardItem = styled.div`
   display: flex;
   width: 100%;
-  padding: 0.5rem 0;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
   border-bottom: 2px solid lightgrey;
+  background-color: white;
 `;
 
 export const ListModeCardDetails = styled.div`
