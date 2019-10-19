@@ -5,6 +5,10 @@ import { SEARCH_CARDS } from '../DeckManager/DeckManagerSidebar/graphql';
 import { toast } from 'react-toastify';
 
 import classes from './SearchForm.module.scss';
+import { StyledSearchForm } from './styles';
+import { SectionHeader } from '../../shared/Headers';
+import { FormRow, FormRowTitle, FormRowContent, TextInput } from '../../shared/Forms';
+import { Button } from '../../shared/Buttons';
 
 const SearchForm = props => {
   const { setSearchResults } = props;
@@ -160,162 +164,194 @@ const SearchForm = props => {
 
   return (
     <div className={classes.SearchFormContainer}>
-      <h1>Search</h1>
-      <form onSubmit={searchCards}>
-        <input
-          type='text'
-          placeholder='Card Name'
-          value={rawSearchParams.name}
-          onChange={e => setRawSearchParams({ ...rawSearchParams, name: e.target.value })}
-        />
-        <input
-          type='text'
-          placeholder='Card Text'
-          value={rawSearchParams.oracle.text}
-          onChange={e =>
-            setRawSearchParams({
-              ...rawSearchParams,
-              oracle: { type: rawSearchParams.oracle.type, text: e.target.value }
-            })
-          }
-        />
-        <select
-          defaultValue={rawSearchParams.oracle.type}
-          onChange={e =>
-            setRawSearchParams({
-              ...rawSearchParams,
-              oracle: { type: e.target.value, text: rawSearchParams.oracle.text }
-            })
-          }>
-          <option value='all'>All</option>
-          <option value='exact'>Exact</option>
-          <option value='any'>Any</option>
-        </select>
+      <SectionHeader>Search</SectionHeader>
+      <StyledSearchForm onSubmit={searchCards}>
+        <FormRow>
+          <FormRowTitle>
+            <h4>Card Name</h4>
+          </FormRowTitle>
+          <FormRowContent>
+            <TextInput
+              type='text'
+              placeholder='Card Name'
+              value={rawSearchParams.name}
+              onChange={e => setRawSearchParams({ ...rawSearchParams, name: e.target.value })}
+            />
+          </FormRowContent>
+        </FormRow>
+        <FormRow>
+          <FormRowTitle>
+            <h4>Card Text</h4>
+          </FormRowTitle>
+          <FormRowContent>
+            <TextInput
+              type='text'
+              placeholder='Card Text'
+              value={rawSearchParams.oracle.text}
+              onChange={e =>
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  oracle: { type: rawSearchParams.oracle.type, text: e.target.value }
+                })
+              }
+            />
+          </FormRowContent>
+        </FormRow>
+        <FormRow>
+          <FormRowTitle>
+            <h4>Oracle Text</h4>
+          </FormRowTitle>
+          <select
+            defaultValue={rawSearchParams.oracle.type}
+            onChange={e =>
+              setRawSearchParams({
+                ...rawSearchParams,
+                oracle: { type: e.target.value, text: rawSearchParams.oracle.text }
+              })
+            }>
+            <option value='all'>All</option>
+            <option value='exact'>Exact</option>
+            <option value='any'>Any</option>
+          </select>
+        </FormRow>
 
-        <label>
-          <input
-            type='checkbox'
-            defaultChecked={rawSearchParams.colors.colors.white}
-            onChange={() => {
-              setRawSearchParams({
-                ...rawSearchParams,
-                colors: {
-                  type: rawSearchParams.colors.type,
-                  colors: { ...rawSearchParams.colors.colors, white: !rawSearchParams.colors.colors.white }
-                }
-              });
-            }}
-          />
-          White
-        </label>
-        <label>
-          <input
-            type='checkbox'
-            defaultChecked={rawSearchParams.colors.colors.blue}
-            onChange={() =>
-              setRawSearchParams({
-                ...rawSearchParams,
-                colors: {
-                  type: rawSearchParams.colors.type,
-                  colors: { ...rawSearchParams.colors.colors, blue: !rawSearchParams.colors.colors.blue }
-                }
-              })
-            }
-          />
-          Blue
-        </label>
-        <label>
-          <input
-            type='checkbox'
-            defaultChecked={rawSearchParams.colors.colors.black}
-            onChange={() =>
-              setRawSearchParams({
-                ...rawSearchParams,
-                colors: {
-                  type: rawSearchParams.colors.type,
-                  colors: { ...rawSearchParams.colors.colors, black: !rawSearchParams.colors.colors.black }
-                }
-              })
-            }
-          />
-          Black
-        </label>
-        <label>
-          <input
-            type='checkbox'
-            defaultChecked={rawSearchParams.colors.colors.red}
-            onChange={() =>
-              setRawSearchParams({
-                ...rawSearchParams,
-                colors: {
-                  type: rawSearchParams.colors.type,
-                  colors: { ...rawSearchParams.colors.colors, red: !rawSearchParams.colors.colors.red }
-                }
-              })
-            }
-          />
-          Red
-        </label>
-        <label>
-          <input
-            type='checkbox'
-            defaultChecked={rawSearchParams.colors.colors.green}
-            onChange={() =>
-              setRawSearchParams({
-                ...rawSearchParams,
-                colors: {
-                  type: rawSearchParams.colors.type,
-                  colors: { ...rawSearchParams.colors.colors, green: !rawSearchParams.colors.colors.green }
-                }
-              })
-            }
-          />
-          Green
-        </label>
-        <label>
-          <input
-            type='checkbox'
-            defaultChecked={rawSearchParams.colors.colors.colorless}
-            onChange={() =>
-              setRawSearchParams({
-                ...rawSearchParams,
-                colors: {
-                  type: rawSearchParams.colors.type,
-                  colors: { ...rawSearchParams.colors.colors, colorless: !rawSearchParams.colors.colors.colorless }
-                }
-              })
-            }
-          />
-          Colorless
-        </label>
+        <FormRow>
+          <FormRowTitle>
+            <h4>Colors</h4>
+          </FormRowTitle>
+          <label>
+            <input
+              type='checkbox'
+              defaultChecked={rawSearchParams.colors.colors.white}
+              onChange={() => {
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  colors: {
+                    type: rawSearchParams.colors.type,
+                    colors: { ...rawSearchParams.colors.colors, white: !rawSearchParams.colors.colors.white }
+                  }
+                });
+              }}
+            />
+            White
+          </label>
+          <label>
+            <input
+              type='checkbox'
+              defaultChecked={rawSearchParams.colors.colors.blue}
+              onChange={() =>
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  colors: {
+                    type: rawSearchParams.colors.type,
+                    colors: { ...rawSearchParams.colors.colors, blue: !rawSearchParams.colors.colors.blue }
+                  }
+                })
+              }
+            />
+            Blue
+          </label>
+          <label>
+            <input
+              type='checkbox'
+              defaultChecked={rawSearchParams.colors.colors.black}
+              onChange={() =>
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  colors: {
+                    type: rawSearchParams.colors.type,
+                    colors: { ...rawSearchParams.colors.colors, black: !rawSearchParams.colors.colors.black }
+                  }
+                })
+              }
+            />
+            Black
+          </label>
+          <label>
+            <input
+              type='checkbox'
+              defaultChecked={rawSearchParams.colors.colors.red}
+              onChange={() =>
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  colors: {
+                    type: rawSearchParams.colors.type,
+                    colors: { ...rawSearchParams.colors.colors, red: !rawSearchParams.colors.colors.red }
+                  }
+                })
+              }
+            />
+            Red
+          </label>
+          <label>
+            <input
+              type='checkbox'
+              defaultChecked={rawSearchParams.colors.colors.green}
+              onChange={() =>
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  colors: {
+                    type: rawSearchParams.colors.type,
+                    colors: { ...rawSearchParams.colors.colors, green: !rawSearchParams.colors.colors.green }
+                  }
+                })
+              }
+            />
+            Green
+          </label>
+          <label>
+            <input
+              type='checkbox'
+              defaultChecked={rawSearchParams.colors.colors.colorless}
+              onChange={() =>
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  colors: {
+                    type: rawSearchParams.colors.type,
+                    colors: { ...rawSearchParams.colors.colors, colorless: !rawSearchParams.colors.colors.colorless }
+                  }
+                })
+              }
+            />
+            Colorless
+          </label>
 
-        <select
-          defaultValue='exactly'
-          onChange={e =>
-            setRawSearchParams({
-              ...rawSearchParams,
-              colors: { type: e.target.value, colors: { ...rawSearchParams.colors.colors } }
-            })
-          }>
-          <option value='exactly'>Exactly these Colors</option>
-          <option value='including'>Including these Colors</option>
-          <option value='at_most'>At most these Colors</option>
-        </select>
+          <select
+            defaultValue='exactly'
+            onChange={e =>
+              setRawSearchParams({
+                ...rawSearchParams,
+                colors: { type: e.target.value, colors: { ...rawSearchParams.colors.colors } }
+              })
+            }>
+            <option value='exactly'>Exactly these Colors</option>
+            <option value='including'>Including these Colors</option>
+            <option value='at_most'>At most these Colors</option>
+          </select>
+        </FormRow>
+        <FormRow>
+          <FormRowTitle>
+            <h4>Type Line</h4>
+          </FormRowTitle>
+          <FormRowContent>
+            <TextInput
+              type='text'
+              placeholder='Type Line'
+              value={rawSearchParams.type_line.text}
+              onChange={e =>
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  type_line: { type: rawSearchParams.type_line.type, text: e.target.value }
+                })
+              }
+            />
+          </FormRowContent>
+        </FormRow>
+        <FormRow>
+          <FormRowTitle>
+            <h4>Power</h4>
+          </FormRowTitle>
 
-        <input
-          type='text'
-          placeholder='Type Line'
-          value={rawSearchParams.type_line.text}
-          onChange={e =>
-            setRawSearchParams({
-              ...rawSearchParams,
-              type_line: { type: rawSearchParams.type_line.type, text: e.target.value }
-            })
-          }
-        />
-
-        <label>
-          Power:
           <select
             defaultValue={rawSearchParams.power.comparison}
             onChange={e =>
@@ -340,173 +376,202 @@ const SearchForm = props => {
               })
             }
           />
-        </label>
+        </FormRow>
+        <FormRow>
+          <FormRowTitle>
+            <h4>Toughness</h4>
+          </FormRowTitle>
+          <FormRowContent>
+            <select
+              defaultValue={rawSearchParams.toughness.comparison}
+              onChange={e =>
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  toughness: { comparison: e.target.value, value: rawSearchParams.toughness.value }
+                })
+              }>
+              <option value='less_than'>less than</option>
+              <option value='less_than_or_equal'>less than or equal to</option>
+              <option value='equal'>equal to</option>
+              <option value='greater_than_or_equal'>greater than or equal to</option>
+              <option value='greater_than'>greater than</option>
+            </select>
+            <input
+              type='number'
+              value={rawSearchParams.toughness.value}
+              onChange={e =>
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  toughness: { comparison: rawSearchParams.toughness.comparison, value: e.target.value }
+                })
+              }
+            />
+          </FormRowContent>
+        </FormRow>
+        <FormRow>
+          <FormRowTitle>
+            <h4>CMC</h4>
+          </FormRowTitle>
+          <FormRowContent>
+            <select
+              defaultValue={rawSearchParams.cmc.comparison}
+              onChange={e =>
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  cmc: { comparison: e.target.value, value: rawSearchParams.cmc.value }
+                })
+              }>
+              <option value='less_than'>less than</option>
+              <option value='less_than_or_equal'>less than or equal to</option>
+              <option value='equal'>equal to</option>
+              <option value='greater_than_or_equal'>greater than or equal to</option>
+              <option value='greater_than'>greater than</option>
+            </select>
+            <input
+              type='number'
+              value={rawSearchParams.cmc.value}
+              onChange={e =>
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  cmc: { comparison: rawSearchParams.cmc.comparison, value: e.target.value }
+                })
+              }
+            />
+          </FormRowContent>
+        </FormRow>
+        <FormRow>
+          <FormRowTitle>
+            <h4>Loyalty</h4>
+          </FormRowTitle>
 
-        <label>
-          Toughness:
-          <select
-            defaultValue={rawSearchParams.toughness.comparison}
-            onChange={e =>
-              setRawSearchParams({
-                ...rawSearchParams,
-                toughness: { comparison: e.target.value, value: rawSearchParams.toughness.value }
-              })
-            }>
-            <option value='less_than'>less than</option>
-            <option value='less_than_or_equal'>less than or equal to</option>
-            <option value='equal'>equal to</option>
-            <option value='greater_than_or_equal'>greater than or equal to</option>
-            <option value='greater_than'>greater than</option>
-          </select>
-          <input
-            type='number'
-            value={rawSearchParams.toughness.value}
-            onChange={e =>
-              setRawSearchParams({
-                ...rawSearchParams,
-                toughness: { comparison: rawSearchParams.toughness.comparison, value: e.target.value }
-              })
-            }
-          />
-        </label>
-
-        <label>
-          CMC:
-          <select
-            defaultValue={rawSearchParams.cmc.comparison}
-            onChange={e =>
-              setRawSearchParams({
-                ...rawSearchParams,
-                cmc: { comparison: e.target.value, value: rawSearchParams.cmc.value }
-              })
-            }>
-            <option value='less_than'>less than</option>
-            <option value='less_than_or_equal'>less than or equal to</option>
-            <option value='equal'>equal to</option>
-            <option value='greater_than_or_equal'>greater than or equal to</option>
-            <option value='greater_than'>greater than</option>
-          </select>
-          <input
-            type='number'
-            value={rawSearchParams.cmc.value}
-            onChange={e =>
-              setRawSearchParams({
-                ...rawSearchParams,
-                cmc: { comparison: rawSearchParams.cmc.comparison, value: e.target.value }
-              })
-            }
-          />
-        </label>
-
-        <label>
-          Loyalty:
-          <select
-            defaultValue={rawSearchParams.loyalty.comparison}
-            onChange={e =>
-              setRawSearchParams({
-                ...rawSearchParams,
-                loyalty: { comparison: e.target.value, value: rawSearchParams.loyalty.value }
-              })
-            }>
-            <option value='less_than'>less than</option>
-            <option value='less_than_or_equal'>less than or equal to</option>
-            <option value='equal'>equal to</option>
-            <option value='greater_than_or_equal'>greater than or equal to</option>
-            <option value='greater_than'>greater than</option>
-          </select>
-          <input
-            type='number'
-            value={rawSearchParams.loyalty.value}
-            onChange={e =>
-              setRawSearchParams({
-                ...rawSearchParams,
-                loyalty: { comparison: rawSearchParams.loyalty.comparison, value: e.target.value }
-              })
-            }
-          />
-        </label>
-
-        <label>
-          <input
-            type='checkbox'
-            defaultChecked={rawSearchParams.rarity.common}
-            onChange={() =>
-              setRawSearchParams({
-                ...rawSearchParams,
-                rarity: {
-                  ...rawSearchParams.rarity,
-                  common: !rawSearchParams.rarity.common
+          <FormRowContent>
+            <select
+              defaultValue={rawSearchParams.loyalty.comparison}
+              onChange={e =>
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  loyalty: { comparison: e.target.value, value: rawSearchParams.loyalty.value }
+                })
+              }>
+              <option value='less_than'>less than</option>
+              <option value='less_than_or_equal'>less than or equal to</option>
+              <option value='equal'>equal to</option>
+              <option value='greater_than_or_equal'>greater than or equal to</option>
+              <option value='greater_than'>greater than</option>
+            </select>
+            <input
+              type='number'
+              value={rawSearchParams.loyalty.value}
+              onChange={e =>
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  loyalty: { comparison: rawSearchParams.loyalty.comparison, value: e.target.value }
+                })
+              }
+            />
+          </FormRowContent>
+        </FormRow>
+        <FormRow>
+          <FormRowTitle>
+            <h4>Rarity</h4>
+          </FormRowTitle>
+          <FormRowContent>
+            <label>
+              <input
+                type='checkbox'
+                defaultChecked={rawSearchParams.rarity.common}
+                onChange={() =>
+                  setRawSearchParams({
+                    ...rawSearchParams,
+                    rarity: {
+                      ...rawSearchParams.rarity,
+                      common: !rawSearchParams.rarity.common
+                    }
+                  })
                 }
-              })
-            }
-          />
-          Common
-        </label>
-        <label>
-          <input
-            type='checkbox'
-            defaultChecked={rawSearchParams.rarity.uncommon}
-            onChange={() =>
-              setRawSearchParams({
-                ...rawSearchParams,
-                rarity: {
-                  ...rawSearchParams.rarity,
-                  uncommon: !rawSearchParams.rarity.uncommon
+              />
+              Common
+            </label>
+            <label>
+              <input
+                type='checkbox'
+                defaultChecked={rawSearchParams.rarity.uncommon}
+                onChange={() =>
+                  setRawSearchParams({
+                    ...rawSearchParams,
+                    rarity: {
+                      ...rawSearchParams.rarity,
+                      uncommon: !rawSearchParams.rarity.uncommon
+                    }
+                  })
                 }
-              })
-            }
-          />
-          Uncommon
-        </label>
-        <label>
-          <input
-            type='checkbox'
-            defaultChecked={rawSearchParams.rarity.rare}
-            onChange={() =>
-              setRawSearchParams({
-                ...rawSearchParams,
-                rarity: {
-                  ...rawSearchParams.rarity,
-                  rare: !rawSearchParams.rarity.rare
+              />
+              Uncommon
+            </label>
+            <label>
+              <input
+                type='checkbox'
+                defaultChecked={rawSearchParams.rarity.rare}
+                onChange={() =>
+                  setRawSearchParams({
+                    ...rawSearchParams,
+                    rarity: {
+                      ...rawSearchParams.rarity,
+                      rare: !rawSearchParams.rarity.rare
+                    }
+                  })
                 }
-              })
-            }
-          />
-          Rare
-        </label>
-        <label>
-          <input
-            type='checkbox'
-            defaultChecked={rawSearchParams.rarity.mythic}
-            onChange={() =>
-              setRawSearchParams({
-                ...rawSearchParams,
-                rarity: {
-                  ...rawSearchParams.rarity,
-                  mythic: !rawSearchParams.rarity.mythic
+              />
+              Rare
+            </label>
+            <label>
+              <input
+                type='checkbox'
+                defaultChecked={rawSearchParams.rarity.mythic}
+                onChange={() =>
+                  setRawSearchParams({
+                    ...rawSearchParams,
+                    rarity: {
+                      ...rawSearchParams.rarity,
+                      mythic: !rawSearchParams.rarity.mythic
+                    }
+                  })
                 }
-              })
-            }
-          />
-          Mythic
-        </label>
+              />
+              Mythic
+            </label>
+          </FormRowContent>
+        </FormRow>
 
-        <input
-          type='text'
-          placeholder='Set'
-          onChange={e => setRawSearchParams({ ...rawSearchParams, set: e.target.value })}
-        />
+        <FormRow>
+          <FormRowTitle>
+            <h4>Set</h4>
+          </FormRowTitle>
+          <FormRowContent>
+            <TextInput
+              type='text'
+              placeholder='Set'
+              onChange={e => setRawSearchParams({ ...rawSearchParams, set: e.target.value })}
+            />
+          </FormRowContent>
+        </FormRow>
+        <FormRow>
+          <FormRowTitle>
+            <h4>Mana Cost</h4>
+          </FormRowTitle>
+          <FormRowContent>
+            <TextInput
+              type='text'
+              placeholder='e.g. {1}{W}{W}'
+              onChange={e => setRawSearchParams({ ...rawSearchParams, mana_cost: e.target.value })}
+            />
+          </FormRowContent>
+        </FormRow>
+        <FormRow>
+          <FormRowTitle>
+            <h4>Include Un-Sets?</h4>
+          </FormRowTitle>
 
-        <label>
-          Mana Cost:
-          <input
-            type='text'
-            placeholder='e.g. {1}{W}{W}'
-            onChange={e => setRawSearchParams({ ...rawSearchParams, mana_cost: e.target.value })}
-          />
-        </label>
-
-        <label>
           <input
             type='checkbox'
             onChange={e =>
@@ -516,13 +581,10 @@ const SearchForm = props => {
               })
             }
           />
-          Include Un-Sets?
-        </label>
+        </FormRow>
 
-        <button type='submit'>{loadingResults ? 'Searching...' : 'Search'}</button>
-
-        <hr />
-      </form>
+        <Button type='submit'>{loadingResults ? 'Searching...' : 'Search'}</Button>
+      </StyledSearchForm>
     </div>
   );
 };

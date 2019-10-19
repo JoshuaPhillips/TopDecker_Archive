@@ -9,16 +9,26 @@ export const FormRow = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 1rem 0;
+  border-bottom: 1px dashed lightgrey;
+  padding: 1rem;
+
+  &:last-of-type {
+    border-bottom: 0;
+  }
 `;
 
-export const FormRowLabel = styled.div`
+export const FormRowTitle = styled.div`
   width: 30%;
   font-weight: ${props => props.theme.fonts.weights.bold};
 `;
 
 export const FormRowContent = styled.div`
-  width: 70%;
+  flex-grow: 1;
+`;
+
+export const FormRowLabel = styled.div`
+  width: 30%;
+  font-weight: ${props => props.theme.fonts.weights.bold};
 `;
 
 export const TextInputWithLabel = styled.div`
@@ -50,9 +60,12 @@ export const TextInput = styled.input`
   width: 100%;
   outline: none;
   letter-spacing: 0.1rem;
-  border: 2px solid ${props => props.theme.colors.primary};
-  border-radius: 5px;
+  border: 1px solid lightgrey;
+  border-bottom: 2px solid lightgrey;
+  border-right: 2px solid lightgrey;
+  border-left: 5px solid ${props => props.theme.colors.primary};
   padding: 0.5rem;
+  padding-left: 1rem;
 `;
 
 export const Select = styled.select`

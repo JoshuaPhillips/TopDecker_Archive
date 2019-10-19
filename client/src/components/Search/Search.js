@@ -10,6 +10,9 @@ import { UPDATE_CARD_LIST } from '../DeckManager/graphql';
 
 import { generateCardList } from '../../utils/generateCardList';
 
+import { StyledSearch } from './styles';
+import { SectionHeader } from '../../shared/Headers';
+
 import classes from './Search.module.scss';
 const Search = props => {
   const [deckList, setDeckList] = useState([]);
@@ -44,10 +47,10 @@ const Search = props => {
   });
 
   return (
-    <main className={classes.Search}>
+    <StyledSearch>
       <SearchForm setSearchResults={setSearchResults} />
       <div className={classes.SearchResultsContainer}>
-        <h1>Search Results</h1>
+        <SectionHeader>Search Results</SectionHeader>
         <p>Add Cards to: </p>
         <select value={selectedDeckId} onChange={e => setSelectedDeckId(e.target.value)}>
           <option value='default' disabled>
@@ -75,7 +78,7 @@ const Search = props => {
           })}
         </div>
       </div>
-    </main>
+    </StyledSearch>
   );
 };
 
