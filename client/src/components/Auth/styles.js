@@ -7,7 +7,7 @@ export const StyledAuth = styled.main`
   width: 50%;
   padding: 3rem 3rem 2rem;
   border-radius: 5px;
-  margin: 1rem auto;
+  margin: 4rem auto;
 
   .loginModeToggleText {
     width: fit-content;
@@ -18,6 +18,23 @@ export const StyledAuth = styled.main`
 
     &:hover {
       transform: scale(1.01);
+    }
+  }
+`;
+
+export const AuthForm = styled.form`
+  width: 80%;
+  margin: auto;
+`;
+
+export const AuthFormButtonsWrapper = styled.div`
+  width: 80%;
+  margin: 1rem auto 2rem;
+  button {
+    margin-right: 0.5rem;
+
+    &:first-child {
+      margin-left: 1.5rem;
     }
   }
 `;

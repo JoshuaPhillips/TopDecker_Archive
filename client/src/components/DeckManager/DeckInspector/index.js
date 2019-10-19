@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import DeckInspectorToolbar from './DeckInspectorToolbar/DeckInspectorToolbar';
+import DeckInspectorToolbar from './DeckInspectorToolbar';
 
 import GalleryModeCardItem from './GalleryModeCardItem/GalleryModeCardItem';
 import TextModeCardItem from './TextModeCardItem/TextModeCardItem';

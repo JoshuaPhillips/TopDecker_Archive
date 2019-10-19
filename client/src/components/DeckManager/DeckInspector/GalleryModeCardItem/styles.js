@@ -21,7 +21,7 @@ export const StyledGalleryModeCardItem = styled.div`
   border-bottom: 2px solid lightgrey;
   background-color: white;
   border-radius: 4.2% 4.2% 5px 5px;
-  margin: 0 0.5rem 1rem 0;
+  margin: 0.5rem 0.5rem 0 0;
 
   :nth-child(4n) {
     margin-right: 0;

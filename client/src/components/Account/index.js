@@ -10,10 +10,10 @@ import { faEdit, faLock, faTimes, faCheck, faTrash } from '@fortawesome/free-sol
 import Checkbox from '../Checkbox';
 import Spinner from '../Spinner/Spinner';
 
-import { StyledAccount, DeleteConfirmationMessage } from './styles';
+import { StyledAccount, AccountForm, AccountFormButtonsWrapper, DeleteConfirmationMessage } from './styles';
 import { SectionHeader } from '../../shared/Headers';
 import { Button, ButtonGroup, DangerButton } from '../../shared/Buttons';
-import { Form, FormRow, FormRowTitle, FormRowContent, TextInput } from '../../shared/Forms';
+import { FormRow, FormRowTitle, FormRowContent, TextInput } from '../../shared/Forms';
 
 const Account = () => {
   const [editing, toggleEditing] = useState(false);
@@ -89,7 +89,7 @@ const Account = () => {
     <StyledAccount>
       <SectionHeader>Account</SectionHeader>
 
-      <Form>
+      <AccountForm>
         <FormRow>
           <FormRowTitle>
             <label htmlFor='firstName'>First Name:</label>
@@ -164,41 +164,43 @@ const Account = () => {
             />
           </FormRowContent>
         </FormRow>
-
+      </AccountForm>
+      <AccountFormButtonsWrapper>
         <Button type='button' onClick={editing ? () => SaveAccountDetailsMutation() : () => toggleEditing(true)}>
           <FontAwesomeIcon icon={faEdit} fixedWidth />
           {editing ? 'Save' : 'Edit'}
         </Button>
-      </Form>
+      </AccountFormButtonsWrapper>
 
       <SectionHeader danger>Danger Zone</SectionHeader>
-      <Form>
-        {!editingPassword && !deletingAccount && (
-          <ButtonGroup>
-            <Button
-              type='button'
-              onClick={() => {
-                toggleDeletingAccount(false);
-                toggleEditingPassword(true);
-              }}>
-              <FontAwesomeIcon icon={faLock} fixedWidth />
-              Change Password
-            </Button>
 
-            <DangerButton
-              type='button'
-              onClick={() => {
-                toggleEditingPassword(false);
-                toggleDeletingAccount(true);
-              }}>
-              <FontAwesomeIcon icon={faTrash} fixedWidth />
-              Delete Account
-            </DangerButton>
-          </ButtonGroup>
-        )}
+      {!editingPassword && !deletingAccount && (
+        <AccountFormButtonsWrapper>
+          <Button
+            type='button'
+            onClick={() => {
+              toggleDeletingAccount(false);
+              toggleEditingPassword(true);
+            }}>
+            <FontAwesomeIcon icon={faLock} fixedWidth />
+            Change Password
+          </Button>
 
-        {editingPassword && (
-          <React.Fragment>
+          <DangerButton
+            type='button'
+            onClick={() => {
+              toggleEditingPassword(false);
+              toggleDeletingAccount(true);
+            }}>
+            <FontAwesomeIcon icon={faTrash} fixedWidth />
+            Delete Account
+          </DangerButton>
+        </AccountFormButtonsWrapper>
+      )}
+
+      {editingPassword && (
+        <React.Fragment>
+          <AccountForm>
             <FormRow>
               <FormRowTitle>
                 <label htmlFor='currentPassword'>Current Password:</label>
@@ -240,31 +242,32 @@ const Account = () => {
                 />
               </FormRowContent>
             </FormRow>
+          </AccountForm>
+          <AccountFormButtonsWrapper>
+            <Button
+              inverted
+              type='button'
+              onClick={() => ChangePasswordMutation()}
+              disabled={
+                passwordDetails.currentPassword.length === 0 ||
+                passwordDetails.newPassword.length === 0 ||
+                passwordDetails.confirmationPassword.length === 0
+              }>
+              <FontAwesomeIcon icon={faCheck} fixedWidth />
+              Confirm
+            </Button>
+            <Button inverted type='button' onClick={() => resetPasswordChange()}>
+              <FontAwesomeIcon icon={faTimes} fixedWidth />
+              Cancel
+            </Button>
+          </AccountFormButtonsWrapper>
+        </React.Fragment>
+      )}
 
-            <ButtonGroup>
-              <Button
-                inverted
-                type='button'
-                onClick={() => ChangePasswordMutation()}
-                disabled={
-                  passwordDetails.currentPassword.length === 0 ||
-                  passwordDetails.newPassword.length === 0 ||
-                  passwordDetails.confirmationPassword.length === 0
-                }>
-                <FontAwesomeIcon icon={faCheck} fixedWidth />
-                Confirm
-              </Button>
-              <Button inverted type='button' onClick={() => resetPasswordChange()}>
-                <FontAwesomeIcon icon={faTimes} fixedWidth />
-                Cancel
-              </Button>
-            </ButtonGroup>
-          </React.Fragment>
-        )}
-
-        <ButtonGroup></ButtonGroup>
-        {deletingAccount && (
-          <React.Fragment>
+      <ButtonGroup></ButtonGroup>
+      {deletingAccount && (
+        <React.Fragment>
+          <AccountForm>
             <FormRow>
               <FormRowTitle>
                 <label htmlFor='accountDeleteConfirmationPassword'>Enter your Password:</label>
@@ -286,23 +289,23 @@ const Account = () => {
                 onClick={() => setDeleteConfirmationCheckbox(!deleteConfirmationCheckbox)}
               />
             </FormRow>
-            <ButtonGroup>
-              <DangerButton
-                inverted
-                type='button'
-                disabled={!deletingAccount || deleteConfirmationPassword.length === 0 || !deleteConfirmationCheckbox}
-                onClick={() => console.log(deleteConfirmationPassword, deleteConfirmationCheckbox)}>
-                <FontAwesomeIcon icon={faTrash} fixedWidth />
-                Delete Forever
-              </DangerButton>
-              <Button inverted type='button' onClick={() => resetAccountDeletion()}>
-                <FontAwesomeIcon icon={faTimes} fixedWidth />
-                Cancel
-              </Button>
-            </ButtonGroup>
-          </React.Fragment>
-        )}
-      </Form>
+          </AccountForm>
+          <AccountFormButtonsWrapper>
+            <DangerButton
+              inverted
+              type='button'
+              disabled={!deletingAccount || deleteConfirmationPassword.length === 0 || !deleteConfirmationCheckbox}
+              onClick={() => console.log(deleteConfirmationPassword, deleteConfirmationCheckbox)}>
+              <FontAwesomeIcon icon={faTrash} fixedWidth />
+              Delete Forever
+            </DangerButton>
+            <Button inverted type='button' onClick={() => resetAccountDeletion()}>
+              <FontAwesomeIcon icon={faTimes} fixedWidth />
+              Cancel
+            </Button>
+          </AccountFormButtonsWrapper>
+        </React.Fragment>
+      )}
     </StyledAccount>
   );
 };

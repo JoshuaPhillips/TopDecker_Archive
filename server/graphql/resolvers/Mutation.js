@@ -160,11 +160,6 @@ const MutationResolvers = {
         if (deckDetails.commander) {
           // this will the scryfall ID of the commander
           newDeck.commander = deckDetails.commander;
-          newDeck.cardList.push({
-            scryfallId: deckDetails.commander,
-            mainDeckCount: 1,
-            sideboardCount: 0
-          });
         }
 
         const savedDeck = await newDeck.save();

@@ -1,10 +1,20 @@
-.Spinner,
-.Spinner:after {
+import styled, { keyframes } from 'styled-components';
+
+const load8 = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+export const StyledSpinner = styled.div`
   border-radius: 50%;
   width: 10em;
   height: 10em;
-}
-.Spinner {
+
   margin: 60px auto;
   font-size: 10px;
   position: relative;
@@ -15,16 +25,11 @@
   border-left: 1.1em solid #000000;
 
   transform: translateZ(0);
-  animation: load8 1.1s infinite linear;
-}
+  animation: ${load8} 1.1s infinite linear;
 
-@keyframes load8 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
+  &:after {
+    border-radius: 50 %;
+    width: 10em;
+    height: 10em;
   }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
+`;

@@ -6,11 +6,12 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { GET_COMMANDER_SEARCH_RESULTS, CREATE_NEW_DECK } from './graphql';
 import { GET_DECK_LIST } from '../graphql';
 
-import { ReactSelectStyles } from './styles';
+import { FormatSelectionWrapper, AddDeckFormButtonsWrapper } from './styles';
 import { FormRow, FormRowTitle, FormRowContent, TextInput } from '../../../shared/Forms';
 import { Button } from '../../../shared/Buttons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
+import Checkbox from '../../Checkbox';
 
 const AddDeckForm = props => {
   const [name, setName] = useState('');
@@ -105,92 +106,72 @@ const AddDeckForm = props => {
   };
 
   return (
-    <form>
-      <FormRow>
-        <FormRowTitle>
-          <label htmlFor='name'>Name</label>
-        </FormRowTitle>
-        <FormRowContent>
-          <TextInput
-            type='text'
-            id='name'
-            value={name}
-            placeholder='Minimum 4 characters'
-            onChange={e => setName(e.target.value)}
-          />
-        </FormRowContent>
-      </FormRow>
-
-      <FormRow>
-        <FormRowTitle>
-          <label htmlFor='format'>Format</label>
-        </FormRowTitle>
-        <FormRowContent>
-          <label>
-            Standard
-            <input
-              type='radio'
-              value='standard'
-              checked={format === 'standard'}
-              onChange={e => setFormat(e.target.value)}
-            />
-          </label>
-
-          <label>
-            Modern
-            <input
-              type='radio'
-              value='modern'
-              checked={format === 'modern'}
-              onChange={e => setFormat(e.target.value)}
-            />
-          </label>
-          <label>
-            Commander
-            <input
-              type='radio'
-              value='commander'
-              checked={format === 'commander'}
-              onChange={e => setFormat(e.target.value)}
-            />
-          </label>
-        </FormRowContent>
-      </FormRow>
-      {/* <select id='format' value={format} onChange={e => setFormat(e.target.value)}>
-          <option value='standard'>Standard</option>
-          <option value='modern'>Modern</option>
-          <option value='commander'>Commander</option>
-        </select> */}
-
-      {format === 'commander' && (
+    <React.Fragment>
+      <form>
         <FormRow>
           <FormRowTitle>
-            <label htmlFor='commander'>Commander</label>
+            <label htmlFor='name'>Name</label>
           </FormRowTitle>
           <FormRowContent>
-            <Select
-              styles={ReactSelectStyles}
-              id='commander'
-              onChange={handleCommanderOptionSelect}
-              onInputChange={handleCommanderInputChange}
-              options={commanderSearchResults}
-              isClearable
-              placeholder='Name of your Commander?'
-              noOptionsMessage={() => 'No Results Found.'}
+            <TextInput
+              type='text'
+              id='name'
+              value={name}
+              placeholder='Minimum 4 characters'
+              onChange={e => setName(e.target.value)}
             />
           </FormRowContent>
         </FormRow>
-      )}
 
-      <Button type='button' disabled={!checkFormValidity()} onClick={() => CreateNewDeckMutation()}>
-        <FontAwesomeIcon icon={faPlus} fixedWidth />
-        Create
-      </Button>
-      <Button type='button' onClick={() => cancelAddDeckHandler()}>
-        <FontAwesomeIcon icon={faTimes} fixedWidth />
-        Cancel
-      </Button>
-    </form>
+        <FormRow>
+          <FormRowTitle>
+            <label htmlFor='format'>Format</label>
+          </FormRowTitle>
+          <FormRowContent>
+            <FormatSelectionWrapper>
+              <Checkbox selected={format === 'standard'} onClick={() => setFormat('standard')}>
+                Standard
+              </Checkbox>
+              <Checkbox selected={format === 'modern'} onClick={() => setFormat('modern')}>
+                Modern
+              </Checkbox>
+              <Checkbox selected={format === 'commander'} onClick={() => setFormat('commander')}>
+                Commander
+              </Checkbox>
+            </FormatSelectionWrapper>
+          </FormRowContent>
+        </FormRow>
+
+        {format === 'commander' && (
+          <FormRow>
+            <FormRowTitle>
+              <label htmlFor='commander'>Commander</label>
+            </FormRowTitle>
+            <FormRowContent>
+              <Select
+                id='commander'
+                onChange={handleCommanderOptionSelect}
+                onInputChange={handleCommanderInputChange}
+                options={commanderSearchResults}
+                isClearable
+                placeholder='Name of your Commander?'
+                noOptionsMessage={() => 'No Results Found.'}
+              />
+            </FormRowContent>
+          </FormRow>
+        )}
+      </form>
+      <AddDeckFormButtonsWrapper>
+        <Button type='button' disabled={!checkFormValidity()} onClick={() => CreateNewDeckMutation()}>
+          <FontAwesomeIcon icon={faPlus} fixedWidth />
+          Create
+        </Button>
+        <Button type='button' onClick={() => cancelAddDeckHandler()}>
+          <FontAwesomeIcon icon={faTimes} fixedWidth />
+          Cancel
+        </Button>
+      </AddDeckFormButtonsWrapper>
+    </React.Fragment>
   );
 };
 

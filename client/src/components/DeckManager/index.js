@@ -5,7 +5,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { GET_AUTH_DATA, GET_DECK_DETAILS, UPDATE_CARD_LIST } from './graphql';
 
 import DeckManagerSidebar from './DeckManagerSidebar';
-import DeckInspector from './DeckInspector/DeckInspector';
+import DeckInspector from './DeckInspector';
 import Spinner from '../Spinner/Spinner';
 
 import { sortCardList } from '../../utils/sortCardList';

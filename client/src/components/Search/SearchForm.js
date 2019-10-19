@@ -8,19 +8,16 @@ import { Mana } from '@saeris/react-mana';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-import { SearchFormWrapper, StyledSearchForm } from './styles';
-import { SectionHeader } from '../../shared/Headers';
 import {
-  FormRow,
-  FormRowTitle,
-  FormRowContent,
-  TextInput,
+  SearchFormWrapper,
   CardColorSelectionGroup,
   CardColorSelectionButton,
   NumberInputWithSelectComparison,
   SearchFormRarityWrapper,
-  StyledSelect
-} from '../../shared/Forms';
+  SearchFormSubmitButtonWrapper
+} from './styles';
+import { SectionHeader } from '../../shared/Headers';
+import { FormRow, FormRowTitle, FormRowContent, TextInput, StyledSelect, NumberInput } from '../../shared/Forms';
 import { Button } from '../../shared/Buttons';
 import Checkbox from '../Checkbox';
 
@@ -176,12 +173,10 @@ const SearchForm = props => {
     }
   };
 
-  console.log(rawSearchParams);
-
   return (
     <SearchFormWrapper>
       <SectionHeader>Search</SectionHeader>
-      <StyledSearchForm onSubmit={searchCards}>
+      <form onSubmit={searchCards}>
         <FormRow>
           <FormRowTitle>
             <h4>Card Name</h4>
@@ -319,7 +314,7 @@ const SearchForm = props => {
               </CardColorSelectionButton>
             </CardColorSelectionGroup>
 
-            <select
+            <StyledSelect
               defaultValue='exactly'
               onChange={e =>
                 setRawSearchParams({
@@ -330,7 +325,7 @@ const SearchForm = props => {
               <option value='exactly'>Exactly these Colors</option>
               <option value='including'>Including these Colors</option>
               <option value='at_most'>At most these Colors</option>
-            </select>
+            </StyledSelect>
           </FormRowContent>
         </FormRow>
         <FormRow>
@@ -357,7 +352,7 @@ const SearchForm = props => {
           </FormRowTitle>
           <FormRowContent>
             <NumberInputWithSelectComparison>
-              <select
+              <StyledSelect
                 defaultValue={rawSearchParams.power.comparison}
                 onChange={e =>
                   setRawSearchParams({
@@ -370,8 +365,8 @@ const SearchForm = props => {
                 <option value='equal'>equal to</option>
                 <option value='greater_than_or_equal'>greater than or equal to</option>
                 <option value='greater_than'>greater than</option>
-              </select>
-              <input
+              </StyledSelect>
+              <NumberInput
                 type='number'
                 min={0}
                 value={rawSearchParams.power.value}
@@ -391,7 +386,7 @@ const SearchForm = props => {
           </FormRowTitle>
           <FormRowContent>
             <NumberInputWithSelectComparison>
-              <select
+              <StyledSelect
                 defaultValue={rawSearchParams.toughness.comparison}
                 onChange={e =>
                   setRawSearchParams({
@@ -404,8 +399,8 @@ const SearchForm = props => {
                 <option value='equal'>equal to</option>
                 <option value='greater_than_or_equal'>greater than or equal to</option>
                 <option value='greater_than'>greater than</option>
-              </select>
-              <input
+              </StyledSelect>
+              <NumberInput
                 type='number'
                 value={rawSearchParams.toughness.value}
                 onChange={e =>
@@ -424,7 +419,7 @@ const SearchForm = props => {
           </FormRowTitle>
           <FormRowContent>
             <NumberInputWithSelectComparison>
-              <select
+              <StyledSelect
                 defaultValue={rawSearchParams.cmc.comparison}
                 onChange={e =>
                   setRawSearchParams({
@@ -437,8 +432,8 @@ const SearchForm = props => {
                 <option value='equal'>equal to</option>
                 <option value='greater_than_or_equal'>greater than or equal to</option>
                 <option value='greater_than'>greater than</option>
-              </select>
-              <input
+              </StyledSelect>
+              <NumberInput
                 type='number'
                 value={rawSearchParams.cmc.value}
                 onChange={e =>
@@ -458,7 +453,7 @@ const SearchForm = props => {
 
           <FormRowContent>
             <NumberInputWithSelectComparison>
-              <select
+              <StyledSelect
                 defaultValue={rawSearchParams.loyalty.comparison}
                 onChange={e =>
                   setRawSearchParams({
@@ -471,8 +466,8 @@ const SearchForm = props => {
                 <option value='equal'>equal to</option>
                 <option value='greater_than_or_equal'>greater than or equal to</option>
                 <option value='greater_than'>greater than</option>
-              </select>
-              <input
+              </StyledSelect>
+              <NumberInput
                 type='number'
                 value={rawSearchParams.loyalty.value}
                 onChange={e =>
@@ -590,11 +585,12 @@ const SearchForm = props => {
             }
           />
         </FormRow>
-
+      </form>
+      <SearchFormSubmitButtonWrapper>
         <Button type='submit'>
           <FontAwesomeIcon icon={faSearch} fixedWidth /> {loadingResults ? 'Searching...' : 'Search'}
         </Button>
-      </StyledSearchForm>
+      </SearchFormSubmitButtonWrapper>
     </SearchFormWrapper>
   );
 };

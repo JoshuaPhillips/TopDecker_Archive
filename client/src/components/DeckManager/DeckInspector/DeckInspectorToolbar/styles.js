@@ -33,13 +33,24 @@ export const StyledDeckInspectorToolbar = styled.div.attrs(props => ({ disabled:
       margin: 0 0 0 0.5rem;
     }
   }
+`;
 
-  .DeckInspectorToolbarControls {
-    display: flex;
-    flex-wrap: no-wrap;
-    justify-content: space-between;
-    padding-top: 0.5rem;
-    width: 100%;
+export const DeckInspectorToolbarControls = styled.div`
+  display: flex;
+  flex-wrap: no-wrap;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  width: 100%;
+`;
+
+export const DeckInspectorControlGroup = styled.div`
+  text-align: center;
+  width: 33%;
+
+  p {
+    margin: 0.5rem 0;
+    font-weight: ${props => props.theme.fonts.weights.bold};
   }
 `;
 

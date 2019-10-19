@@ -25,7 +25,10 @@ toast.configure({
   position: 'bottom-left',
   hideProgressBar: true,
   autoClose: 4000,
-  delay: 0
+  delay: 0,
+  style: {
+    backgroundColor: 'transparent'
+  }
 });
 
 const App = () => {

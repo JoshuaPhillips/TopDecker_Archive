@@ -1,14 +1,9 @@
 import React from 'react';
 
-import classes from './Spinner.module.scss';
+import { StyledSpinner } from './styles';
 
-const Spinner = props => {
-  return (
-    <React.Fragment>
-      <div className={classes.Spinner} />
-      {props.children}
-    </React.Fragment>
-  );
+const Spinner = () => {
+  return <StyledSpinner />;
 };
 
 export default Spinner;

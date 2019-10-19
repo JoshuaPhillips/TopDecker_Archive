@@ -15,9 +15,9 @@ export const TextModeCardListContainer = styled.div`
 export const StyledTextModeCardItem = styled.div`
   display: flex;
   flex-direction: column;
-  width: calc((100% - 1.5rem) / 4);
-  min-width: 300px;
-  margin: 0 0.5rem 0.5rem 0;
+  width: calc((100% - 1rem) / 3);
+
+  margin: 0.5rem 0.5rem 0 0;
 
   background-color: white;
 
@@ -26,7 +26,7 @@ export const StyledTextModeCardItem = styled.div`
   border-bottom: 2px solid lightgrey;
   border-radius: 5px;
 
-  :nth-child(4n) {
+  :nth-child(3n) {
     margin-right: 0;
   }
 `;

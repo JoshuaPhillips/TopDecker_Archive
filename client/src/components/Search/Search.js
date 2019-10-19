@@ -10,10 +10,10 @@ import { UPDATE_CARD_LIST } from '../DeckManager/graphql';
 
 import { generateCardList } from '../../utils/generateCardList';
 
-import { StyledSearch } from './styles';
+import { StyledSearch, SearchResultsWrapper, SearchResultsToolbar, SearchResultsCardListContainer } from './styles';
 import { SectionHeader } from '../../shared/Headers';
+import { ModeToggleContainer } from '../../shared/ModeToggles';
 
-import classes from './Search.module.scss';
 const Search = props => {
   const [deckList, setDeckList] = useState([]);
   const [selectedDeckId, setSelectedDeckId] = useState(props.location.state ? props.location.state.deck.id : 'default');
@@ -49,25 +49,35 @@ const Search = props => {
   return (
     <StyledSearch>
       <SearchForm setSearchResults={setSearchResults} />
-      <div className={classes.SearchResultsContainer}>
+      <SearchResultsWrapper>
         <SectionHeader>Search Results</SectionHeader>
-        <p>Add Cards to: </p>
-        <select value={selectedDeckId} onChange={e => setSelectedDeckId(e.target.value)}>
-          <option value='default' disabled>
-            {GetUserDecksQueryResponse.loading && GetUserDecksQueryResponse.called
-              ? 'Loading decks...'
-              : 'Select a Deck to Edit...'}
-          </option>
-          {deckList &&
-            deckList.map(deck => {
-              return (
-                <option key={deck.id} value={deck.id}>
-                  {deck.name}
-                </option>
-              );
-            })}
-        </select>
-        <div className={classes.SearchResultsCardListContainer}>
+        <SearchResultsToolbar>
+          <div>
+            <select value={selectedDeckId} onChange={e => setSelectedDeckId(e.target.value)}>
+              <option value='default' disabled>
+                {GetUserDecksQueryResponse.loading && GetUserDecksQueryResponse.called
+                  ? 'Loading decks...'
+                  : 'Select a Deck to Edit...'}
+              </option>
+              {deckList &&
+                deckList.map(deck => {
+                  return (
+                    <option key={deck.id} value={deck.id}>
+                      {deck.name}
+                    </option>
+                  );
+                })}
+            </select>
+          </div>
+          <div>
+            <ModeToggleContainer>
+              <button type='button'>Gallery</button>
+              <button type='button'>Text</button>
+              <button type='button'>List</button>
+            </ModeToggleContainer>
+          </div>
+        </SearchResultsToolbar>
+        <SearchResultsCardListContainer>
           {searchResults.map(result => {
             return (
               <div key={result.scryfall_id}>
@@ -76,8 +86,8 @@ const Search = props => {
               </div>
             );
           })}
-        </div>
-      </div>
+        </SearchResultsCardListContainer>
+      </SearchResultsWrapper>
     </StyledSearch>
   );
 };

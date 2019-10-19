@@ -8,10 +8,10 @@ import { GET_AUTH_DATA } from '../../graphql';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 
-import { StyledAuth } from './styles';
+import { StyledAuth, AuthForm, AuthFormButtonsWrapper } from './styles';
 import { SectionHeader } from '../../shared/Headers';
 import { Button } from '../../shared/Buttons';
-import { Form, FormRow, FormRowTitle, FormRowContent, TextInput } from '../../shared/Forms';
+import { FormRow, FormRowTitle, FormRowContent, TextInput } from '../../shared/Forms';
 
 const Auth = () => {
   const client = useApolloClient();
@@ -81,7 +81,7 @@ const Auth = () => {
     <StyledAuth>
       <SectionHeader>{isLogin ? 'Login' : 'Sign Up'}</SectionHeader>
 
-      <Form>
+      <AuthForm>
         {!isLogin && (
           <React.Fragment>
             <FormRow>
@@ -173,12 +173,13 @@ const Auth = () => {
             </FormRow>
           </React.Fragment>
         )}
-
+      </AuthForm>
+      <AuthFormButtonsWrapper>
         <Button type='button' onClick={isLogin ? () => LoginQuery() : () => SignUpMutation()}>
           <FontAwesomeIcon icon={faSignInAlt} fixedWidth />
           {isLogin ? 'Login' : 'Sign Up'}
         </Button>
-      </Form>
+      </AuthFormButtonsWrapper>
 
       <p
         className='loginModeToggleText'

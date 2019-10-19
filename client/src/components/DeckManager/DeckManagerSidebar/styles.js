@@ -1,9 +1,10 @@
 import styled from 'styled-components';
+import { ModeToggleContainer } from '../../../shared/ModeToggles';
 
 export const StyledDeckManagerSidebar = styled.aside`
   width: 30%;
   max-width: 300px;
-  max-height: 92vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -15,45 +16,59 @@ export const StyledDeckManagerSidebar = styled.aside`
 export const QuickSearchContainer = styled.div`
   display: flex;
   flex-direction: column;
-  max-height: 85%;
+  height: 75%;
+`;
 
-  .QuickSearchHeaderContainer {
-    h1 {
-      margin-top: 0.65rem;
-      padding-bottom: 1.65rem; // to line up with the header of the deck inspector
-    }
+export const QuickSearchListSelectionWrapper = styled(ModeToggleContainer)`
+  margin: 1rem 0;
+`;
+
+export const QuickSearchResultsContainer = styled.div`
+  border-top: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+  border: 2px dashed lightgrey;
+  overflow-y: scroll;
+  margin-bottom: 1rem;
+
+  h1 {
+    font-weight: ${props => props.theme.fonts.weights.bold};
+    font-size: ${props => props.theme.fonts.sizes.extraLarge};
+    text-align: center;
+    padding: 0.5rem 0;
   }
+`;
 
-  .QuickSearchResultsContainer {
-    border-top: 1px solid lightgrey;
-    border-bottom: 1px solid lightgrey;
-    border: 2px dashed lightgrey;
-    overflow-y: scroll;
-    margin-bottom: 1rem;
-
-    h1 {
-      font-weight: ${props => props.theme.fonts.weights.bold};
-      font-size: ${props => props.theme.fonts.sizes.extraLarge};
-      text-align: center;
-      padding: 0.5rem 0;
-    }
+export const QuickSearchFormContainer = styled.div`
+  margin-top: auto;
+  input {
+    width: 100%;
+    margin-bottom: 0.5rem;
   }
+`;
 
-  .QuickSearchFormContainer {
-    input {
-      width: 100%;
-      margin-bottom: 0.5rem;
-    }
+export const QuickSearchFormButtonsWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  transition: color 0.2s ease-in-out;
+
+  button {
+    padding: 0.5rem 0;
+    margin-bottom: 0.5rem;
+    width: calc(50% - 0.25rem);
   }
 `;
 
 export const OtherDecksContainer = styled.div`
+  height: 25%;
   border-top: 2px solid ${props => props.theme.colors.primary};
   padding: 0.5rem 0;
   min-height: 15%;
   overflow-y: scroll;
 
   p {
-    margin-bottom: 0.25rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px dotted lightgrey;
   }
 `;

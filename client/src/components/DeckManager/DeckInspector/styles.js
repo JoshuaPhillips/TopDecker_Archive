@@ -4,11 +4,13 @@ export const StyledDeckInspector = styled.main`
   flex-grow: 3;
   flex-basis: 0;
   margin-left: 2rem;
+  height: 100%;
+  overflow: scroll;
 `;
 
 export const DeckDetails = styled.div`
   h1 {
-    margin: 2rem 0;
+    margin: 1rem 0;
     padding: 0.5rem;
     border: 1px solid lightgrey;
     border-bottom: 2px solid lightgrey;
@@ -20,5 +22,5 @@ export const DeckDetails = styled.div`
 export const CardListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin: 1rem 0 2rem;
+  margin: 1rem 0 0;
 `;

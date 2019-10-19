@@ -4,7 +4,7 @@ export const DeckListContainer = styled.main`
   display: flex;
   flex-wrap: wrap;
   background-color: white;
-  margin: 1rem auto;
+  margin: 4rem auto;
   padding: 3rem;
   border: 1px solid lightgrey;
   box-shadow: 5px 5px 7px #c7c7c7;

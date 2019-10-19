@@ -14,10 +14,17 @@ import { faSearch, faArrowLeft, faEraser } from '@fortawesome/free-solid-svg-ico
 
 import { capitalise } from '../../../utils/capitalise';
 
-import { StyledDeckManagerSidebar, QuickSearchContainer, OtherDecksContainer } from './styles';
+import {
+  StyledDeckManagerSidebar,
+  QuickSearchContainer,
+  QuickSearchListSelectionWrapper,
+  OtherDecksContainer,
+  QuickSearchResultsContainer,
+  QuickSearchFormContainer,
+  QuickSearchFormButtonsWrapper
+} from './styles';
 import { SectionHeader } from '../../../shared/Headers';
 import { Button } from '../../../shared/Buttons';
-import { ModeToggleContainer } from '../../../shared/ModeToggles';
 import { TextInput } from '../../../shared/Forms';
 
 const DeckManagerSidebar = props => {
@@ -77,10 +84,10 @@ const DeckManagerSidebar = props => {
   return (
     <StyledDeckManagerSidebar>
       <QuickSearchContainer>
-        <div className='QuickSearchHeaderContainer'>
+        <div>
           <SectionHeader>Quick Search</SectionHeader>
           {format !== 'commander' && (
-            <ModeToggleContainer>
+            <QuickSearchListSelectionWrapper>
               <button type='button' disabled={selectedList === 'mainDeck'} onClick={() => setSelectedList('mainDeck')}>
                 Main Deck
               </button>
@@ -90,10 +97,10 @@ const DeckManagerSidebar = props => {
                 onClick={() => setSelectedList('sideboard')}>
                 Sideboard
               </button>
-            </ModeToggleContainer>
+            </QuickSearchListSelectionWrapper>
           )}
         </div>
-        <div className='QuickSearchResultsContainer'>
+        <QuickSearchResultsContainer>
           {selectedResult ? (
             <Card card={selectedResult} />
           ) : searchResults.length === 0 ? (
@@ -122,8 +129,8 @@ const DeckManagerSidebar = props => {
               )}
             </React.Fragment>
           )}
-        </div>
-        <div className='QuickSearchFormContainer'>
+        </QuickSearchResultsContainer>
+        <QuickSearchFormContainer>
           <form onSubmit={searchCards}>
             <TextInput
               type='text'
@@ -132,30 +139,33 @@ const DeckManagerSidebar = props => {
               onChange={e => setNameSearch(e.target.value)}
             />
 
-            <Button inverted type='submit' disabled={nameSearch.length < 3}>
-              <FontAwesomeIcon icon={faSearch} fixedWidth />
-              {loadingResults ? 'Searching...' : 'Search'}
-            </Button>
-            {selectedResult && (
-              <Button type='button' onClick={() => setSelectedResult(null)}>
-                <FontAwesomeIcon icon={faArrowLeft} fixedWidth />
-                Back
+            <QuickSearchFormButtonsWrapper>
+              <Button inverted type='submit' disabled={nameSearch.length < 3}>
+                <FontAwesomeIcon icon={faSearch} fixedWidth />
+                {loadingResults ? 'Searching...' : 'Search'}
               </Button>
-            )}
-            {searchResults.length !== 0 && (
-              <Button
-                type='button'
-                onClick={() => {
-                  setNameSearch('');
-                  setSelectedResult(null);
-                  setSearchResults([]);
-                }}>
-                <FontAwesomeIcon icon={faEraser} fixedWidth />
-                Clear Results
-              </Button>
-            )}
+
+              {searchResults.length !== 0 &&
+                (selectedResult ? (
+                  <Button type='button' onClick={() => setSelectedResult(null)}>
+                    <FontAwesomeIcon icon={faArrowLeft} fixedWidth />
+                    Back
+                  </Button>
+                ) : (
+                  <Button
+                    type='button'
+                    onClick={() => {
+                      setNameSearch('');
+                      setSelectedResult(null);
+                      setSearchResults([]);
+                    }}>
+                    <FontAwesomeIcon icon={faEraser} fixedWidth />
+                    Clear
+                  </Button>
+                ))}
+            </QuickSearchFormButtonsWrapper>
           </form>
-        </div>
+        </QuickSearchFormContainer>
       </QuickSearchContainer>
 
       <OtherDecksContainer>

@@ -19,7 +19,7 @@ export const StyledListModeCardItem = styled.div`
   display: flex;
   width: 100%;
   padding: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
   border-bottom: 2px solid lightgrey;
   background-color: white;
 `;

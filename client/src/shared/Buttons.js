@@ -1,12 +1,16 @@
 import styled from 'styled-components';
 
+export const ButtonGroup = styled.div`
+  text-align: center;
+`;
+
 export const Button = styled.button`
   border: 2px solid ${props => props.theme.colors.primary}
   background-color: ${props => (props.inverted ? props.theme.colors.primary : 'inherit')}
   color: ${props => (props.inverted ? props.theme.colors.background : props.theme.colors.primary)}
   padding: 0.5rem;
   border-radius: 3px;
-  margin: 0 0.5rem 0.5rem 0;
+  
   transition: .2s all ease-in-out;
 
   &:hover {
@@ -21,17 +25,14 @@ export const Button = styled.button`
   }
 
   &:disabled:hover {
+    background-color: lightgrey;
     color: lightslategrey;
+    
   }
   
   svg {
     margin-right: .25rem;
-    
   }
-`;
-
-export const ButtonGroup = styled.div`
-  text-align: center;
 `;
 
 export const DangerButton = styled(Button)`

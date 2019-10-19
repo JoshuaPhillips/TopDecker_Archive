@@ -6,8 +6,13 @@ import { capitalise } from '../../../../utils/capitalise';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTrash, faFileExport } from '@fortawesome/free-solid-svg-icons';
 
-import { StyledDeckInspectorToolbar, CardTypeFilterIcon } from './styles';
-import { DeckInspectorControlGroup } from '../../../../shared/DeckInspectorControlGroup';
+import {
+  StyledDeckInspectorToolbar,
+  DeckInspectorToolbarControls,
+  CardTypeFilterIcon,
+  DeckInspectorControlGroup
+} from './styles';
+
 import { Button, DangerButton } from '../../../../shared/Buttons';
 import { ModeToggleContainer } from '../../../../shared/ModeToggles';
 
@@ -60,9 +65,8 @@ const DeckInspectorToolbar = props => {
           </div>
         )}
       </div>
-      <div className='DeckInspectorToolbarControls'>
+      <DeckInspectorToolbarControls>
         <DeckInspectorControlGroup>
-          <p>View as:</p>
           <ModeToggleContainer>
             <button type='button' disabled={viewMode === 'gallery'} onClick={() => changeViewModeHandler('gallery')}>
               Gallery
@@ -78,7 +82,6 @@ const DeckInspectorToolbar = props => {
         </DeckInspectorControlGroup>
 
         <DeckInspectorControlGroup>
-          <p>Filters:</p>
           {filterNames.map(filter => {
             return (
               <CardTypeFilterIcon
@@ -94,7 +97,6 @@ const DeckInspectorToolbar = props => {
         </DeckInspectorControlGroup>
 
         <DeckInspectorControlGroup>
-          <p>Sort by:</p>
           <ModeToggleContainer>
             <button
               type='button'
@@ -138,7 +140,7 @@ const DeckInspectorToolbar = props => {
             </button>
           </ModeToggleContainer>
         </DeckInspectorControlGroup>
-      </div>
+      </DeckInspectorToolbarControls>
     </StyledDeckInspectorToolbar>
   );
 };

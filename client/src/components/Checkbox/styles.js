@@ -6,12 +6,13 @@ export const StyledCheckbox = styled.div`
   user-select: none;
 
   span {
+    display: flex;
+    align-items: center;
     cursor: pointer;
     margin-right: 0.5rem;
-    width: 1rem;
-    height: 1rem;
     border: 1px solid lightgrey;
-    background-color: ${props => (props.selected ? props.theme.colors.primary : 'white')};
+    color: ${props => (props.selected ? props.theme.colors.primary : props.theme.colors.background)};
+    transition: all 0.1s ease-in-out;
   }
 
   label {
