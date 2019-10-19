@@ -6,11 +6,11 @@ export const FormRow = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  border-bottom: 1px dashed lightgrey;
+  border-top: 1px dashed lightgrey;
   padding: 1rem;
 
-  &:last-of-type {
-    border-bottom: 0;
+  &:first-of-type {
+    border-top: 0;
   }
 `;
 

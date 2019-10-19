@@ -24,8 +24,4 @@ export const StyledSidebarSearchResult = styled.div`
     align-items: center;
     justify-content: space-between;
   }
-
-  .SidebarSearchResultCardContainer {
-    border: 1px solid red;
-  }
 `;

@@ -20,8 +20,20 @@ export const AccountForm = styled.form`
 `;
 
 export const AccountFormButtonsWrapper = styled.div`
+  margin: 1rem auto 2rem;
+  button {
+    margin-right: 0.5rem;
+
+    &:first-child {
+      margin-left: 1.5rem;
+    }
+  }
+`;
+
+export const DangerZoneButtonsWrapper = styled.div`
   width: 80%;
   margin: 1rem auto 2rem;
+
   button {
     margin-right: 0.5rem;
 

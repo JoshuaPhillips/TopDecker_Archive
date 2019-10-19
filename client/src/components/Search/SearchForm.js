@@ -322,9 +322,9 @@ const SearchForm = props => {
                   colors: { type: e.target.value, colors: { ...rawSearchParams.colors.colors } }
                 })
               }>
-              <option value='exactly'>Exactly these Colors</option>
-              <option value='including'>Including these Colors</option>
-              <option value='at_most'>At most these Colors</option>
+              <option value='exactly'>Exactly</option>
+              <option value='including'>Including</option>
+              <option value='at_most'>At most</option>
             </StyledSelect>
           </FormRowContent>
         </FormRow>
@@ -585,12 +585,12 @@ const SearchForm = props => {
             }
           />
         </FormRow>
+        <SearchFormSubmitButtonWrapper>
+          <Button type='submit'>
+            <FontAwesomeIcon icon={faSearch} fixedWidth /> {loadingResults ? 'Searching...' : 'Search'}
+          </Button>
+        </SearchFormSubmitButtonWrapper>
       </form>
-      <SearchFormSubmitButtonWrapper>
-        <Button type='submit'>
-          <FontAwesomeIcon icon={faSearch} fixedWidth /> {loadingResults ? 'Searching...' : 'Search'}
-        </Button>
-      </SearchFormSubmitButtonWrapper>
     </SearchFormWrapper>
   );
 };

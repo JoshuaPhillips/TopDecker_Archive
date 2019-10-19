@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 import Card from '../Card/Card';
 import SearchForm from './SearchForm.js';
@@ -12,6 +15,7 @@ import { generateCardList } from '../../utils/generateCardList';
 
 import { StyledSearch, SearchResultsWrapper, SearchResultsToolbar, SearchResultsCardListContainer } from './styles';
 import { SectionHeader } from '../../shared/Headers';
+import { Button } from '../../shared/Buttons';
 import { ModeToggleContainer } from '../../shared/ModeToggles';
 import { StyledSelect } from '../../shared/Forms';
 
@@ -76,6 +80,15 @@ const Search = props => {
               <button type='button'>Text</button>
               <button type='button'>List</button>
             </ModeToggleContainer>
+          </div>
+
+          <div>
+            <Button type='button' disabled={selectedDeckId === 'default'}>
+              <NavLink to={`/decks/${selectedDeckId}`}>
+                <FontAwesomeIcon icon={faArrowRight} fixedWidth />
+                Go to Deck
+              </NavLink>
+            </Button>
           </div>
         </SearchResultsToolbar>
         <SearchResultsCardListContainer>

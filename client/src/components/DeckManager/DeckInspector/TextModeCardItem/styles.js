@@ -15,19 +15,53 @@ export const TextModeCardListContainer = styled.div`
 export const StyledTextModeCardItem = styled.div`
   display: flex;
   flex-direction: column;
-  width: calc((100% - 1rem) / 3);
-
   margin: 0.5rem 0.5rem 0 0;
-
   background-color: white;
-
   border: 1px solid lightgrey;
   border-top: 3px solid #385170;
   border-bottom: 2px solid lightgrey;
   border-radius: 5px;
 
-  :nth-child(3n) {
+  width: calc((100% - 0.5rem) / 2);
+
+  :nth-child(2n) {
     margin-right: 0;
+  }
+
+  @media (min-width: 1000px) {
+    width: calc((100% - 1rem) / 3);
+
+    :nth-child(2n) {
+      margin-right: 0.5rem;
+    }
+
+    :nth-child(3n) {
+      margin-right: 0;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    width: calc((100% - 1.5rem) / 4);
+
+    :nth-child(3n) {
+      margin-right: 0.5rem;
+    }
+
+    :nth-child(4n) {
+      margin-right: 0;
+    }
+  }
+
+  @media (min-width: 1600px) {
+    width: calc((100% - 2rem) / 5);
+
+    :nth-child(4n) {
+      margin-right: 0.5rem;
+    }
+
+    :nth-child(5n) {
+      margin-right: 0;
+    }
   }
 `;
 

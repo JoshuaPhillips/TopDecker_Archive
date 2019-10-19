@@ -11,7 +11,7 @@ export const SearchFormWrapper = styled.div`
   padding: 1rem;
   height: 100%;
   overflow-y: scroll;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
   border: 1px solid lightgrey;
   border-bottom: 2px solid lightgrey;
   border-radius: 5px;
@@ -85,6 +85,7 @@ export const SearchResultsWrapper = styled.div`
   border-bottom: 2px solid lightgrey;
   border-radius: 5px;
   background-color: white;
+  overflow: scroll;
 `;
 
 export const SearchResultsToolbar = styled.div`
