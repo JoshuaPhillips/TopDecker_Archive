@@ -13,3 +13,8 @@ export const StyledAccount = styled.main`
     color: blue;
   }
 `;
+
+export const DeleteConfirmationMessage = styled.div`
+  font-weight: ${props => props.theme.fonts.weights.bold};
+  margin-right: 0.5rem;
+`;

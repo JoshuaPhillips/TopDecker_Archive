@@ -23,7 +23,7 @@ export const FormRowTitle = styled.div`
 `;
 
 export const FormRowContent = styled.div`
-  flex-grow: 1;
+  width: 70%;
 `;
 
 export const TextInput = styled.input`
@@ -36,6 +36,68 @@ export const TextInput = styled.input`
   border-left: 5px solid ${props => props.theme.colors.primary};
   padding: 0.5rem;
   padding-left: 1rem;
+`;
+
+export const CardColorSelectionGroup = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+`;
+
+export const CardColorSelectionButton = styled.button.attrs(() => ({
+  type: 'button'
+}))`
+    color: ${props => props.theme.colors.primary} 
+    
+    border: ${props => (props.selected ? `2px solid ${props.theme.colors.primary}` : `2px solid lightgrey`)};
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.5rem 0 0.5rem 0.5rem;
+    margin: 0 0.5rem 0.5rem 0;
+    width: calc((100% - 1rem) / 3);
+
+    :nth-child(3n) {
+      margin-right: 0;
+    }
+
+    i {
+      margin-right: 0.5rem;
+      ${props => !props.selected && `filter: grayscale(100%)`};
+    }
+  }
+  `;
+
+export const NumberInputWithSelectComparison = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  select,
+  input {
+    outline: none;
+  }
+
+  select {
+    flex-grow: 1;
+    margin-right: 0.5rem;
+  }
+
+  input {
+    padding: 0.5rem;
+    width: 20%;
+  }
+`;
+
+export const SearchFormRarityWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+`;
+
+export const StyledSelect = styled.select`
+  outline: 0;
+  letter-spacing: 0.1rem;
+  margin: 0.5rem 0;
 `;
 
 export const Select = styled.select`

@@ -11,7 +11,7 @@ import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { StyledAuth } from './styles';
 import { SectionHeader } from '../../shared/Headers';
 import { Button } from '../../shared/Buttons';
-import { Form, FormRow, FormRowTitle, FormRowContent } from '../../shared/Forms';
+import { Form, FormRow, FormRowTitle, FormRowContent, TextInput } from '../../shared/Forms';
 
 const Auth = () => {
   const client = useApolloClient();
@@ -89,7 +89,7 @@ const Auth = () => {
                 <label htmlFor='firstName'>First Name:</label>
               </FormRowTitle>
               <FormRowContent>
-                <input
+                <TextInput
                   type='text'
                   id='firstName'
                   value={authDetails.firstName}
@@ -103,7 +103,7 @@ const Auth = () => {
                 <label htmlFor='lastName'>Last Name:</label>
               </FormRowTitle>
               <FormRowContent>
-                <input
+                <TextInput
                   type='text'
                   id='lastName'
                   value={authDetails.lastName}
@@ -117,7 +117,7 @@ const Auth = () => {
                 <label htmlFor='username'>Username:</label>
               </FormRowTitle>
               <FormRowContent>
-                <input
+                <TextInput
                   type='text'
                   id='username'
                   value={authDetails.username}
@@ -133,7 +133,7 @@ const Auth = () => {
             <label htmlFor='email'>Email:</label>
           </FormRowTitle>
           <FormRowContent>
-            <input
+            <TextInput
               type='email'
               id='email'
               value={authDetails.email}
@@ -147,7 +147,7 @@ const Auth = () => {
             <label htmlFor='password'>Password:</label>
           </FormRowTitle>
           <FormRowContent>
-            <input
+            <TextInput
               type='password'
               id='password'
               value={authDetails.password}
@@ -163,7 +163,7 @@ const Auth = () => {
                 <label htmlFor='avatarUrl'>Avatar Url:</label>
               </FormRowTitle>
               <FormRowContent>
-                <input
+                <TextInput
                   type='url'
                   id='avatarUrl'
                   value={authDetails.avatarUrl}
@@ -182,7 +182,6 @@ const Auth = () => {
 
       <p
         className='loginModeToggleText'
-        type='button'
         onClick={() => {
           toggleLogin(!isLogin);
         }}>

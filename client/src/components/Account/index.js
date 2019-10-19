@@ -7,8 +7,10 @@ import { GET_ACCOUNT_DETAILS, SAVE_ACCOUNT_DETAILS, CHANGE_PASSWORD } from './gr
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faLock, faTimes, faCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
 
+import Checkbox from '../Checkbox';
 import Spinner from '../Spinner/Spinner';
-import { StyledAccount } from './styles';
+
+import { StyledAccount, DeleteConfirmationMessage } from './styles';
 import { SectionHeader } from '../../shared/Headers';
 import { Button, ButtonGroup, DangerButton } from '../../shared/Buttons';
 import { Form, FormRow, FormRowTitle, FormRowContent, TextInput } from '../../shared/Forms';
@@ -278,22 +280,15 @@ const Account = () => {
             </FormRow>
 
             <FormRow>
-              <FormRowTitle>
-                <label htmlFor='accountDeleteConfirmationCheckbox'>Do you really want to delete your account?</label>
-              </FormRowTitle>
-              <FormRowContent>
-                <input
-                  type='checkbox'
-                  id='accountDeleteConfirmationCheckbox'
-                  disabled={!deletingAccount}
-                  onChange={e => setDeleteConfirmationCheckbox(e.target.checked)}
-                />
-              </FormRowContent>
+              <DeleteConfirmationMessage>Do you really want to delete your account?</DeleteConfirmationMessage>
+              <Checkbox
+                selected={deleteConfirmationCheckbox}
+                onClick={() => setDeleteConfirmationCheckbox(!deleteConfirmationCheckbox)}
+              />
             </FormRow>
             <ButtonGroup>
               <DangerButton
                 inverted
-                success
                 type='button'
                 disabled={!deletingAccount || deleteConfirmationPassword.length === 0 || !deleteConfirmationCheckbox}
                 onClick={() => console.log(deleteConfirmationPassword, deleteConfirmationCheckbox)}>
