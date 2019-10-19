@@ -7,7 +7,7 @@ import { GET_COMMANDER_SEARCH_RESULTS, CREATE_NEW_DECK } from './graphql';
 import { GET_DECK_LIST } from '../graphql';
 
 import { ReactSelectStyles } from './styles';
-import { FormRow, TextInputWithLabel } from '../../../shared/Forms';
+import { FormRow, FormRowTitle, FormRowContent, TextInput } from '../../../shared/Forms';
 import { Button } from '../../../shared/Buttons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -106,62 +106,79 @@ const AddDeckForm = props => {
 
   return (
     <form>
-      <TextInputWithLabel>
-        <label htmlFor='name'>Name</label>
-        <input
-          type='text'
-          id='name'
-          value={name}
-          placeholder='Mininum 4 characters'
-          onChange={e => setName(e.target.value)}
-        />
-      </TextInputWithLabel>
-
-      <TextInputWithLabel>
-        <label htmlFor='format'>Format</label>
-        <label>
-          Standard
-          <input
-            type='radio'
-            value='standard'
-            checked={format === 'standard'}
-            onChange={e => setFormat(e.target.value)}
+      <FormRow>
+        <FormRowTitle>
+          <label htmlFor='name'>Name</label>
+        </FormRowTitle>
+        <FormRowContent>
+          <TextInput
+            type='text'
+            id='name'
+            value={name}
+            placeholder='Minimum 4 characters'
+            onChange={e => setName(e.target.value)}
           />
-        </label>
+        </FormRowContent>
+      </FormRow>
 
-        <label>
-          Modern
-          <input type='radio' value='modern' checked={format === 'modern'} onChange={e => setFormat(e.target.value)} />
-        </label>
-        <label>
-          Commander
-          <input
-            type='radio'
-            value='commander'
-            checked={format === 'commander'}
-            onChange={e => setFormat(e.target.value)}
-          />
-        </label>
-        {/* <select id='format' value={format} onChange={e => setFormat(e.target.value)}>
+      <FormRow>
+        <FormRowTitle>
+          <label htmlFor='format'>Format</label>
+        </FormRowTitle>
+        <FormRowContent>
+          <label>
+            Standard
+            <input
+              type='radio'
+              value='standard'
+              checked={format === 'standard'}
+              onChange={e => setFormat(e.target.value)}
+            />
+          </label>
+
+          <label>
+            Modern
+            <input
+              type='radio'
+              value='modern'
+              checked={format === 'modern'}
+              onChange={e => setFormat(e.target.value)}
+            />
+          </label>
+          <label>
+            Commander
+            <input
+              type='radio'
+              value='commander'
+              checked={format === 'commander'}
+              onChange={e => setFormat(e.target.value)}
+            />
+          </label>
+        </FormRowContent>
+      </FormRow>
+      {/* <select id='format' value={format} onChange={e => setFormat(e.target.value)}>
           <option value='standard'>Standard</option>
           <option value='modern'>Modern</option>
           <option value='commander'>Commander</option>
         </select> */}
-      </TextInputWithLabel>
 
       {format === 'commander' && (
         <FormRow>
-          <label htmlFor='commander'>Commander</label>
-          <Select
-            styles={ReactSelectStyles}
-            id='commander'
-            onChange={handleCommanderOptionSelect}
-            onInputChange={handleCommanderInputChange}
-            options={commanderSearchResults}
-            isClearable
-            placeholder='Name of your Commander?'
-            noOptionsMessage={() => 'No Results Found.'}
-          />
+          <FormRowTitle>
+            <label htmlFor='commander'>Commander</label>
+          </FormRowTitle>
+          <FormRowContent>
+            <Select
+              styles={ReactSelectStyles}
+              id='commander'
+              onChange={handleCommanderOptionSelect}
+              onInputChange={handleCommanderInputChange}
+              options={commanderSearchResults}
+              isClearable
+              placeholder='Name of your Commander?'
+              noOptionsMessage={() => 'No Results Found.'}
+            />
+          </FormRowContent>
         </FormRow>
       )}
 

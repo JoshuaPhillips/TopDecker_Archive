@@ -11,7 +11,7 @@ import Spinner from '../Spinner/Spinner';
 import { StyledAccount } from './styles';
 import { SectionHeader } from '../../shared/Headers';
 import { Button, ButtonGroup, DangerButton } from '../../shared/Buttons';
-import { Form, TextInputWithLabel } from '../../shared/Forms';
+import { Form, FormRow, FormRowTitle, FormRowContent, TextInput } from '../../shared/Forms';
 
 const Account = () => {
   const [editing, toggleEditing] = useState(false);
@@ -88,65 +88,80 @@ const Account = () => {
       <SectionHeader>Account</SectionHeader>
 
       <Form>
-        <TextInputWithLabel>
-          <label htmlFor='firstName'>First Name:</label>
+        <FormRow>
+          <FormRowTitle>
+            <label htmlFor='firstName'>First Name:</label>
+          </FormRowTitle>
+          <FormRowContent>
+            <TextInput
+              type='text'
+              id='firstName'
+              value={accountDetails.firstName}
+              onChange={e => setAccountDetails({ ...accountDetails, firstName: e.target.value })}
+              readOnly={!editing}
+            />
+          </FormRowContent>
+        </FormRow>
 
-          <input
-            type='text'
-            id='firstName'
-            value={accountDetails.firstName}
-            onChange={e => setAccountDetails({ ...accountDetails, firstName: e.target.value })}
-            readOnly={!editing}
-          />
-        </TextInputWithLabel>
+        <FormRow>
+          <FormRowTitle>
+            <label htmlFor='lastName'>Last Name:</label>
+          </FormRowTitle>
+          <FormRowContent>
+            <TextInput
+              type='text'
+              id='lastName'
+              value={accountDetails.lastName}
+              onChange={e => setAccountDetails({ ...accountDetails, lastName: e.target.value })}
+              readOnly={!editing}
+            />
+          </FormRowContent>
+        </FormRow>
 
-        <TextInputWithLabel>
-          <label htmlFor='lastName'>Last Name:</label>
+        <FormRow>
+          <FormRowTitle>
+            <label htmlFor='username'>Username:</label>
+          </FormRowTitle>
+          <FormRowContent>
+            <TextInput
+              type='text'
+              id='username'
+              value={accountDetails.username}
+              onChange={e => setAccountDetails({ ...accountDetails, username: e.target.value })}
+              readOnly={!editing}
+            />
+          </FormRowContent>
+        </FormRow>
 
-          <input
-            type='text'
-            id='lastName'
-            value={accountDetails.lastName}
-            onChange={e => setAccountDetails({ ...accountDetails, lastName: e.target.value })}
-            readOnly={!editing}
-          />
-        </TextInputWithLabel>
+        <FormRow>
+          <FormRowTitle>
+            <label htmlFor='email'>Email:</label>
+          </FormRowTitle>
+          <FormRowContent>
+            <TextInput
+              type='email'
+              id='email'
+              value={accountDetails.email}
+              onChange={e => setAccountDetails({ ...accountDetails, email: e.target.value })}
+              readOnly={!editing}
+            />
+          </FormRowContent>
+        </FormRow>
 
-        <TextInputWithLabel>
-          <label htmlFor='username'>Username:</label>
-
-          <input
-            type='text'
-            id='username'
-            value={accountDetails.username}
-            onChange={e => setAccountDetails({ ...accountDetails, username: e.target.value })}
-            readOnly={!editing}
-          />
-        </TextInputWithLabel>
-
-        <TextInputWithLabel>
-          <label htmlFor='email'>Email:</label>
-
-          <input
-            type='email'
-            id='email'
-            value={accountDetails.email}
-            onChange={e => setAccountDetails({ ...accountDetails, email: e.target.value })}
-            readOnly={!editing}
-          />
-        </TextInputWithLabel>
-
-        <TextInputWithLabel>
-          <label htmlFor='avatarUrl'>Avatar Url:</label>
-
-          <input
-            type='url'
-            id='avatarUrl'
-            value={accountDetails.avatarUrl}
-            onChange={e => setAccountDetails({ ...accountDetails, avatarUrl: e.target.value })}
-            readOnly={!editing}
-          />
-        </TextInputWithLabel>
+        <FormRow>
+          <FormRowTitle>
+            <label htmlFor='avatarUrl'>Avatar Url:</label>
+          </FormRowTitle>
+          <FormRowContent>
+            <TextInput
+              type='url'
+              id='avatarUrl'
+              value={accountDetails.avatarUrl}
+              onChange={e => setAccountDetails({ ...accountDetails, avatarUrl: e.target.value })}
+              readOnly={!editing}
+            />
+          </FormRowContent>
+        </FormRow>
 
         <Button type='button' onClick={editing ? () => SaveAccountDetailsMutation() : () => toggleEditing(true)}>
           <FontAwesomeIcon icon={faEdit} fixedWidth />
@@ -182,38 +197,47 @@ const Account = () => {
 
         {editingPassword && (
           <React.Fragment>
-            <TextInputWithLabel>
-              <label htmlFor='currentPassword'>Current Password:</label>
+            <FormRow>
+              <FormRowTitle>
+                <label htmlFor='currentPassword'>Current Password:</label>
+              </FormRowTitle>
+              <FormRowContent>
+                <TextInput
+                  type='password'
+                  id='currentPassword'
+                  value={passwordDetails.currentPassword}
+                  onChange={e => setPasswordDetails({ ...passwordDetails, currentPassword: e.target.value })}
+                />
+              </FormRowContent>
+            </FormRow>
 
-              <input
-                type='password'
-                id='currentPassword'
-                value={passwordDetails.currentPassword}
-                onChange={e => setPasswordDetails({ ...passwordDetails, currentPassword: e.target.value })}
-              />
-            </TextInputWithLabel>
+            <FormRow>
+              <FormRowTitle>
+                <label htmlFor='newPassword'>New Password:</label>
+              </FormRowTitle>
+              <FormRowContent>
+                <TextInput
+                  type='password'
+                  id='newPassword'
+                  value={passwordDetails.newPassword}
+                  onChange={e => setPasswordDetails({ ...passwordDetails, newPassword: e.target.value })}
+                />
+              </FormRowContent>
+            </FormRow>
 
-            <TextInputWithLabel>
-              <label htmlFor='newPassword'>New Password:</label>
-
-              <input
-                type='password'
-                id='newPassword'
-                value={passwordDetails.newPassword}
-                onChange={e => setPasswordDetails({ ...passwordDetails, newPassword: e.target.value })}
-              />
-            </TextInputWithLabel>
-
-            <TextInputWithLabel>
-              <label htmlFor='confirmationPassword'>Confirm New Password:</label>
-
-              <input
-                type='password'
-                id='confirmationPassword'
-                value={passwordDetails.confirmationPassword}
-                onChange={e => setPasswordDetails({ ...passwordDetails, confirmationPassword: e.target.value })}
-              />
-            </TextInputWithLabel>
+            <FormRow>
+              <FormRowTitle>
+                <label htmlFor='confirmationPassword'>Confirm New Password:</label>
+              </FormRowTitle>
+              <FormRowContent>
+                <TextInput
+                  type='password'
+                  id='confirmationPassword'
+                  value={passwordDetails.confirmationPassword}
+                  onChange={e => setPasswordDetails({ ...passwordDetails, confirmationPassword: e.target.value })}
+                />
+              </FormRowContent>
+            </FormRow>
 
             <ButtonGroup>
               <Button
@@ -239,27 +263,33 @@ const Account = () => {
         <ButtonGroup></ButtonGroup>
         {deletingAccount && (
           <React.Fragment>
-            <TextInputWithLabel>
-              <label htmlFor='accountDeleteConfirmationPassword'>Enter your Password:</label>
+            <FormRow>
+              <FormRowTitle>
+                <label htmlFor='accountDeleteConfirmationPassword'>Enter your Password:</label>
+              </FormRowTitle>
+              <FormRowContent>
+                <TextInput
+                  type='text'
+                  id='accountDeleteConfirmationPassword'
+                  disabled={!deletingAccount}
+                  onChange={e => setDeleteConfirmationPassword(e.target.value)}
+                />
+              </FormRowContent>
+            </FormRow>
 
-              <input
-                type='text'
-                id='accountDeleteConfirmationPassword'
-                disabled={!deletingAccount}
-                onChange={e => setDeleteConfirmationPassword(e.target.value)}
-              />
-            </TextInputWithLabel>
-
-            <TextInputWithLabel>
-              <label htmlFor='accountDeleteConfirmationCheckbox'>Do you really want to delete your account?</label>
-
-              <input
-                type='checkbox'
-                id='accountDeleteConfirmationCheckbox'
-                disabled={!deletingAccount}
-                onChange={e => setDeleteConfirmationCheckbox(e.target.checked)}
-              />
-            </TextInputWithLabel>
+            <FormRow>
+              <FormRowTitle>
+                <label htmlFor='accountDeleteConfirmationCheckbox'>Do you really want to delete your account?</label>
+              </FormRowTitle>
+              <FormRowContent>
+                <input
+                  type='checkbox'
+                  id='accountDeleteConfirmationCheckbox'
+                  disabled={!deletingAccount}
+                  onChange={e => setDeleteConfirmationCheckbox(e.target.checked)}
+                />
+              </FormRowContent>
+            </FormRow>
             <ButtonGroup>
               <DangerButton
                 inverted

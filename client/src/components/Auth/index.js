@@ -11,7 +11,7 @@ import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { StyledAuth } from './styles';
 import { SectionHeader } from '../../shared/Headers';
 import { Button } from '../../shared/Buttons';
-import { Form, TextInputWithLabel } from '../../shared/Forms';
+import { Form, FormRow, FormRowTitle, FormRowContent } from '../../shared/Forms';
 
 const Auth = () => {
   const client = useApolloClient();
@@ -84,75 +84,93 @@ const Auth = () => {
       <Form>
         {!isLogin && (
           <React.Fragment>
-            <TextInputWithLabel>
-              <label htmlFor='firstName'>First Name:</label>
+            <FormRow>
+              <FormRowTitle>
+                <label htmlFor='firstName'>First Name:</label>
+              </FormRowTitle>
+              <FormRowContent>
+                <input
+                  type='text'
+                  id='firstName'
+                  value={authDetails.firstName}
+                  onChange={e => setAuthDetails({ ...authDetails, firstName: e.target.value })}
+                />
+              </FormRowContent>
+            </FormRow>
 
-              <input
-                type='text'
-                id='firstName'
-                value={authDetails.firstName}
-                onChange={e => setAuthDetails({ ...authDetails, firstName: e.target.value })}
-              />
-            </TextInputWithLabel>
+            <FormRow>
+              <FormRowTitle>
+                <label htmlFor='lastName'>Last Name:</label>
+              </FormRowTitle>
+              <FormRowContent>
+                <input
+                  type='text'
+                  id='lastName'
+                  value={authDetails.lastName}
+                  onChange={e => setAuthDetails({ ...authDetails, lastName: e.target.value })}
+                />
+              </FormRowContent>
+            </FormRow>
 
-            <TextInputWithLabel>
-              <label htmlFor='lastName'>Last Name:</label>
-
-              <input
-                type='text'
-                id='lastName'
-                value={authDetails.lastName}
-                onChange={e => setAuthDetails({ ...authDetails, lastName: e.target.value })}
-              />
-            </TextInputWithLabel>
-
-            <TextInputWithLabel>
-              <label htmlFor='username'>Username:</label>
-
-              <input
-                type='text'
-                id='username'
-                value={authDetails.username}
-                onChange={e => setAuthDetails({ ...authDetails, username: e.target.value })}
-              />
-            </TextInputWithLabel>
+            <FormRow>
+              <FormRowTitle>
+                <label htmlFor='username'>Username:</label>
+              </FormRowTitle>
+              <FormRowContent>
+                <input
+                  type='text'
+                  id='username'
+                  value={authDetails.username}
+                  onChange={e => setAuthDetails({ ...authDetails, username: e.target.value })}
+                />
+              </FormRowContent>
+            </FormRow>
           </React.Fragment>
         )}
 
-        <TextInputWithLabel>
-          <label htmlFor='email'>Email:</label>
+        <FormRow>
+          <FormRowTitle>
+            <label htmlFor='email'>Email:</label>
+          </FormRowTitle>
+          <FormRowContent>
+            <input
+              type='email'
+              id='email'
+              value={authDetails.email}
+              onChange={e => setAuthDetails({ ...authDetails, email: e.target.value })}
+            />
+          </FormRowContent>
+        </FormRow>
 
-          <input
-            type='email'
-            id='email'
-            value={authDetails.email}
-            onChange={e => setAuthDetails({ ...authDetails, email: e.target.value })}
-          />
-        </TextInputWithLabel>
-
-        <TextInputWithLabel>
-          <label htmlFor='password'>Password:</label>
-
-          <input
-            type='password'
-            id='password'
-            value={authDetails.password}
-            onChange={e => setAuthDetails({ ...authDetails, password: e.target.value })}
-          />
-        </TextInputWithLabel>
+        <FormRow>
+          <FormRowTitle>
+            <label htmlFor='password'>Password:</label>
+          </FormRowTitle>
+          <FormRowContent>
+            <input
+              type='password'
+              id='password'
+              value={authDetails.password}
+              onChange={e => setAuthDetails({ ...authDetails, password: e.target.value })}
+            />
+          </FormRowContent>
+        </FormRow>
 
         {!isLogin && (
           <React.Fragment>
-            <TextInputWithLabel>
-              <label htmlFor='avatarUrl'>Avatar Url:</label>
-
-              <input
-                type='url'
-                id='avatarUrl'
-                value={authDetails.avatarUrl}
-                onChange={e => setAuthDetails({ ...authDetails, avatarUrl: e.target.value })}
-              />
-            </TextInputWithLabel>
+            <FormRow>
+              <FormRowTitle>
+                <label htmlFor='avatarUrl'>Avatar Url:</label>
+              </FormRowTitle>
+              <FormRowContent>
+                <input
+                  type='url'
+                  id='avatarUrl'
+                  value={authDetails.avatarUrl}
+                  onChange={e => setAuthDetails({ ...authDetails, avatarUrl: e.target.value })}
+                />
+              </FormRowContent>
+            </FormRow>
           </React.Fragment>
         )}
 

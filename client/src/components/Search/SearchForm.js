@@ -195,24 +195,20 @@ const SearchForm = props => {
                 })
               }
             />
+
+            <select
+              defaultValue={rawSearchParams.oracle.type}
+              onChange={e =>
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  oracle: { type: e.target.value, text: rawSearchParams.oracle.text }
+                })
+              }>
+              <option value='all'>All</option>
+              <option value='exact'>Exact</option>
+              <option value='any'>Any</option>
+            </select>
           </FormRowContent>
-        </FormRow>
-        <FormRow>
-          <FormRowTitle>
-            <h4>Oracle Text</h4>
-          </FormRowTitle>
-          <select
-            defaultValue={rawSearchParams.oracle.type}
-            onChange={e =>
-              setRawSearchParams({
-                ...rawSearchParams,
-                oracle: { type: e.target.value, text: rawSearchParams.oracle.text }
-              })
-            }>
-            <option value='all'>All</option>
-            <option value='exact'>Exact</option>
-            <option value='any'>Any</option>
-          </select>
         </FormRow>
 
         <FormRow>
