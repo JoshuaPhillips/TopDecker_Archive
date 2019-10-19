@@ -2,13 +2,15 @@ import styled from 'styled-components';
 
 export const StyledSearch = styled.main`
   display: flex;
-  padding: 4rem 5rem;
+  padding: 4rem 2rem 1rem;
+  height: 100vh;
 `;
 
 export const SearchFormWrapper = styled.div`
   width: 40%;
-  padding: 1rem 0.5rem;
-  height: fit-content;
+  padding: 1rem;
+  height: 100%;
+  overflow-y: scroll;
   margin-right: 1rem;
   border: 1px solid lightgrey;
   border-bottom: 2px solid lightgrey;
@@ -78,7 +80,7 @@ export const SearchFormSubmitButtonWrapper = styled.div`
 
 export const SearchResultsWrapper = styled.div`
   width: 60%;
-  padding: 1rem 0.5rem;
+  padding: 1rem;
   border: 1px solid lightgrey;
   border-bottom: 2px solid lightgrey;
   border-radius: 5px;
@@ -86,7 +88,6 @@ export const SearchResultsWrapper = styled.div`
 `;
 
 export const SearchResultsToolbar = styled.div`
-  border: 1px solid red;
   display: flex;
   justify-content: space-between;
   align-items: center;

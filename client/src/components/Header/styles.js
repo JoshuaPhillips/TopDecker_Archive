@@ -8,7 +8,7 @@ export const StyledHeader = styled.header`
   justify-content: space-between;
   background-color: ${props => props.theme.colors.primary};
   color: ${props => props.theme.colors.background};
-  padding: 0 5rem;
+  padding: 0 2rem;
   font-weight: bold;
 
   h1 {

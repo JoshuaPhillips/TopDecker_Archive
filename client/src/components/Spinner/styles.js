@@ -15,7 +15,7 @@ export const StyledSpinner = styled.div`
   width: 10em;
   height: 10em;
 
-  margin: 60px auto;
+  margin: 4rem auto;
   font-size: 10px;
   position: relative;
   text-indent: -9999em;
@@ -28,7 +28,7 @@ export const StyledSpinner = styled.div`
   animation: ${load8} 1.1s infinite linear;
 
   &:after {
-    border-radius: 50 %;
+    border-radius: 50%;
     width: 10em;
     height: 10em;
   }

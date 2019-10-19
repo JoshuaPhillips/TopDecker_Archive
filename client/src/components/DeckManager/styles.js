@@ -5,5 +5,5 @@ export const StyledDeckManager = styled.main`
   height: 100vh;
 
   border: 1px solid red;
-  padding: 4rem 5rem 1rem;
+  padding: 4rem 2rem 1rem;
 `;

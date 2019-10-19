@@ -13,6 +13,7 @@ import { generateCardList } from '../../utils/generateCardList';
 import { StyledSearch, SearchResultsWrapper, SearchResultsToolbar, SearchResultsCardListContainer } from './styles';
 import { SectionHeader } from '../../shared/Headers';
 import { ModeToggleContainer } from '../../shared/ModeToggles';
+import { StyledSelect } from '../../shared/Forms';
 
 const Search = props => {
   const [deckList, setDeckList] = useState([]);
@@ -53,7 +54,7 @@ const Search = props => {
         <SectionHeader>Search Results</SectionHeader>
         <SearchResultsToolbar>
           <div>
-            <select value={selectedDeckId} onChange={e => setSelectedDeckId(e.target.value)}>
+            <StyledSelect value={selectedDeckId} onChange={e => setSelectedDeckId(e.target.value)}>
               <option value='default' disabled>
                 {GetUserDecksQueryResponse.loading && GetUserDecksQueryResponse.called
                   ? 'Loading decks...'
@@ -67,7 +68,7 @@ const Search = props => {
                     </option>
                   );
                 })}
-            </select>
+            </StyledSelect>
           </div>
           <div>
             <ModeToggleContainer>
