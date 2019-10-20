@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const StyledSearchResultCardControls = styled.div`
   padding-top: 0.25rem;
   text-align: center;
+  font-weight: ${props => props.theme.fonts.weights.bold};
 `;
 
 export const SearchResultCardControlGroup = styled.div`
@@ -11,7 +12,6 @@ export const SearchResultCardControlGroup = styled.div`
 
   div {
     width: 33.33%;
-    font-weight: ${props => props.theme.fonts.weights.bold};
   }
 
   button {

@@ -22,4 +22,9 @@ export const ExportTextArea = styled.textarea`
   resize: none;
   line-height: 150%;
   letter-spacing: 0.1rem;
+  border: 2px solid lightgrey;
+  border-top: 1px solid lightgrey;
+  border-left: 5px solid ${props => props.theme.colors.primary};
+  outline: none;
+  font-weight: ${props => props.theme.fonts.weights.bold};
 `;

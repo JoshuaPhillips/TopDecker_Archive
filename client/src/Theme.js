@@ -2,7 +2,6 @@
 
 const color__primary = '#385170';
 const color__background = 'whitesmoke';
-const color__success = 'forestgreen';
 const color__danger = 'firebrick';
 
 // fonts
@@ -19,10 +18,6 @@ const standardBorderMixin = () => {
   return 'border: 1px solid lightgrey; border-bottom: 2px solid lightgrey;';
 };
 
-// sizing
-
-const header__height = 8;
-
 export const Theme = {
   borders: {
     standard: standardBorderMixin()
@@ -30,7 +25,6 @@ export const Theme = {
   colors: {
     primary: color__primary,
     background: color__background,
-    success: color__success,
     danger: color__danger
   },
   fonts: {
@@ -45,8 +39,5 @@ export const Theme = {
       base: 'normal',
       bold: 'bold'
     }
-  },
-  sizing: {
-    headerHeight: header__height
   }
 };

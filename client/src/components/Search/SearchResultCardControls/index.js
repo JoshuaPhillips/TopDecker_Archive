@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { validateAddCard } from '../../../utils/validateAddCard';
+import { capitalise } from '../../../utils/capitalise';
 
 import {
   StyledSearchResultCardControls,
@@ -32,7 +33,7 @@ const SearchResultCardControls = props => {
   if (deck && result.legalities[deck.format] !== 'legal') {
     return (
       <StyledSearchResultCardControls>
-        <p>Card not legal.</p>
+        <p>This card isn't legal in {capitalise(deck.format)}.</p>
       </StyledSearchResultCardControls>
     );
   }
@@ -87,13 +88,13 @@ const SearchResultCardControls = props => {
             </button>
             <button
               type='button'
-              disabled={matchedCard && matchedCard.mainDeckCount === 0}
+              disabled={matchedCard !== undefined && matchedCard.mainDeckCount === 0}
               onClick={() => updateCardList('mainDeck', 'remove', result)}>
               <FontAwesomeIcon icon={faMinus} fixedWidth />
             </button>
             <button
               type='button'
-              disabled={matchedCard && matchedCard.mainDeckCount === 0}
+              disabled={matchedCard !== undefined && matchedCard.mainDeckCount === 0}
               onClick={() => updateCardList('sideboard', 'transferToSideboard', result)}>
               <FontAwesomeIcon icon={faExchangeAlt} fixedWidth />
             </button>
@@ -117,13 +118,13 @@ const SearchResultCardControls = props => {
             </button>
             <button
               type='button'
-              disabled={matchedCard && matchedCard.sideboardCount === 0}
+              disabled={matchedCard !== undefined && matchedCard.sideboardCount === 0}
               onClick={() => updateCardList('sideboard', 'remove', result)}>
               <FontAwesomeIcon icon={faMinus} fixedWidth />
             </button>
             <button
               type='button'
-              disabled={matchedCard && matchedCard.sideboardCount === 0}
+              disabled={matchedCard !== undefined && matchedCard.sideboardCount === 0}
               onClick={() => updateCardList('mainDeck', 'transferToMainDeck', result)}>
               <FontAwesomeIcon icon={faExchangeAlt} fixedWidth />
             </button>
