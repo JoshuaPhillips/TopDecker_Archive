@@ -9,8 +9,9 @@ export const StyledAccount = styled.main`
   border-radius: 5px;
   margin: 4rem auto;
 
-  toastify-info-body {
-    color: blue;
+  h1 {
+    width: 80%;
+    margin: 1rem auto;
   }
 `;
 

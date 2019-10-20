@@ -54,10 +54,12 @@ const DeckInspectorToolbar = props => {
                 Search for Cards
               </Button>
             </Link>
-            <Button type='button'>
-              <FontAwesomeIcon icon={faFileExport} fixedWidth />
-              Export Deck
-            </Button>
+            <Link to={{ pathname: `/decks/${props.deck.id}/export`, state: { deck: props.deck } }}>
+              <Button type='button'>
+                <FontAwesomeIcon icon={faFileExport} fixedWidth />
+                Export Deck
+              </Button>
+            </Link>
             <DangerButton type='button'>
               <FontAwesomeIcon icon={faTrash} fixedWidth />
               Delete Deck

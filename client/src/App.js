@@ -8,6 +8,7 @@ import Auth from './components/Auth';
 import Account from './components/Account';
 import DeckList from './components/DeckList';
 import DeckManager from './components/DeckManager';
+import Export from './components/Export';
 import Header from './components/Header';
 import Search from './components/Search/Search';
 
@@ -45,6 +46,7 @@ const App = () => {
 
         <Route path='/account' component={Account} />
         <Route path='/decks' exact component={DeckList} />
+        <Route path='/decks/:deckId/export' component={Export} />
         <Route path='/decks/:deckId' component={DeckManager} />
         <Route path='/search/' component={Search} />
 

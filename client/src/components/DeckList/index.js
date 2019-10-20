@@ -24,8 +24,8 @@ const Decks = () => {
   const { currentUserId } = GetAuthDataQueryResponse.data.AuthData;
 
   const GetDeckListQueryResponse = useQuery(GET_DECK_LIST, {
-    fetchPolicy: 'network-only',
     onCompleted(data) {
+      console.log(data);
       if (data) {
         const deckList = data.getAllDecks.sort((a, b) => {
           if (a.format.toLowerCase() < b.format.toLowerCase()) {
@@ -47,6 +47,8 @@ const Decks = () => {
           return 0;
         });
         setDeckList(deckList);
+      } else {
+        toast.error('Sorry, there was a problem retrieving your deck list.');
       }
     }
   });
@@ -78,8 +80,6 @@ const Decks = () => {
   const otherDecks = deckList.filter(deck => {
     return deck.owner.id !== currentUserId;
   });
-
-  // console.log(GetDeckListQueryResponse);
 
   if (GetDeckListQueryResponse.loading) {
     return <Spinner />;
