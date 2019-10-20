@@ -12,7 +12,6 @@ export const StyledSearchResultListItem = styled.div`
 
 export const ListModeCardDetails = styled.div`
   flex-grow: 7;
-
   width: 70%;
   flex-basis: 0;
   display: flex;

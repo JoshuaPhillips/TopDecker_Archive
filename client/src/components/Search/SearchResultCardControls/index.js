@@ -9,8 +9,15 @@ import { StyledSearchResultCardControls, SearchResultCardControlGroup } from './
 
 const SearchResultCardControls = props => {
   const { deck, result, updateCardList } = props;
+  console.log(result.name, props);
 
   let matchedCard;
+
+  if (deck) {
+    matchedCard = deck.cardList.find(({ card }) => {
+      return card.scryfall_id === result.scryfall_id;
+    });
+  }
 
   let contents = (
     <StyledSearchResultCardControls>
@@ -42,7 +49,7 @@ const SearchResultCardControls = props => {
                     <p>Main Deck</p>
                   </div>
                   <div>
-                    {[...Array(matchedCard ? matchedCard.mainDeckCount : 0)].map((_, index) => {
+                    {[...Array(matchedCard ? matchedCard.mainDeckCount : -1)].map((_, index) => {
                       return (
                         <FontAwesomeIcon
                           key={`${result.scryfall_id}__mainDeck__active__${index}`}
@@ -136,11 +143,6 @@ const SearchResultCardControls = props => {
         ));
   }
 
-  if (deck) {
-    matchedCard = deck.cardList.find(({ card }) => {
-      return card.scryfall_id === result.scryfall_id;
-    });
-  }
   return contents;
 };
 

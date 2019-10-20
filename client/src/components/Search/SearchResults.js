@@ -104,11 +104,26 @@ const SearchResults = props => {
       <SearchResultsCardListContainer>
         {searchResults.map(result => {
           return viewMode === 'gallery' ? (
-            <SearchResultGalleryItem result={result} deck={deck} updateCardListHandler={updateCardListHandler} />
+            <SearchResultGalleryItem
+              key={result.scryfall_id}
+              result={result}
+              deck={deck}
+              updateCardListHandler={updateCardListHandler}
+            />
           ) : viewMode === 'text' ? (
-            <SearchResultTextItem result={result} deck={deck} updateCardListHandler={updateCardListHandler} />
+            <SearchResultTextItem
+              key={result.scryfall_id}
+              result={result}
+              deck={deck}
+              updateCardListHandler={updateCardListHandler}
+            />
           ) : (
-            <SearchResultListItem result={result} deck={deck} updateCardListHandler={updateCardListHandler} />
+            <SearchResultListItem
+              key={result.scryfall_id}
+              result={result}
+              deck={deck}
+              updateCardListHandler={updateCardListHandler}
+            />
           );
         })}
       </SearchResultsCardListContainer>
