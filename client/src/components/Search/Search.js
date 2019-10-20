@@ -6,8 +6,12 @@ import SearchResults from './SearchResults';
 import { StyledSearch } from './styles';
 
 const Search = props => {
-  const { deck } = props.location.state || null;
   const [searchResults, setSearchResults] = useState([]);
+
+  let deck = null;
+  if (props.location.state) {
+    deck = props.location.state.deck;
+  }
 
   return (
     <StyledSearch>
