@@ -8,6 +8,7 @@ export const GET_USER_DECKS = gql`
         name
         format
         commander {
+          scryfall_id
           color_identity
         }
         cardList {

@@ -4,9 +4,9 @@ export const generateCardList = (deck, listToUpdate, updateMode, updatedCard) =>
     ...deck
   };
 
-  const maximumCardAllowance = format === 'commander' ? 1 : 4;
+  console.log(updateMode);
 
-  // find matching card, if it exists
+  const maximumCardAllowance = format === 'commander' ? 1 : 4;
 
   const matchingCardIndex = cardList.findIndex(({ card }) => {
     return card.scryfall_id === updatedCard.scryfall_id;

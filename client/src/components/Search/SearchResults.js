@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,10 +23,12 @@ import SearchResultListItem from './SearchResultListItem';
 const SearchResults = props => {
   const { searchResults } = props;
   const [deckList, setDeckList] = useState([]);
-  const [selectedDeckId, setSelectedDeckId] = useState('default');
+  const [selectedDeckId, setSelectedDeckId] = useState(props.selectedDeck ? props.selectedDeck.id : 'default');
   const [viewMode, setViewMode] = useState('gallery');
+  const [selectedDeck, setSelectedDeck] = useState(null);
 
   const GetUserDecksQueryResponse = useQuery(GET_USER_DECKS, {
+    fetchPolicy: 'network-only',
     onCompleted(data) {
       if (data) {
         setDeckList(data.getCurrentUser.decks);
@@ -37,7 +39,7 @@ const SearchResults = props => {
   const [UpdateCardListMutation] = useMutation(UPDATE_CARD_LIST);
 
   const updateCardListHandler = (listToUpdate, updateMode, updatedCard) => {
-    const newDeck = generateCardList(deck, listToUpdate, updateMode, updatedCard);
+    const newDeck = generateCardList(selectedDeck, listToUpdate, updateMode, updatedCard);
 
     const filteredCardList = newDeck.cardList.map(({ card, mainDeckCount, sideboardCount }) => {
       return { scryfallId: card.scryfall_id, mainDeckCount, sideboardCount };
@@ -47,22 +49,29 @@ const SearchResults = props => {
       variables: { deckId: selectedDeckId, cardList: filteredCardList },
       refetchQueries: [{ query: GET_USER_DECKS }]
     });
+
+    setSelectedDeck(newDeck);
   };
 
-  let deck;
-
-  if (selectedDeckId) {
-    deck = deckList.find(({ id }) => {
-      return id === selectedDeckId;
+  const selectDeckHandler = e => {
+    setSelectedDeckId(e.target.value);
+    let newSelectedDeck = deckList.find(({ id }) => {
+      return id === e.target.value;
     });
-  }
+
+    setSelectedDeck(newSelectedDeck);
+  };
+
+  useEffect(() => {
+    console.log(selectedDeck);
+  }, [selectedDeck]);
 
   return (
     <SearchResultsWrapper>
       <SectionHeader>Search Results</SectionHeader>
       <SearchResultsToolbar>
         <div>
-          <StyledSelect value={selectedDeckId} onChange={e => setSelectedDeckId(e.target.value)}>
+          <StyledSelect value={selectedDeckId} onChange={e => selectDeckHandler(e)}>
             <option value='default' disabled>
               {GetUserDecksQueryResponse.loading && GetUserDecksQueryResponse.called
                 ? 'Loading decks...'
@@ -107,21 +116,21 @@ const SearchResults = props => {
             <SearchResultGalleryItem
               key={result.scryfall_id}
               result={result}
-              deck={deck}
+              deck={selectedDeck}
               updateCardListHandler={updateCardListHandler}
             />
           ) : viewMode === 'text' ? (
             <SearchResultTextItem
               key={result.scryfall_id}
               result={result}
-              deck={deck}
+              deck={selectedDeck}
               updateCardListHandler={updateCardListHandler}
             />
           ) : (
             <SearchResultListItem
               key={result.scryfall_id}
               result={result}
-              deck={deck}
+              deck={selectedDeck}
               updateCardListHandler={updateCardListHandler}
             />
           );
