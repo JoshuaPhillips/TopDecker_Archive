@@ -97,9 +97,4 @@ export const SearchResultsToolbar = styled.div`
 export const SearchResultsCardListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-
-  & > div {
-    margin: 0.5rem;
-    max-width: calc(20% - 1rem);
-  }
 `;

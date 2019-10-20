@@ -15,13 +15,13 @@ export const FormRow = styled.div`
 `;
 
 export const FormRowTitle = styled.div`
-  width: 30%;
+  width: 25%;
   padding: 0.5rem;
   font-weight: ${props => props.theme.fonts.weights.bold};
 `;
 
 export const FormRowContent = styled.div`
-  width: 70%;
+  width: 75%;
 `;
 
 export const TextInput = styled.input`

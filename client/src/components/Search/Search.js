@@ -23,6 +23,7 @@ const Search = props => {
   const [deckList, setDeckList] = useState([]);
   const [selectedDeckId, setSelectedDeckId] = useState(props.location.state ? props.location.state.deck.id : 'default');
   const [searchResults, setSearchResults] = useState([]);
+  const [viewMode, setViewMode] = useState('gallery');
 
   const GetUserDecksQueryResponse = useQuery(GET_USER_DECKS, {
     onCompleted(data) {
@@ -76,9 +77,15 @@ const Search = props => {
           </div>
           <div>
             <ModeToggleContainer>
-              <button type='button'>Gallery</button>
-              <button type='button'>Text</button>
-              <button type='button'>List</button>
+              <button type='button' disabled={viewMode === 'gallery'} onClick={() => setViewMode('gallery')}>
+                Gallery
+              </button>
+              <button type='button' disabled={viewMode === 'text'} onClick={() => setViewMode('text')}>
+                Text
+              </button>
+              <button type='button' disabled={viewMode === 'list'} onClick={() => setViewMode('list')}>
+                List
+              </button>
             </ModeToggleContainer>
           </div>
 
