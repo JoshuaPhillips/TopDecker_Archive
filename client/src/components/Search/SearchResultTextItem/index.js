@@ -2,16 +2,19 @@ import React from 'react';
 
 import convertTextToSymbols from '../../../utils/convertTextToSymbols';
 
+import SearchResultCardControls from '../SearchResultCardControls';
+
 import {
   StyledSearchResultTextItem,
   TextModeCardItemHeader,
   TextModeCardItemContent,
   TextModeCardItemOracleText,
-  TextModeCardItemFlavorText
+  TextModeCardItemFlavorText,
+  SearchResultCardControlsWrapper
 } from './styles';
 
 const SearchResultTextItem = props => {
-  const { result } = props;
+  const { deck, result, updateCardListHandler } = props;
 
   return (
     <StyledSearchResultTextItem>
@@ -80,6 +83,9 @@ const SearchResultTextItem = props => {
           );
         })
       )}
+      <SearchResultCardControlsWrapper>
+        <SearchResultCardControls deck={deck} result={result} updateCardList={updateCardListHandler} />
+      </SearchResultCardControlsWrapper>
     </StyledSearchResultTextItem>
   );
 };

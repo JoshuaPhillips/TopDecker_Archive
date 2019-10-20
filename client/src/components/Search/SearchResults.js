@@ -4,26 +4,21 @@ import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
-import SearchResultCardControls from './SearchResultCardControls';
-
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { GET_USER_DECKS } from './graphql';
 import { UPDATE_CARD_LIST } from '../DeckManager/graphql';
 
 import { generateCardList } from '../../utils/generateCardList';
 
-import {
-  SearchResultsWrapper,
-  SearchResultsToolbar,
-  SearchResultsCardListContainer,
-  SearchResultItemWrapper
-} from './styles';
+import { SearchResultsWrapper, SearchResultsToolbar, SearchResultsCardListContainer } from './styles';
 
 import { SectionHeader } from '../../shared/Headers';
 import { Button } from '../../shared/Buttons';
 import { ModeToggleContainer } from '../../shared/ModeToggles';
 import { StyledSelect } from '../../shared/Forms';
 import SearchResultGalleryItem from './SearchResultGalleryItem';
+import SearchResultTextItem from './SearchResultTextItem';
+import SearchResultListItem from './SearchResultListItem';
 
 const SearchResults = props => {
   const { searchResults } = props;
@@ -108,11 +103,12 @@ const SearchResults = props => {
       </SearchResultsToolbar>
       <SearchResultsCardListContainer>
         {searchResults.map(result => {
-          return (
-            <SearchResultItemWrapper>
-              <SearchResultGalleryItem deck={deck} result={result} updateCardListHandler={updateCardListHandler} />
-              <SearchResultCardControls deck={deck} result={result} updateCardList={updateCardListHandler} />
-            </SearchResultItemWrapper>
+          return viewMode === 'gallery' ? (
+            <SearchResultGalleryItem result={result} deck={deck} updateCardListHandler={updateCardListHandler} />
+          ) : viewMode === 'text' ? (
+            <SearchResultTextItem result={result} deck={deck} updateCardListHandler={updateCardListHandler} />
+          ) : (
+            <SearchResultListItem result={result} deck={deck} updateCardListHandler={updateCardListHandler} />
           );
         })}
       </SearchResultsCardListContainer>

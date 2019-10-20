@@ -1,25 +1,23 @@
 import styled from 'styled-components';
 
-export const StyledSearchResultCardControlsContainer = styled.div`
+export const StyledSearchResultCardControls = styled.div`
   padding-top: 0.25rem;
   text-align: center;
 `;
 
-export const SearchResultCardControls = styled.div`
+export const SearchResultCardControlGroup = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-content: center;
-  padding: 0.25rem;
+  justify-content: flex-end;
+  
 
   div {
-    width: 33.33%;
-    text-align: center;
+    width: 33.33%
+    font-size: ${props => props.theme.fonts.sizes.small};    
   }
 
   button {
     border: 0;
     outline: 0;
     background-color: transparent;
-    font-size: 1rem;
   }
 `;

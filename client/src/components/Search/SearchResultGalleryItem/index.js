@@ -1,14 +1,18 @@
 import React from 'react';
 import Card from '../../Card/Card';
 
-import { StyledSearchResultGalleryItem } from './styles';
+import { StyledSearchResultGalleryItem, SearchResultCardControlsWrapper } from './styles';
+import SearchResultCardControls from '../SearchResultCardControls';
 
 const SearchResultGalleryItem = props => {
-  const { result } = props;
+  const { deck, result, updateCardListHandler } = props;
 
   return (
     <StyledSearchResultGalleryItem>
       <Card card={result} />
+      <SearchResultCardControlsWrapper>
+        <SearchResultCardControls deck={deck} result={result} updateCardList={updateCardListHandler} />
+      </SearchResultCardControlsWrapper>
     </StyledSearchResultGalleryItem>
   );
 };

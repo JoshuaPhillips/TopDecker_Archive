@@ -97,9 +97,12 @@ export const SearchResultsToolbar = styled.div`
 export const SearchResultsCardListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+  align-items: stretch;
 `;
 
 export const SearchResultItemWrapper = styled.div`
+  display: flex;
+
   width: calc((100% - 1rem) / 3);
   margin: 0 0.5rem 0.5rem 0;
 

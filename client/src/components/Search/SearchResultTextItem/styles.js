@@ -3,16 +3,18 @@ import styled from 'styled-components';
 export const StyledSearchResultTextItem = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0.5rem 0.5rem 0 0;
   background-color: white;
   border: 1px solid lightgrey;
   border-top: 3px solid #385170;
   border-bottom: 2px solid lightgrey;
   border-radius: 5px;
 
-  width: calc((100% - 0.5rem) / 2);
+  width: calc((100% - 1rem) / 3);
 
-  &:nth-child(2n) {
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+
+  :nth-child(3n) {
     margin-right: 0;
   }
 `;
@@ -74,4 +76,8 @@ export const TextModeCardItemFlavorText = styled.div`
     font-style: italic;
     line-height: 150%;
   }
+`;
+
+export const SearchResultCardControlsWrapper = styled.div`
+  margin: auto 0 0.5rem;
 `;

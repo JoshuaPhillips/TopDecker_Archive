@@ -1,11 +1,12 @@
 import React from 'react';
-import convertTextToSymbols from '../../../utils/convertTextToSymbols';
-import { capitalise } from '../../../utils/capitalise';
 
-import { StyledSearchResultListItem, ListModeCardDetails } from './styles';
+import SearchResultCardControls from '../SearchResultCardControls';
+import convertTextToSymbols from '../../../utils/convertTextToSymbols';
+
+import { StyledSearchResultListItem, ListModeCardDetails, SearchResultCardControlsWrapper } from './styles';
 
 const SearchResultListItem = props => {
-  const { result } = props;
+  const { deck, result, updateCardListHandler } = props;
 
   const renderManaCost = () => {
     if (result.mana_cost === null) {
@@ -22,8 +23,10 @@ const SearchResultListItem = props => {
         <p className='ListModeTypeLine'>{result.type_line}</p>
 
         {renderManaCost()}
-        <p className='ListModeRarity'>{capitalise(result.rarity)}</p>
       </ListModeCardDetails>
+      <SearchResultCardControlsWrapper>
+        <SearchResultCardControls deck={deck} result={result} updateCardList={updateCardListHandler} />
+      </SearchResultCardControlsWrapper>
     </StyledSearchResultListItem>
   );
 };
