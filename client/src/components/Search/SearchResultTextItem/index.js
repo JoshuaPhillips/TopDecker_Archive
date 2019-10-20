@@ -1,5 +1,4 @@
 import React from 'react';
-import SearchResultCardControls from '../SearchResultCardControls';
 
 import convertTextToSymbols from '../../../utils/convertTextToSymbols';
 
@@ -12,7 +11,7 @@ import {
 } from './styles';
 
 const SearchResultTextItem = props => {
-  const { deck, result, updateCardListHandler } = props;
+  const { result } = props;
 
   return (
     <StyledSearchResultTextItem>
@@ -81,7 +80,6 @@ const SearchResultTextItem = props => {
           );
         })
       )}
-      <SearchResultCardControls deck={deck} updateCardListHandler={updateCardListHandler} result={result} />
     </StyledSearchResultTextItem>
   );
 };

@@ -98,3 +98,12 @@ export const SearchResultsCardListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
 `;
+
+export const SearchResultItemWrapper = styled.div`
+  width: calc((100% - 1rem) / 3);
+  margin: 0 0.5rem 0.5rem 0;
+
+  &:nth-child(3n) {
+    margin-right: 0;
+  }
+`;

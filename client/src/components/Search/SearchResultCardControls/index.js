@@ -5,16 +5,16 @@ import { faStar as faRegularStar } from '@fortawesome/free-regular-svg-icons';
 
 import { validateAddCard } from '../../../utils/validateAddCard';
 
-import classes from './SearchResultCardControls.module.scss';
+import { StyledSearchResultCardControlsContainer } from './styles';
 
 const SearchResultCardControls = props => {
   const { deck, result, updateCardList } = props;
 
   if (!deck) {
     return (
-      <div className={classes.SearchResultCardControlsContainer}>
-        <p>Please select a deck from the dropdown above.</p>
-      </div>
+      <StyledSearchResultCardControlsContainer>
+        <p>Please select a deck.</p>
+      </StyledSearchResultCardControlsContainer>
     );
   }
 
@@ -24,7 +24,7 @@ const SearchResultCardControls = props => {
 
   if (deck.format === 'commander') {
     return (
-      <div className={classes.SearchResultCardControlsContainer}>
+      <StyledSearchResultCardControlsContainer>
         {matchedCard ? (
           <button type='button' onClick={() => updateCardList('mainDeck', 'remove', result)}>
             Remove
@@ -34,19 +34,19 @@ const SearchResultCardControls = props => {
             Add
           </button>
         )}
-      </div>
+      </StyledSearchResultCardControlsContainer>
     );
   }
 
   return (
-    <div className={classes.SearchResultCardControlsContainer}>
+    <StyledSearchResultCardControlsContainer>
       {deck.format !== 'commander' && (
         <React.Fragment>
-          <div className={classes.SearchResultCardControls}>
+          <SearchResultCardControls>
             <div>
               <p>Main Deck</p>
             </div>
-            <div className={classes.SearchResultCardQuantityIndicators}>
+            <div>
               {[...Array(matchedCard ? matchedCard.mainDeckCount : 0)].map((_, index) => {
                 return (
                   <FontAwesomeIcon key={`${result.scryfall_id}__mainDeck__active__${index}`} icon={faStar} fixedWidth />
@@ -83,13 +83,13 @@ const SearchResultCardControls = props => {
                 <FontAwesomeIcon icon={faExchangeAlt} fixedWidth />
               </button>
             </div>
-          </div>
+          </SearchResultCardControls>
 
-          <div className={classes.SearchResultCardControls}>
+          <SearchResultCardControls>
             <div>
               <p>Sideboard</p>
             </div>
-            <div className={classes.SearchResultCardQuantityIndicators}>
+            <div>
               {[...Array(matchedCard ? matchedCard.sideboardCount : 0)].map((_, index) => {
                 return (
                   <FontAwesomeIcon
@@ -130,10 +130,10 @@ const SearchResultCardControls = props => {
                 <FontAwesomeIcon icon={faExchangeAlt} fixedWidth />
               </button>
             </div>
-          </div>
+          </SearchResultCardControls>
         </React.Fragment>
       )}
-    </div>
+    </StyledSearchResultCardControlsContainer>
   );
 };
 

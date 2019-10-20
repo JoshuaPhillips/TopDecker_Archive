@@ -1,16 +1,18 @@
-.SearchResultCardControlsContainer {
+import styled from 'styled-components';
+
+export const StyledSearchResultCardControlsContainer = styled.div`
   padding-top: 0.25rem;
   text-align: center;
-}
+`;
 
-.SearchResultCardControls {
+export const SearchResultCardControls = styled.div`
   display: flex;
   justify-content: space-between;
   align-content: center;
-  padding: 0.25rem 0.5rem;
+  padding: 0.25rem;
 
   div {
-    width: 33%;
+    width: 33.33%;
     text-align: center;
   }
 
@@ -20,4 +22,4 @@
     background-color: transparent;
     font-size: 1rem;
   }
-}
+`;

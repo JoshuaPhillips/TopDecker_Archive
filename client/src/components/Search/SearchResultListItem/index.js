@@ -3,10 +3,9 @@ import convertTextToSymbols from '../../../utils/convertTextToSymbols';
 import { capitalise } from '../../../utils/capitalise';
 
 import { StyledSearchResultListItem, ListModeCardDetails } from './styles';
-import SearchResultCardControls from '../SearchResultCardControls';
 
 const SearchResultListItem = props => {
-  const { deck, result, updateCardListHandler } = props;
+  const { result } = props;
 
   const renderManaCost = () => {
     if (result.mana_cost === null) {
@@ -25,7 +24,6 @@ const SearchResultListItem = props => {
         {renderManaCost()}
         <p className='ListModeRarity'>{capitalise(result.rarity)}</p>
       </ListModeCardDetails>
-      <SearchResultCardControls deck={deck} updateCardListHandler={updateCardListHandler} result={result} />
     </StyledSearchResultListItem>
   );
 };
