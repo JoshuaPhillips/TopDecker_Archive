@@ -14,6 +14,8 @@ export const GET_DECK_DETAILS = gql`
         type_line
         rarity
         layout
+        set
+        collector_number
         power
         toughness
         loyalty
@@ -38,6 +40,8 @@ export const GET_DECK_DETAILS = gql`
           mana_cost
           rarity
           layout
+          set
+          collector_number
           cmc
           power
           toughness

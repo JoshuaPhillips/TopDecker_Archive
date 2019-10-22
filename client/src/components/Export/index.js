@@ -30,7 +30,7 @@ const Export = props => {
 
     deck.cardList.forEach(({ card, mainDeckCount }) => {
       if (mainDeckCount !== 0) {
-        exportString += `${mainDeckCount} ${card.name} (${card.set}) ${card.collector_number}\n`;
+        exportString += `${mainDeckCount} ${card.name} (${card.set.toUpperCase()}) ${card.collector_number}\n`;
       }
     });
 
@@ -38,7 +38,7 @@ const Export = props => {
 
     deck.cardList.forEach(({ card, sideboardCount }) => {
       if (sideboardCount !== 0) {
-        exportString += `${sideboardCount} ${card.name} (${card.set}) ${card.collector_number}\n`;
+        exportString += `${sideboardCount} ${card.name} (${card.set.toUpperCase()}) ${card.collector_number}\n`;
       }
     });
 

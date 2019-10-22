@@ -1,5 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+
+import { useMutation } from '@apollo/react-hooks';
+import { DELETE_DECK } from './graphql';
+import { GET_DECK_LIST } from '../../../DeckList/graphql';
 
 import { capitalise } from '../../../../utils/capitalise';
 
@@ -28,7 +32,22 @@ const DeckInspectorToolbar = props => {
     toggleFilterHandler
   } = props;
 
+  let history = useHistory();
+  const [DeleteDeckMutation] = useMutation(DELETE_DECK, {
+    refetchQueries: [{ query: GET_DECK_LIST }],
+    variables: { deckId: props.deck.id },
+    onCompleted(data) {
+      if (data.deleteDeck) {
+        history.push('/decks');
+      }
+    }
+  });
+
   const filterNames = ['creature', 'planeswalker', 'artifact', 'enchantment', 'sorcery', 'instant', 'land'];
+
+  const deleteDeckHandler = () => {
+    DeleteDeckMutation();
+  };
 
   return (
     <StyledDeckInspectorToolbar>
@@ -60,7 +79,7 @@ const DeckInspectorToolbar = props => {
                 Export Deck
               </Button>
             </Link>
-            <DangerButton type='button'>
+            <DangerButton type='button' onClick={() => deleteDeckHandler()}>
               <FontAwesomeIcon icon={faTrash} fixedWidth />
               Delete Deck
             </DangerButton>

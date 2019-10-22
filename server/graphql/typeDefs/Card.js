@@ -57,6 +57,7 @@ const CardType = gql`
     lang: String!
     oracle_text: String
     flavor_text: String
+    set: String
     power: String
     toughness: String
     type_line: String!
@@ -64,6 +65,7 @@ const CardType = gql`
     rarity: Rarity!
     set_name: String!
     card_faces: [CardFace]
+    collector_number: String
   }
 `;
 

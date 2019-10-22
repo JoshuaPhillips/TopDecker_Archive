@@ -10,6 +10,7 @@ const filterCardData = fullCardData => {
     'loyalty',
     'mana_cost',
     'lang',
+    'set',
     'oracle_text',
     'power',
     'toughness',
@@ -18,7 +19,8 @@ const filterCardData = fullCardData => {
     'rarity',
     'set_name',
     'card_faces',
-    'flavor_text'
+    'flavor_text',
+    'collector_number'
   ];
 
   let filteredData = {
@@ -32,6 +34,7 @@ const filterCardData = fullCardData => {
     loyalty: null,
     mana_cost: null,
     lang: null,
+    set: null,
     oracle_text: null,
     power: null,
     toughness: null,
@@ -40,7 +43,8 @@ const filterCardData = fullCardData => {
     rarity: null,
     set_name: null,
     flavor_text: null,
-    card_faces: []
+    card_faces: [],
+    collector_number: null
   };
 
   requiredFields.map(field => {

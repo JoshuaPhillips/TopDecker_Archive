@@ -66,7 +66,7 @@ const DeckManagerSidebar = props => {
     }
   };
 
-  const GetUserDecksQueryResponse = useQuery(GET_USER_DECKS);
+  const GetUserDecksQueryResponse = useQuery(GET_USER_DECKS, { fetchPolicy: 'network-only' });
 
   const defaultParams = {
     formats: [

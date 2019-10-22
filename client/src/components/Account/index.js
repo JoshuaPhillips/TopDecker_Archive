@@ -96,11 +96,21 @@ const Account = () => {
     return <Spinner />;
   }
 
+  const toggleEditingHandler = e => {
+    e.preventDefault();
+    toggleEditing(true);
+  };
+
+  const saveAccountDetailsHandler = e => {
+    e.preventDefault();
+    SaveAccountDetailsMutation();
+  };
+
   return (
     <StyledAccount>
       <SectionHeader>Account</SectionHeader>
 
-      <AccountForm>
+      <AccountForm onSubmit={editing ? e => saveAccountDetailsHandler(e) : e => toggleEditingHandler(e)}>
         <FormRow>
           <FormRowTitle>
             <label htmlFor='firstName'>First Name:</label>
@@ -176,7 +186,7 @@ const Account = () => {
           </FormRowContent>
         </FormRow>
         <AccountFormButtonsWrapper>
-          <Button type='button' onClick={editing ? () => SaveAccountDetailsMutation() : () => toggleEditing(true)}>
+          <Button type='submit'>
             <FontAwesomeIcon icon={faEdit} fixedWidth />
             {editing ? 'Save' : 'Edit'}
           </Button>
@@ -284,7 +294,7 @@ const Account = () => {
               </FormRowTitle>
               <FormRowContent>
                 <TextInput
-                  type='text'
+                  type='password'
                   id='accountDeleteConfirmationPassword'
                   disabled={!deletingAccount}
                   onChange={e => setDeleteConfirmationPassword(e.target.value)}

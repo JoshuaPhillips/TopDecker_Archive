@@ -24,8 +24,8 @@ const Decks = () => {
   const { currentUserId } = GetAuthDataQueryResponse.data.AuthData;
 
   const GetDeckListQueryResponse = useQuery(GET_DECK_LIST, {
+    fetchPolicy: 'network-only',
     onCompleted(data) {
-      console.log(data);
       if (data) {
         const deckList = data.getAllDecks.sort((a, b) => {
           if (a.format.toLowerCase() < b.format.toLowerCase()) {
@@ -55,6 +55,7 @@ const Decks = () => {
 
   const [DeleteDeckMutation] = useMutation(DELETE_DECK, {
     refetchQueries: [{ query: GET_DECK_LIST }],
+
     onCompleted(data) {
       if (data) {
         const { deleteDeck: deletedDeckId } = data;

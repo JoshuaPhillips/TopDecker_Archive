@@ -28,7 +28,6 @@ export const AuthForm = styled.form`
 `;
 
 export const AuthFormButtonsWrapper = styled.div`
-  width: 80%;
   margin: 1rem auto 2rem;
   button {
     margin-right: 0.5rem;

@@ -27,7 +27,8 @@ const Auth = () => {
 
   const GetAuthDataQueryResponse = useQuery(GET_AUTH_DATA, { fetchPolicy: 'cache-only' });
 
-  const LoginQuery = async () => {
+  const loginHandler = async e => {
+    e.preventDefault();
     const { data } = await client.query({
       query: LOGIN,
       variables: {
@@ -50,6 +51,11 @@ const Auth = () => {
         }
       }
     });
+  };
+
+  const signUpHandler = e => {
+    e.preventDefault();
+    SignUpMutation();
   };
 
   const [SignUpMutation] = useMutation(SIGN_UP_USER, {
@@ -81,7 +87,7 @@ const Auth = () => {
     <StyledAuth>
       <SectionHeader>{isLogin ? 'Login' : 'Sign Up'}</SectionHeader>
 
-      <AuthForm>
+      <AuthForm onSubmit={isLogin ? e => loginHandler(e) : e => signUpHandler(e)}>
         {!isLogin && (
           <React.Fragment>
             <FormRow>
@@ -173,13 +179,13 @@ const Auth = () => {
             </FormRow>
           </React.Fragment>
         )}
+        <AuthFormButtonsWrapper>
+          <Button type='submit'>
+            <FontAwesomeIcon icon={faSignInAlt} fixedWidth />
+            {isLogin ? 'Login' : 'Sign Up'}
+          </Button>
+        </AuthFormButtonsWrapper>
       </AuthForm>
-      <AuthFormButtonsWrapper>
-        <Button type='button' onClick={isLogin ? () => LoginQuery() : () => SignUpMutation()}>
-          <FontAwesomeIcon icon={faSignInAlt} fixedWidth />
-          {isLogin ? 'Login' : 'Sign Up'}
-        </Button>
-      </AuthFormButtonsWrapper>
 
       <p
         className='loginModeToggleText'

@@ -7,3 +7,9 @@ export const GET_AUTH_DATA = gql`
     }
   }
 `;
+
+export const DELETE_DECK = gql`
+  mutation DeleteDeck($deckId: ID!) {
+    deleteDeck(deckId: $deckId)
+  }
+`;

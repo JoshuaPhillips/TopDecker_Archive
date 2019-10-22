@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faMinus, faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faMinus, faExchangeAlt, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle as faRegularCheckCircle } from '@fortawesome/free-regular-svg-icons';
 
 import { validateAddCard } from '../../../utils/validateAddCard';
 import { capitalise } from '../../../utils/capitalise';
@@ -61,7 +62,7 @@ const SearchResultCardControls = props => {
     return (
       <StyledSearchResultCardControls>
         <button type='button' onClick={() => updateCardList('mainDeck', matchedCard ? 'remove' : 'add', result)}>
-          {matchedCard ? 'Remove' : 'Add'}
+          <FontAwesomeIcon icon={matchedCard ? faCheckCircle : faRegularCheckCircle} fixedWidth />
         </button>
       </StyledSearchResultCardControls>
     );
