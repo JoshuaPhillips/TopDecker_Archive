@@ -25,7 +25,9 @@ const Export = props => {
     let exportString = '';
 
     if (deck.format === 'commander') {
-      exportString += `1 ${deck.commander.name} (${deck.commander.set}) ${deck.commander.collector_number}\n`;
+      exportString += `1 ${deck.commander.name} (${deck.commander.set.toUpperCase()}) ${
+        deck.commander.collector_number
+      }\n`;
     }
 
     deck.cardList.forEach(({ card, mainDeckCount }) => {
