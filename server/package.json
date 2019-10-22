@@ -1,5 +1,6 @@
 {
   "name": "server",
+  "description": "GPL-3.0-or-later",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
