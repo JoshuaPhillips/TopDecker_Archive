@@ -10,12 +10,17 @@ export const StyledDeckInspector = styled.main`
 
 export const DeckDetails = styled.div`
   h2 {
-    margin: 1rem 0;
-    padding: 0.5rem;
-    border: 1px solid lightgrey;
-    border-bottom: 2px solid lightgrey;
-    background-color: white;
-    width: 25%;
+    width: fit-content;
+    margin: 2rem 0 1rem;
+    padding: 0.5rem 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+
+    background-color: ${props => props.theme.colors.primary};
+    color: ${props => props.theme.colors.background};
+    border-radius: 0 10px 10px 0;
+    font-weight: ${props => props.theme.fonts.weights.bold};
+    text-align: center;
   }
 `;
 
