@@ -63,12 +63,13 @@ export const QuickSearchFormButtonsWrapper = styled.div`
 export const OtherDecksContainer = styled.div`
   height: 25%;
   border-top: 2px solid ${props => props.theme.colors.primary};
+
   padding: 0.5rem 0;
   min-height: 15%;
   overflow-y: scroll;
 
   p {
-    padding: 0.5rem 0;
+    padding: 0.5rem 0 0.5rem 0.5rem;
     border-bottom: 1px dotted lightgrey;
   }
 `;

@@ -184,31 +184,46 @@ const MutationResolvers = {
       }
     },
 
-    editDeck: async (_, args) => {
+    editDeck: async (_, args, context) => {
       try {
+        const { currentUserId } = context.authenticationStatus;
         const { deckId, newDetails } = args;
 
-        const updatedDeck = await Deck.findByIdAndUpdate(
-          deckId,
-          {
-            ...newDetails
-          },
-          { new: true }
-        );
+        const matchedUser = await User.findById(currentUserId);
 
-        if (!updatedDeck) {
+        if (!matchedUser) {
+          throw new ApolloError('User could not be found.', 'USER_NOT_FOUND');
+        }
+
+        let deckToUpdate = await Deck.findById(deckId);
+
+        if (deckToUpdate.owner !== matchedUser.id) {
           throw new ApolloError('Error updating deck.', 'ERROR_UPDATING_DECK');
         }
 
-        return { ...updatedDeck._doc, id: updatedDeck._doc._id };
+        if (!deckToUpdate) {
+          throw new ApolloError('Error updating deck.', 'ERROR_UPDATING_DECK');
+        }
+
+        deckToUpdate = { ...newDetails };
+        await deckToUpdate.save();
+
+        return { ...deckToUpdate._doc, id: deckToUpdate._doc._id };
       } catch (error) {
         return error;
       }
     },
 
-    deleteDeck: async (_, args) => {
+    deleteDeck: async (_, args, context) => {
       try {
+        const { currentUserId } = context.authenticationStatus;
         const { deckId } = args;
+
+        const matchedUser = await User.findById(currentUserId);
+
+        if (!matchedUser) {
+          throw new ApolloError('User could not be found.', 'USER_NOT_FOUND');
+        }
 
         const matchedDeck = await Deck.findByIdAndDelete(deckId);
 
@@ -238,7 +253,7 @@ const MutationResolvers = {
       }
     },
 
-    updateCardList: async (_, args) => {
+    updateCardList: async (_, args, context) => {
       try {
         const { deckId, cardList } = args;
 
