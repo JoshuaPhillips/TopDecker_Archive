@@ -7,14 +7,12 @@ const authenticateToken = request => {
   };
 
   if (!request.headers.authorization) {
-    // console.log(authenticationStatus);
     return authenticationStatus;
   }
 
   const token = request.headers.authorization.split(' ')[1] || null;
 
   if (!token) {
-    // console.log(authenticationStatus);
     return authenticationStatus;
   }
 
@@ -24,8 +22,6 @@ const authenticateToken = request => {
     refereshToken: 'some-refresh-token',
     tokenDuration: 1
   };
-
-  // console.log(token, authenticationStatus);
 
   return authenticationStatus;
 };

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import Spinner from '../Spinner/Spinner';
+
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -21,7 +23,7 @@ import SearchResultTextItem from './SearchResultTextItem';
 import SearchResultListItem from './SearchResultListItem';
 
 const SearchResults = props => {
-  const { searchResults } = props;
+  const { searchResults, searchingCards } = props;
   const [deckList, setDeckList] = useState([]);
   const [selectedDeckId, setSelectedDeckId] = useState(props.selectedDeck ? props.selectedDeck.id : 'default');
   const [viewMode, setViewMode] = useState('gallery');
@@ -67,6 +69,19 @@ const SearchResults = props => {
       <SectionHeader>Search Results</SectionHeader>
       <SearchResultsToolbar>
         <div>
+          <ModeToggleContainer>
+            <button type='button' disabled={viewMode === 'gallery'} onClick={() => setViewMode('gallery')}>
+              Gallery
+            </button>
+            <button type='button' disabled={viewMode === 'text'} onClick={() => setViewMode('text')}>
+              Text
+            </button>
+            <button type='button' disabled={viewMode === 'list'} onClick={() => setViewMode('list')}>
+              List
+            </button>
+          </ModeToggleContainer>
+        </div>
+        <div>
           <StyledSelect value={selectedDeckId} onChange={e => selectDeckHandler(e)}>
             <option value='default' disabled>
               {GetUserDecksQueryResponse.loading && GetUserDecksQueryResponse.called
@@ -83,19 +98,6 @@ const SearchResults = props => {
               })}
           </StyledSelect>
         </div>
-        <div>
-          <ModeToggleContainer>
-            <button type='button' disabled={viewMode === 'gallery'} onClick={() => setViewMode('gallery')}>
-              Gallery
-            </button>
-            <button type='button' disabled={viewMode === 'text'} onClick={() => setViewMode('text')}>
-              Text
-            </button>
-            <button type='button' disabled={viewMode === 'list'} onClick={() => setViewMode('list')}>
-              List
-            </button>
-          </ModeToggleContainer>
-        </div>
 
         <div>
           <Button type='button' disabled={selectedDeckId === 'default'}>
@@ -106,32 +108,36 @@ const SearchResults = props => {
           </Button>
         </div>
       </SearchResultsToolbar>
-      <SearchResultsCardListContainer>
-        {searchResults.map(result => {
-          return viewMode === 'gallery' ? (
-            <SearchResultGalleryItem
-              key={result.scryfall_id}
-              result={result}
-              deck={selectedDeck}
-              updateCardListHandler={updateCardListHandler}
-            />
-          ) : viewMode === 'text' ? (
-            <SearchResultTextItem
-              key={result.scryfall_id}
-              result={result}
-              deck={selectedDeck}
-              updateCardListHandler={updateCardListHandler}
-            />
-          ) : (
-            <SearchResultListItem
-              key={result.scryfall_id}
-              result={result}
-              deck={selectedDeck}
-              updateCardListHandler={updateCardListHandler}
-            />
-          );
-        })}
-      </SearchResultsCardListContainer>
+      {searchingCards ? (
+        <Spinner />
+      ) : (
+        <SearchResultsCardListContainer>
+          {searchResults.map(result => {
+            return viewMode === 'gallery' ? (
+              <SearchResultGalleryItem
+                key={result.scryfall_id}
+                result={result}
+                deck={selectedDeck}
+                updateCardListHandler={updateCardListHandler}
+              />
+            ) : viewMode === 'text' ? (
+              <SearchResultTextItem
+                key={result.scryfall_id}
+                result={result}
+                deck={selectedDeck}
+                updateCardListHandler={updateCardListHandler}
+              />
+            ) : (
+              <SearchResultListItem
+                key={result.scryfall_id}
+                result={result}
+                deck={selectedDeck}
+                updateCardListHandler={updateCardListHandler}
+              />
+            );
+          })}
+        </SearchResultsCardListContainer>
+      )}
     </SearchResultsWrapper>
   );
 };

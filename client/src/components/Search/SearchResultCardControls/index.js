@@ -6,11 +6,7 @@ import { faCheckCircle as faRegularCheckCircle } from '@fortawesome/free-regular
 import { validateAddCard } from '../../../utils/validateAddCard';
 import { capitalise } from '../../../utils/capitalise';
 
-import {
-  StyledSearchResultCardControls,
-  SearchResultCardControlGroup,
-  SearchResultCardQuantityContainer
-} from './styles';
+import { StyledSearchResultCardControls, SearchResultCardControlGroup } from './styles';
 
 const SearchResultCardControls = props => {
   const { deck, result, updateCardList } = props;
@@ -76,9 +72,9 @@ const SearchResultCardControls = props => {
             <p>Main</p>
           </div>
 
-          <SearchResultCardQuantityContainer>
+          <div>
             <p>x {matchedCard ? matchedCard.mainDeckCount : '0'}</p>
-          </SearchResultCardQuantityContainer>
+          </div>
 
           <div>
             <button
@@ -104,7 +100,7 @@ const SearchResultCardControls = props => {
 
         <SearchResultCardControlGroup>
           <div>
-            <p>Sideboard</p>
+            <p>Side</p>
           </div>
           <div>
             <p>x {matchedCard ? matchedCard.sideboardCount : '0'}</p>

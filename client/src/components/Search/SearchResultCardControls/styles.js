@@ -24,8 +24,3 @@ export const SearchResultCardControlGroup = styled.div`
     }
   }
 `;
-
-export const SearchResultCardQuantityContainer = styled.div`
-  p {
-  }
-`;

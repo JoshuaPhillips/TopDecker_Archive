@@ -3,7 +3,6 @@ import { Link, useHistory } from 'react-router-dom';
 
 import { useMutation } from '@apollo/react-hooks';
 import { DELETE_DECK } from './graphql';
-import { GET_DECK_LIST } from '../../../DeckList/graphql';
 
 import { capitalise } from '../../../../utils/capitalise';
 
@@ -34,7 +33,6 @@ const DeckInspectorToolbar = props => {
 
   let history = useHistory();
   const [DeleteDeckMutation] = useMutation(DELETE_DECK, {
-    refetchQueries: [{ query: GET_DECK_LIST }],
     variables: { deckId: props.deck.id },
     onCompleted(data) {
       if (data.deleteDeck) {

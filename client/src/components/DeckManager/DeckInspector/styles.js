@@ -9,7 +9,7 @@ export const StyledDeckInspector = styled.main`
 `;
 
 export const DeckDetails = styled.div`
-  h1 {
+  h2 {
     margin: 1rem 0;
     padding: 0.5rem;
     border: 1px solid lightgrey;

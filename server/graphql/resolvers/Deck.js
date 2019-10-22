@@ -11,7 +11,7 @@ const DeckResolvers = {
         const matchedUser = await User.findById(parent.owner);
 
         if (!matchedUser) {
-          throw new ApolloError(`User could not be found with ID ${parent.owner}`, 'USER_NOT_FOUND');
+          throw new ApolloError(`Fuck. User could not be found with ID ${parent.owner}`, 'USER_NOT_FOUND');
         }
 
         return { ...matchedUser._doc, id: matchedUser._doc._id };

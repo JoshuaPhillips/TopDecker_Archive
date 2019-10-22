@@ -31,3 +31,15 @@ export const CHANGE_PASSWORD = gql`
     }
   }
 `;
+
+export const DELETE_ACCOUNT = gql`
+  mutation DeleteAccount($password: String!) {
+    deleteUser(password: $password)
+  }
+`;
+
+export const LOGOUT = gql`
+  mutation Logout {
+    logout @client
+  }
+`;

@@ -9,9 +9,9 @@ import DeckListItem from './DeckListItem';
 import AddDeckForm from './AddDeckForm';
 import Spinner from '../Spinner/Spinner';
 
-import { DeckListContainer, DeckList } from './styles';
+import { DeckListContainer, DeckList, DeckListSubSectionHeader } from './styles';
 import { Button } from '../../shared/Buttons';
-import { SectionHeader, SubSectionHeader } from '../../shared/Headers';
+import { SectionHeader } from '../../shared/Headers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -47,8 +47,6 @@ const Decks = () => {
           return 0;
         });
         setDeckList(deckList);
-      } else {
-        toast.error('Sorry, there was a problem retrieving your deck list.');
       }
     }
   });
@@ -91,8 +89,9 @@ const Decks = () => {
       <SectionHeader>Your Decks</SectionHeader>
 
       <DeckList>
+        {GetDeckListQueryResponse.errors && toast.error('Sorry there was an error loading your deck list.')}
         {currentUserDecks.length === 0 ? (
-          <SubSectionHeader>No Decks Found</SubSectionHeader>
+          <DeckListSubSectionHeader>No Decks Found</DeckListSubSectionHeader>
         ) : (
           currentUserDecks.map(deck => {
             return (
@@ -115,7 +114,7 @@ const Decks = () => {
 
       <DeckList>
         {otherDecks.length === 0 ? (
-          <SubSectionHeader>No Decks Found</SubSectionHeader>
+          <DeckListSubSectionHeader>No Decks Found</DeckListSubSectionHeader>
         ) : (
           otherDecks.map(deck => {
             return <DeckListItem deck={deck} key={deck.id} currentUserId={currentUserId} />;

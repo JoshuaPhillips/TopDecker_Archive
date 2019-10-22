@@ -90,8 +90,9 @@ export const SearchResultsWrapper = styled.div`
 
 export const SearchResultsToolbar = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
+  margin-bottom: 2rem;
 `;
 
 export const SearchResultsCardListContainer = styled.div`

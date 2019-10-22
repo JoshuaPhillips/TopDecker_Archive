@@ -2,6 +2,7 @@ import React from 'react';
 
 import SearchResultCardControls from '../SearchResultCardControls';
 import convertTextToSymbols from '../../../utils/convertTextToSymbols';
+import { capitalise } from '../../../utils/capitalise';
 
 import { StyledSearchResultListItem, ListModeCardDetails, SearchResultCardControlsWrapper } from './styles';
 
@@ -23,6 +24,7 @@ const SearchResultListItem = props => {
         <p className='ListModeTypeLine'>{result.type_line}</p>
 
         {renderManaCost()}
+        <p className='ListModeRarity'>{capitalise(result.rarity)}</p>
       </ListModeCardDetails>
       <SearchResultCardControlsWrapper>
         <SearchResultCardControls deck={deck} result={result} updateCardList={updateCardListHandler} />

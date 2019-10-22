@@ -4,8 +4,6 @@ export const generateCardList = (deck, listToUpdate, updateMode, updatedCard) =>
     ...deck
   };
 
-  console.log(updateMode);
-
   const maximumCardAllowance = format === 'commander' ? 1 : 4;
 
   const matchingCardIndex = cardList.findIndex(({ card }) => {

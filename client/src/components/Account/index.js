@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { GET_ACCOUNT_DETAILS, SAVE_ACCOUNT_DETAILS, CHANGE_PASSWORD } from './graphql';
+import { GET_ACCOUNT_DETAILS, SAVE_ACCOUNT_DETAILS, CHANGE_PASSWORD, DELETE_ACCOUNT, LOGOUT } from './graphql';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faLock, faTimes, faCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -76,25 +76,18 @@ const Account = () => {
     }
   });
 
-  const submitPasswordChange = e => {
-    e.preventDefault();
-    ChangePasswordMutation();
-  };
+  const [DeleteAccountMutation] = useMutation(DELETE_ACCOUNT, {
+    variables: {
+      password: deleteConfirmationPassword
+    },
+    onCompleted(data) {
+      if (data.deleteUser === true) {
+        toast.info('Account deleted.');
+      }
+    }
+  });
 
-  const resetPasswordChange = () => {
-    toggleEditingPassword(false);
-    setPasswordDetails({ currentPassword: '', newPassword: '', confirmationPassword: '' });
-  };
-
-  const resetAccountDeletion = () => {
-    toggleDeletingAccount(false);
-    setDeleteConfirmationPassword('');
-    setDeleteConfirmationCheckbox(false);
-  };
-
-  if (GetAccountDetailsQueryResponse.loading) {
-    return <Spinner />;
-  }
+  const [LogoutMutation] = useMutation(LOGOUT);
 
   const toggleEditingHandler = e => {
     e.preventDefault();
@@ -105,6 +98,32 @@ const Account = () => {
     e.preventDefault();
     SaveAccountDetailsMutation();
   };
+
+  const submitPasswordChangeHandler = e => {
+    e.preventDefault();
+    ChangePasswordMutation();
+  };
+
+  const resetPasswordChangeHandler = () => {
+    toggleEditingPassword(false);
+    setPasswordDetails({ currentPassword: '', newPassword: '', confirmationPassword: '' });
+  };
+
+  const resetAccountDeletionHandler = () => {
+    toggleDeletingAccount(false);
+    setDeleteConfirmationPassword('');
+    setDeleteConfirmationCheckbox(false);
+  };
+
+  const deleteAccountHandler = e => {
+    e.preventDefault();
+    DeleteAccountMutation();
+    LogoutMutation();
+  };
+
+  if (GetAccountDetailsQueryResponse.loading) {
+    return <Spinner />;
+  }
 
   return (
     <StyledAccount>
@@ -221,7 +240,7 @@ const Account = () => {
 
       {editingPassword && (
         <React.Fragment>
-          <AccountForm onSubmit={e => submitPasswordChange(e)}>
+          <AccountForm onSubmit={e => submitPasswordChangeHandler(e)}>
             <FormRow>
               <FormRowTitle>
                 <label htmlFor='currentPassword'>Current Password:</label>
@@ -275,7 +294,7 @@ const Account = () => {
                 <FontAwesomeIcon icon={faCheck} fixedWidth />
                 Confirm
               </Button>
-              <Button inverted type='button' onClick={() => resetPasswordChange()}>
+              <Button inverted type='button' onClick={() => resetPasswordChangeHandler()}>
                 <FontAwesomeIcon icon={faTimes} fixedWidth />
                 Cancel
               </Button>
@@ -287,7 +306,7 @@ const Account = () => {
       <ButtonGroup></ButtonGroup>
       {deletingAccount && (
         <React.Fragment>
-          <AccountForm onSubmit={() => console.log(deleteConfirmationPassword, deleteConfirmationCheckbox)}>
+          <AccountForm onSubmit={e => deleteAccountHandler(e)}>
             <FormRow>
               <FormRowTitle>
                 <label htmlFor='accountDeleteConfirmationPassword'>Enter your Password:</label>
@@ -317,7 +336,7 @@ const Account = () => {
                 <FontAwesomeIcon icon={faTrash} fixedWidth />
                 Delete Forever
               </DangerButton>
-              <Button inverted type='button' onClick={() => resetAccountDeletion()}>
+              <Button inverted type='button' onClick={() => resetAccountDeletionHandler()}>
                 <FontAwesomeIcon icon={faTimes} fixedWidth />
                 Cancel
               </Button>

@@ -4,7 +4,6 @@ import Select from 'react-select';
 
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { GET_COMMANDER_SEARCH_RESULTS, CREATE_NEW_DECK } from './graphql';
-import { GET_DECK_LIST } from '../graphql';
 
 import { FormatSelectionWrapper, AddDeckFormButtonsWrapper } from './styles';
 import { FormRow, FormRowTitle, FormRowContent, TextInput } from '../../../shared/Forms';
@@ -51,7 +50,6 @@ const AddDeckForm = props => {
         commander: commander ? commander.id : null
       }
     },
-    refetchQueries: [{ query: GET_DECK_LIST }],
     onCompleted(data) {
       props.history.push(`/decks/${data.createDeck.id}`);
     }

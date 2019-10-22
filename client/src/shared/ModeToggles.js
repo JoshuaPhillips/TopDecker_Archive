@@ -8,6 +8,7 @@ export const ModeToggleContainer = styled.div`
 
   button {
     flex-grow: 1;
+    flex-basis: 0;
     padding: 0.25rem 0.5rem;
     border: 2px solid ${props => props.theme.colors.primary};
     border-right: 0;

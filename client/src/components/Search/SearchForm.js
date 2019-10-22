@@ -22,9 +22,8 @@ import { Button } from '../../shared/Buttons';
 import Checkbox from '../Checkbox';
 
 const SearchForm = props => {
-  const { setSearchResults } = props;
+  const { setSearchResults, loadingResults, setLoadingResults } = props;
   const client = useApolloClient();
-  const [loadingResults, setLoadingResults] = useState(false);
 
   const [rawSearchParams, setRawSearchParams] = useState({
     name: '',
@@ -489,7 +488,6 @@ const SearchForm = props => {
               <Checkbox
                 selected={rawSearchParams.rarity.common}
                 onClick={() => {
-                  console.log(rawSearchParams);
                   setRawSearchParams({
                     ...rawSearchParams,
                     rarity: {
@@ -503,7 +501,6 @@ const SearchForm = props => {
               <Checkbox
                 selected={rawSearchParams.rarity.uncommon}
                 onClick={() => {
-                  console.log(rawSearchParams);
                   setRawSearchParams({
                     ...rawSearchParams,
                     rarity: {
@@ -517,7 +514,6 @@ const SearchForm = props => {
               <Checkbox
                 selected={rawSearchParams.rarity.rare}
                 onClick={() => {
-                  console.log(rawSearchParams);
                   setRawSearchParams({
                     ...rawSearchParams,
                     rarity: {
@@ -531,7 +527,6 @@ const SearchForm = props => {
               <Checkbox
                 selected={rawSearchParams.rarity.mythic}
                 onClick={() => {
-                  console.log(rawSearchParams);
                   setRawSearchParams({
                     ...rawSearchParams,
                     rarity: {

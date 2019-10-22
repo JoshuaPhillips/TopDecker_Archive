@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks';
+import { useQuery, useApolloClient } from '@apollo/react-hooks';
 import { LOGIN, SIGN_UP_USER } from './graphql';
 import { GET_AUTH_DATA } from '../../graphql';
+
+import { toast } from 'react-toastify';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
@@ -29,7 +31,11 @@ const Auth = () => {
 
   const loginHandler = async e => {
     e.preventDefault();
-    const { data } = await client.query({
+
+    if (authDetails.email === '') return toast.error('Please enter your email address.');
+    if (authDetails.password === '') return toast.error('Please enter your password.');
+
+    const { data, errors } = await client.query({
       query: LOGIN,
       variables: {
         email: authDetails.email,
@@ -37,6 +43,13 @@ const Auth = () => {
       },
       fetchPolicy: 'no-cache'
     });
+
+    if (errors) {
+      errors.forEach(error => {
+        toast.error(error.message);
+      });
+      return;
+    }
 
     const { token, currentUserId } = data.login;
     localStorage.setItem('token', token);
@@ -53,17 +66,32 @@ const Auth = () => {
     });
   };
 
-  const signUpHandler = e => {
+  const signUpHandler = async e => {
     e.preventDefault();
-    SignUpMutation();
-  };
 
-  const [SignUpMutation] = useMutation(SIGN_UP_USER, {
-    variables: { userDetails: authDetails },
-    // we don't want the user's password stored in the cache, so we don't record the query or the response.
-    fetchPolicy: 'no-cache',
-    onCompleted(data) {
-      // instead, we save the response in localStorage and the 'AuthData' query. The latter can then be used to check authentication.
+    const { firstName, lastName, username, email, password } = authDetails;
+
+    if (firstName === '') return toast.error('Please enter a first name.');
+    if (lastName === '') return toast.error('Please enter a last name.');
+    if (username === '') return toast.error('Please enter a username.');
+    if (email === '') return toast.error('Please enter an email address.');
+    if (password === '') return toast.error('Please enter a password.');
+
+    const { data, errors } = await client.mutate({
+      mutation: SIGN_UP_USER,
+      variables: { userDetails: authDetails },
+      fetchPolicy: 'no-cache',
+      errorPolicy: 'all'
+    });
+
+    if (errors) {
+      errors.forEach(error => {
+        toast.error(error.message);
+      });
+      return;
+    }
+
+    if (data) {
       localStorage.setItem('token', data.createUser.token);
       localStorage.setItem('currentUserId', data.createUser.currentUserId);
       client.writeQuery({
@@ -77,7 +105,7 @@ const Auth = () => {
         }
       });
     }
-  });
+  };
 
   const { token, currentUserId } = GetAuthDataQueryResponse.data.AuthData;
 

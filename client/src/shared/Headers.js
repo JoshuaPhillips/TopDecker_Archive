@@ -11,7 +11,7 @@ export const SectionHeader = styled.h1`
   font-weight: ${props => props.theme.fonts.weights.bold};
 `;
 
-export const SubSectionHeader = styled.h1`
+export const SubSectionHeader = styled.h2`
   font-size: ${props => props.theme.fonts.sizes.large};
   width: 100%;
   font-weight: ${props => props.theme.fonts.weights.bold};

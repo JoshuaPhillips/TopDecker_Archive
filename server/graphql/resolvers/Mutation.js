@@ -80,6 +80,12 @@ const MutationResolvers = {
           throw new ApolloError('Password not correct.', 'PASSWORD_INCORRECT');
         }
 
+        const ownedDecks = matchedUser.decks;
+
+        for (var i = 0; i < ownedDecks.length; i++) {
+          await Deck.findByIdAndDelete(ownedDecks[i]);
+        }
+
         const success = await User.findByIdAndDelete(currentUserId);
 
         if (!success) {
