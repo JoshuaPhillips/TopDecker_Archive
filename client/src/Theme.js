@@ -30,6 +30,7 @@ export const Theme = {
   fonts: {
     family: 'sans-serif',
     sizes: {
+      extraSmall: calculateFontSize(-1),
       small: calculateFontSize(-0.5),
       base: calculateFontSize(0),
       large: calculateFontSize(1),

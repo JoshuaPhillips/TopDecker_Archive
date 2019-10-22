@@ -16,6 +16,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import styled from 'styled-components';
+import Footer from './components/Footer';
 
 const StyledApp = styled.div`
   display: flex;
@@ -52,6 +53,7 @@ const App = () => {
 
         <Redirect to='/decks' />
       </Switch>
+      <Footer />
     </StyledApp>
   );
 };
