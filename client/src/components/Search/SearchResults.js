@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import Spinner from '../Spinner/Spinner';
+import Spinner from '../Spinner';
 
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

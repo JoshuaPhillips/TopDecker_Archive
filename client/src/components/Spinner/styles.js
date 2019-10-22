@@ -22,7 +22,7 @@ export const StyledSpinner = styled.div`
   border-top: 1.1em solid rgba(0, 0, 0, 0.2);
   border-right: 1.1em solid rgba(0, 0, 0, 0.2);
   border-bottom: 1.1em solid rgba(0, 0, 0, 0.2);
-  border-left: 1.1em solid #000000;
+  border-left: 1.1em solid ${props => props.theme.colors.primary};
 
   transform: translateZ(0);
   animation: ${load8} 1.1s infinite linear;

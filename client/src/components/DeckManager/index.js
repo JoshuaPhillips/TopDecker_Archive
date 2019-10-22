@@ -6,7 +6,7 @@ import { GET_AUTH_DATA, GET_DECK_DETAILS, UPDATE_CARD_LIST } from './graphql';
 
 import DeckManagerSidebar from './DeckManagerSidebar';
 import DeckInspector from './DeckInspector';
-import Spinner from '../Spinner/Spinner';
+import Spinner from '../Spinner';
 
 import { sortCardList } from '../../utils/sortCardList';
 import { generateCardList } from '../../utils/generateCardList';

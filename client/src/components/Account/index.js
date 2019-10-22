@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faLock, faTimes, faCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import Checkbox from '../Checkbox';
-import Spinner from '../Spinner/Spinner';
+import Spinner from '../Spinner';
 
 import {
   StyledAccount,

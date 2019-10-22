@@ -7,7 +7,7 @@ import { GET_AUTH_DATA } from '../../graphql';
 
 import DeckListItem from './DeckListItem';
 import AddDeckForm from './AddDeckForm';
-import Spinner from '../Spinner/Spinner';
+import Spinner from '../Spinner';
 
 import { DeckListContainer, DeckList, DeckListSubSectionHeader } from './styles';
 import { Button } from '../../shared/Buttons';

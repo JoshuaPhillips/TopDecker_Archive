@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactImage from 'react-image';
-import Spinner from '../Spinner/Spinner';
+import Spinner from '../Spinner';
 
 import { StyledCard } from './styles';
 

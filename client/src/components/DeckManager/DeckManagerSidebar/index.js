@@ -6,8 +6,8 @@ import { useApolloClient, useQuery } from '@apollo/react-hooks';
 import { SEARCH_CARDS, GET_USER_DECKS } from './graphql';
 
 import SidebarSearchResult from './SidebarSearchResult';
-import Spinner from '../../Spinner/Spinner';
-import Card from '../../Card/Card';
+import Spinner from '../../Spinner';
+import Card from '../../Card';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faArrowLeft, faEraser } from '@fortawesome/free-solid-svg-icons';

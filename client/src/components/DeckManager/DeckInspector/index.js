@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 import DeckInspectorToolbar from './DeckInspectorToolbar';
 
-import GalleryModeCardItem from './GalleryModeCardItem/GalleryModeCardItem';
-import TextModeCardItem from './TextModeCardItem/TextModeCardItem';
-import ListModeCardItem from './ListModeCardItem/ListModeCardItem';
+import GalleryModeCardItem from './GalleryModeCardItem';
+import TextModeCardItem from './TextModeCardItem';
+import ListModeCardItem from './ListModeCardItem';
 
 import filterCardList from '../../../utils/filterCardList';
 
