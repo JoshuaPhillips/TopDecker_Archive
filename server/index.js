@@ -18,7 +18,7 @@ mongoose
   .connect(uri, config)
   .then(
     server
-      .listen()
+      .listen({ port: process.env.PORT || 4000 })
       .then(({ url }) => {
         console.log(`Server is listening at ${url}...`);
       })
