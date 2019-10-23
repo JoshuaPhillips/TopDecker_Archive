@@ -20,6 +20,13 @@ body {
   background-color: ${props => props.theme.colors.background};
 }
 
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 button {
   outline: 0;
   border: 0;
