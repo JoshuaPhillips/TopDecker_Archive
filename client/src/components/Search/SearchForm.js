@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { useApolloClient } from '@apollo/react-hooks';
-import { SEARCH_CARDS } from '../DeckManager/DeckManagerSidebar/graphql';
-import { toast } from 'react-toastify';
-import { Mana } from '@saeris/react-mana';
+import { useApolloClient } from "@apollo/react-hooks";
+import { SEARCH_CARDS } from "../DeckManager/DeckManagerSidebar/graphql";
+import { toast } from "react-toastify";
+import { Mana } from "@saeris/react-mana";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 import {
   SearchFormWrapper,
@@ -15,29 +15,36 @@ import {
   NumberInputWithSelectComparison,
   SearchFormRarityWrapper,
   SearchFormSubmitButtonWrapper
-} from './styles';
-import { SectionHeader } from '../../shared/Headers';
-import { FormRow, FormRowTitle, FormRowContent, TextInput, StyledSelect, NumberInput } from '../../shared/Forms';
-import { Button } from '../../shared/Buttons';
-import Checkbox from '../Checkbox';
+} from "./styles";
+import { SectionHeader } from "../../shared/Headers";
+import {
+  FormRow,
+  FormRowTitle,
+  FormRowContent,
+  TextInput,
+  StyledSelect,
+  NumberInput
+} from "../../shared/Forms";
+import { Button } from "../../shared/Buttons";
+import Checkbox from "../Checkbox";
 
 const SearchForm = props => {
   const { setSearchResults, loadingResults, setLoadingResults } = props;
   const client = useApolloClient();
 
   const [rawSearchParams, setRawSearchParams] = useState({
-    name: '',
+    name: "",
     oracle: {
-      type: 'all',
-      text: ''
+      type: "all",
+      text: ""
     },
     type_line: {
-      type: 'any',
-      text: ''
+      type: "any",
+      text: ""
     },
     set: [],
     colors: {
-      type: 'exactly',
+      type: "exactly",
       colors: {
         white: false,
         blue: false,
@@ -47,22 +54,22 @@ const SearchForm = props => {
         colorless: false
       }
     },
-    mana_cost: '',
+    mana_cost: "",
     power: {
-      comparison: 'less_than',
-      value: ''
+      comparison: "less_than",
+      value: ""
     },
     toughness: {
-      comparison: 'less_than',
-      value: ''
+      comparison: "less_than",
+      value: ""
     },
     cmc: {
-      comparison: 'less_than',
-      value: ''
+      comparison: "less_than",
+      value: ""
     },
     loyalty: {
-      comparison: 'less_than',
-      value: ''
+      comparison: "less_than",
+      value: ""
     },
     rarity: {
       common: false,
@@ -77,12 +84,12 @@ const SearchForm = props => {
   });
 
   const colorAbbreviationMap = {
-    white: 'W',
-    blue: 'U',
-    black: 'B',
-    red: 'R',
-    green: 'G',
-    colorless: 'C'
+    white: "W",
+    blue: "U",
+    black: "B",
+    red: "R",
+    green: "G",
+    colorless: "C"
   };
 
   const formatSearchParams = () => {
@@ -112,18 +119,23 @@ const SearchForm = props => {
     if (toughness.value) formattedSearchParams.toughness = { ...toughness };
     if (loyalty.value) formattedSearchParams.loyalty = { ...loyalty };
     if (cmc.value) formattedSearchParams.cmc = { ...cmc };
-    if (set.length !== 0) formattedSearchParams.set = set.split(',');
+    if (set.length !== 0) formattedSearchParams.set = set.split(",");
 
     // format colors
 
     let formattedColors = [];
 
     Object.keys(colors.colors).map(color => {
-      if (colors.colors[color]) formattedColors.push(colorAbbreviationMap[color]);
+      if (colors.colors[color])
+        formattedColors.push(colorAbbreviationMap[color]);
       return null;
     });
 
-    if (formattedColors.length !== 0) formattedSearchParams.colors = { type: colors.type, colors: formattedColors };
+    if (formattedColors.length !== 0)
+      formattedSearchParams.colors = {
+        type: colors.type,
+        colors: formattedColors
+      };
 
     // format rarity
 
@@ -134,7 +146,8 @@ const SearchForm = props => {
       return null;
     });
 
-    if (formattedRarities.length !== 0) formattedSearchParams.rarity = formattedRarities;
+    if (formattedRarities.length !== 0)
+      formattedSearchParams.rarity = formattedRarities;
 
     // format 'is'
 
@@ -158,7 +171,7 @@ const SearchForm = props => {
       variables: {
         searchParams: formatSearchParams()
       },
-      errorPolicy: 'all'
+      errorPolicy: "all"
     });
 
     if (errors) {
@@ -182,10 +195,11 @@ const SearchForm = props => {
           </FormRowTitle>
           <FormRowContent>
             <TextInput
-              type='text'
-              placeholder='Card Name'
+              type="text"
               value={rawSearchParams.name}
-              onChange={e => setRawSearchParams({ ...rawSearchParams, name: e.target.value })}
+              onChange={e =>
+                setRawSearchParams({ ...rawSearchParams, name: e.target.value })
+              }
             />
           </FormRowContent>
         </FormRow>
@@ -195,13 +209,15 @@ const SearchForm = props => {
           </FormRowTitle>
           <FormRowContent>
             <TextInput
-              type='text'
-              placeholder='Card Text'
+              type="text"
               value={rawSearchParams.oracle.text}
               onChange={e =>
                 setRawSearchParams({
                   ...rawSearchParams,
-                  oracle: { type: rawSearchParams.oracle.type, text: e.target.value }
+                  oracle: {
+                    type: rawSearchParams.oracle.type,
+                    text: e.target.value
+                  }
                 })
               }
             />
@@ -211,12 +227,16 @@ const SearchForm = props => {
               onChange={e =>
                 setRawSearchParams({
                   ...rawSearchParams,
-                  oracle: { type: e.target.value, text: rawSearchParams.oracle.text }
+                  oracle: {
+                    type: e.target.value,
+                    text: rawSearchParams.oracle.text
+                  }
                 })
-              }>
-              <option value='all'>All</option>
-              <option value='exact'>Exact</option>
-              <option value='any'>Any</option>
+              }
+            >
+              <option value="all">All</option>
+              <option value="exact">Exact</option>
+              <option value="any">Any</option>
             </StyledSelect>
           </FormRowContent>
         </FormRow>
@@ -234,11 +254,15 @@ const SearchForm = props => {
                     ...rawSearchParams,
                     colors: {
                       type: rawSearchParams.colors.type,
-                      colors: { ...rawSearchParams.colors.colors, white: !rawSearchParams.colors.colors.white }
+                      colors: {
+                        ...rawSearchParams.colors.colors,
+                        white: !rawSearchParams.colors.colors.white
+                      }
                     }
                   });
-                }}>
-                <Mana symbol={'w'} shadow={false} cost={true} />
+                }}
+              >
+                <Mana symbol={"w"} shadow={false} cost={true} />
                 White
               </CardColorSelectionButton>
               <CardColorSelectionButton
@@ -248,11 +272,15 @@ const SearchForm = props => {
                     ...rawSearchParams,
                     colors: {
                       type: rawSearchParams.colors.type,
-                      colors: { ...rawSearchParams.colors.colors, blue: !rawSearchParams.colors.colors.blue }
+                      colors: {
+                        ...rawSearchParams.colors.colors,
+                        blue: !rawSearchParams.colors.colors.blue
+                      }
                     }
                   });
-                }}>
-                <Mana symbol={'u'} cost />
+                }}
+              >
+                <Mana symbol={"u"} cost />
                 Blue
               </CardColorSelectionButton>
               <CardColorSelectionButton
@@ -262,11 +290,15 @@ const SearchForm = props => {
                     ...rawSearchParams,
                     colors: {
                       type: rawSearchParams.colors.type,
-                      colors: { ...rawSearchParams.colors.colors, black: !rawSearchParams.colors.colors.black }
+                      colors: {
+                        ...rawSearchParams.colors.colors,
+                        black: !rawSearchParams.colors.colors.black
+                      }
                     }
                   });
-                }}>
-                <Mana symbol={'b'} cost />
+                }}
+              >
+                <Mana symbol={"b"} cost />
                 Black
               </CardColorSelectionButton>
               <CardColorSelectionButton
@@ -276,11 +308,15 @@ const SearchForm = props => {
                     ...rawSearchParams,
                     colors: {
                       type: rawSearchParams.colors.type,
-                      colors: { ...rawSearchParams.colors.colors, red: !rawSearchParams.colors.colors.red }
+                      colors: {
+                        ...rawSearchParams.colors.colors,
+                        red: !rawSearchParams.colors.colors.red
+                      }
                     }
                   });
-                }}>
-                <Mana symbol={'r'} cost />
+                }}
+              >
+                <Mana symbol={"r"} cost />
                 Red
               </CardColorSelectionButton>
               <CardColorSelectionButton
@@ -290,11 +326,15 @@ const SearchForm = props => {
                     ...rawSearchParams,
                     colors: {
                       type: rawSearchParams.colors.type,
-                      colors: { ...rawSearchParams.colors.colors, green: !rawSearchParams.colors.colors.green }
+                      colors: {
+                        ...rawSearchParams.colors.colors,
+                        green: !rawSearchParams.colors.colors.green
+                      }
                     }
                   });
-                }}>
-                <Mana symbol={'g'} cost />
+                }}
+              >
+                <Mana symbol={"g"} cost />
                 Green
               </CardColorSelectionButton>
               <CardColorSelectionButton
@@ -304,26 +344,34 @@ const SearchForm = props => {
                     ...rawSearchParams,
                     colors: {
                       type: rawSearchParams.colors.type,
-                      colors: { ...rawSearchParams.colors.colors, colorless: !rawSearchParams.colors.colors.colorless }
+                      colors: {
+                        ...rawSearchParams.colors.colors,
+                        colorless: !rawSearchParams.colors.colors.colorless
+                      }
                     }
                   });
-                }}>
-                <Mana symbol={'c'} cost />
+                }}
+              >
+                <Mana symbol={"c"} cost />
                 Colorless
               </CardColorSelectionButton>
             </CardColorSelectionGroup>
 
             <StyledSelect
-              defaultValue='exactly'
+              defaultValue="exactly"
               onChange={e =>
                 setRawSearchParams({
                   ...rawSearchParams,
-                  colors: { type: e.target.value, colors: { ...rawSearchParams.colors.colors } }
+                  colors: {
+                    type: e.target.value,
+                    colors: { ...rawSearchParams.colors.colors }
+                  }
                 })
-              }>
-              <option value='exactly'>Exactly</option>
-              <option value='including'>Including</option>
-              <option value='at_most'>At most</option>
+              }
+            >
+              <option value="exactly">Exactly</option>
+              <option value="including">Including</option>
+              <option value="at_most">At most</option>
             </StyledSelect>
           </FormRowContent>
         </FormRow>
@@ -333,13 +381,15 @@ const SearchForm = props => {
           </FormRowTitle>
           <FormRowContent>
             <TextInput
-              type='text'
-              placeholder='Type Line'
+              type="text"
               value={rawSearchParams.type_line.text}
               onChange={e =>
                 setRawSearchParams({
                   ...rawSearchParams,
-                  type_line: { type: rawSearchParams.type_line.type, text: e.target.value }
+                  type_line: {
+                    type: rawSearchParams.type_line.type,
+                    text: e.target.value
+                  }
                 })
               }
             />
@@ -356,23 +406,34 @@ const SearchForm = props => {
                 onChange={e =>
                   setRawSearchParams({
                     ...rawSearchParams,
-                    power: { comparison: e.target.value, value: rawSearchParams.power.value }
+                    power: {
+                      comparison: e.target.value,
+                      value: rawSearchParams.power.value
+                    }
                   })
-                }>
-                <option value='less_than'>less than</option>
-                <option value='less_than_or_equal'>less than or equal to</option>
-                <option value='equal'>equal to</option>
-                <option value='greater_than_or_equal'>greater than or equal to</option>
-                <option value='greater_than'>greater than</option>
+                }
+              >
+                <option value="less_than">less than</option>
+                <option value="less_than_or_equal">
+                  less than or equal to
+                </option>
+                <option value="equal">equal to</option>
+                <option value="greater_than_or_equal">
+                  greater than or equal to
+                </option>
+                <option value="greater_than">greater than</option>
               </StyledSelect>
               <NumberInput
-                type='number'
+                type="number"
                 min={0}
                 value={rawSearchParams.power.value}
                 onChange={e =>
                   setRawSearchParams({
                     ...rawSearchParams,
-                    power: { comparison: rawSearchParams.power.comparison, value: e.target.value }
+                    power: {
+                      comparison: rawSearchParams.power.comparison,
+                      value: e.target.value
+                    }
                   })
                 }
               />
@@ -390,22 +451,33 @@ const SearchForm = props => {
                 onChange={e =>
                   setRawSearchParams({
                     ...rawSearchParams,
-                    toughness: { comparison: e.target.value, value: rawSearchParams.toughness.value }
+                    toughness: {
+                      comparison: e.target.value,
+                      value: rawSearchParams.toughness.value
+                    }
                   })
-                }>
-                <option value='less_than'>less than</option>
-                <option value='less_than_or_equal'>less than or equal to</option>
-                <option value='equal'>equal to</option>
-                <option value='greater_than_or_equal'>greater than or equal to</option>
-                <option value='greater_than'>greater than</option>
+                }
+              >
+                <option value="less_than">less than</option>
+                <option value="less_than_or_equal">
+                  less than or equal to
+                </option>
+                <option value="equal">equal to</option>
+                <option value="greater_than_or_equal">
+                  greater than or equal to
+                </option>
+                <option value="greater_than">greater than</option>
               </StyledSelect>
               <NumberInput
-                type='number'
+                type="number"
                 value={rawSearchParams.toughness.value}
                 onChange={e =>
                   setRawSearchParams({
                     ...rawSearchParams,
-                    toughness: { comparison: rawSearchParams.toughness.comparison, value: e.target.value }
+                    toughness: {
+                      comparison: rawSearchParams.toughness.comparison,
+                      value: e.target.value
+                    }
                   })
                 }
               />
@@ -423,22 +495,33 @@ const SearchForm = props => {
                 onChange={e =>
                   setRawSearchParams({
                     ...rawSearchParams,
-                    cmc: { comparison: e.target.value, value: rawSearchParams.cmc.value }
+                    cmc: {
+                      comparison: e.target.value,
+                      value: rawSearchParams.cmc.value
+                    }
                   })
-                }>
-                <option value='less_than'>less than</option>
-                <option value='less_than_or_equal'>less than or equal to</option>
-                <option value='equal'>equal to</option>
-                <option value='greater_than_or_equal'>greater than or equal to</option>
-                <option value='greater_than'>greater than</option>
+                }
+              >
+                <option value="less_than">less than</option>
+                <option value="less_than_or_equal">
+                  less than or equal to
+                </option>
+                <option value="equal">equal to</option>
+                <option value="greater_than_or_equal">
+                  greater than or equal to
+                </option>
+                <option value="greater_than">greater than</option>
               </StyledSelect>
               <NumberInput
-                type='number'
+                type="number"
                 value={rawSearchParams.cmc.value}
                 onChange={e =>
                   setRawSearchParams({
                     ...rawSearchParams,
-                    cmc: { comparison: rawSearchParams.cmc.comparison, value: e.target.value }
+                    cmc: {
+                      comparison: rawSearchParams.cmc.comparison,
+                      value: e.target.value
+                    }
                   })
                 }
               />
@@ -457,22 +540,33 @@ const SearchForm = props => {
                 onChange={e =>
                   setRawSearchParams({
                     ...rawSearchParams,
-                    loyalty: { comparison: e.target.value, value: rawSearchParams.loyalty.value }
+                    loyalty: {
+                      comparison: e.target.value,
+                      value: rawSearchParams.loyalty.value
+                    }
                   })
-                }>
-                <option value='less_than'>less than</option>
-                <option value='less_than_or_equal'>less than or equal to</option>
-                <option value='equal'>equal to</option>
-                <option value='greater_than_or_equal'>greater than or equal to</option>
-                <option value='greater_than'>greater than</option>
+                }
+              >
+                <option value="less_than">less than</option>
+                <option value="less_than_or_equal">
+                  less than or equal to
+                </option>
+                <option value="equal">equal to</option>
+                <option value="greater_than_or_equal">
+                  greater than or equal to
+                </option>
+                <option value="greater_than">greater than</option>
               </StyledSelect>
               <NumberInput
-                type='number'
+                type="number"
                 value={rawSearchParams.loyalty.value}
                 onChange={e =>
                   setRawSearchParams({
                     ...rawSearchParams,
-                    loyalty: { comparison: rawSearchParams.loyalty.comparison, value: e.target.value }
+                    loyalty: {
+                      comparison: rawSearchParams.loyalty.comparison,
+                      value: e.target.value
+                    }
                   })
                 }
               />
@@ -495,7 +589,8 @@ const SearchForm = props => {
                       common: !rawSearchParams.rarity.common
                     }
                   });
-                }}>
+                }}
+              >
                 Common
               </Checkbox>
               <Checkbox
@@ -508,7 +603,8 @@ const SearchForm = props => {
                       uncommon: !rawSearchParams.rarity.uncommon
                     }
                   });
-                }}>
+                }}
+              >
                 Uncommon
               </Checkbox>
               <Checkbox
@@ -521,7 +617,8 @@ const SearchForm = props => {
                       rare: !rawSearchParams.rarity.rare
                     }
                   });
-                }}>
+                }}
+              >
                 Rare
               </Checkbox>
               <Checkbox
@@ -534,7 +631,8 @@ const SearchForm = props => {
                       mythic: !rawSearchParams.rarity.mythic
                     }
                   });
-                }}>
+                }}
+              >
                 Mythic
               </Checkbox>
             </SearchFormRarityWrapper>
@@ -547,9 +645,10 @@ const SearchForm = props => {
           </FormRowTitle>
           <FormRowContent>
             <TextInput
-              type='text'
-              placeholder='Set'
-              onChange={e => setRawSearchParams({ ...rawSearchParams, set: e.target.value })}
+              type="text"
+              onChange={e =>
+                setRawSearchParams({ ...rawSearchParams, set: e.target.value })
+              }
             />
           </FormRowContent>
         </FormRow>
@@ -559,9 +658,14 @@ const SearchForm = props => {
           </FormRowTitle>
           <FormRowContent>
             <TextInput
-              type='text'
-              placeholder='e.g. {1}{W}{W}'
-              onChange={e => setRawSearchParams({ ...rawSearchParams, mana_cost: e.target.value })}
+              type="text"
+              placeholder="e.g. {1}{W}{W}"
+              onChange={e =>
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  mana_cost: e.target.value
+                })
+              }
             />
           </FormRowContent>
         </FormRow>
@@ -581,8 +685,9 @@ const SearchForm = props => {
           />
         </FormRow>
         <SearchFormSubmitButtonWrapper>
-          <Button type='submit'>
-            <FontAwesomeIcon icon={faSearch} fixedWidth /> {loadingResults ? 'Searching...' : 'Search'}
+          <Button type="submit">
+            <FontAwesomeIcon icon={faSearch} fixedWidth />{" "}
+            {loadingResults ? "Searching..." : "Search"}
           </Button>
         </SearchFormSubmitButtonWrapper>
       </form>
