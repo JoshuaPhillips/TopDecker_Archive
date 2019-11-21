@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledSearch = styled.main`
   display: flex;
@@ -25,11 +25,14 @@ export const CardColorSelectionGroup = styled.div`
 `;
 
 export const CardColorSelectionButton = styled.button.attrs(() => ({
-  type: 'button'
+  type: "button"
 }))`
     color: ${props => props.theme.colors.primary} 
-    
-    border: ${props => (props.selected ? `2px solid ${props.theme.colors.primary}` : `2px solid lightgrey`)};
+    border: ${props =>
+      props.selected
+        ? `2px solid ${props.theme.colors.primary}`
+        : `2px solid lightgrey`};
+    box-shadow: ${props => (props.selected ? `1px 3px 8px lightgrey` : "none")}
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -44,7 +47,10 @@ export const CardColorSelectionButton = styled.button.attrs(() => ({
     i {
       margin-right: 0.5rem;
       ${props => !props.selected && `filter: grayscale(100%)`};
+      transition: .2s all ease-in-out;
     }
+
+    transition: .2s all ease-in-out;
   }
   `;
 

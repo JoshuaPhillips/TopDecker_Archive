@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledHeader = styled.header`
   position: fixed;
@@ -12,9 +12,16 @@ export const StyledHeader = styled.header`
   font-weight: bold;
 
   h1 {
+    text-transform: uppercase
     padding: 0.5rem 0;
     letter-spacing: 0.1rem;
+    color: lightgrey;
+    font-weight: bold;
     font-size: ${props => props.theme.fonts.sizes.extraLarge};
+
+    span {
+      color: ${props => props.theme.colors.background}
+    }
   }
 `;
 

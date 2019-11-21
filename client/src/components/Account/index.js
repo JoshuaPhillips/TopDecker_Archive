@@ -1,14 +1,27 @@
-import React, { useState } from 'react';
-import { toast } from 'react-toastify';
+import React, { useState } from "react";
+import { toast } from "react-toastify";
 
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { GET_ACCOUNT_DETAILS, SAVE_ACCOUNT_DETAILS, CHANGE_PASSWORD, DELETE_ACCOUNT, LOGOUT } from './graphql';
+import { useQuery, useMutation } from "@apollo/react-hooks";
+import {
+  GET_ACCOUNT_DETAILS,
+  SAVE_ACCOUNT_DETAILS,
+  CHANGE_PASSWORD,
+  DELETE_ACCOUNT,
+  LOGOUT
+} from "./graphql";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faLock, faTimes, faCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faEdit,
+  faLock,
+  faTimes,
+  faCheck,
+  faTrash,
+  faUserCircle
+} from "@fortawesome/free-solid-svg-icons";
 
-import Checkbox from '../Checkbox';
-import Spinner from '../Spinner';
+import Checkbox from "../Checkbox";
+import Spinner from "../Spinner";
 
 import {
   StyledAccount,
@@ -16,33 +29,48 @@ import {
   AccountFormButtonsWrapper,
   DeleteConfirmationMessage,
   DangerZoneButtonsWrapper
-} from './styles';
-import { SectionHeader } from '../../shared/Headers';
-import { Button, ButtonGroup, DangerButton } from '../../shared/Buttons';
-import { FormRow, FormRowTitle, FormRowContent, TextInput } from '../../shared/Forms';
+} from "./styles";
+import { SectionHeader } from "../../shared/Headers";
+import { Button, ButtonGroup, DangerButton } from "../../shared/Buttons";
+import {
+  FormRow,
+  FormRowTitle,
+  FormRowContent,
+  TextInput
+} from "../../shared/Forms";
 
 const Account = () => {
   const [editing, toggleEditing] = useState(false);
   const [accountDetails, setAccountDetails] = useState({
-    firstName: '',
-    lastName: '',
-    username: '',
-    email: '',
-    avatarUrl: ''
+    firstName: "",
+    lastName: "",
+    username: "",
+    email: "",
+    avatarUrl: ""
   });
   const [editingPassword, toggleEditingPassword] = useState(false);
   const [passwordDetails, setPasswordDetails] = useState({
-    currentPassword: '',
-    newPassword: '',
-    confirmationPassword: ''
+    currentPassword: "",
+    newPassword: "",
+    confirmationPassword: ""
   });
   const [deletingAccount, toggleDeletingAccount] = useState(false);
-  const [deleteConfirmationPassword, setDeleteConfirmationPassword] = useState('');
-  const [deleteConfirmationCheckbox, setDeleteConfirmationCheckbox] = useState(false);
+  const [deleteConfirmationPassword, setDeleteConfirmationPassword] = useState(
+    ""
+  );
+  const [deleteConfirmationCheckbox, setDeleteConfirmationCheckbox] = useState(
+    false
+  );
 
   const GetAccountDetailsQueryResponse = useQuery(GET_ACCOUNT_DETAILS, {
     onCompleted() {
-      const { firstName, lastName, username, email, avatarUrl } = GetAccountDetailsQueryResponse.data.getCurrentUser;
+      const {
+        firstName,
+        lastName,
+        username,
+        email,
+        avatarUrl
+      } = GetAccountDetailsQueryResponse.data.getCurrentUser;
       setAccountDetails({
         firstName,
         lastName,
@@ -60,19 +88,23 @@ const Account = () => {
       }
     },
     onCompleted() {
-      toast.info('Account details saved.');
+      toast.info("Account details saved.");
       toggleEditing(false);
     }
   });
 
   const [ChangePasswordMutation] = useMutation(CHANGE_PASSWORD, {
-    fetchPolicy: 'no-cache',
+    fetchPolicy: "no-cache",
     variables: {
       ...passwordDetails
     },
     onCompleted() {
-      toast.info('Password saved.');
-      setPasswordDetails({ currentPassword: '', newPassword: '', confirmationPassword: '' });
+      toast.info("Password saved.");
+      setPasswordDetails({
+        currentPassword: "",
+        newPassword: "",
+        confirmationPassword: ""
+      });
     }
   });
 
@@ -82,7 +114,7 @@ const Account = () => {
     },
     onCompleted(data) {
       if (data.deleteUser === true) {
-        toast.info('Account deleted.');
+        toast.info("Account deleted.");
       }
     }
   });
@@ -106,12 +138,16 @@ const Account = () => {
 
   const resetPasswordChangeHandler = () => {
     toggleEditingPassword(false);
-    setPasswordDetails({ currentPassword: '', newPassword: '', confirmationPassword: '' });
+    setPasswordDetails({
+      currentPassword: "",
+      newPassword: "",
+      confirmationPassword: ""
+    });
   };
 
   const resetAccountDeletionHandler = () => {
     toggleDeletingAccount(false);
-    setDeleteConfirmationPassword('');
+    setDeleteConfirmationPassword("");
     setDeleteConfirmationCheckbox(false);
   };
 
@@ -127,19 +163,33 @@ const Account = () => {
 
   return (
     <StyledAccount>
-      <SectionHeader>Account</SectionHeader>
+      <SectionHeader>
+        <FontAwesomeIcon icon={faUserCircle} fixedWidth />
+        Account
+      </SectionHeader>
 
-      <AccountForm onSubmit={editing ? e => saveAccountDetailsHandler(e) : e => toggleEditingHandler(e)}>
+      <AccountForm
+        onSubmit={
+          editing
+            ? e => saveAccountDetailsHandler(e)
+            : e => toggleEditingHandler(e)
+        }
+      >
         <FormRow>
           <FormRowTitle>
-            <label htmlFor='firstName'>First Name:</label>
+            <label htmlFor="firstName">First Name:</label>
           </FormRowTitle>
           <FormRowContent>
             <TextInput
-              type='text'
-              id='firstName'
+              type="text"
+              id="firstName"
               value={accountDetails.firstName}
-              onChange={e => setAccountDetails({ ...accountDetails, firstName: e.target.value })}
+              onChange={e =>
+                setAccountDetails({
+                  ...accountDetails,
+                  firstName: e.target.value
+                })
+              }
               readOnly={!editing}
             />
           </FormRowContent>
@@ -147,14 +197,19 @@ const Account = () => {
 
         <FormRow>
           <FormRowTitle>
-            <label htmlFor='lastName'>Last Name:</label>
+            <label htmlFor="lastName">Last Name:</label>
           </FormRowTitle>
           <FormRowContent>
             <TextInput
-              type='text'
-              id='lastName'
+              type="text"
+              id="lastName"
               value={accountDetails.lastName}
-              onChange={e => setAccountDetails({ ...accountDetails, lastName: e.target.value })}
+              onChange={e =>
+                setAccountDetails({
+                  ...accountDetails,
+                  lastName: e.target.value
+                })
+              }
               readOnly={!editing}
             />
           </FormRowContent>
@@ -162,14 +217,19 @@ const Account = () => {
 
         <FormRow>
           <FormRowTitle>
-            <label htmlFor='username'>Username:</label>
+            <label htmlFor="username">Username:</label>
           </FormRowTitle>
           <FormRowContent>
             <TextInput
-              type='text'
-              id='username'
+              type="text"
+              id="username"
               value={accountDetails.username}
-              onChange={e => setAccountDetails({ ...accountDetails, username: e.target.value })}
+              onChange={e =>
+                setAccountDetails({
+                  ...accountDetails,
+                  username: e.target.value
+                })
+              }
               readOnly={!editing}
             />
           </FormRowContent>
@@ -177,14 +237,16 @@ const Account = () => {
 
         <FormRow>
           <FormRowTitle>
-            <label htmlFor='email'>Email:</label>
+            <label htmlFor="email">Email:</label>
           </FormRowTitle>
           <FormRowContent>
             <TextInput
-              type='email'
-              id='email'
+              type="email"
+              id="email"
               value={accountDetails.email}
-              onChange={e => setAccountDetails({ ...accountDetails, email: e.target.value })}
+              onChange={e =>
+                setAccountDetails({ ...accountDetails, email: e.target.value })
+              }
               readOnly={!editing}
             />
           </FormRowContent>
@@ -192,22 +254,27 @@ const Account = () => {
 
         <FormRow>
           <FormRowTitle>
-            <label htmlFor='avatarUrl'>Avatar Url:</label>
+            <label htmlFor="avatarUrl">Avatar Url:</label>
           </FormRowTitle>
           <FormRowContent>
             <TextInput
-              type='url'
-              id='avatarUrl'
+              type="url"
+              id="avatarUrl"
               value={accountDetails.avatarUrl}
-              onChange={e => setAccountDetails({ ...accountDetails, avatarUrl: e.target.value })}
+              onChange={e =>
+                setAccountDetails({
+                  ...accountDetails,
+                  avatarUrl: e.target.value
+                })
+              }
               readOnly={!editing}
             />
           </FormRowContent>
         </FormRow>
         <AccountFormButtonsWrapper>
-          <Button type='submit'>
+          <Button type="submit">
             <FontAwesomeIcon icon={faEdit} fixedWidth />
-            {editing ? 'Save' : 'Edit'}
+            {editing ? "Save" : "Edit"}
           </Button>
         </AccountFormButtonsWrapper>
       </AccountForm>
@@ -217,21 +284,23 @@ const Account = () => {
       {!editingPassword && !deletingAccount && (
         <DangerZoneButtonsWrapper>
           <Button
-            type='button'
+            type="button"
             onClick={() => {
               toggleDeletingAccount(false);
               toggleEditingPassword(true);
-            }}>
+            }}
+          >
             <FontAwesomeIcon icon={faLock} fixedWidth />
             Change Password
           </Button>
 
           <DangerButton
-            type='button'
+            type="button"
             onClick={() => {
               toggleEditingPassword(false);
               toggleDeletingAccount(true);
-            }}>
+            }}
+          >
             <FontAwesomeIcon icon={faTrash} fixedWidth />
             Delete Account
           </DangerButton>
@@ -243,58 +312,80 @@ const Account = () => {
           <AccountForm onSubmit={e => submitPasswordChangeHandler(e)}>
             <FormRow>
               <FormRowTitle>
-                <label htmlFor='currentPassword'>Current Password:</label>
+                <label htmlFor="currentPassword">Current Password:</label>
               </FormRowTitle>
               <FormRowContent>
                 <TextInput
-                  type='password'
-                  id='currentPassword'
+                  type="password"
+                  id="currentPassword"
                   value={passwordDetails.currentPassword}
-                  onChange={e => setPasswordDetails({ ...passwordDetails, currentPassword: e.target.value })}
+                  onChange={e =>
+                    setPasswordDetails({
+                      ...passwordDetails,
+                      currentPassword: e.target.value
+                    })
+                  }
                 />
               </FormRowContent>
             </FormRow>
 
             <FormRow>
               <FormRowTitle>
-                <label htmlFor='newPassword'>New Password:</label>
+                <label htmlFor="newPassword">New Password:</label>
               </FormRowTitle>
               <FormRowContent>
                 <TextInput
-                  type='password'
-                  id='newPassword'
+                  type="password"
+                  id="newPassword"
                   value={passwordDetails.newPassword}
-                  onChange={e => setPasswordDetails({ ...passwordDetails, newPassword: e.target.value })}
+                  onChange={e =>
+                    setPasswordDetails({
+                      ...passwordDetails,
+                      newPassword: e.target.value
+                    })
+                  }
                 />
               </FormRowContent>
             </FormRow>
 
             <FormRow>
               <FormRowTitle>
-                <label htmlFor='confirmationPassword'>Confirm New Password:</label>
+                <label htmlFor="confirmationPassword">
+                  Confirm New Password:
+                </label>
               </FormRowTitle>
               <FormRowContent>
                 <TextInput
-                  type='password'
-                  id='confirmationPassword'
+                  type="password"
+                  id="confirmationPassword"
                   value={passwordDetails.confirmationPassword}
-                  onChange={e => setPasswordDetails({ ...passwordDetails, confirmationPassword: e.target.value })}
+                  onChange={e =>
+                    setPasswordDetails({
+                      ...passwordDetails,
+                      confirmationPassword: e.target.value
+                    })
+                  }
                 />
               </FormRowContent>
             </FormRow>
             <AccountFormButtonsWrapper>
               <Button
                 inverted
-                type='submit'
+                type="submit"
                 disabled={
                   passwordDetails.currentPassword.length === 0 ||
                   passwordDetails.newPassword.length === 0 ||
                   passwordDetails.confirmationPassword.length === 0
-                }>
+                }
+              >
                 <FontAwesomeIcon icon={faCheck} fixedWidth />
                 Confirm
               </Button>
-              <Button inverted type='button' onClick={() => resetPasswordChangeHandler()}>
+              <Button
+                inverted
+                type="button"
+                onClick={() => resetPasswordChangeHandler()}
+              >
                 <FontAwesomeIcon icon={faTimes} fixedWidth />
                 Cancel
               </Button>
@@ -309,12 +400,14 @@ const Account = () => {
           <AccountForm onSubmit={e => deleteAccountHandler(e)}>
             <FormRow>
               <FormRowTitle>
-                <label htmlFor='accountDeleteConfirmationPassword'>Enter your Password:</label>
+                <label htmlFor="accountDeleteConfirmationPassword">
+                  Enter your Password:
+                </label>
               </FormRowTitle>
               <FormRowContent>
                 <TextInput
-                  type='password'
-                  id='accountDeleteConfirmationPassword'
+                  type="password"
+                  id="accountDeleteConfirmationPassword"
                   disabled={!deletingAccount}
                   onChange={e => setDeleteConfirmationPassword(e.target.value)}
                 />
@@ -322,21 +415,34 @@ const Account = () => {
             </FormRow>
 
             <FormRow>
-              <DeleteConfirmationMessage>Do you really want to delete your account?</DeleteConfirmationMessage>
+              <DeleteConfirmationMessage>
+                Do you really want to delete your account?
+              </DeleteConfirmationMessage>
               <Checkbox
                 selected={deleteConfirmationCheckbox}
-                onClick={() => setDeleteConfirmationCheckbox(!deleteConfirmationCheckbox)}
+                onClick={() =>
+                  setDeleteConfirmationCheckbox(!deleteConfirmationCheckbox)
+                }
               />
             </FormRow>
             <AccountFormButtonsWrapper>
               <DangerButton
                 inverted
-                type='submit'
-                disabled={!deletingAccount || deleteConfirmationPassword.length === 0 || !deleteConfirmationCheckbox}>
+                type="submit"
+                disabled={
+                  !deletingAccount ||
+                  deleteConfirmationPassword.length === 0 ||
+                  !deleteConfirmationCheckbox
+                }
+              >
                 <FontAwesomeIcon icon={faTrash} fixedWidth />
                 Delete Forever
               </DangerButton>
-              <Button inverted type='button' onClick={() => resetAccountDeletionHandler()}>
+              <Button
+                inverted
+                type="button"
+                onClick={() => resetAccountDeletionHandler()}
+              >
                 <FontAwesomeIcon icon={faTimes} fixedWidth />
                 Cancel
               </Button>

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Form = styled.form``;
 
@@ -28,16 +28,20 @@ export const TextInput = styled.input`
   width: 100%;
   outline: none;
   letter-spacing: 0.1rem;
-  border-top: 1px solid lightgrey;
-  border-bottom: 2px solid lightgrey;
-  border-right: 2px solid lightgrey;
-  border-left: 5px solid ${props => props.theme.colors.primary};
+  border: 2px solid lightgrey;
+
   padding: 0.5rem;
   padding-left: 1rem;
   transition: all 0.2s ease-in-out;
 
   &:read-only {
     color: lightgrey;
+  }
+
+  &:focus {
+    box-shadow: 3px 3px 8px lightgrey;
+    border: 2px solid ${props => props.theme.colors.primary};
+    border-left: 5px solid ${props => props.theme.colors.primary};
   }
 `;
 

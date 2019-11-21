@@ -1,26 +1,26 @@
 // colors
 
-const color__primary = '#385170';
-const color__background = 'whitesmoke';
-const color__danger = 'firebrick';
+const color__primary = "#385170";
+const color__background = "whitesmoke";
+const color__danger = "firebrick";
 
 // fonts
 
 const font_size__base = 1; // in rem
 
 const calculateFontSize = modifier => {
-  return font_size__base + modifier * 0.2 + 'rem';
+  return font_size__base + modifier * 0.25 + "rem";
 };
 
 // borders
 
-const standardBorderMixin = () => {
-  return 'border: 1px solid lightgrey; border-bottom: 2px solid lightgrey;';
+const addStandardBorder = () => {
+  return "border: 1px solid lightgrey; border-bottom: 2px solid lightgrey;";
 };
 
 export const Theme = {
   borders: {
-    standard: standardBorderMixin()
+    standard: addStandardBorder()
   },
   colors: {
     primary: color__primary,
@@ -28,7 +28,7 @@ export const Theme = {
     danger: color__danger
   },
   fonts: {
-    family: 'sans-serif',
+    family: "sans-serif",
     sizes: {
       extraSmall: calculateFontSize(-1),
       small: calculateFontSize(-0.5),
@@ -37,8 +37,8 @@ export const Theme = {
       extraLarge: calculateFontSize(2)
     },
     weights: {
-      base: 'normal',
-      bold: 'bold'
+      base: "normal",
+      bold: "bold"
     }
   }
 };

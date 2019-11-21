@@ -185,508 +185,574 @@ const SearchForm = props => {
     }
   };
 
-  return (
-    <SearchFormWrapper>
-      <SectionHeader>Search</SectionHeader>
-      <form onSubmit={searchCards}>
-        <FormRow>
-          <FormRowTitle>
-            <h4>Card Name</h4>
-          </FormRowTitle>
-          <FormRowContent>
-            <TextInput
-              type="text"
-              value={rawSearchParams.name}
-              onChange={e =>
-                setRawSearchParams({ ...rawSearchParams, name: e.target.value })
-              }
-            />
-          </FormRowContent>
-        </FormRow>
-        <FormRow>
-          <FormRowTitle>
-            <h4>Card Text</h4>
-          </FormRowTitle>
-          <FormRowContent>
-            <TextInput
-              type="text"
-              value={rawSearchParams.oracle.text}
-              onChange={e =>
-                setRawSearchParams({
-                  ...rawSearchParams,
-                  oracle: {
-                    type: rawSearchParams.oracle.type,
-                    text: e.target.value
-                  }
-                })
-              }
-            />
+  const renderCardNameField = () => {
+    return (
+      <FormRow>
+        <FormRowTitle>
+          <h4>Card Name</h4>
+        </FormRowTitle>
+        <FormRowContent>
+          <TextInput
+            type="text"
+            value={rawSearchParams.name}
+            onChange={e =>
+              setRawSearchParams({ ...rawSearchParams, name: e.target.value })
+            }
+          />
+        </FormRowContent>
+      </FormRow>
+    );
+  };
 
-            <StyledSelect
-              defaultValue={rawSearchParams.oracle.type}
-              onChange={e =>
-                setRawSearchParams({
-                  ...rawSearchParams,
-                  oracle: {
-                    type: e.target.value,
-                    text: rawSearchParams.oracle.text
-                  }
-                })
-              }
-            >
-              <option value="all">All</option>
-              <option value="exact">Exact</option>
-              <option value="any">Any</option>
-            </StyledSelect>
-          </FormRowContent>
-        </FormRow>
-
-        <FormRow>
-          <FormRowTitle>
-            <h4>Colors</h4>
-          </FormRowTitle>
-          <FormRowContent>
-            <CardColorSelectionGroup>
-              <CardColorSelectionButton
-                selected={rawSearchParams.colors.colors.white}
-                onClick={() => {
-                  setRawSearchParams({
-                    ...rawSearchParams,
-                    colors: {
-                      type: rawSearchParams.colors.type,
-                      colors: {
-                        ...rawSearchParams.colors.colors,
-                        white: !rawSearchParams.colors.colors.white
-                      }
-                    }
-                  });
-                }}
-              >
-                <Mana symbol={"w"} shadow={false} cost={true} />
-                White
-              </CardColorSelectionButton>
-              <CardColorSelectionButton
-                selected={rawSearchParams.colors.colors.blue}
-                onClick={() => {
-                  setRawSearchParams({
-                    ...rawSearchParams,
-                    colors: {
-                      type: rawSearchParams.colors.type,
-                      colors: {
-                        ...rawSearchParams.colors.colors,
-                        blue: !rawSearchParams.colors.colors.blue
-                      }
-                    }
-                  });
-                }}
-              >
-                <Mana symbol={"u"} cost />
-                Blue
-              </CardColorSelectionButton>
-              <CardColorSelectionButton
-                selected={rawSearchParams.colors.colors.black}
-                onClick={() => {
-                  setRawSearchParams({
-                    ...rawSearchParams,
-                    colors: {
-                      type: rawSearchParams.colors.type,
-                      colors: {
-                        ...rawSearchParams.colors.colors,
-                        black: !rawSearchParams.colors.colors.black
-                      }
-                    }
-                  });
-                }}
-              >
-                <Mana symbol={"b"} cost />
-                Black
-              </CardColorSelectionButton>
-              <CardColorSelectionButton
-                selected={rawSearchParams.colors.colors.red}
-                onClick={() => {
-                  setRawSearchParams({
-                    ...rawSearchParams,
-                    colors: {
-                      type: rawSearchParams.colors.type,
-                      colors: {
-                        ...rawSearchParams.colors.colors,
-                        red: !rawSearchParams.colors.colors.red
-                      }
-                    }
-                  });
-                }}
-              >
-                <Mana symbol={"r"} cost />
-                Red
-              </CardColorSelectionButton>
-              <CardColorSelectionButton
-                selected={rawSearchParams.colors.colors.green}
-                onClick={() => {
-                  setRawSearchParams({
-                    ...rawSearchParams,
-                    colors: {
-                      type: rawSearchParams.colors.type,
-                      colors: {
-                        ...rawSearchParams.colors.colors,
-                        green: !rawSearchParams.colors.colors.green
-                      }
-                    }
-                  });
-                }}
-              >
-                <Mana symbol={"g"} cost />
-                Green
-              </CardColorSelectionButton>
-              <CardColorSelectionButton
-                selected={rawSearchParams.colors.colors.colorless}
-                onClick={() => {
-                  setRawSearchParams({
-                    ...rawSearchParams,
-                    colors: {
-                      type: rawSearchParams.colors.type,
-                      colors: {
-                        ...rawSearchParams.colors.colors,
-                        colorless: !rawSearchParams.colors.colors.colorless
-                      }
-                    }
-                  });
-                }}
-              >
-                <Mana symbol={"c"} cost />
-                Colorless
-              </CardColorSelectionButton>
-            </CardColorSelectionGroup>
-
-            <StyledSelect
-              defaultValue="exactly"
-              onChange={e =>
-                setRawSearchParams({
-                  ...rawSearchParams,
-                  colors: {
-                    type: e.target.value,
-                    colors: { ...rawSearchParams.colors.colors }
-                  }
-                })
-              }
-            >
-              <option value="exactly">Exactly</option>
-              <option value="including">Including</option>
-              <option value="at_most">At most</option>
-            </StyledSelect>
-          </FormRowContent>
-        </FormRow>
-        <FormRow>
-          <FormRowTitle>
-            <h4>Type Line</h4>
-          </FormRowTitle>
-          <FormRowContent>
-            <TextInput
-              type="text"
-              value={rawSearchParams.type_line.text}
-              onChange={e =>
-                setRawSearchParams({
-                  ...rawSearchParams,
-                  type_line: {
-                    type: rawSearchParams.type_line.type,
-                    text: e.target.value
-                  }
-                })
-              }
-            />
-          </FormRowContent>
-        </FormRow>
-        <FormRow>
-          <FormRowTitle>
-            <h4>Power</h4>
-          </FormRowTitle>
-          <FormRowContent>
-            <NumberInputWithSelectComparison>
-              <StyledSelect
-                defaultValue={rawSearchParams.power.comparison}
-                onChange={e =>
-                  setRawSearchParams({
-                    ...rawSearchParams,
-                    power: {
-                      comparison: e.target.value,
-                      value: rawSearchParams.power.value
-                    }
-                  })
-                }
-              >
-                <option value="less_than">less than</option>
-                <option value="less_than_or_equal">
-                  less than or equal to
-                </option>
-                <option value="equal">equal to</option>
-                <option value="greater_than_or_equal">
-                  greater than or equal to
-                </option>
-                <option value="greater_than">greater than</option>
-              </StyledSelect>
-              <NumberInput
-                type="number"
-                min={0}
-                value={rawSearchParams.power.value}
-                onChange={e =>
-                  setRawSearchParams({
-                    ...rawSearchParams,
-                    power: {
-                      comparison: rawSearchParams.power.comparison,
-                      value: e.target.value
-                    }
-                  })
-                }
-              />
-            </NumberInputWithSelectComparison>
-          </FormRowContent>
-        </FormRow>
-        <FormRow>
-          <FormRowTitle>
-            <h4>Toughness</h4>
-          </FormRowTitle>
-          <FormRowContent>
-            <NumberInputWithSelectComparison>
-              <StyledSelect
-                defaultValue={rawSearchParams.toughness.comparison}
-                onChange={e =>
-                  setRawSearchParams({
-                    ...rawSearchParams,
-                    toughness: {
-                      comparison: e.target.value,
-                      value: rawSearchParams.toughness.value
-                    }
-                  })
-                }
-              >
-                <option value="less_than">less than</option>
-                <option value="less_than_or_equal">
-                  less than or equal to
-                </option>
-                <option value="equal">equal to</option>
-                <option value="greater_than_or_equal">
-                  greater than or equal to
-                </option>
-                <option value="greater_than">greater than</option>
-              </StyledSelect>
-              <NumberInput
-                type="number"
-                value={rawSearchParams.toughness.value}
-                onChange={e =>
-                  setRawSearchParams({
-                    ...rawSearchParams,
-                    toughness: {
-                      comparison: rawSearchParams.toughness.comparison,
-                      value: e.target.value
-                    }
-                  })
-                }
-              />
-            </NumberInputWithSelectComparison>
-          </FormRowContent>
-        </FormRow>
-        <FormRow>
-          <FormRowTitle>
-            <h4>CMC</h4>
-          </FormRowTitle>
-          <FormRowContent>
-            <NumberInputWithSelectComparison>
-              <StyledSelect
-                defaultValue={rawSearchParams.cmc.comparison}
-                onChange={e =>
-                  setRawSearchParams({
-                    ...rawSearchParams,
-                    cmc: {
-                      comparison: e.target.value,
-                      value: rawSearchParams.cmc.value
-                    }
-                  })
-                }
-              >
-                <option value="less_than">less than</option>
-                <option value="less_than_or_equal">
-                  less than or equal to
-                </option>
-                <option value="equal">equal to</option>
-                <option value="greater_than_or_equal">
-                  greater than or equal to
-                </option>
-                <option value="greater_than">greater than</option>
-              </StyledSelect>
-              <NumberInput
-                type="number"
-                value={rawSearchParams.cmc.value}
-                onChange={e =>
-                  setRawSearchParams({
-                    ...rawSearchParams,
-                    cmc: {
-                      comparison: rawSearchParams.cmc.comparison,
-                      value: e.target.value
-                    }
-                  })
-                }
-              />
-            </NumberInputWithSelectComparison>
-          </FormRowContent>
-        </FormRow>
-        <FormRow>
-          <FormRowTitle>
-            <h4>Loyalty</h4>
-          </FormRowTitle>
-
-          <FormRowContent>
-            <NumberInputWithSelectComparison>
-              <StyledSelect
-                defaultValue={rawSearchParams.loyalty.comparison}
-                onChange={e =>
-                  setRawSearchParams({
-                    ...rawSearchParams,
-                    loyalty: {
-                      comparison: e.target.value,
-                      value: rawSearchParams.loyalty.value
-                    }
-                  })
-                }
-              >
-                <option value="less_than">less than</option>
-                <option value="less_than_or_equal">
-                  less than or equal to
-                </option>
-                <option value="equal">equal to</option>
-                <option value="greater_than_or_equal">
-                  greater than or equal to
-                </option>
-                <option value="greater_than">greater than</option>
-              </StyledSelect>
-              <NumberInput
-                type="number"
-                value={rawSearchParams.loyalty.value}
-                onChange={e =>
-                  setRawSearchParams({
-                    ...rawSearchParams,
-                    loyalty: {
-                      comparison: rawSearchParams.loyalty.comparison,
-                      value: e.target.value
-                    }
-                  })
-                }
-              />
-            </NumberInputWithSelectComparison>
-          </FormRowContent>
-        </FormRow>
-        <FormRow>
-          <FormRowTitle>
-            <h4>Rarity</h4>
-          </FormRowTitle>
-          <FormRowContent>
-            <SearchFormRarityWrapper>
-              <Checkbox
-                selected={rawSearchParams.rarity.common}
-                onClick={() => {
-                  setRawSearchParams({
-                    ...rawSearchParams,
-                    rarity: {
-                      ...rawSearchParams.rarity,
-                      common: !rawSearchParams.rarity.common
-                    }
-                  });
-                }}
-              >
-                Common
-              </Checkbox>
-              <Checkbox
-                selected={rawSearchParams.rarity.uncommon}
-                onClick={() => {
-                  setRawSearchParams({
-                    ...rawSearchParams,
-                    rarity: {
-                      ...rawSearchParams.rarity,
-                      uncommon: !rawSearchParams.rarity.uncommon
-                    }
-                  });
-                }}
-              >
-                Uncommon
-              </Checkbox>
-              <Checkbox
-                selected={rawSearchParams.rarity.rare}
-                onClick={() => {
-                  setRawSearchParams({
-                    ...rawSearchParams,
-                    rarity: {
-                      ...rawSearchParams.rarity,
-                      rare: !rawSearchParams.rarity.rare
-                    }
-                  });
-                }}
-              >
-                Rare
-              </Checkbox>
-              <Checkbox
-                selected={rawSearchParams.rarity.mythic}
-                onClick={() => {
-                  setRawSearchParams({
-                    ...rawSearchParams,
-                    rarity: {
-                      ...rawSearchParams.rarity,
-                      mythic: !rawSearchParams.rarity.mythic
-                    }
-                  });
-                }}
-              >
-                Mythic
-              </Checkbox>
-            </SearchFormRarityWrapper>
-          </FormRowContent>
-        </FormRow>
-
-        <FormRow>
-          <FormRowTitle>
-            <h4>Set</h4>
-          </FormRowTitle>
-          <FormRowContent>
-            <TextInput
-              type="text"
-              onChange={e =>
-                setRawSearchParams({ ...rawSearchParams, set: e.target.value })
-              }
-            />
-          </FormRowContent>
-        </FormRow>
-        <FormRow>
-          <FormRowTitle>
-            <h4>Mana Cost</h4>
-          </FormRowTitle>
-          <FormRowContent>
-            <TextInput
-              type="text"
-              placeholder="e.g. {1}{W}{W}"
-              onChange={e =>
-                setRawSearchParams({
-                  ...rawSearchParams,
-                  mana_cost: e.target.value
-                })
-              }
-            />
-          </FormRowContent>
-        </FormRow>
-        <FormRow>
-          <FormRowTitle>
-            <h4>Include Un-Sets?</h4>
-          </FormRowTitle>
-
-          <Checkbox
-            selected={rawSearchParams.is.funny}
-            onClick={() =>
+  const renderCardTextField = () => {
+    return (
+      <FormRow>
+        <FormRowTitle>
+          <h4>Card Text</h4>
+        </FormRowTitle>
+        <FormRowContent>
+          <TextInput
+            type="text"
+            value={rawSearchParams.oracle.text}
+            onChange={e =>
               setRawSearchParams({
                 ...rawSearchParams,
-                is: { ...rawSearchParams.is, funny: !rawSearchParams.is.funny }
+                oracle: {
+                  type: rawSearchParams.oracle.type,
+                  text: e.target.value
+                }
               })
             }
           />
-        </FormRow>
+
+          <StyledSelect
+            defaultValue={rawSearchParams.oracle.type}
+            onChange={e =>
+              setRawSearchParams({
+                ...rawSearchParams,
+                oracle: {
+                  type: e.target.value,
+                  text: rawSearchParams.oracle.text
+                }
+              })
+            }
+          >
+            <option value="all">All</option>
+            <option value="exact">Exact</option>
+            <option value="any">Any</option>
+          </StyledSelect>
+        </FormRowContent>
+      </FormRow>
+    );
+  };
+
+  const renderCardColorsField = () => {
+    return (
+      <FormRow>
+        <FormRowTitle>
+          <h4>Colors</h4>
+        </FormRowTitle>
+        <FormRowContent>
+          <CardColorSelectionGroup>
+            <CardColorSelectionButton
+              selected={rawSearchParams.colors.colors.white}
+              onClick={() => {
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  colors: {
+                    type: rawSearchParams.colors.type,
+                    colors: {
+                      ...rawSearchParams.colors.colors,
+                      white: !rawSearchParams.colors.colors.white
+                    }
+                  }
+                });
+              }}
+            >
+              <Mana symbol={"w"} shadow={false} cost={true} />
+              White
+            </CardColorSelectionButton>
+            <CardColorSelectionButton
+              selected={rawSearchParams.colors.colors.blue}
+              onClick={() => {
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  colors: {
+                    type: rawSearchParams.colors.type,
+                    colors: {
+                      ...rawSearchParams.colors.colors,
+                      blue: !rawSearchParams.colors.colors.blue
+                    }
+                  }
+                });
+              }}
+            >
+              <Mana symbol={"u"} cost />
+              Blue
+            </CardColorSelectionButton>
+            <CardColorSelectionButton
+              selected={rawSearchParams.colors.colors.black}
+              onClick={() => {
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  colors: {
+                    type: rawSearchParams.colors.type,
+                    colors: {
+                      ...rawSearchParams.colors.colors,
+                      black: !rawSearchParams.colors.colors.black
+                    }
+                  }
+                });
+              }}
+            >
+              <Mana symbol={"b"} cost />
+              Black
+            </CardColorSelectionButton>
+            <CardColorSelectionButton
+              selected={rawSearchParams.colors.colors.red}
+              onClick={() => {
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  colors: {
+                    type: rawSearchParams.colors.type,
+                    colors: {
+                      ...rawSearchParams.colors.colors,
+                      red: !rawSearchParams.colors.colors.red
+                    }
+                  }
+                });
+              }}
+            >
+              <Mana symbol={"r"} cost />
+              Red
+            </CardColorSelectionButton>
+            <CardColorSelectionButton
+              selected={rawSearchParams.colors.colors.green}
+              onClick={() => {
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  colors: {
+                    type: rawSearchParams.colors.type,
+                    colors: {
+                      ...rawSearchParams.colors.colors,
+                      green: !rawSearchParams.colors.colors.green
+                    }
+                  }
+                });
+              }}
+            >
+              <Mana symbol={"g"} cost />
+              Green
+            </CardColorSelectionButton>
+            <CardColorSelectionButton
+              selected={rawSearchParams.colors.colors.colorless}
+              onClick={() => {
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  colors: {
+                    type: rawSearchParams.colors.type,
+                    colors: {
+                      ...rawSearchParams.colors.colors,
+                      colorless: !rawSearchParams.colors.colors.colorless
+                    }
+                  }
+                });
+              }}
+            >
+              <Mana symbol={"c"} cost />
+              Colorless
+            </CardColorSelectionButton>
+          </CardColorSelectionGroup>
+
+          <StyledSelect
+            defaultValue="exactly"
+            onChange={e =>
+              setRawSearchParams({
+                ...rawSearchParams,
+                colors: {
+                  type: e.target.value,
+                  colors: { ...rawSearchParams.colors.colors }
+                }
+              })
+            }
+          >
+            <option value="exactly">Exactly</option>
+            <option value="including">Including</option>
+            <option value="at_most">At most</option>
+          </StyledSelect>
+        </FormRowContent>
+      </FormRow>
+    );
+  };
+
+  const renderCardTypeLineField = () => {
+    return (
+      <FormRow>
+        <FormRowTitle>
+          <h4>Type Line</h4>
+        </FormRowTitle>
+        <FormRowContent>
+          <TextInput
+            type="text"
+            value={rawSearchParams.type_line.text}
+            onChange={e =>
+              setRawSearchParams({
+                ...rawSearchParams,
+                type_line: {
+                  type: rawSearchParams.type_line.type,
+                  text: e.target.value
+                }
+              })
+            }
+          />
+        </FormRowContent>
+      </FormRow>
+    );
+  };
+
+  const renderPowerField = () => {
+    return (
+      <FormRow>
+        <FormRowTitle>
+          <h4>Power</h4>
+        </FormRowTitle>
+        <FormRowContent>
+          <NumberInputWithSelectComparison>
+            <StyledSelect
+              defaultValue={rawSearchParams.power.comparison}
+              onChange={e =>
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  power: {
+                    comparison: e.target.value,
+                    value: rawSearchParams.power.value
+                  }
+                })
+              }
+            >
+              <option value="less_than">less than</option>
+              <option value="less_than_or_equal">less than or equal to</option>
+              <option value="equal">equal to</option>
+              <option value="greater_than_or_equal">
+                greater than or equal to
+              </option>
+              <option value="greater_than">greater than</option>
+            </StyledSelect>
+            <NumberInput
+              type="number"
+              min={0}
+              value={rawSearchParams.power.value}
+              onChange={e =>
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  power: {
+                    comparison: rawSearchParams.power.comparison,
+                    value: e.target.value
+                  }
+                })
+              }
+            />
+          </NumberInputWithSelectComparison>
+        </FormRowContent>
+      </FormRow>
+    );
+  };
+
+  const renderToughnessField = () => {
+    return (
+      <FormRow>
+        <FormRowTitle>
+          <h4>Toughness</h4>
+        </FormRowTitle>
+        <FormRowContent>
+          <NumberInputWithSelectComparison>
+            <StyledSelect
+              defaultValue={rawSearchParams.toughness.comparison}
+              onChange={e =>
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  toughness: {
+                    comparison: e.target.value,
+                    value: rawSearchParams.toughness.value
+                  }
+                })
+              }
+            >
+              <option value="less_than">less than</option>
+              <option value="less_than_or_equal">less than or equal to</option>
+              <option value="equal">equal to</option>
+              <option value="greater_than_or_equal">
+                greater than or equal to
+              </option>
+              <option value="greater_than">greater than</option>
+            </StyledSelect>
+            <NumberInput
+              type="number"
+              value={rawSearchParams.toughness.value}
+              onChange={e =>
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  toughness: {
+                    comparison: rawSearchParams.toughness.comparison,
+                    value: e.target.value
+                  }
+                })
+              }
+            />
+          </NumberInputWithSelectComparison>
+        </FormRowContent>
+      </FormRow>
+    );
+  };
+
+  const renderCmcField = () => {
+    return (
+      <FormRow>
+        <FormRowTitle>
+          <h4>CMC</h4>
+        </FormRowTitle>
+        <FormRowContent>
+          <NumberInputWithSelectComparison>
+            <StyledSelect
+              defaultValue={rawSearchParams.cmc.comparison}
+              onChange={e =>
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  cmc: {
+                    comparison: e.target.value,
+                    value: rawSearchParams.cmc.value
+                  }
+                })
+              }
+            >
+              <option value="less_than">less than</option>
+              <option value="less_than_or_equal">less than or equal to</option>
+              <option value="equal">equal to</option>
+              <option value="greater_than_or_equal">
+                greater than or equal to
+              </option>
+              <option value="greater_than">greater than</option>
+            </StyledSelect>
+            <NumberInput
+              type="number"
+              value={rawSearchParams.cmc.value}
+              onChange={e =>
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  cmc: {
+                    comparison: rawSearchParams.cmc.comparison,
+                    value: e.target.value
+                  }
+                })
+              }
+            />
+          </NumberInputWithSelectComparison>
+        </FormRowContent>
+      </FormRow>
+    );
+  };
+
+  const renderLoyaltyField = () => {
+    return (
+      <FormRow>
+        <FormRowTitle>
+          <h4>Loyalty</h4>
+        </FormRowTitle>
+
+        <FormRowContent>
+          <NumberInputWithSelectComparison>
+            <StyledSelect
+              defaultValue={rawSearchParams.loyalty.comparison}
+              onChange={e =>
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  loyalty: {
+                    comparison: e.target.value,
+                    value: rawSearchParams.loyalty.value
+                  }
+                })
+              }
+            >
+              <option value="less_than">less than</option>
+              <option value="less_than_or_equal">less than or equal to</option>
+              <option value="equal">equal to</option>
+              <option value="greater_than_or_equal">
+                greater than or equal to
+              </option>
+              <option value="greater_than">greater than</option>
+            </StyledSelect>
+            <NumberInput
+              type="number"
+              value={rawSearchParams.loyalty.value}
+              onChange={e =>
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  loyalty: {
+                    comparison: rawSearchParams.loyalty.comparison,
+                    value: e.target.value
+                  }
+                })
+              }
+            />
+          </NumberInputWithSelectComparison>
+        </FormRowContent>
+      </FormRow>
+    );
+  };
+
+  const renderRarityField = () => {
+    return (
+      <FormRow>
+        <FormRowTitle>
+          <h4>Rarity</h4>
+        </FormRowTitle>
+        <FormRowContent>
+          <SearchFormRarityWrapper>
+            <Checkbox
+              selected={rawSearchParams.rarity.common}
+              onClick={() => {
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  rarity: {
+                    ...rawSearchParams.rarity,
+                    common: !rawSearchParams.rarity.common
+                  }
+                });
+              }}
+            >
+              Common
+            </Checkbox>
+            <Checkbox
+              selected={rawSearchParams.rarity.uncommon}
+              onClick={() => {
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  rarity: {
+                    ...rawSearchParams.rarity,
+                    uncommon: !rawSearchParams.rarity.uncommon
+                  }
+                });
+              }}
+            >
+              Uncommon
+            </Checkbox>
+            <Checkbox
+              selected={rawSearchParams.rarity.rare}
+              onClick={() => {
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  rarity: {
+                    ...rawSearchParams.rarity,
+                    rare: !rawSearchParams.rarity.rare
+                  }
+                });
+              }}
+            >
+              Rare
+            </Checkbox>
+            <Checkbox
+              selected={rawSearchParams.rarity.mythic}
+              onClick={() => {
+                setRawSearchParams({
+                  ...rawSearchParams,
+                  rarity: {
+                    ...rawSearchParams.rarity,
+                    mythic: !rawSearchParams.rarity.mythic
+                  }
+                });
+              }}
+            >
+              Mythic
+            </Checkbox>
+          </SearchFormRarityWrapper>
+        </FormRowContent>
+      </FormRow>
+    );
+  };
+
+  const renderSetField = () => {
+    return (
+      <FormRow>
+        <FormRowTitle>
+          <h4>Set</h4>
+        </FormRowTitle>
+        <FormRowContent>
+          <TextInput
+            type="text"
+            onChange={e =>
+              setRawSearchParams({ ...rawSearchParams, set: e.target.value })
+            }
+          />
+        </FormRowContent>
+      </FormRow>
+    );
+  };
+
+  const renderManaCostField = () => {
+    return (
+      <FormRow>
+        <FormRowTitle>
+          <h4>Mana Cost</h4>
+        </FormRowTitle>
+        <FormRowContent>
+          <TextInput
+            type="text"
+            placeholder="e.g. {1}{W}{W}"
+            onChange={e =>
+              setRawSearchParams({
+                ...rawSearchParams,
+                mana_cost: e.target.value
+              })
+            }
+          />
+        </FormRowContent>
+      </FormRow>
+    );
+  };
+
+  const renderUnSetsField = () => {
+    return (
+      <FormRow>
+        <FormRowTitle>
+          <h4>Include Un-Sets?</h4>
+        </FormRowTitle>
+
+        <Checkbox
+          selected={rawSearchParams.is.funny}
+          onClick={() =>
+            setRawSearchParams({
+              ...rawSearchParams,
+              is: { ...rawSearchParams.is, funny: !rawSearchParams.is.funny }
+            })
+          }
+        />
+      </FormRow>
+    );
+  };
+
+  return (
+    <SearchFormWrapper>
+      <SectionHeader>
+        <FontAwesomeIcon icon={faSearch} fixedWidth />
+        Search
+      </SectionHeader>
+      <form onSubmit={searchCards}>
+        {renderCardNameField()}
+        {renderCardTextField()}
+        {renderCardColorsField()}
+        {renderCardTypeLineField()}
+        {renderPowerField()}
+        {renderToughnessField()}
+        {renderCmcField()}
+        {renderLoyaltyField()}
+        {renderRarityField()}
+        {renderSetField()}
+        {renderManaCostField()}
+        {renderUnSetsField()}
+
         <SearchFormSubmitButtonWrapper>
           <Button type="submit">
-            <FontAwesomeIcon icon={faSearch} fixedWidth />{" "}
+            <FontAwesomeIcon icon={faSearch} fixedWidth />
             {loadingResults ? "Searching..." : "Search"}
           </Button>
         </SearchFormSubmitButtonWrapper>

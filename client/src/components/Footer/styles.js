@@ -1,9 +1,9 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledFooter = styled.footer`
   background-color: ${props => props.theme.colors.primary};
-  // color: ${props => props.theme.colors.background};
-  color: aliceblue;
+  color: ${props => props.theme.colors.background};
+  font-weight: ${props => props.theme.fonts.weights.bold}
   padding: 1rem;
   font-style: italic;
   letter-spacing: 0.1rem;
@@ -11,7 +11,7 @@ export const StyledFooter = styled.footer`
   font-size: ${props => props.theme.fonts.sizes.extraSmall};
 
   p {
-    width: 50%;
+    width: 80%;
     margin: auto;
   }
 `;
