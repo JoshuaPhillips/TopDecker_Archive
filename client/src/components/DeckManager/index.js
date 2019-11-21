@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
+import { toast } from "react-toastify";
 
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { GET_AUTH_DATA, GET_DECK_DETAILS, UPDATE_CARD_LIST } from './graphql';
+import { useQuery, useMutation } from "@apollo/react-hooks";
+import { GET_AUTH_DATA, GET_DECK_DETAILS, UPDATE_CARD_LIST } from "./graphql";
 
-import DeckManagerSidebar from './DeckManagerSidebar';
-import DeckInspector from './DeckInspector';
-import Spinner from '../Spinner';
+import DeckManagerSidebar from "./DeckManagerSidebar";
+import DeckInspector from "./DeckInspector";
+import Spinner from "../Spinner";
 
-import { sortCardList } from '../../utils/sortCardList';
-import { generateCardList } from '../../utils/generateCardList';
+import { sortCardList } from "../../utils/sortCardList";
+import { generateCardList } from "../../utils/generateCardList";
 
-import { StyledDeckManager } from './styles';
+import { StyledDeckManager } from "./styles";
 
 const DeckManager = props => {
   const { deckId: currentDeckId } = props.match.params;
@@ -25,9 +26,11 @@ const DeckManager = props => {
     instant: true,
     land: true
   });
-  const [sortMode, setSortMode] = useState('alphabetical');
+  const [sortMode, setSortMode] = useState("alphabetical");
 
-  const GetAuthDataQueryResponse = useQuery(GET_AUTH_DATA, { fetchPolicy: 'cache-only' });
+  const GetAuthDataQueryResponse = useQuery(GET_AUTH_DATA, {
+    fetchPolicy: "cache-only"
+  });
   const { currentUserId } = GetAuthDataQueryResponse.data.AuthData;
   const deckOwnerId = deck ? deck.owner.id : null;
   const currentUserOwnsDeck = currentUserId === deckOwnerId;
@@ -37,12 +40,15 @@ const DeckManager = props => {
   const GetDeckDetailsQueryResponse = useQuery(GET_DECK_DETAILS, {
     skip: !currentDeckId,
     variables: { deckId: currentDeckId },
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: "cache-and-network",
     onCompleted(data) {
       if (data) {
         const sortedDeck = {
           ...GetDeckDetailsQueryResponse.data.getDeckById,
-          cardList: sortCardList(GetDeckDetailsQueryResponse.data.getDeckById.cardList, sortMode)
+          cardList: sortCardList(
+            GetDeckDetailsQueryResponse.data.getDeckById.cardList,
+            sortMode
+          )
         };
 
         setDeck(sortedDeck);
@@ -67,14 +73,23 @@ const DeckManager = props => {
   const [UpdateCardListMutation] = useMutation(UPDATE_CARD_LIST);
 
   const updateCardList = (deck, listToUpdate, updateMode, updatedCard) => {
-    const newDeck = generateCardList(deck, listToUpdate, updateMode, updatedCard);
+    const newDeck = generateCardList(
+      deck,
+      listToUpdate,
+      updateMode,
+      updatedCard
+    );
     setDeck({ ...newDeck, cardList: sortCardList(newDeck.cardList, sortMode) });
 
-    const filteredCardList = newDeck.cardList.map(({ card, mainDeckCount, sideboardCount }) => {
-      return { scryfallId: card.scryfall_id, mainDeckCount, sideboardCount };
-    });
+    const filteredCardList = newDeck.cardList.map(
+      ({ card, mainDeckCount, sideboardCount }) => {
+        return { scryfallId: card.scryfall_id, mainDeckCount, sideboardCount };
+      }
+    );
 
-    UpdateCardListMutation({ variables: { deckId: currentDeckId, cardList: filteredCardList } });
+    UpdateCardListMutation({
+      variables: { deckId: currentDeckId, cardList: filteredCardList }
+    });
   };
 
   // ========== TOGGLE FILTERS ========== //
@@ -87,7 +102,12 @@ const DeckManager = props => {
 
   return (
     <StyledDeckManager>
-      {deck && currentUserOwnsDeck && <DeckManagerSidebar deck={deck} updateCardListHandler={updateCardList} />}
+      {deck && currentUserOwnsDeck && (
+        <DeckManagerSidebar
+          deck={deck}
+          updateCardListHandler={updateCardList}
+        />
+      )}
       {!deck || GetDeckDetailsQueryResponse.loading ? (
         <Spinner />
       ) : (

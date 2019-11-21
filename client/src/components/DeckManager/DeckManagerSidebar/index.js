@@ -91,7 +91,10 @@ const DeckManagerSidebar = props => {
     <StyledDeckManagerSidebar>
       <QuickSearchContainer>
         <div>
-          <SectionHeader>Quick Search</SectionHeader>
+          <SectionHeader>
+            <FontAwesomeIcon icon={faSearch} fixedWidth />
+            Quick Search
+          </SectionHeader>
           {format !== "commander" && (
             <QuickSearchListSelectionWrapper>
               <button

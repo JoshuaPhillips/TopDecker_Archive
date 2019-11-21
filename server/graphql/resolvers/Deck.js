@@ -1,4 +1,5 @@
 const { ApolloError } = require("apollo-server");
+const axios = require("axios");
 
 const User = require("../../database/models/User");
 const filterCardData = require("../utils/filterCardData");
@@ -11,7 +12,7 @@ const DeckResolvers = {
 
         if (!matchedUser) {
           throw new ApolloError(
-            `Fuck. User could not be found with ID ${parent.owner}`,
+            `User could not be found with ID ${parent.owner}`,
             "USER_NOT_FOUND"
           );
         }
@@ -27,7 +28,7 @@ const DeckResolvers = {
         const { commander } = parent;
 
         if (commander) {
-          const matchedCard = await fetch(
+          const matchedCard = await axios.get(
             `https://api.scryfall.com/cards/${commander}`
           );
 
@@ -40,7 +41,7 @@ const DeckResolvers = {
           };
         }
 
-        const matchedCard = await fetch(
+        const matchedCard = await axios.get(
           `https://api.scryfall.com/cards/84dd3586-7c3b-4f9c-a1eb-7745b75339b0`
         );
 
@@ -65,7 +66,7 @@ const DeckResolvers = {
           // use the result of map.
           const populatedCards = await Promise.all(
             cardList.map(async card => {
-              const matchedCard = await fetch(
+              const matchedCard = await axios.get(
                 `https://api.scryfall.com/cards/${card.scryfallId}`
               );
 

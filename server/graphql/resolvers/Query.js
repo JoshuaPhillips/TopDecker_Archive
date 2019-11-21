@@ -1,6 +1,7 @@
 const { ApolloError } = require("apollo-server");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const axios = require("axios");
 
 const querystring = require("querystring");
 
@@ -109,7 +110,7 @@ const QueryResolvers = {
     // Card-related Queries
     getRandomCard: async () => {
       try {
-        const card = await fetch(`https://api.scryfall.com/cards/random`);
+        const card = await axios.get(`https://api.scryfall.com/cards/random`);
 
         return filterCardData(card.data);
       } catch (error) {
@@ -119,7 +120,7 @@ const QueryResolvers = {
 
     getCardByScryfallId: async (_, args) => {
       try {
-        const card = await fetch(
+        const card = await axios.get(
           `https://api.scryfall.com/cards/${args.scryfallId}`
         );
 
@@ -140,7 +141,7 @@ const QueryResolvers = {
           url += querystring.escape(searchString);
         }
 
-        const response = await fetch(url).catch(error => {
+        const response = await axios.get(url).catch(error => {
           const { status } = error.response;
           throw new ApolloError(
             "Sorry, we couldn't find any cards that matched your search.",
@@ -167,14 +168,14 @@ const QueryResolvers = {
 
     getAllSets: async () => {
       let sets = [];
-      const response = await fetch("https://api.scryfall.com/sets").catch(
-        error => {
+      const response = await axios
+        .get("https://api.scryfall.com/sets")
+        .catch(error => {
           throw new ApolloError(
             "Could not connect to Scryfall API.",
             "SCRYFALL_CONNECTION_ISSUE"
           );
-        }
-      );
+        });
 
       response.data.data.map(set => {
         if (set.set_type === "core" || set.set_type === "expansion") {

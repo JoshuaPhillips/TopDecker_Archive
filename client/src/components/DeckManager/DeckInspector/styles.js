@@ -12,13 +12,11 @@ export const DeckDetails = styled.div`
   h2 {
     width: fit-content;
     margin: 2rem 0 1rem;
-    padding: 0.5rem 2rem;
+    padding: 0.5rem 2rem 0.5rem 0;
     text-transform: uppercase;
-    letter-spacing: 0.2rem;
+    letter-spacing: 0.1rem;
 
-    background-color: ${props => props.theme.colors.deepBlue};
-    color: ${props => props.theme.colors.whiteSmoke};
-    border-radius: 0 10px 10px 0;
+    color: ${props => props.theme.colors.deepBlue};
     font-weight: ${props => props.theme.fonts.weights.bold};
     text-align: center;
   }
@@ -28,4 +26,17 @@ export const CardListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin: 1rem 0 0;
+`;
+
+export const StyledCardListPlaceholder = styled.div`
+  padding: 5rem;
+  text-align: center;
+  border: 5px dashed lightgrey;
+  h1 {
+    font-size: ${props => props.theme.fonts.sizes.extraLarge}};
+
+    svg {
+      margin-right: 0.5rem;
+    }
+  }
 `;

@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 export const SEARCH_CARDS = gql`
   query SearchCards($searchParams: SearchParamsInput!) {
@@ -17,10 +17,12 @@ export const SEARCH_CARDS = gql`
         power
         toughness
         loyalty
+        set
         type_line
         rarity
         color_identity
         layout
+        collector_number
         legalities {
           standard
           modern

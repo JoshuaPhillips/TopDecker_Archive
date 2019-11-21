@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import DeckInspectorToolbar from "./DeckInspectorToolbar";
 
+import CardListPlaceholder from "./CardListPlaceholder";
 import GalleryModeCardItem from "./GalleryModeCardItem";
 import TextModeCardItem from "./TextModeCardItem";
 import ListModeCardItem from "./ListModeCardItem";
@@ -118,37 +119,45 @@ const DeckInspector = props => {
           Main Deck ({totalMainDeckCount} /{" "}
           {deck.format === "commander" ? 100 : 60})
         </SubSectionHeader>
-        <CardListContainer>
-          {deck.format === "commander" &&
-            renderCardItem(
-              deck.commander.scryfall_id,
-              { card: deck.commander, mainDeckCount: 1, sideboardCount: 0 },
-              "commander"
-            )}
+        {filteredMainDeckList.length === 0 ? (
+          <CardListPlaceholder deck />
+        ) : (
+          <CardListContainer>
+            {deck.format === "commander" &&
+              renderCardItem(
+                deck.commander.scryfall_id,
+                { card: deck.commander, mainDeckCount: 1, sideboardCount: 0 },
+                "commander"
+              )}
 
-          {filteredMainDeckList.map(cardWithCounts => {
-            return renderCardItem(
-              cardWithCounts.card.scryfall_id,
-              cardWithCounts,
-              "mainDeck"
-            );
-          })}
-        </CardListContainer>
+            {filteredMainDeckList.map(cardWithCounts => {
+              return renderCardItem(
+                cardWithCounts.card.scryfall_id,
+                cardWithCounts,
+                "mainDeck"
+              );
+            })}
+          </CardListContainer>
+        )}
 
         {deck.format !== "commander" && (
           <>
             <SubSectionHeader>
               Sideboard ({totalSideboardCount} / 15)
             </SubSectionHeader>
-            <CardListContainer>
-              {filteredSideboardList.map(cardWithCounts => {
-                return renderCardItem(
-                  cardWithCounts.card.scryfall_id,
-                  cardWithCounts,
-                  "sideboard"
-                );
-              })}
-            </CardListContainer>
+            {filteredSideboardList.length === 0 ? (
+              <CardListPlaceholder deck />
+            ) : (
+              <CardListContainer>
+                {filteredSideboardList.map(cardWithCounts => {
+                  return renderCardItem(
+                    cardWithCounts.card.scryfall_id,
+                    cardWithCounts,
+                    "sideboard"
+                  );
+                })}
+              </CardListContainer>
+            )}
           </>
         )}
       </DeckDetails>

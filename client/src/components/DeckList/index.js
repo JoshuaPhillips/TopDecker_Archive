@@ -32,7 +32,9 @@ const Decks = () => {
   const GetDeckListQueryResponse = useQuery(GET_DECK_LIST, {
     fetchPolicy: "network-only",
     onCompleted(data) {
+      console.log("Fetched", data);
       if (data) {
+        console.log(data);
         const deckList = data.getAllDecks.sort((a, b) => {
           if (a.format.toLowerCase() < b.format.toLowerCase()) {
             return -1;

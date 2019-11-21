@@ -1,4 +1,5 @@
 const { ApolloError } = require("apollo-server");
+const axios = require("axios");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -169,7 +170,7 @@ const MutationResolvers = {
 
         if (deckDetails.commander) {
           // Check if the commander card ID exists in Scryfall.
-          const commander = await fetch(
+          const commander = await axios.get(
             `http://api.scryfall.com/cards/${deckDetails.commander}`
           );
 

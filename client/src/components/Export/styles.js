@@ -17,14 +17,12 @@ export const StyledExport = styled.main`
 export const ExportTextArea = styled.textarea`
   width: 100%;
   height: 50vh;
-  padding: 1rem 5rem;
+  padding: 1rem 5rem 1rem 1.5rem;
   border-radius: 5px;
   resize: none;
   line-height: 150%;
   letter-spacing: 0.1rem;
-  border: ${props => props.theme.borders.thick};
-  border-top: 1px solid lightgrey;
-  border-left: 5px solid ${props => props.theme.colors.deepBlue};
+  border: 3px dotted lightgrey;
   outline: none;
   font-weight: ${props => props.theme.fonts.weights.bold};
 `;
