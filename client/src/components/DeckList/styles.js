@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { SubSectionHeader } from '../../shared/Headers';
+import styled from "styled-components";
+import { SubSectionHeader } from "../../shared/Headers";
 
 export const DeckListContainer = styled.main`
   display: flex;
@@ -7,7 +7,7 @@ export const DeckListContainer = styled.main`
   background-color: white;
   margin: 4rem auto;
   padding: 3rem;
-  border: 1px solid lightgrey;
+  border: ${props => props.theme.borders.standard}
   box-shadow: 5px 5px 7px #c7c7c7;
   width: 50%;
   border-radius: 5px;

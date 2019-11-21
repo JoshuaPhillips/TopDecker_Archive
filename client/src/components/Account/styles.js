@@ -1,7 +1,7 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledAccount = styled.main`
-  border: 1px solid #c7c7c7;
+  border: ${props => props.theme.borders.standard}
   background-color: white;
   box-shadow: 5px 5px 7px #c7c7c7;
   width: 50%;
@@ -33,7 +33,7 @@ export const AccountFormButtonsWrapper = styled.div`
 
 export const DangerZoneButtonsWrapper = styled.div`
   width: 80%;
-  margin: 1rem auto 2rem;
+  margin: 2rem auto 2rem;
 
   button {
     margin-right: 0.5rem;

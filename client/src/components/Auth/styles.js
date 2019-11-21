@@ -1,7 +1,7 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledAuth = styled.main`
-  border: 1px solid #c7c7c7;
+  border: ${props => props.theme.borders.standard}
   background-color: white;
   box-shadow: 5px 5px 7px #c7c7c7;
   width: 50%;
@@ -14,7 +14,7 @@ export const StyledAuth = styled.main`
     margin: auto;
     padding: 0.5rem;
     cursor: pointer;
-    border-bottom: 2px solid ${props => props.theme.colors.primary};
+    border-bottom: 2px solid ${props => props.theme.colors.deepBlue};
 
     &:hover {
       transform: scale(1.01);

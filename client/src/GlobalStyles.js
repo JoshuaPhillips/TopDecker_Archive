@@ -1,5 +1,5 @@
 // Styled Components
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
 * {
@@ -13,11 +13,11 @@ const GlobalStyles = createGlobalStyle`
 }
 
 body {
-  color: ${props => props.theme.colors.primary}
+  color: ${props => props.theme.colors.deepBlue}
   font-family: ${props => props.theme.fonts.family}
   font-size: ${props => props.theme.fonts.sizes.base}
   font-weight: ${props => props.theme.fonts.weights.base};
-  background-color: ${props => props.theme.colors.background};
+  background-color: ${props => props.theme.colors.whiteSmoke};
 }
 
 .App {

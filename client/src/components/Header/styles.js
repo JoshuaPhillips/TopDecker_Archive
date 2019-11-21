@@ -6,8 +6,8 @@ export const StyledHeader = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: ${props => props.theme.colors.primary};
-  color: ${props => props.theme.colors.background};
+  background-color: ${props => props.theme.colors.deepBlue};
+  color: ${props => props.theme.colors.whiteSmoke};
   padding: 0 2rem;
   font-weight: bold;
 
@@ -20,7 +20,7 @@ export const StyledHeader = styled.header`
     font-size: ${props => props.theme.fonts.sizes.extraLarge};
 
     span {
-      color: ${props => props.theme.colors.background}
+      color: ${props => props.theme.colors.whiteSmoke}
     }
   }
 `;
@@ -30,8 +30,8 @@ export const Nav = styled.nav`
   align-items: center;
 
   a.active {
-    color: ${props => props.theme.colors.primary};
-    background-color: ${props => props.theme.colors.background};
+    color: ${props => props.theme.colors.deepBlue};
+    background-color: ${props => props.theme.colors.whiteSmoke};
   }
 `;
 
@@ -41,8 +41,8 @@ export const NavigationLink = styled.button`
   padding: 1rem;
 
   &:hover {
-    background-color: ${props => props.theme.colors.background};
-    color: ${props => props.theme.colors.primary};
+    background-color: ${props => props.theme.colors.whiteSmoke};
+    color: ${props => props.theme.colors.deepBlue};
   }
 
   svg {

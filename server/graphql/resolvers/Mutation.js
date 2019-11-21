@@ -66,7 +66,11 @@ const MutationResolvers = {
           throw new ApolloError("Error updating user.", "ERROR_UPDATING_USER");
         }
 
-        return { ...updatedUser._doc, id: updatedUser._doc._id };
+        return {
+          ...updatedUser._doc,
+          id: updatedUser._doc._id,
+          password: null
+        };
       } catch (error) {
         return error;
       }

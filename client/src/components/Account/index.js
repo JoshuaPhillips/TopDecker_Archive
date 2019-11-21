@@ -1,165 +1,24 @@
 import React, { useState } from "react";
-import { toast } from "react-toastify";
 
-import { useQuery, useMutation } from "@apollo/react-hooks";
-import {
-  GET_ACCOUNT_DETAILS,
-  SAVE_ACCOUNT_DETAILS,
-  CHANGE_PASSWORD,
-  DELETE_ACCOUNT,
-  LOGOUT
-} from "./graphql";
+import AccountDetailsForm from "./AccountDetailsForm";
+import PasswordChangeForm from "./PasswordChangeForm";
+import DeleteAccountForm from "./DeleteAccountForm";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faEdit,
+  faUserCircle,
   faLock,
-  faTimes,
-  faCheck,
   faTrash,
-  faUserCircle
+  faExclamationTriangle
 } from "@fortawesome/free-solid-svg-icons";
 
-import Checkbox from "../Checkbox";
-import Spinner from "../Spinner";
-
-import {
-  StyledAccount,
-  AccountForm,
-  AccountFormButtonsWrapper,
-  DeleteConfirmationMessage,
-  DangerZoneButtonsWrapper
-} from "./styles";
+import { StyledAccount, DangerZoneButtonsWrapper } from "./styles";
 import { SectionHeader } from "../../shared/Headers";
-import { Button, ButtonGroup, DangerButton } from "../../shared/Buttons";
-import {
-  FormRow,
-  FormRowTitle,
-  FormRowContent,
-  TextInput
-} from "../../shared/Forms";
+import { Button, DangerButton } from "../../shared/Buttons";
 
 const Account = () => {
-  const [editing, toggleEditing] = useState(false);
-  const [accountDetails, setAccountDetails] = useState({
-    firstName: "",
-    lastName: "",
-    username: "",
-    email: "",
-    avatarUrl: ""
-  });
   const [editingPassword, toggleEditingPassword] = useState(false);
-  const [passwordDetails, setPasswordDetails] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmationPassword: ""
-  });
   const [deletingAccount, toggleDeletingAccount] = useState(false);
-  const [deleteConfirmationPassword, setDeleteConfirmationPassword] = useState(
-    ""
-  );
-  const [deleteConfirmationCheckbox, setDeleteConfirmationCheckbox] = useState(
-    false
-  );
-
-  const GetAccountDetailsQueryResponse = useQuery(GET_ACCOUNT_DETAILS, {
-    onCompleted() {
-      const {
-        firstName,
-        lastName,
-        username,
-        email,
-        avatarUrl
-      } = GetAccountDetailsQueryResponse.data.getCurrentUser;
-      setAccountDetails({
-        firstName,
-        lastName,
-        username,
-        email,
-        avatarUrl
-      });
-    }
-  });
-
-  const [SaveAccountDetailsMutation] = useMutation(SAVE_ACCOUNT_DETAILS, {
-    variables: {
-      newDetails: {
-        ...accountDetails
-      }
-    },
-    onCompleted() {
-      toast.info("Account details saved.");
-      toggleEditing(false);
-    }
-  });
-
-  const [ChangePasswordMutation] = useMutation(CHANGE_PASSWORD, {
-    fetchPolicy: "no-cache",
-    variables: {
-      ...passwordDetails
-    },
-    onCompleted() {
-      toast.info("Password saved.");
-      setPasswordDetails({
-        currentPassword: "",
-        newPassword: "",
-        confirmationPassword: ""
-      });
-    }
-  });
-
-  const [DeleteAccountMutation] = useMutation(DELETE_ACCOUNT, {
-    variables: {
-      password: deleteConfirmationPassword
-    },
-    onCompleted(data) {
-      if (data.deleteUser === true) {
-        toast.info("Account deleted.");
-      }
-    }
-  });
-
-  const [LogoutMutation] = useMutation(LOGOUT);
-
-  const toggleEditingHandler = e => {
-    e.preventDefault();
-    toggleEditing(true);
-  };
-
-  const saveAccountDetailsHandler = e => {
-    e.preventDefault();
-    SaveAccountDetailsMutation();
-  };
-
-  const submitPasswordChangeHandler = e => {
-    e.preventDefault();
-    ChangePasswordMutation();
-  };
-
-  const resetPasswordChangeHandler = () => {
-    toggleEditingPassword(false);
-    setPasswordDetails({
-      currentPassword: "",
-      newPassword: "",
-      confirmationPassword: ""
-    });
-  };
-
-  const resetAccountDeletionHandler = () => {
-    toggleDeletingAccount(false);
-    setDeleteConfirmationPassword("");
-    setDeleteConfirmationCheckbox(false);
-  };
-
-  const deleteAccountHandler = e => {
-    e.preventDefault();
-    DeleteAccountMutation();
-    LogoutMutation();
-  };
-
-  if (GetAccountDetailsQueryResponse.loading) {
-    return <Spinner />;
-  }
 
   return (
     <StyledAccount>
@@ -167,123 +26,16 @@ const Account = () => {
         <FontAwesomeIcon icon={faUserCircle} fixedWidth />
         Account
       </SectionHeader>
-
-      <AccountForm
-        onSubmit={
-          editing
-            ? e => saveAccountDetailsHandler(e)
-            : e => toggleEditingHandler(e)
-        }
-      >
-        <FormRow>
-          <FormRowTitle>
-            <label htmlFor="firstName">First Name:</label>
-          </FormRowTitle>
-          <FormRowContent>
-            <TextInput
-              type="text"
-              id="firstName"
-              value={accountDetails.firstName}
-              onChange={e =>
-                setAccountDetails({
-                  ...accountDetails,
-                  firstName: e.target.value
-                })
-              }
-              readOnly={!editing}
-            />
-          </FormRowContent>
-        </FormRow>
-
-        <FormRow>
-          <FormRowTitle>
-            <label htmlFor="lastName">Last Name:</label>
-          </FormRowTitle>
-          <FormRowContent>
-            <TextInput
-              type="text"
-              id="lastName"
-              value={accountDetails.lastName}
-              onChange={e =>
-                setAccountDetails({
-                  ...accountDetails,
-                  lastName: e.target.value
-                })
-              }
-              readOnly={!editing}
-            />
-          </FormRowContent>
-        </FormRow>
-
-        <FormRow>
-          <FormRowTitle>
-            <label htmlFor="username">Username:</label>
-          </FormRowTitle>
-          <FormRowContent>
-            <TextInput
-              type="text"
-              id="username"
-              value={accountDetails.username}
-              onChange={e =>
-                setAccountDetails({
-                  ...accountDetails,
-                  username: e.target.value
-                })
-              }
-              readOnly={!editing}
-            />
-          </FormRowContent>
-        </FormRow>
-
-        <FormRow>
-          <FormRowTitle>
-            <label htmlFor="email">Email:</label>
-          </FormRowTitle>
-          <FormRowContent>
-            <TextInput
-              type="email"
-              id="email"
-              value={accountDetails.email}
-              onChange={e =>
-                setAccountDetails({ ...accountDetails, email: e.target.value })
-              }
-              readOnly={!editing}
-            />
-          </FormRowContent>
-        </FormRow>
-
-        <FormRow>
-          <FormRowTitle>
-            <label htmlFor="avatarUrl">Avatar Url:</label>
-          </FormRowTitle>
-          <FormRowContent>
-            <TextInput
-              type="url"
-              id="avatarUrl"
-              value={accountDetails.avatarUrl}
-              onChange={e =>
-                setAccountDetails({
-                  ...accountDetails,
-                  avatarUrl: e.target.value
-                })
-              }
-              readOnly={!editing}
-            />
-          </FormRowContent>
-        </FormRow>
-        <AccountFormButtonsWrapper>
-          <Button type="submit">
-            <FontAwesomeIcon icon={faEdit} fixedWidth />
-            {editing ? "Save" : "Edit"}
-          </Button>
-        </AccountFormButtonsWrapper>
-      </AccountForm>
-
-      <SectionHeader danger>Danger Zone</SectionHeader>
+      <AccountDetailsForm />
+      <SectionHeader danger>
+        <FontAwesomeIcon icon={faExclamationTriangle} fixedWidth />
+        Danger Zone
+      </SectionHeader>
 
       {!editingPassword && !deletingAccount && (
         <DangerZoneButtonsWrapper>
           <Button
+            inverted
             type="button"
             onClick={() => {
               toggleDeletingAccount(false);
@@ -308,147 +60,10 @@ const Account = () => {
       )}
 
       {editingPassword && (
-        <React.Fragment>
-          <AccountForm onSubmit={e => submitPasswordChangeHandler(e)}>
-            <FormRow>
-              <FormRowTitle>
-                <label htmlFor="currentPassword">Current Password:</label>
-              </FormRowTitle>
-              <FormRowContent>
-                <TextInput
-                  type="password"
-                  id="currentPassword"
-                  value={passwordDetails.currentPassword}
-                  onChange={e =>
-                    setPasswordDetails({
-                      ...passwordDetails,
-                      currentPassword: e.target.value
-                    })
-                  }
-                />
-              </FormRowContent>
-            </FormRow>
-
-            <FormRow>
-              <FormRowTitle>
-                <label htmlFor="newPassword">New Password:</label>
-              </FormRowTitle>
-              <FormRowContent>
-                <TextInput
-                  type="password"
-                  id="newPassword"
-                  value={passwordDetails.newPassword}
-                  onChange={e =>
-                    setPasswordDetails({
-                      ...passwordDetails,
-                      newPassword: e.target.value
-                    })
-                  }
-                />
-              </FormRowContent>
-            </FormRow>
-
-            <FormRow>
-              <FormRowTitle>
-                <label htmlFor="confirmationPassword">
-                  Confirm New Password:
-                </label>
-              </FormRowTitle>
-              <FormRowContent>
-                <TextInput
-                  type="password"
-                  id="confirmationPassword"
-                  value={passwordDetails.confirmationPassword}
-                  onChange={e =>
-                    setPasswordDetails({
-                      ...passwordDetails,
-                      confirmationPassword: e.target.value
-                    })
-                  }
-                />
-              </FormRowContent>
-            </FormRow>
-            <AccountFormButtonsWrapper>
-              <Button
-                inverted
-                type="submit"
-                disabled={
-                  passwordDetails.currentPassword.length === 0 ||
-                  passwordDetails.newPassword.length === 0 ||
-                  passwordDetails.confirmationPassword.length === 0
-                }
-              >
-                <FontAwesomeIcon icon={faCheck} fixedWidth />
-                Confirm
-              </Button>
-              <Button
-                inverted
-                type="button"
-                onClick={() => resetPasswordChangeHandler()}
-              >
-                <FontAwesomeIcon icon={faTimes} fixedWidth />
-                Cancel
-              </Button>
-            </AccountFormButtonsWrapper>
-          </AccountForm>
-        </React.Fragment>
+        <PasswordChangeForm toggleEditingPassword={toggleEditingPassword} />
       )}
-
-      <ButtonGroup></ButtonGroup>
       {deletingAccount && (
-        <React.Fragment>
-          <AccountForm onSubmit={e => deleteAccountHandler(e)}>
-            <FormRow>
-              <FormRowTitle>
-                <label htmlFor="accountDeleteConfirmationPassword">
-                  Enter your Password:
-                </label>
-              </FormRowTitle>
-              <FormRowContent>
-                <TextInput
-                  type="password"
-                  id="accountDeleteConfirmationPassword"
-                  disabled={!deletingAccount}
-                  onChange={e => setDeleteConfirmationPassword(e.target.value)}
-                />
-              </FormRowContent>
-            </FormRow>
-
-            <FormRow>
-              <DeleteConfirmationMessage>
-                Do you really want to delete your account?
-              </DeleteConfirmationMessage>
-              <Checkbox
-                selected={deleteConfirmationCheckbox}
-                onClick={() =>
-                  setDeleteConfirmationCheckbox(!deleteConfirmationCheckbox)
-                }
-              />
-            </FormRow>
-            <AccountFormButtonsWrapper>
-              <DangerButton
-                inverted
-                type="submit"
-                disabled={
-                  !deletingAccount ||
-                  deleteConfirmationPassword.length === 0 ||
-                  !deleteConfirmationCheckbox
-                }
-              >
-                <FontAwesomeIcon icon={faTrash} fixedWidth />
-                Delete Forever
-              </DangerButton>
-              <Button
-                inverted
-                type="button"
-                onClick={() => resetAccountDeletionHandler()}
-              >
-                <FontAwesomeIcon icon={faTimes} fixedWidth />
-                Cancel
-              </Button>
-            </AccountFormButtonsWrapper>
-          </AccountForm>
-        </React.Fragment>
+        <DeleteAccountForm toggleDeletingAccount={toggleDeletingAccount} />
       )}
     </StyledAccount>
   );

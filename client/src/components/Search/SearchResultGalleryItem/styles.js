@@ -1,9 +1,9 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledSearchResultGalleryItem = styled.div`
   background-color: white;
-  border: 1px solid lightgrey;
-  border-bottom: 2px solid lightgrey;
+  border: ${props => props.theme.borders.standard}
+  border-bottom: ${props => props.theme.borders.thick};
   border-radius: 4.2% 4.2% 5px 5px;
   margin-bottom: 0.5rem;
   margin-right: 0.5rem;

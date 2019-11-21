@@ -1,14 +1,14 @@
-import React from 'react';
-import CardItemControls from '../CardItemControls';
+import React from "react";
+import CardItemControls from "../CardItemControls";
 
-import convertTextToSymbols from '../../../../utils/convertTextToSymbols';
+import convertTextToSymbols from "../../../../utils/convertTextToSymbols";
 import {
   StyledTextModeCardItem,
   TextModeCardItemHeader,
   TextModeCardItemContent,
   TextModeCardItemOracleText,
   TextModeCardItemFlavorText
-} from './styles';
+} from "./styles";
 
 const TextModeCardItem = props => {
   const {
@@ -24,17 +24,21 @@ const TextModeCardItem = props => {
   return (
     <StyledTextModeCardItem>
       {card.card_faces.length === 0 ? (
-        <React.Fragment>
+        <>
           <TextModeCardItemHeader>
             <p>{card.name.trim()}</p>
-            {card.mana_cost && card.mana_cost.length !== 0 && convertTextToSymbols(card.mana_cost)}
+            {card.mana_cost &&
+              card.mana_cost.length !== 0 &&
+              convertTextToSymbols(card.mana_cost)}
           </TextModeCardItemHeader>
           <TextModeCardItemContent>
             <div>
               <p>{card.type_line}</p>
             </div>
             {card.oracle_text !== null && (
-              <TextModeCardItemOracleText>{convertTextToSymbols(card.oracle_text)}</TextModeCardItemOracleText>
+              <TextModeCardItemOracleText>
+                {convertTextToSymbols(card.oracle_text)}
+              </TextModeCardItemOracleText>
             )}
             {card.power && card.toughness ? (
               <div>
@@ -50,21 +54,24 @@ const TextModeCardItem = props => {
               </TextModeCardItemFlavorText>
             )}
           </TextModeCardItemContent>
-        </React.Fragment>
+        </>
       ) : (
         card.card_faces.map(card_face => {
           return (
             <React.Fragment key={`${card.scryfall_id}__${card_face.name}`}>
               <TextModeCardItemHeader>
                 <p>{card_face.name}</p>
-                {card_face.mana_cost.length !== 0 && convertTextToSymbols(card_face.mana_cost)}
+                {card_face.mana_cost.length !== 0 &&
+                  convertTextToSymbols(card_face.mana_cost)}
               </TextModeCardItemHeader>
               <TextModeCardItemContent>
                 <div>
                   <p>{card_face.type_line}</p>
                 </div>
                 {card_face.oracle_text !== null && (
-                  <TextModeCardItemOracleText>{convertTextToSymbols(card_face.oracle_text)}</TextModeCardItemOracleText>
+                  <TextModeCardItemOracleText>
+                    {convertTextToSymbols(card_face.oracle_text)}
+                  </TextModeCardItemOracleText>
                 )}
                 {card_face.power && card_face.toughness && (
                   <div>

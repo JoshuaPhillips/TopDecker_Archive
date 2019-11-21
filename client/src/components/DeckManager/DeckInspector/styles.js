@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledDeckInspector = styled.main`
   flex-grow: 3;
@@ -16,8 +16,8 @@ export const DeckDetails = styled.div`
     text-transform: uppercase;
     letter-spacing: 0.2rem;
 
-    background-color: ${props => props.theme.colors.primary};
-    color: ${props => props.theme.colors.background};
+    background-color: ${props => props.theme.colors.deepBlue};
+    color: ${props => props.theme.colors.whiteSmoke};
     border-radius: 0 10px 10px 0;
     font-weight: ${props => props.theme.fonts.weights.bold};
     text-align: center;

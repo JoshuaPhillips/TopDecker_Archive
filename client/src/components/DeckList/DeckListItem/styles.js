@@ -1,11 +1,11 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledDeckListItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin: 1rem 0;
-  border: 2px solid ${props => props.theme.colors.primary};
+  border: 2px solid ${props => props.theme.colors.deepBlue};
   padding: 1rem;
   cursor: pointer;
   transition: 0.2s all ease-in-out;

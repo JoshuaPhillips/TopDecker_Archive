@@ -6,7 +6,7 @@ export const StyledSearchResultListItem = styled.div`
   justify-content: space-between;
   padding: 0.5rem;
   margin-top: 0.5rem;
-  border-bottom: 2px solid lightgrey;
+  border-bottom: ${props => props.theme.borders.thick};
   background-color: white;
 `;
 

@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const StyledFooter = styled.footer`
-  background-color: ${props => props.theme.colors.primary};
-  color: ${props => props.theme.colors.background};
+  background-color: ${props => props.theme.colors.deepBlue};
+  color: ${props => props.theme.colors.whiteSmoke};
   font-weight: ${props => props.theme.fonts.weights.bold}
   padding: 1rem;
   font-style: italic;

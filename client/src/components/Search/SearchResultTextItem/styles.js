@@ -1,12 +1,12 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledSearchResultTextItem = styled.div`
   display: flex;
   flex-direction: column;
   background-color: white;
-  border: 1px solid lightgrey;
+  border: ${props => props.theme.borders.standard}
   border-top: 3px solid #385170;
-  border-bottom: 2px solid lightgrey;
+  border-bottom: ${props => props.theme.borders.thick};
   border-radius: 5px;
 
   width: calc((100% - 1rem) / 3);

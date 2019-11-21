@@ -1,14 +1,16 @@
-import styled from 'styled-components';
-import { Mana } from '@saeris/react-mana';
+import styled from "styled-components";
+import { Mana } from "@saeris/react-mana";
 
-export const StyledDeckInspectorToolbar = styled.div.attrs(props => ({ disabled: props.disabled }))`
+export const StyledDeckInspectorToolbar = styled.div.attrs(props => ({
+  disabled: props.disabled
+}))`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   padding: 1rem;
   background-color: white;
-  border: 1px solid lightgrey;
-  border-bottom: 2px solid lightgrey;
+  border: ${props => props.theme.borders.standard}
+  border-bottom: ${props => props.theme.borders.thick};
 
   .DeckInspectorToolbarHeader {
     width: 100%;
@@ -16,11 +18,14 @@ export const StyledDeckInspectorToolbar = styled.div.attrs(props => ({ disabled:
     justify-content: space-between;
     align-items: center;
     padding-bottom: 0.5rem;
-    border-bottom: 3px solid ${props => props.theme.colors.primary};
+    border-bottom: 3px solid ${props => props.theme.colors.deepBlue};
 
     h1 {
       text-transform: uppercase;
-      color: ${props => (props.danger ? props.theme.colors.danger : props.theme.colors.primary)};
+      color: ${props =>
+        props.danger
+          ? props.theme.colors.fireBrick
+          : props.theme.colors.deepBlue};
       font-size: ${props => props.theme.fonts.sizes.extraLarge};
       font-weight: ${props => props.theme.fonts.weights.bold};
     }
@@ -58,5 +63,6 @@ export const CardTypeFilterIcon = styled(Mana)`
   margin: 0 0.25rem;
   cursor: pointer;
 
-  color: ${props => (props.disabled ? 'lightgrey' : props.theme.colors.primary)};
+  color: ${props =>
+    props.disabled ? "lightgrey" : props.theme.colors.deepBlue};
 `;

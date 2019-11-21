@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const ModeToggleContainer = styled.div`
   display: flex;
@@ -10,13 +10,13 @@ export const ModeToggleContainer = styled.div`
     flex-grow: 1;
     flex-basis: 0;
     padding: 0.25rem 0.5rem;
-    border: 2px solid ${props => props.theme.colors.primary};
+    border: 2px solid ${props => props.theme.colors.deepBlue};
     border-right: 0;
-    color: ${props => props.theme.colors.primary};
+    color: ${props => props.theme.colors.deepBlue};
 
     &:disabled {
-      background-color: ${props => props.theme.colors.primary};
-      color: ${props => props.theme.colors.background};
+      background-color: ${props => props.theme.colors.deepBlue};
+      color: ${props => props.theme.colors.whiteSmoke};
     }
 
     &:first-child {
@@ -24,7 +24,7 @@ export const ModeToggleContainer = styled.div`
     }
 
     &:last-child {
-      border-right: 2px solid ${props => props.theme.colors.primary}
+      border-right: 2px solid ${props => props.theme.colors.deepBlue}
       border-radius: 0 5px 5px 0;
     }
   }

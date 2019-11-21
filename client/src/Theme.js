@@ -1,8 +1,8 @@
 // colors
 
-const color__primary = "#385170";
-const color__background = "whitesmoke";
-const color__danger = "firebrick";
+const color__deepBlue = "#385170";
+const color__whiteSmoke = "whitesmoke";
+const color__fireBrick = "firebrick";
 
 // fonts
 
@@ -12,20 +12,15 @@ const calculateFontSize = modifier => {
   return font_size__base + modifier * 0.25 + "rem";
 };
 
-// borders
-
-const addStandardBorder = () => {
-  return "border: 1px solid lightgrey; border-bottom: 2px solid lightgrey;";
-};
-
 export const Theme = {
   borders: {
-    standard: addStandardBorder()
+    standard: `1px solid lightgrey`,
+    thick: `2px solid lightgrey`
   },
   colors: {
-    primary: color__primary,
-    background: color__background,
-    danger: color__danger
+    deepBlue: color__deepBlue,
+    whiteSmoke: color__whiteSmoke,
+    fireBrick: color__fireBrick
   },
   fonts: {
     family: "sans-serif",

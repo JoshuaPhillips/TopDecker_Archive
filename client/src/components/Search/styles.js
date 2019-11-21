@@ -12,8 +12,8 @@ export const SearchFormWrapper = styled.div`
   height: 100%;
   overflow-y: scroll;
   margin-right: 0.5rem;
-  border: 1px solid lightgrey;
-  border-bottom: 2px solid lightgrey;
+  border: ${props => props.theme.borders.standard}
+  border-bottom: ${props => props.theme.borders.thick};
   border-radius: 5px;
   background-color: white;
 `;
@@ -27,11 +27,11 @@ export const CardColorSelectionGroup = styled.div`
 export const CardColorSelectionButton = styled.button.attrs(() => ({
   type: "button"
 }))`
-    color: ${props => props.theme.colors.primary} 
+    color: ${props => props.theme.colors.deepBlue} 
     border: ${props =>
       props.selected
-        ? `2px solid ${props.theme.colors.primary}`
-        : `2px solid lightgrey`};
+        ? `2px solid ${props.theme.colors.deepBlue}`
+        : `${props => props.theme.borders.thick}`};
     box-shadow: ${props => (props.selected ? `1px 3px 8px lightgrey` : "none")}
     display: flex;
     align-items: center;
@@ -87,8 +87,8 @@ export const SearchFormSubmitButtonWrapper = styled.div`
 export const SearchResultsWrapper = styled.div`
   width: 60%;
   padding: 1rem;
-  border: 1px solid lightgrey;
-  border-bottom: 2px solid lightgrey;
+  border: ${props => props.theme.borders.standard}
+  border-bottom: ${props => props.theme.borders.thick};
   border-radius: 5px;
   background-color: white;
   overflow: scroll;

@@ -29,7 +29,7 @@ const Header = () => {
       </h1>
       {currentUserId && (
         <Nav>
-          <React.Fragment>
+          <>
             <NavigationLink as={NavLink} to="/account">
               <FontAwesomeIcon icon={faUserCircle} fixedWidth />
               Account
@@ -50,7 +50,7 @@ const Header = () => {
               <FontAwesomeIcon icon={faPowerOff} fixedWidth />
               Logout
             </NavigationLink>
-          </React.Fragment>
+          </>
         </Nav>
       )}
     </StyledHeader>

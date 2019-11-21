@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 export const GET_ACCOUNT_DETAILS = gql`
   query GetAccountDetails {
@@ -16,12 +16,20 @@ export const SAVE_ACCOUNT_DETAILS = gql`
   mutation SaveAccountDetails($newDetails: UserDetailsInput!) {
     editUser(newDetails: $newDetails) {
       firstName
+      lastName
+      username
+      email
+      avatarUrl
     }
   }
 `;
 
 export const CHANGE_PASSWORD = gql`
-  mutation ChangePassword($currentPassword: String!, $newPassword: String!, $confirmationPassword: String!) {
+  mutation ChangePassword(
+    $currentPassword: String!
+    $newPassword: String!
+    $confirmationPassword: String!
+  ) {
     changePassword(
       currentPassword: $currentPassword
       newPassword: $newPassword

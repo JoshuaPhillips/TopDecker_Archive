@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledSidebarSearchResult = styled.div`
   display: flex;
@@ -7,7 +7,8 @@ export const StyledSidebarSearchResult = styled.div`
   border-top: 1px dashed lightgrey;
   cursor: pointer;
   transition: 0.1s all ease-in-out;
-  color: ${props => (props.unavailable ? 'lightgrey' : props.theme.colors.primary)}
+  color: ${props =>
+    props.unavailable ? "lightgrey" : props.theme.colors.deepBlue}
   user-select: none;
 
   &:first-child {
@@ -15,8 +16,12 @@ export const StyledSidebarSearchResult = styled.div`
   }
 
   &:hover {
-    background-color: ${props => (props.unavailable ? props.theme.colors.background : props.theme.colors.primary)};
-    color: ${props => (props.unavailable ? 'lightgrey' : props.theme.colors.background)};
+    background-color: ${props =>
+      props.unavailable
+        ? props.theme.colors.whiteSmoke
+        : props.theme.colors.deepBlue};
+    color: ${props =>
+      props.unavailable ? "lightgrey" : props.theme.colors.whiteSmoke};
   }
 
   .SidebarSearchResultHeader {

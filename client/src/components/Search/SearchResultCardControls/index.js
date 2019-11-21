@@ -1,12 +1,20 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faMinus, faExchangeAlt, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import { faCheckCircle as faRegularCheckCircle } from '@fortawesome/free-regular-svg-icons';
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPlus,
+  faMinus,
+  faExchangeAlt,
+  faCheckCircle
+} from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle as faRegularCheckCircle } from "@fortawesome/free-regular-svg-icons";
 
-import { validateAddCard } from '../../../utils/validateAddCard';
-import { capitalise } from '../../../utils/capitalise';
+import { validateAddCard } from "../../../utils/validateAddCard";
+import { capitalise } from "../../../utils/capitalise";
 
-import { StyledSearchResultCardControls, SearchResultCardControlGroup } from './styles';
+import {
+  StyledSearchResultCardControls,
+  SearchResultCardControlGroup
+} from "./styles";
 
 const SearchResultCardControls = props => {
   const { deck, result, updateCardList } = props;
@@ -27,7 +35,7 @@ const SearchResultCardControls = props => {
     );
   }
 
-  if (deck && result.legalities[deck.format] !== 'legal') {
+  if (deck && result.legalities[deck.format] !== "legal") {
     return (
       <StyledSearchResultCardControls>
         <p>This card isn't legal in {capitalise(deck.format)}.</p>
@@ -35,7 +43,7 @@ const SearchResultCardControls = props => {
     );
   }
 
-  if (deck.format === 'commander') {
+  if (deck.format === "commander") {
     if (result.scryfall_id === deck.commander.scryfall_id) {
       return (
         <StyledSearchResultCardControls>
@@ -44,7 +52,10 @@ const SearchResultCardControls = props => {
       );
     }
 
-    const combinedColorIdentity = [...deck.commander.color_identity, ...result.color_identity];
+    const combinedColorIdentity = [
+      ...deck.commander.color_identity,
+      ...result.color_identity
+    ];
     const uniques = [...new Set(combinedColorIdentity)];
 
     if (uniques.length > deck.commander.color_identity.length) {
@@ -57,8 +68,16 @@ const SearchResultCardControls = props => {
     }
     return (
       <StyledSearchResultCardControls>
-        <button type='button' onClick={() => updateCardList('mainDeck', matchedCard ? 'remove' : 'add', result)}>
-          <FontAwesomeIcon icon={matchedCard ? faCheckCircle : faRegularCheckCircle} fixedWidth />
+        <button
+          type="button"
+          onClick={() =>
+            updateCardList("mainDeck", matchedCard ? "remove" : "add", result)
+          }
+        >
+          <FontAwesomeIcon
+            icon={matchedCard ? faCheckCircle : faRegularCheckCircle}
+            fixedWidth
+          />
         </button>
       </StyledSearchResultCardControls>
     );
@@ -66,33 +85,42 @@ const SearchResultCardControls = props => {
 
   return (
     <StyledSearchResultCardControls>
-      <React.Fragment>
+      <>
         <SearchResultCardControlGroup>
           <div>
             <p>Main</p>
           </div>
 
           <div>
-            <p>x {matchedCard ? matchedCard.mainDeckCount : '0'}</p>
+            <p>x {matchedCard ? matchedCard.mainDeckCount : "0"}</p>
           </div>
 
           <div>
             <button
-              type='button'
-              disabled={!validateAddCard(deck, result, 'mainDeck')}
-              onClick={() => updateCardList('mainDeck', 'add', result)}>
+              type="button"
+              disabled={!validateAddCard(deck, result, "mainDeck")}
+              onClick={() => updateCardList("mainDeck", "add", result)}
+            >
               <FontAwesomeIcon icon={faPlus} fixedWidth />
             </button>
             <button
-              type='button'
-              disabled={matchedCard !== undefined && matchedCard.mainDeckCount === 0}
-              onClick={() => updateCardList('mainDeck', 'remove', result)}>
+              type="button"
+              disabled={
+                matchedCard !== undefined && matchedCard.mainDeckCount === 0
+              }
+              onClick={() => updateCardList("mainDeck", "remove", result)}
+            >
               <FontAwesomeIcon icon={faMinus} fixedWidth />
             </button>
             <button
-              type='button'
-              disabled={matchedCard !== undefined && matchedCard.mainDeckCount === 0}
-              onClick={() => updateCardList('sideboard', 'transferToSideboard', result)}>
+              type="button"
+              disabled={
+                matchedCard !== undefined && matchedCard.mainDeckCount === 0
+              }
+              onClick={() =>
+                updateCardList("sideboard", "transferToSideboard", result)
+              }
+            >
               <FontAwesomeIcon icon={faExchangeAlt} fixedWidth />
             </button>
           </div>
@@ -103,31 +131,40 @@ const SearchResultCardControls = props => {
             <p>Side</p>
           </div>
           <div>
-            <p>x {matchedCard ? matchedCard.sideboardCount : '0'}</p>
+            <p>x {matchedCard ? matchedCard.sideboardCount : "0"}</p>
           </div>
 
           <div>
             <button
-              type='button'
-              disabled={!validateAddCard(deck, result, 'sideboard')}
-              onClick={() => updateCardList('sideboard', 'add', result)}>
+              type="button"
+              disabled={!validateAddCard(deck, result, "sideboard")}
+              onClick={() => updateCardList("sideboard", "add", result)}
+            >
               <FontAwesomeIcon icon={faPlus} fixedWidth />
             </button>
             <button
-              type='button'
-              disabled={matchedCard !== undefined && matchedCard.sideboardCount === 0}
-              onClick={() => updateCardList('sideboard', 'remove', result)}>
+              type="button"
+              disabled={
+                matchedCard !== undefined && matchedCard.sideboardCount === 0
+              }
+              onClick={() => updateCardList("sideboard", "remove", result)}
+            >
               <FontAwesomeIcon icon={faMinus} fixedWidth />
             </button>
             <button
-              type='button'
-              disabled={matchedCard !== undefined && matchedCard.sideboardCount === 0}
-              onClick={() => updateCardList('mainDeck', 'transferToMainDeck', result)}>
+              type="button"
+              disabled={
+                matchedCard !== undefined && matchedCard.sideboardCount === 0
+              }
+              onClick={() =>
+                updateCardList("mainDeck", "transferToMainDeck", result)
+              }
+            >
               <FontAwesomeIcon icon={faExchangeAlt} fixedWidth />
             </button>
           </div>
         </SearchResultCardControlGroup>
-      </React.Fragment>
+      </>
     </StyledSearchResultCardControls>
   );
 };

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledTextModeContainer = styled.div`
   h1 {
@@ -17,9 +17,9 @@ export const StyledTextModeCardItem = styled.div`
   flex-direction: column;
   margin: 0.5rem 0.5rem 0 0;
   background-color: white;
-  border: 1px solid lightgrey;
+  border: ${props => props.theme.borders.standard}
   border-top: 3px solid #385170;
-  border-bottom: 2px solid lightgrey;
+  border-bottom: ${props => props.theme.borders.thick};
   border-radius: 5px;
 
   width: calc((100% - 0.5rem) / 2);

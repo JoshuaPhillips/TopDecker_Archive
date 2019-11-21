@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import Card from '../../../Card';
-import CardItemControls from '../CardItemControls';
+import Card from "../../../Card";
+import CardItemControls from "../CardItemControls";
 
-import { StyledGalleryModeCardItem } from './styles';
+import { StyledGalleryModeCardItem } from "./styles";
 
 const GalleryModeCardItem = props => {
   const {
@@ -18,7 +18,7 @@ const GalleryModeCardItem = props => {
 
   return (
     <StyledGalleryModeCardItem>
-      <React.Fragment>
+      <>
         <Card card={card} />
         <CardItemControls
           type={type}
@@ -31,7 +31,7 @@ const GalleryModeCardItem = props => {
           totalMainDeckCount={totalMainDeckCount}
           totalSideboardCount={totalSideboardCount}
         />
-      </React.Fragment>
+      </>
     </StyledGalleryModeCardItem>
   );
 };

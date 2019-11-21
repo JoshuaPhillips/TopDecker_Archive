@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import convertTextToSymbols from '../../../utils/convertTextToSymbols';
+import convertTextToSymbols from "../../../utils/convertTextToSymbols";
 
-import SearchResultCardControls from '../SearchResultCardControls';
+import SearchResultCardControls from "../SearchResultCardControls";
 
 import {
   StyledSearchResultTextItem,
@@ -11,7 +11,7 @@ import {
   TextModeCardItemOracleText,
   TextModeCardItemFlavorText,
   SearchResultCardControlsWrapper
-} from './styles';
+} from "./styles";
 
 const SearchResultTextItem = props => {
   const { deck, result, updateCardListHandler } = props;
@@ -19,17 +19,21 @@ const SearchResultTextItem = props => {
   return (
     <StyledSearchResultTextItem>
       {result.card_faces.length === 0 ? (
-        <React.Fragment>
+        <>
           <TextModeCardItemHeader>
             <p>{result.name.trim()}</p>
-            {result.mana_cost && result.mana_cost.length !== 0 && convertTextToSymbols(result.mana_cost)}
+            {result.mana_cost &&
+              result.mana_cost.length !== 0 &&
+              convertTextToSymbols(result.mana_cost)}
           </TextModeCardItemHeader>
           <TextModeCardItemContent>
             <div>
               <p>{result.type_line}</p>
             </div>
             {result.oracle_text !== null && (
-              <TextModeCardItemOracleText>{convertTextToSymbols(result.oracle_text)}</TextModeCardItemOracleText>
+              <TextModeCardItemOracleText>
+                {convertTextToSymbols(result.oracle_text)}
+              </TextModeCardItemOracleText>
             )}
             {result.power && result.toughness ? (
               <div>
@@ -45,21 +49,24 @@ const SearchResultTextItem = props => {
               </TextModeCardItemFlavorText>
             )}
           </TextModeCardItemContent>
-        </React.Fragment>
+        </>
       ) : (
         result.card_faces.map(card_face => {
           return (
             <React.Fragment key={`${result.scryfall_id}__${card_face.name}`}>
               <TextModeCardItemHeader>
                 <p>{card_face.name}</p>
-                {card_face.mana_cost.length !== 0 && convertTextToSymbols(card_face.mana_cost)}
+                {card_face.mana_cost.length !== 0 &&
+                  convertTextToSymbols(card_face.mana_cost)}
               </TextModeCardItemHeader>
               <TextModeCardItemContent>
                 <div>
                   <p>{card_face.type_line}</p>
                 </div>
                 {card_face.oracle_text !== null && (
-                  <TextModeCardItemOracleText>{convertTextToSymbols(card_face.oracle_text)}</TextModeCardItemOracleText>
+                  <TextModeCardItemOracleText>
+                    {convertTextToSymbols(card_face.oracle_text)}
+                  </TextModeCardItemOracleText>
                 )}
                 {card_face.power && card_face.toughness && (
                   <div>
@@ -84,7 +91,11 @@ const SearchResultTextItem = props => {
         })
       )}
       <SearchResultCardControlsWrapper>
-        <SearchResultCardControls deck={deck} result={result} updateCardList={updateCardListHandler} />
+        <SearchResultCardControls
+          deck={deck}
+          result={result}
+          updateCardList={updateCardListHandler}
+        />
       </SearchResultCardControlsWrapper>
     </StyledSearchResultTextItem>
   );

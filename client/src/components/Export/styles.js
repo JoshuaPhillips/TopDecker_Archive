@@ -1,11 +1,11 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledExport = styled.main`
   width: 50%;
   margin: 4rem auto 1rem;
-  border: 1px solid lightgrey;
-  border-bottom: 2px solid lightgrey;
-  border-right: 2px solid lightgrey;
+  border: ${props => props.theme.borders.standard}
+  border-bottom: ${props => props.theme.borders.thick};
+  border-right: ${props => props.theme.borders.thick};
   padding: 2rem;
 
   button {
@@ -22,9 +22,9 @@ export const ExportTextArea = styled.textarea`
   resize: none;
   line-height: 150%;
   letter-spacing: 0.1rem;
-  border: 2px solid lightgrey;
+  border: ${props => props.theme.borders.thick};
   border-top: 1px solid lightgrey;
-  border-left: 5px solid ${props => props.theme.colors.primary};
+  border-left: 5px solid ${props => props.theme.colors.deepBlue};
   outline: none;
   font-weight: ${props => props.theme.fonts.weights.bold};
 `;

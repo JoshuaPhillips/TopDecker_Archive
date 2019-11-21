@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { ModeToggleContainer } from '../../../shared/ModeToggles';
+import styled from "styled-components";
+import { ModeToggleContainer } from "../../../shared/ModeToggles";
 
 export const StyledDeckManagerSidebar = styled.aside`
   width: 30%;
@@ -62,7 +62,7 @@ export const QuickSearchFormButtonsWrapper = styled.div`
 
 export const OtherDecksContainer = styled.div`
   height: 25%;
-  border-top: 2px solid ${props => props.theme.colors.primary};
+  border-top: 2px solid ${props => props.theme.colors.deepBlue};
 
   padding: 0.5rem 0;
   min-height: 15%;

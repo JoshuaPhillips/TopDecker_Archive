@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledCheckbox = styled.div`
   display: flex;
@@ -10,8 +10,11 @@ export const StyledCheckbox = styled.div`
     align-items: center;
     cursor: pointer;
     margin-right: 0.5rem;
-    border: 1px solid lightgrey;
-    color: ${props => (props.selected ? props.theme.colors.primary : props.theme.colors.background)};
+    border: ${props => props.theme.borders.standard}
+    color: ${props =>
+      props.selected
+        ? props.theme.colors.deepBlue
+        : props.theme.colors.whiteSmoke};
     transition: all 0.1s ease-in-out;
   }
 

@@ -1,46 +1,56 @@
-import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
-import Select from 'react-select';
+import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
+import Select from "react-select";
 
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { GET_COMMANDER_SEARCH_RESULTS, CREATE_NEW_DECK } from './graphql';
+import { useQuery, useMutation } from "@apollo/react-hooks";
+import { GET_COMMANDER_SEARCH_RESULTS, CREATE_NEW_DECK } from "./graphql";
 
-import { FormatSelectionWrapper, AddDeckFormButtonsWrapper } from './styles';
-import { FormRow, FormRowTitle, FormRowContent, TextInput } from '../../../shared/Forms';
-import { Button } from '../../../shared/Buttons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
-import Checkbox from '../../Checkbox';
+import { FormatSelectionWrapper, AddDeckFormButtonsWrapper } from "./styles";
+import {
+  FormRow,
+  FormRowTitle,
+  FormRowContent,
+  TextInput
+} from "../../../shared/Forms";
+import { Button } from "../../../shared/Buttons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
+import Checkbox from "../../Checkbox";
 
 const AddDeckForm = props => {
-  const [name, setName] = useState('');
-  const [format, setFormat] = useState('standard');
-  const [commander, setCommander] = useState({ name: '', id: '' });
+  const [name, setName] = useState("");
+  const [format, setFormat] = useState("standard");
+  const [commander, setCommander] = useState({ name: "", id: "" });
   const [commanderSearchResults, setCommanderSearchResults] = useState([]);
 
   const { cancelAddDeckHandler } = props;
 
-  const GetCommanderSearchResultsQueryResponse = useQuery(GET_COMMANDER_SEARCH_RESULTS, {
-    skip: !commander.name || commander.name.length <= 2,
-    variables: {
-      searchParams: {
-        name: commander.name,
-        is: 'commander'
+  const GetCommanderSearchResultsQueryResponse = useQuery(
+    GET_COMMANDER_SEARCH_RESULTS,
+    {
+      skip: !commander.name || commander.name.length <= 2,
+      variables: {
+        searchParams: {
+          name: commander.name,
+          is: "commander"
+        }
+      },
+      onCompleted() {
+        const {
+          cards
+        } = GetCommanderSearchResultsQueryResponse.data.searchCards;
+
+        const results = cards.map(card => {
+          return {
+            label: card.name,
+            value: card.scryfall_id
+          };
+        });
+
+        setCommanderSearchResults(results);
       }
-    },
-    onCompleted() {
-      const { cards } = GetCommanderSearchResultsQueryResponse.data.searchCards;
-
-      const results = cards.map(card => {
-        return {
-          label: card.name,
-          value: card.scryfall_id
-        };
-      });
-
-      setCommanderSearchResults(results);
     }
-  });
+  );
 
   const [CreateNewDeckMutation] = useMutation(CREATE_NEW_DECK, {
     variables: {
@@ -61,8 +71,12 @@ const AddDeckForm = props => {
     }
 
     switch (format) {
-      case 'commander':
-        if (commander.id === '' || commander.id === null || commander.id === undefined) {
+      case "commander":
+        if (
+          commander.id === "" ||
+          commander.id === null ||
+          commander.id === undefined
+        ) {
           return false;
         }
         break;
@@ -77,7 +91,7 @@ const AddDeckForm = props => {
   // Handle the event listener when the dropdown search input is changed
   const handleCommanderInputChange = (inputValue, action) => {
     switch (action.action) {
-      case 'input-change':
+      case "input-change":
         setCommander({ ...commander, name: inputValue });
         break;
 
@@ -89,12 +103,12 @@ const AddDeckForm = props => {
   // Handle the event listener when a dropdown option is selected
   const handleCommanderOptionSelect = (option, action) => {
     switch (action.action) {
-      case 'select-option':
+      case "select-option":
         setCommander({ name: option.label, id: option.value });
         break;
 
-      case 'clear':
-        setCommander({ name: '', id: '' });
+      case "clear":
+        setCommander({ name: "", id: "" });
         setCommanderSearchResults([]);
         break;
 
@@ -104,18 +118,18 @@ const AddDeckForm = props => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <form>
         <FormRow>
           <FormRowTitle>
-            <label htmlFor='name'>Name</label>
+            <label htmlFor="name">Name</label>
           </FormRowTitle>
           <FormRowContent>
             <TextInput
-              type='text'
-              id='name'
+              type="text"
+              id="name"
               value={name}
-              placeholder='Minimum 4 characters'
+              placeholder="Minimum 4 characters"
               onChange={e => setName(e.target.value)}
             />
           </FormRowContent>
@@ -123,53 +137,66 @@ const AddDeckForm = props => {
 
         <FormRow>
           <FormRowTitle>
-            <label htmlFor='format'>Format</label>
+            <label htmlFor="format">Format</label>
           </FormRowTitle>
           <FormRowContent>
             <FormatSelectionWrapper>
-              <Checkbox selected={format === 'standard'} onClick={() => setFormat('standard')}>
+              <Checkbox
+                selected={format === "standard"}
+                onClick={() => setFormat("standard")}
+              >
                 Standard
               </Checkbox>
-              <Checkbox selected={format === 'modern'} onClick={() => setFormat('modern')}>
+              <Checkbox
+                selected={format === "modern"}
+                onClick={() => setFormat("modern")}
+              >
                 Modern
               </Checkbox>
-              <Checkbox selected={format === 'commander'} onClick={() => setFormat('commander')}>
+              <Checkbox
+                selected={format === "commander"}
+                onClick={() => setFormat("commander")}
+              >
                 Commander
               </Checkbox>
             </FormatSelectionWrapper>
           </FormRowContent>
         </FormRow>
 
-        {format === 'commander' && (
+        {format === "commander" && (
           <FormRow>
             <FormRowTitle>
-              <label htmlFor='commander'>Commander</label>
+              <label htmlFor="commander">Commander</label>
             </FormRowTitle>
             <FormRowContent>
               <Select
-                id='commander'
+                id="commander"
                 onChange={handleCommanderOptionSelect}
                 onInputChange={handleCommanderInputChange}
                 options={commanderSearchResults}
                 isClearable
-                placeholder='Name of your Commander?'
-                noOptionsMessage={() => 'No Results Found.'}
+                placeholder="Name of your Commander?"
+                noOptionsMessage={() => "No Results Found."}
               />
             </FormRowContent>
           </FormRow>
         )}
       </form>
       <AddDeckFormButtonsWrapper>
-        <Button type='button' disabled={!checkFormValidity()} onClick={() => CreateNewDeckMutation()}>
+        <Button
+          type="button"
+          disabled={!checkFormValidity()}
+          onClick={() => CreateNewDeckMutation()}
+        >
           <FontAwesomeIcon icon={faPlus} fixedWidth />
           Create
         </Button>
-        <Button type='button' onClick={() => cancelAddDeckHandler()}>
+        <Button type="button" onClick={() => cancelAddDeckHandler()}>
           <FontAwesomeIcon icon={faTimes} fixedWidth />
           Cancel
         </Button>
       </AddDeckFormButtonsWrapper>
-    </React.Fragment>
+    </>
   );
 };
 

@@ -1,19 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import DeckInspectorToolbar from './DeckInspectorToolbar';
+import DeckInspectorToolbar from "./DeckInspectorToolbar";
 
-import GalleryModeCardItem from './GalleryModeCardItem';
-import TextModeCardItem from './TextModeCardItem';
-import ListModeCardItem from './ListModeCardItem';
+import GalleryModeCardItem from "./GalleryModeCardItem";
+import TextModeCardItem from "./TextModeCardItem";
+import ListModeCardItem from "./ListModeCardItem";
 
-import filterCardList from '../../../utils/filterCardList';
+import filterCardList from "../../../utils/filterCardList";
 
-import { StyledDeckInspector, DeckDetails, CardListContainer } from './styles';
-import { SubSectionHeader } from '../../../shared/Headers';
+import { StyledDeckInspector, DeckDetails, CardListContainer } from "./styles";
+import { SubSectionHeader } from "../../../shared/Headers";
 
 const DeckInspector = props => {
-  const { deck, sortMode, filters, currentUserOwnsDeck, updateCardListHandler } = props;
-  const [viewMode, setViewMode] = useState('text');
+  const {
+    deck,
+    sortMode,
+    filters,
+    currentUserOwnsDeck,
+    updateCardListHandler
+  } = props;
+  const [viewMode, setViewMode] = useState("text");
 
   const mainDeckList = deck.cardList.filter(card => {
     return card.mainDeckCount !== 0;
@@ -26,7 +32,7 @@ const DeckInspector = props => {
   const filteredMainDeckList = filterCardList(mainDeckList, filters);
   const filteredSideboardList = filterCardList(sideboardList, filters);
 
-  let totalMainDeckCount = deck.format === 'commander' ? 1 : 0;
+  let totalMainDeckCount = deck.format === "commander" ? 1 : 0;
   let totalSideboardCount = 0;
 
   mainDeckList.forEach(({ mainDeckCount }) => {
@@ -41,7 +47,7 @@ const DeckInspector = props => {
     let cardItem;
 
     switch (viewMode) {
-      case 'gallery':
+      case "gallery":
         cardItem = (
           <GalleryModeCardItem
             key={key}
@@ -56,7 +62,7 @@ const DeckInspector = props => {
         );
         return cardItem;
 
-      case 'text':
+      case "text":
         cardItem = (
           <TextModeCardItem
             key={key}
@@ -71,7 +77,7 @@ const DeckInspector = props => {
         );
         return cardItem;
 
-      case 'list':
+      case "list":
         cardItem = (
           <ListModeCardItem
             key={key}
@@ -87,7 +93,9 @@ const DeckInspector = props => {
         return cardItem;
 
       default:
-        return (cardItem = <h2>Sorry, there was a problem loading your cards.</h2>);
+        return (cardItem = (
+          <h2>Sorry, there was a problem loading your cards.</h2>
+        ));
     }
   };
 
@@ -107,30 +115,41 @@ const DeckInspector = props => {
       />
       <DeckDetails>
         <SubSectionHeader>
-          Main Deck ({totalMainDeckCount} / {deck.format === 'commander' ? 100 : 60})
+          Main Deck ({totalMainDeckCount} /{" "}
+          {deck.format === "commander" ? 100 : 60})
         </SubSectionHeader>
         <CardListContainer>
-          {deck.format === 'commander' &&
+          {deck.format === "commander" &&
             renderCardItem(
               deck.commander.scryfall_id,
               { card: deck.commander, mainDeckCount: 1, sideboardCount: 0 },
-              'commander'
+              "commander"
             )}
 
           {filteredMainDeckList.map(cardWithCounts => {
-            return renderCardItem(cardWithCounts.card.scryfall_id, cardWithCounts, 'mainDeck');
+            return renderCardItem(
+              cardWithCounts.card.scryfall_id,
+              cardWithCounts,
+              "mainDeck"
+            );
           })}
         </CardListContainer>
 
-        {deck.format !== 'commander' && (
-          <React.Fragment>
-            <SubSectionHeader>Sideboard ({totalSideboardCount} / 15)</SubSectionHeader>
+        {deck.format !== "commander" && (
+          <>
+            <SubSectionHeader>
+              Sideboard ({totalSideboardCount} / 15)
+            </SubSectionHeader>
             <CardListContainer>
               {filteredSideboardList.map(cardWithCounts => {
-                return renderCardItem(cardWithCounts.card.scryfall_id, cardWithCounts, 'sideboard');
+                return renderCardItem(
+                  cardWithCounts.card.scryfall_id,
+                  cardWithCounts,
+                  "sideboard"
+                );
               })}
             </CardListContainer>
-          </React.Fragment>
+          </>
         )}
       </DeckDetails>
     </StyledDeckInspector>

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledGalleryModeContainer = styled.div`
   max-height: 100%;
@@ -16,8 +16,8 @@ export const GalleryModeCardListContainer = styled.div`
 `;
 
 export const StyledGalleryModeCardItem = styled.div`
-  border: 1px solid lightgrey;
-  border-bottom: 2px solid lightgrey;
+  border: ${props => props.theme.borders.standard}
+  border-bottom: ${props => props.theme.borders.thick};
   background-color: white;
   border-radius: 4.2% 4.2% 5px 5px;
   margin: 0.5rem 0.5rem 0 0;

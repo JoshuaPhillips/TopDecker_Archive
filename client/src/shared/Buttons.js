@@ -5,27 +5,36 @@ export const ButtonGroup = styled.div`
 `;
 
 export const Button = styled.button`
-  border: 2px solid ${props => props.theme.colors.primary}
+  border: 2px solid ${({
+    theme: {
+      colors: { deepBlue }
+    }
+  }) => deepBlue}
   background-color: ${props =>
-    props.inverted ? "inherit" : props.theme.colors.primary}
-  color: ${props =>
-    props.inverted ? props.theme.colors.primary : props.theme.colors.background}
+    props.inverted ? "inherit" : props.theme.colors.deepBlue}
+  color: ${({
+    inverted,
+    theme: {
+      colors: { deepBlue, whiteSmoke }
+    }
+  }) => (inverted ? deepBlue : whiteSmoke)}
   padding: 0.5rem;
-  
   border-radius: 3px;
   
   transition: .2s all ease-in-out;
 
   &:hover {
-    background-color: ${props =>
-      props.inverted
-        ? props.theme.colors.primary
-        : props.theme.colors.background}
+    background-color: ${({
+      inverted,
+      theme: {
+        colors: { deepBlue, whiteSmoke }
+      }
+    }) => (inverted ? deepBlue : whiteSmoke)}
         
     color: ${props =>
       props.inverted
-        ? props.theme.colors.background
-        : props.theme.colors.primary}
+        ? props.theme.colors.whiteSmoke
+        : props.theme.colors.deepBlue}
   }
 
   &:disabled {
@@ -46,22 +55,24 @@ export const Button = styled.button`
 `;
 
 export const DangerButton = styled(Button)`
-  border: 2px solid ${props => props.theme.colors.danger}
+  border: 2px solid ${props => props.theme.colors.fireBrick}
   background-color: ${props =>
-    props.inverted ? props.theme.colors.danger : "inherit"}
+    props.inverted ? props.theme.colors.fireBrick : "inherit"}
   
   color: ${props =>
-    props.inverted ? props.theme.colors.background : props.theme.colors.danger}
+    props.inverted
+      ? props.theme.colors.whiteSmoke
+      : props.theme.colors.fireBrick}
   
 
   &:hover {
     background-color: ${props =>
       props.inverted
-        ? props.theme.colors.background
-        : props.theme.colors.danger}
+        ? props.theme.colors.whiteSmoke
+        : props.theme.colors.fireBrick}
     color: ${props =>
       props.inverted
-        ? props.theme.colors.danger
-        : props.theme.colors.background}
+        ? props.theme.colors.fireBrick
+        : props.theme.colors.whiteSmoke}
   }
 `;
