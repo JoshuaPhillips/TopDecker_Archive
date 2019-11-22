@@ -11,6 +11,8 @@ export const StyledDeckManagerSidebar = styled.aside`
   ${props => props.theme.borders.standard};
   background-color: white;
   padding: 0.5rem 1rem;
+  border: ${props => props.theme.borders.standard}
+  border-bottom: ${props => props.theme.borders.thick};
 `;
 
 export const QuickSearchContainer = styled.div`

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-import { toast } from "react-toastify";
 
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { GET_AUTH_DATA, GET_DECK_DETAILS, UPDATE_CARD_LIST } from "./graphql";
