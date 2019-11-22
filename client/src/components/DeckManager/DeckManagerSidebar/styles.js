@@ -31,12 +31,18 @@ export const QuickSearchResultsContainer = styled.div`
   border: 2px dashed lightgrey;
   overflow-y: scroll;
   margin-bottom: 1rem;
+  padding: 0.5rem 0;
 
   h1 {
     font-weight: ${props => props.theme.fonts.weights.bold};
     font-size: ${props => props.theme.fonts.sizes.extraLarge};
     text-align: center;
-    padding: 0.5rem 0;
+  }
+
+  p {
+    text-align: center;
+    padding-top: 0.5rem;
+    font-style: italic;
   }
 `;
 

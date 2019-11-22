@@ -27,11 +27,13 @@ export const CardColorSelectionGroup = styled.div`
 export const CardColorSelectionButton = styled.button.attrs(() => ({
   type: "button"
 }))`
-    color: ${props => props.theme.colors.deepBlue} 
+    color: ${props => props.theme.colors.deepBlue}
+    
     border: ${props =>
       props.selected
         ? `2px solid ${props.theme.colors.deepBlue}`
-        : `${props => props.theme.borders.thick}`};
+        : `${props.theme.borders.thick}`};
+    
     box-shadow: ${props => (props.selected ? `1px 3px 8px lightgrey` : "none")}
     display: flex;
     align-items: center;

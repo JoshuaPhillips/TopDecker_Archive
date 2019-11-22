@@ -120,7 +120,27 @@ const DeckInspector = props => {
           {deck.format === "commander" ? 100 : 60})
         </SubSectionHeader>
         {filteredMainDeckList.length === 0 ? (
-          <CardListPlaceholder deck />
+          <>
+            {deck.format === "commander" ? (
+              <CardListContainer>
+                {deck.format === "commander" &&
+                  renderCardItem(
+                    deck.commander.scryfall_id,
+                    {
+                      card: deck.commander,
+                      mainDeckCount: 1,
+                      sideboardCount: 0
+                    },
+                    "commander"
+                  )}
+              </CardListContainer>
+            ) : (
+              <CardListPlaceholder
+                deck
+                currentUserOwnsDeck={currentUserOwnsDeck}
+              />
+            )}
+          </>
         ) : (
           <CardListContainer>
             {deck.format === "commander" &&
@@ -146,7 +166,10 @@ const DeckInspector = props => {
               Sideboard ({totalSideboardCount} / 15)
             </SubSectionHeader>
             {filteredSideboardList.length === 0 ? (
-              <CardListPlaceholder deck />
+              <CardListPlaceholder
+                deck
+                currentUserOwnsDeck={currentUserOwnsDeck}
+              />
             ) : (
               <CardListContainer>
                 {filteredSideboardList.map(cardWithCounts => {

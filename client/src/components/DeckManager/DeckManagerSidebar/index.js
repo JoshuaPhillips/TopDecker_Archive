@@ -118,7 +118,13 @@ const DeckManagerSidebar = props => {
           {selectedResult ? (
             <Card card={selectedResult} />
           ) : searchResults.length === 0 ? (
-            <h1>Search for a card name below.</h1>
+            <>
+              <h1>Search for a card name below.</h1>
+              <p>
+                Only cards that match your deck's format (and commander if there
+                is one) will be shown.
+              </p>
+            </>
           ) : (
             <>
               {loadingResults ? (
