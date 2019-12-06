@@ -1,32 +1,34 @@
-import { ApolloClient } from 'apollo-client';
-import { ApolloLink } from 'apollo-link';
-import { createHttpLink } from 'apollo-link-http';
-import { setContext } from 'apollo-link-context';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import LogCache from 'apollo-cache-logger';
-import { GET_AUTH_DATA } from './graphql';
+import { ApolloClient } from "apollo-client";
+import { ApolloLink } from "apollo-link";
+import { createHttpLink } from "apollo-link-http";
+import { setContext } from "apollo-link-context";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import LogCache from "apollo-cache-logger";
+import { GET_AUTH_DATA } from "./graphql";
 
 const logCache = false;
 
 const cache = logCache
-  ? new LogCache(new InMemoryCache({ addTypename: false }), { logger: msg => console.log(msg) })
+  ? new LogCache(new InMemoryCache({ addTypename: false }), {
+      logger: msg => console.log(msg)
+    })
   : new InMemoryCache();
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:4000'
+  uri: "https://thawing-spire-37444.herokuapp.com/graphql"
 });
 
 const authLink = setContext((_, { headers, ...context }) => {
-  const token = localStorage.getItem('token');
-  const currentUserId = localStorage.getItem('currentUserId');
+  const token = localStorage.getItem("token");
+  const currentUserId = localStorage.getItem("currentUserId");
 
   return {
     ...context,
     headers: {
       ...headers,
-      'Access-Control-Allow-Origin': '*',
-      currentuserid: currentUserId ? currentUserId : '',
-      authorization: token ? `Bearer ${token}` : ''
+      "Access-Control-Allow-Origin": "*",
+      currentuserid: currentUserId ? currentUserId : "",
+      authorization: token ? `Bearer ${token}` : ""
     }
   };
 });
@@ -34,8 +36,12 @@ const authLink = setContext((_, { headers, ...context }) => {
 // this removes '__typename' from any request variables, in case they are obtained from a previous query.
 const cleanTypeNameLink = new ApolloLink((operation, forward) => {
   if (operation.variables) {
-    const omitTypename = (key, value) => (key === '__typename' ? undefined : value);
-    operation.variables = JSON.parse(JSON.stringify(operation.variables), omitTypename);
+    const omitTypename = (key, value) =>
+      key === "__typename" ? undefined : value;
+    operation.variables = JSON.parse(
+      JSON.stringify(operation.variables),
+      omitTypename
+    );
   }
   return forward(operation).map(data => {
     return data;
@@ -55,13 +61,13 @@ const client = new ApolloClient({
   },
   defaultOptions: {
     watchQuery: {
-      errorPolicy: 'all'
+      errorPolicy: "all"
     },
     query: {
-      errorPolicy: 'all'
+      errorPolicy: "all"
     },
     mutation: {
-      errorPolicy: 'all'
+      errorPolicy: "all"
     }
   }
 });
@@ -69,9 +75,9 @@ const client = new ApolloClient({
 cache.writeData({
   data: {
     AuthData: {
-      __typename: 'AuthData',
-      token: localStorage.getItem('token') || null,
-      currentUserId: localStorage.getItem('currentUserId') || null
+      __typename: "AuthData",
+      token: localStorage.getItem("token") || null,
+      currentUserId: localStorage.getItem("currentUserId") || null
     }
   }
 });
@@ -83,9 +89,9 @@ client.onResetStore(() =>
       AuthData: {
         /* These have to check localStorage again, otherwise they're locked into the value for token / currentUserId
         that they were assigned when the cache was first instantiated. I.e. they don't reflect changes on logout. */
-        __typename: 'AuthData',
-        token: localStorage.getItem('token') || null,
-        currentUserId: localStorage.getItem('currentUserId') || null
+        __typename: "AuthData",
+        token: localStorage.getItem("token") || null,
+        currentUserId: localStorage.getItem("currentUserId") || null
       }
     }
   })
