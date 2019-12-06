@@ -1,10 +1,10 @@
-const { ApolloServer } = require('apollo-server');
-const typeDefs = require('./graphql/typeDefs');
-const resolvers = require('./graphql/resolvers');
-const authenticateToken = require('./graphql/middleware/authentication');
+const { ApolloServer } = require("apollo-server");
+const typeDefs = require("./graphql/typeDefs");
+const resolvers = require("./graphql/resolvers");
+const authenticateToken = require("./graphql/middleware/authentication");
 
-const { uri, config } = require('./database/db');
-const mongoose = require('mongoose');
+const { uri, config } = require("./database/db");
+const mongoose = require("mongoose");
 
 const server = new ApolloServer({
   typeDefs,
@@ -18,7 +18,7 @@ mongoose
   .connect(uri, config)
   .then(
     server
-      .listen({ port: process.env.PORT || 4000 })
+      .listen({ port: process.env.PORT || 8000 })
       .then(({ url }) => {
         console.log(`Server is listening at ${url}...`);
       })
