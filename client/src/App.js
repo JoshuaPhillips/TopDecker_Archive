@@ -45,7 +45,7 @@ const App = () => {
 
   return (
     <StyledApp className='App'>
-      {screenTooSmall ? (
+      {screenTooSmall && process.env.NODE_ENV === "production" ? (
         <MobileViewPlaceholder />
       ) : (
         <>

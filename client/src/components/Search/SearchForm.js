@@ -157,6 +157,7 @@ const SearchForm = props => {
   };
 
   const searchCards = async submitEvent => {
+    const exactNameMatchPattern = new RegExp(`^${rawSearchParams.name}$`, "i");
     submitEvent.preventDefault();
     setLoadingResults(true);
     const { data, errors } = await client.query({
@@ -173,8 +174,17 @@ const SearchForm = props => {
         return toast.error(error.message);
       });
     } else {
+      const exactMatches = data.searchCards.cards.filter(card => {
+        return card.name.match(exactNameMatchPattern) !== null;
+      });
+
+      const nonExactMatches = data.searchCards.cards.filter(card => {
+        return card.name.match(exactNameMatchPattern) === null;
+      });
+
+      setSearchResults([...exactMatches, ...nonExactMatches]);
+
       setLoadingResults(false);
-      setSearchResults(data.searchCards.cards);
     }
   };
 
