@@ -1,36 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import Spinner from '../Spinner';
+import Spinner from "../Spinner";
 
-import { NavLink } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { GET_USER_DECKS } from './graphql';
-import { UPDATE_CARD_LIST } from '../DeckManager/graphql';
+import { useQuery, useMutation } from "@apollo/react-hooks";
+import { GET_USER_DECKS } from "./graphql";
+import { UPDATE_CARD_LIST } from "../DeckManager/graphql";
 
-import { generateCardList } from '../../utils/generateCardList';
+import { generateCardList } from "../../utils/generateCardList";
 
-import { SearchResultsWrapper, SearchResultsToolbar, SearchResultsCardListContainer } from './styles';
+import { SearchResultsWrapper, SearchResultsToolbar, SearchResultsCardListContainer } from "./styles";
 
-import { SectionHeader } from '../../shared/Headers';
-import { Button } from '../../shared/Buttons';
-import { ModeToggleContainer } from '../../shared/ModeToggles';
-import { StyledSelect } from '../../shared/Forms';
-import SearchResultGalleryItem from './SearchResultGalleryItem';
-import SearchResultTextItem from './SearchResultTextItem';
-import SearchResultListItem from './SearchResultListItem';
+import { SectionHeader } from "../../shared/Headers";
+import { Button } from "../../shared/Buttons";
+import { ModeToggleContainer } from "../../shared/ModeToggles";
+import { StyledSelect } from "../../shared/Forms";
+import SearchResultGalleryItem from "./SearchResultGalleryItem";
+import SearchResultTextItem from "./SearchResultTextItem";
+import SearchResultListItem from "./SearchResultListItem";
 
 const SearchResults = props => {
   const { searchResults, searchingCards } = props;
   const [deckList, setDeckList] = useState([]);
-  const [selectedDeckId, setSelectedDeckId] = useState(props.selectedDeck ? props.selectedDeck.id : 'default');
-  const [viewMode, setViewMode] = useState('gallery');
+  const [selectedDeckId, setSelectedDeckId] = useState(props.selectedDeck ? props.selectedDeck.id : "default");
+  const [viewMode, setViewMode] = useState("gallery");
   const [selectedDeck, setSelectedDeck] = useState(null);
 
   const GetUserDecksQueryResponse = useQuery(GET_USER_DECKS, {
-    fetchPolicy: 'network-only',
+    fetchPolicy: "network-only",
     onCompleted(data) {
       if (data) {
         setDeckList(data.getCurrentUser.decks);
@@ -70,13 +70,13 @@ const SearchResults = props => {
       <SearchResultsToolbar>
         <div>
           <ModeToggleContainer>
-            <button type='button' disabled={viewMode === 'gallery'} onClick={() => setViewMode('gallery')}>
+            <button type='button' disabled={viewMode === "gallery"} onClick={() => setViewMode("gallery")}>
               Gallery
             </button>
-            <button type='button' disabled={viewMode === 'text'} onClick={() => setViewMode('text')}>
+            <button type='button' disabled={viewMode === "text"} onClick={() => setViewMode("text")}>
               Text
             </button>
-            <button type='button' disabled={viewMode === 'list'} onClick={() => setViewMode('list')}>
+            <button type='button' disabled={viewMode === "list"} onClick={() => setViewMode("list")}>
               List
             </button>
           </ModeToggleContainer>
@@ -85,8 +85,8 @@ const SearchResults = props => {
           <StyledSelect value={selectedDeckId} onChange={e => selectDeckHandler(e)}>
             <option value='default' disabled>
               {GetUserDecksQueryResponse.loading && GetUserDecksQueryResponse.called
-                ? 'Loading decks...'
-                : 'Select a Deck to Edit...'}
+                ? "Loading decks..."
+                : "Select a Deck to Edit..."}
             </option>
             {deckList &&
               deckList.map(deck => {
@@ -100,12 +100,12 @@ const SearchResults = props => {
         </div>
 
         <div>
-          <Button type='button' disabled={selectedDeckId === 'default'}>
-            <NavLink to={`/decks/${selectedDeckId}`}>
+          <NavLink to={`/decks/${selectedDeckId}`}>
+            <Button type='button' disabled={selectedDeckId === "default"}>
               <FontAwesomeIcon icon={faArrowRight} fixedWidth />
               Go to Deck
-            </NavLink>
-          </Button>
+            </Button>
+          </NavLink>
         </div>
       </SearchResultsToolbar>
       {searchingCards ? (
@@ -113,14 +113,14 @@ const SearchResults = props => {
       ) : (
         <SearchResultsCardListContainer>
           {searchResults.map(result => {
-            return viewMode === 'gallery' ? (
+            return viewMode === "gallery" ? (
               <SearchResultGalleryItem
                 key={result.scryfall_id}
                 result={result}
                 deck={selectedDeck}
                 updateCardListHandler={updateCardListHandler}
               />
-            ) : viewMode === 'text' ? (
+            ) : viewMode === "text" ? (
               <SearchResultTextItem
                 key={result.scryfall_id}
                 result={result}
