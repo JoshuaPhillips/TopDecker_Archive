@@ -24,31 +24,19 @@ const QueryResolvers = {
         const matchedUser = await User.findOne({ email: email });
 
         if (!matchedUser) {
-          throw new ApolloError(
-            `User could not be found with email ${email}.`,
-            "USER_NOT_FOUND"
-          );
+          throw new ApolloError(`User could not be found with email ${email}.`, "USER_NOT_FOUND");
         }
 
-        const passwordMatches = await bcrypt.compare(
-          password,
-          matchedUser.password
-        );
+        const passwordMatches = await bcrypt.compare(password, matchedUser.password);
 
         if (!passwordMatches) {
           throw new ApolloError("Password Incorrect.", "PASSWORD_INCORRECT");
         }
 
-        const token = jwt.sign(
-          { userId: matchedUser._id, email: matchedUser.email },
-          "somesupersecretkey"
-        );
+        const token = jwt.sign({ userId: matchedUser._id, email: matchedUser.email }, process.env.JWT_SECRET_KEY);
 
         if (!token) {
-          throw new ApolloError(
-            "Error validating login.",
-            "TOKEN_GENERATION_ERROR"
-          );
+          throw new ApolloError("Error validating login.", "TOKEN_GENERATION_ERROR");
         }
 
         return {
@@ -68,10 +56,7 @@ const QueryResolvers = {
         const matchedUser = await User.findById(currentUserId);
 
         if (!matchedUser) {
-          throw new ApolloError(
-            `No user found with User ID ${currentUserId}`,
-            "USER_NOT_FOUND"
-          );
+          throw new ApolloError(`No user found with User ID ${currentUserId}`, "USER_NOT_FOUND");
         }
 
         return { ...matchedUser._doc, id: matchedUser._doc._id };
@@ -120,9 +105,7 @@ const QueryResolvers = {
 
     getCardByScryfallId: async (_, args) => {
       try {
-        const card = await axios.get(
-          `https://api.scryfall.com/cards/${args.scryfallId}`
-        );
+        const card = await axios.get(`https://api.scryfall.com/cards/${args.scryfallId}`);
 
         return filterCardData(card.data);
       } catch (error) {
@@ -168,14 +151,9 @@ const QueryResolvers = {
 
     getAllSets: async () => {
       let sets = [];
-      const response = await axios
-        .get("https://api.scryfall.com/sets")
-        .catch(error => {
-          throw new ApolloError(
-            "Could not connect to Scryfall API.",
-            "SCRYFALL_CONNECTION_ISSUE"
-          );
-        });
+      const response = await axios.get("https://api.scryfall.com/sets").catch(error => {
+        throw new ApolloError("Could not connect to Scryfall API.", "SCRYFALL_CONNECTION_ISSUE");
+      });
 
       response.data.data.map(set => {
         if (set.set_type === "core" || set.set_type === "expansion") {

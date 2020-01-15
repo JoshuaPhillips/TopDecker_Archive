@@ -14,17 +14,11 @@ const MutationResolvers = {
         const { userDetails } = args;
 
         const detailsExist = await User.findOne({
-          $or: [
-            { email: userDetails.email },
-            { username: userDetails.username }
-          ]
+          $or: [{ email: userDetails.email }, { username: userDetails.username }]
         });
 
         if (detailsExist) {
-          throw new ApolloError(
-            `User with that email or username already exists.`,
-            "USER_CREDENTIALS_EXIST"
-          );
+          throw new ApolloError(`User with that email or username already exists.`, "USER_CREDENTIALS_EXIST");
         }
 
         const newUser = new User({
@@ -35,10 +29,7 @@ const MutationResolvers = {
         newUser.password = await bcrypt.hash(userDetails.password, 12);
         const savedUser = await newUser.save();
 
-        const token = jwt.sign(
-          { userId: savedUser._id, email: savedUser._doc.email },
-          "somesupersecretkey"
-        );
+        const token = jwt.sign({ userId: savedUser._id, email: savedUser._doc.email }, process.env.JWT_SECRET_KEY);
 
         return {
           currentUserId: savedUser._id,
@@ -87,10 +78,7 @@ const MutationResolvers = {
           throw new ApolloError("User could not be found.", "USER_NOT_FOUND");
         }
 
-        const passwordCorrect = await bcrypt.compare(
-          password,
-          matchedUser.password
-        );
+        const passwordCorrect = await bcrypt.compare(password, matchedUser.password);
 
         if (!passwordCorrect) {
           throw new ApolloError("Password not correct.", "PASSWORD_INCORRECT");
@@ -127,10 +115,7 @@ const MutationResolvers = {
         }
 
         // Check that the current password is correct.
-        const passwordCorrect = await bcrypt.compare(
-          currentPassword,
-          matchedUser.password
-        );
+        const passwordCorrect = await bcrypt.compare(currentPassword, matchedUser.password);
 
         if (!passwordCorrect) {
           throw new ApolloError("Password incorrect.", "PASSWORD_INCORRECT");
@@ -138,10 +123,7 @@ const MutationResolvers = {
 
         // Check that the two version of the new password given match (this will be check on the client side too).
         if (newPassword !== confirmationPassword) {
-          throw new ApolloError(
-            "Passwords do not match.",
-            "UNMATCHED_PASSWORDS"
-          );
+          throw new ApolloError("Passwords do not match.", "UNMATCHED_PASSWORDS");
         }
 
         // Otherwise - good to go. Update the user's new password.
@@ -170,15 +152,10 @@ const MutationResolvers = {
 
         if (deckDetails.commander) {
           // Check if the commander card ID exists in Scryfall.
-          const commander = await axios.get(
-            `http://api.scryfall.com/cards/${deckDetails.commander}`
-          );
+          const commander = await axios.get(`http://api.scryfall.com/cards/${deckDetails.commander}`);
 
           if (!commander) {
-            throw new ApolloError(
-              "Commander not found.",
-              "COMMANDER_NOT_FOUND"
-            );
+            throw new ApolloError("Commander not found.", "COMMANDER_NOT_FOUND");
           }
         }
 
@@ -198,10 +175,7 @@ const MutationResolvers = {
         const savedDeck = await newDeck.save();
 
         if (!savedDeck) {
-          throw new ApolloError(
-            "Error creating new deck.",
-            "ERROR_CREATING_DECK"
-          );
+          throw new ApolloError("Error creating new deck.", "ERROR_CREATING_DECK");
         }
 
         matchedUser.decks.push(savedDeck._id);
@@ -277,10 +251,7 @@ const MutationResolvers = {
           return matchedDeck._id;
         }
 
-        throw new ApolloError(
-          "Sorry, there was a problem deleting the deck.",
-          "DECK_NOT_DELETED"
-        );
+        throw new ApolloError("Sorry, there was a problem deleting the deck.", "DECK_NOT_DELETED");
       } catch (error) {
         return error;
       }
@@ -345,17 +316,10 @@ const MutationResolvers = {
     editComment: async (_, args) => {
       const { commentId, newText } = args;
 
-      const updatedComment = await Comment.findByIdAndUpdate(
-        commentId,
-        { text: newText },
-        { new: true }
-      );
+      const updatedComment = await Comment.findByIdAndUpdate(commentId, { text: newText }, { new: true });
 
       if (!updatedComment) {
-        throw new ApolloError(
-          "Comment could not be found.",
-          "COMMENT_NOT_FOUND"
-        );
+        throw new ApolloError("Comment could not be found.", "COMMENT_NOT_FOUND");
       }
 
       return { ...updatedComment._doc, id: updatedComment._doc._id };
@@ -368,10 +332,7 @@ const MutationResolvers = {
         const deletedComment = await Comment.findByIdAndDelete(commentId);
 
         if (!deletedComment) {
-          throw new ApolloError(
-            "Could not delete comment.",
-            "COMMENT_NOT_FOUND"
-          );
+          throw new ApolloError("Could not delete comment.", "COMMENT_NOT_FOUND");
         }
 
         const author = await User.findById(deletedComment.author);
