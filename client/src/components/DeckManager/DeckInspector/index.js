@@ -13,13 +13,7 @@ import { StyledDeckInspector, DeckDetails, CardListContainer } from "./styles";
 import { SubSectionHeader } from "../../../shared/Headers";
 
 const DeckInspector = props => {
-  const {
-    deck,
-    sortMode,
-    filters,
-    currentUserOwnsDeck,
-    updateCardListHandler
-  } = props;
+  const { deck, sortMode, filters, currentUserOwnsDeck, updateCardListHandler } = props;
   const [viewMode, setViewMode] = useState("text");
 
   const mainDeckList = deck.cardList.filter(card => {
@@ -94,9 +88,7 @@ const DeckInspector = props => {
         return cardItem;
 
       default:
-        return (cardItem = (
-          <h2>Sorry, there was a problem loading your cards.</h2>
-        ));
+        return (cardItem = <h2>Sorry, there was a problem loading your cards.</h2>);
     }
   };
 
@@ -116,8 +108,7 @@ const DeckInspector = props => {
       />
       <DeckDetails>
         <SubSectionHeader>
-          Main Deck ({totalMainDeckCount} /{" "}
-          {deck.format === "commander" ? 100 : 60})
+          Main Deck ({totalMainDeckCount} / {deck.format === "commander" ? 100 : 60})
         </SubSectionHeader>
         {filteredMainDeckList.length === 0 ? (
           <>
@@ -135,10 +126,7 @@ const DeckInspector = props => {
                   )}
               </CardListContainer>
             ) : (
-              <CardListPlaceholder
-                deck
-                currentUserOwnsDeck={currentUserOwnsDeck}
-              />
+              <CardListPlaceholder deck={deck} currentUserOwnsDeck={currentUserOwnsDeck} />
             )}
           </>
         ) : (
@@ -151,33 +139,20 @@ const DeckInspector = props => {
               )}
 
             {filteredMainDeckList.map(cardWithCounts => {
-              return renderCardItem(
-                cardWithCounts.card.scryfall_id,
-                cardWithCounts,
-                "mainDeck"
-              );
+              return renderCardItem(cardWithCounts.card.scryfall_id, cardWithCounts, "mainDeck");
             })}
           </CardListContainer>
         )}
 
         {deck.format !== "commander" && (
           <>
-            <SubSectionHeader>
-              Sideboard ({totalSideboardCount} / 15)
-            </SubSectionHeader>
+            <SubSectionHeader>Sideboard ({totalSideboardCount} / 15)</SubSectionHeader>
             {filteredSideboardList.length === 0 ? (
-              <CardListPlaceholder
-                deck
-                currentUserOwnsDeck={currentUserOwnsDeck}
-              />
+              <CardListPlaceholder deck={deck} currentUserOwnsDeck={currentUserOwnsDeck} />
             ) : (
               <CardListContainer>
                 {filteredSideboardList.map(cardWithCounts => {
-                  return renderCardItem(
-                    cardWithCounts.card.scryfall_id,
-                    cardWithCounts,
-                    "sideboard"
-                  );
+                  return renderCardItem(cardWithCounts.card.scryfall_id, cardWithCounts, "sideboard");
                 })}
               </CardListContainer>
             )}

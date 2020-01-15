@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import SearchForm from './SearchForm';
-import SearchResults from './SearchResults';
+import SearchForm from "./SearchForm";
+import SearchResults from "./SearchResults";
 
-import { StyledSearch } from './styles';
+import { StyledSearch } from "./styles";
 
 const Search = props => {
   const [searchResults, setSearchResults] = useState([]);
@@ -12,6 +12,7 @@ const Search = props => {
   let deck = null;
   if (props.location.state) {
     deck = props.location.state.deck;
+    console.log(deck);
   }
 
   return (

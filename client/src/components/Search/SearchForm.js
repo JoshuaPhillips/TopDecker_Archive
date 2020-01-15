@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { useApolloClient } from "@apollo/react-hooks";
 import { SEARCH_CARDS } from "../DeckManager/DeckManagerSidebar/graphql";
@@ -77,10 +77,6 @@ const SearchForm = props => {
   const client = useApolloClient();
 
   const [rawSearchParams, setRawSearchParams] = useState(initialSearchParams);
-
-  useEffect(() => {
-    console.log(rawSearchParams);
-  }, [rawSearchParams]);
 
   const colorAbbreviationMap = {
     white: "W",
