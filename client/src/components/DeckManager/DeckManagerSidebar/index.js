@@ -10,11 +10,7 @@ import Spinner from "../../Spinner";
 import Card from "../../Card";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSearch,
-  faArrowLeft,
-  faEraser
-} from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faArrowLeft, faEraser } from "@fortawesome/free-solid-svg-icons";
 
 import { capitalise } from "../../../utils/capitalise";
 
@@ -97,18 +93,13 @@ const DeckManagerSidebar = props => {
           </SectionHeader>
           {format !== "commander" && (
             <QuickSearchListSelectionWrapper>
-              <button
-                type="button"
-                disabled={selectedList === "mainDeck"}
-                onClick={() => setSelectedList("mainDeck")}
-              >
+              <button type='button' disabled={selectedList === "mainDeck"} onClick={() => setSelectedList("mainDeck")}>
                 Main Deck
               </button>
               <button
-                type="button"
+                type='button'
                 disabled={selectedList === "sideboard"}
-                onClick={() => setSelectedList("sideboard")}
-              >
+                onClick={() => setSelectedList("sideboard")}>
                 Sideboard
               </button>
             </QuickSearchListSelectionWrapper>
@@ -120,10 +111,7 @@ const DeckManagerSidebar = props => {
           ) : searchResults.length === 0 ? (
             <>
               <h1>Search for a card name below.</h1>
-              <p>
-                Only cards that match your deck's format (and commander if there
-                is one) will be shown.
-              </p>
+              <p>Only cards that match your deck's format (and commander if there is one) will be shown.</p>
             </>
           ) : (
             <>
@@ -153,33 +141,32 @@ const DeckManagerSidebar = props => {
         <QuickSearchFormContainer>
           <form onSubmit={searchCards}>
             <TextInput
-              type="text"
-              placeholder="Card Name..."
+              type='text'
+              placeholder='Card Name...'
               value={nameSearch}
               onChange={e => setNameSearch(e.target.value)}
             />
 
             <QuickSearchFormButtonsWrapper>
-              <Button type="submit" disabled={nameSearch.length < 3}>
+              <Button type='submit' disabled={nameSearch.length < 3}>
                 <FontAwesomeIcon icon={faSearch} fixedWidth />
                 {loadingResults ? "Searching..." : "Search"}
               </Button>
 
               {searchResults.length !== 0 &&
                 (selectedResult ? (
-                  <Button type="button" onClick={() => setSelectedResult(null)}>
+                  <Button type='button' onClick={() => setSelectedResult(null)}>
                     <FontAwesomeIcon icon={faArrowLeft} fixedWidth />
                     Back
                   </Button>
                 ) : (
                   <Button
-                    type="button"
+                    type='button'
                     onClick={() => {
                       setNameSearch("");
                       setSelectedResult(null);
                       setSearchResults([]);
-                    }}
-                  >
+                    }}>
                     <FontAwesomeIcon icon={faEraser} fixedWidth />
                     Clear
                   </Button>
