@@ -1,10 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCrown, faPlus, faTimes, faMinus, faExchangeAlt, faStar } from '@fortawesome/free-solid-svg-icons';
-import { faStar as faRegularStar } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCrown, faPlus, faTimes, faMinus, faExchangeAlt } from "@fortawesome/free-solid-svg-icons";
 
-import { StyledCardItemControls } from './styles';
+import { StyledCardItemControls } from "./styles";
 
 const CardItemControls = props => {
   const {
@@ -26,19 +25,15 @@ const CardItemControls = props => {
   );
   const deleteControls = (
     <div>
-      <button type='button' onClick={() => updateCardListHandler(deck, type, 'remove', card)}>
+      <button type='button' onClick={() => updateCardListHandler(deck, type, "remove", card)}>
         <FontAwesomeIcon icon={faTimes} fixedWidth />
       </button>
     </div>
   );
-  const quantityIndicators = (
+
+  const quantityIndicator = (
     <div>
-      {[...Array(type === 'mainDeck' ? mainDeckCount : sideboardCount)].map((_, index) => {
-        return <FontAwesomeIcon icon={faStar} fixedWidth key={`${card.scryfall_id}__faStar__${index}`} />;
-      })}
-      {[...Array(type === 'mainDeck' ? 4 - mainDeckCount : 4 - sideboardCount)].map((_, index) => {
-        return <FontAwesomeIcon icon={faRegularStar} fixedWidth key={`${card.scryfall_id}__faRegularStar__${index}`} />;
-      })}
+      <p>x {type === "mainDeck" ? mainDeckCount : sideboardCount}</p>
     </div>
   );
 
@@ -48,25 +43,25 @@ const CardItemControls = props => {
         type='button'
         disabled={
           mainDeckCount + sideboardCount === 4 ||
-          (type === 'mainDeck' ? totalMainDeckCount >= 60 : totalSideboardCount >= 15)
+          (type === "mainDeck" ? totalMainDeckCount >= 60 : totalSideboardCount >= 15)
         }
-        onClick={() => updateCardListHandler(deck, type, 'add', card)}>
+        onClick={() => updateCardListHandler(deck, type, "add", card)}>
         <FontAwesomeIcon icon={faPlus} fixedWidth />
       </button>
       <button
         type='button'
-        disabled={type === 'mainDeck' ? mainDeckCount === 0 : sideboardCount === 0}
-        onClick={() => updateCardListHandler(deck, type, 'remove', card)}>
+        disabled={type === "mainDeck" ? mainDeckCount === 0 : sideboardCount === 0}
+        onClick={() => updateCardListHandler(deck, type, "remove", card)}>
         <FontAwesomeIcon icon={faMinus} fixedWidth />
       </button>
       <button
         type='button'
-        disabled={type === 'mainDeck' ? totalSideboardCount >= 15 : totalMainDeckCount >= 60}
+        disabled={type === "mainDeck" ? totalSideboardCount >= 15 : totalMainDeckCount >= 60}
         onClick={() =>
           updateCardListHandler(
             deck,
-            type === 'mainDeck' ? 'sideboard' : 'mainDeck',
-            type === 'mainDeck' ? 'transferToSideboard' : 'transferToMainDeck',
+            type === "mainDeck" ? "sideboard" : "mainDeck",
+            type === "mainDeck" ? "transferToSideboard" : "transferToMainDeck",
             card
           )
         }>
@@ -76,18 +71,18 @@ const CardItemControls = props => {
   );
 
   if (!currentUserOwnsDeck) {
-    return deck.format === 'commander' ? null : <StyledCardItemControls>{quantityIndicators}</StyledCardItemControls>;
+    return deck.format === "commander" ? null : <StyledCardItemControls>{quantityIndicator}</StyledCardItemControls>;
   }
 
-  return deck.format === 'commander' ? (
-    type === 'commander' ? (
+  return deck.format === "commander" ? (
+    type === "commander" ? (
       <StyledCardItemControls>{commanderControls}</StyledCardItemControls>
     ) : (
       <StyledCardItemControls>{deleteControls}</StyledCardItemControls>
     )
   ) : (
     <StyledCardItemControls>
-      {quantityIndicators}
+      {quantityIndicator}
       {quantityControls}
     </StyledCardItemControls>
   );
