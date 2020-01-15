@@ -27,18 +27,15 @@ const TextModeCardItem = props => {
         <>
           <TextModeCardItemHeader>
             <p>{card.name.trim()}</p>
-            {card.mana_cost &&
-              card.mana_cost.length !== 0 &&
-              convertTextToSymbols(card.mana_cost)}
+            {card.mana_cost && card.mana_cost.length !== 0 && convertTextToSymbols(card.mana_cost)}
+            {card.mana_cost && card.mana_cost.length === 0 && "-"}
           </TextModeCardItemHeader>
           <TextModeCardItemContent>
             <div>
               <p>{card.type_line}</p>
             </div>
             {card.oracle_text !== null && (
-              <TextModeCardItemOracleText>
-                {convertTextToSymbols(card.oracle_text)}
-              </TextModeCardItemOracleText>
+              <TextModeCardItemOracleText>{convertTextToSymbols(card.oracle_text)}</TextModeCardItemOracleText>
             )}
             {card.power && card.toughness ? (
               <div>
@@ -61,17 +58,14 @@ const TextModeCardItem = props => {
             <React.Fragment key={`${card.scryfall_id}__${card_face.name}`}>
               <TextModeCardItemHeader>
                 <p>{card_face.name}</p>
-                {card_face.mana_cost.length !== 0 &&
-                  convertTextToSymbols(card_face.mana_cost)}
+                {card_face.mana_cost.length !== 0 ? convertTextToSymbols(card_face.mana_cost) : "-"}
               </TextModeCardItemHeader>
               <TextModeCardItemContent>
                 <div>
                   <p>{card_face.type_line}</p>
                 </div>
                 {card_face.oracle_text !== null && (
-                  <TextModeCardItemOracleText>
-                    {convertTextToSymbols(card_face.oracle_text)}
-                  </TextModeCardItemOracleText>
+                  <TextModeCardItemOracleText>{convertTextToSymbols(card_face.oracle_text)}</TextModeCardItemOracleText>
                 )}
                 {card_face.power && card_face.toughness && (
                   <div>
