@@ -115,6 +115,7 @@ const QueryResolvers = {
 
     searchCards: async (_, args) => {
       try {
+        console.log(args);
         let url = args.url || "";
 
         if (!args.url) {
@@ -122,6 +123,8 @@ const QueryResolvers = {
 
           const searchString = generateSearchString(args.searchParams);
           url += querystring.escape(searchString);
+
+          console.log(searchString);
         }
 
         const response = await axios.get(url).catch(error => {

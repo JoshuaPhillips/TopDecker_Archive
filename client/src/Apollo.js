@@ -15,7 +15,10 @@ const cache = logCache
   : new InMemoryCache();
 
 const httpLink = createHttpLink({
-  uri: "https://thawing-spire-37444.herokuapp.com/graphql"
+  uri:
+    process.env.NODE_ENV === "production"
+      ? "https://thawing-spire-37444.herokuapp.com/graphql"
+      : "http://localhost:8000/graphql"
 });
 
 const authLink = setContext((_, { headers, ...context }) => {
@@ -36,12 +39,8 @@ const authLink = setContext((_, { headers, ...context }) => {
 // this removes '__typename' from any request variables, in case they are obtained from a previous query.
 const cleanTypeNameLink = new ApolloLink((operation, forward) => {
   if (operation.variables) {
-    const omitTypename = (key, value) =>
-      key === "__typename" ? undefined : value;
-    operation.variables = JSON.parse(
-      JSON.stringify(operation.variables),
-      omitTypename
-    );
+    const omitTypename = (key, value) => (key === "__typename" ? undefined : value);
+    operation.variables = JSON.parse(JSON.stringify(operation.variables), omitTypename);
   }
   return forward(operation).map(data => {
     return data;

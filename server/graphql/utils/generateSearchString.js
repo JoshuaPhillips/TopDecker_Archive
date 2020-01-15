@@ -1,140 +1,140 @@
 const comparisonMap = {
-  less_than: '<',
-  less_than_or_equal: '<=',
-  equal: '=',
-  greater_than_or_equal: '>=',
-  greater_than: '>'
+  less_than: "<",
+  less_than_or_equal: "<=",
+  equal: "=",
+  greater_than_or_equal: ">=",
+  greater_than: ">"
 };
 
 const generateNameString = nameParam => {
-  if (nameParam === '') {
-    return '';
+  if (nameParam === "") {
+    return "";
   }
   return `${nameParam.toLowerCase()} `;
 };
 
 const generateOracleTextString = oracleTextParam => {
   const { type, text } = oracleTextParam;
-  if (text === '') {
-    return '';
+  if (text === "") {
+    return "";
   }
 
-  let oracleTextString = '(';
+  let oracleTextString = "(";
   let searchTerms = text
     .trim()
-    .replace(/  +/g, ' ')
-    .split(' ')
+    .replace(/  +/g, " ")
+    .split(" ")
     .map(word => {
       return `oracle:${word}`;
     });
 
   switch (type) {
-    case 'all':
-      oracleTextString += searchTerms.join(' ');
+    case "all":
+      oracleTextString += searchTerms.join(" ");
       break;
 
-    case 'exact':
+    case "exact":
       oracleTextString += `oracle:"${text}"`;
       break;
 
-    case 'any':
-      oracleTextString += searchTerms.join(' or ');
+    case "any":
+      oracleTextString += searchTerms.join(" or ");
       break;
 
     default:
       break;
   }
 
-  oracleTextString += ')';
+  oracleTextString += ")";
 
   return oracleTextString;
 };
 
 const generateTypeLineString = typeLineParam => {
-  if (typeLineParam.text === '') {
-    return '';
+  if (typeLineParam.text === "") {
+    return "";
   }
 
-  let typeLineString = '(';
+  let typeLineString = "(";
   let searchWords = typeLineParam.text
     .trim()
-    .replace(/ +/g, '')
-    .split(',')
+    .replace(/ +/g, "")
+    .split(",")
     .map(word => {
       return `type:${word}`;
     });
 
   switch (typeLineParam.type) {
-    case 'all':
-      typeLineString += searchWords.join(' ');
+    case "all":
+      typeLineString += searchWords.join(" ");
       break;
 
-    case 'any':
-      typeLineString += searchWords.join(' or ');
+    case "any":
+      typeLineString += searchWords.join(" or ");
       break;
 
     default:
       break;
   }
 
-  typeLineString += ')';
+  typeLineString += ")";
   return typeLineString;
 };
 
 const generateColorsString = colorsParam => {
   if (colorsParam.colors.length === 0) {
-    return '';
+    return "";
   }
 
-  let colorString = '(';
+  let colorString = "(";
 
   switch (colorsParam.type) {
-    case 'exactly':
-      colorString += `color=${colorsParam.colors.join('')}`;
+    case "exactly":
+      colorString += `color=${colorsParam.colors.join("")}`;
       break;
 
-    case 'including':
-      colorString += `color>=${colorsParam.colors.join('')}`;
+    case "including":
+      colorString += `color>=${colorsParam.colors.join("")}`;
       break;
 
-    case 'at_most':
-      colorString += `color<=${colorsParam.colors.join('')}`;
+    case "at_most":
+      colorString += `color<=${colorsParam.colors.join("")}`;
       break;
 
     default:
       break;
   }
 
-  colorString += ')';
+  colorString += ")";
   return colorString;
 };
 
 const generateIdentityString = identityParam => {
-  let identityString = '(';
+  let identityString = "(";
 
   switch (identityParam.type) {
-    case 'exactly':
-      identityString += `id=${identityParam.colors.join('')}`;
+    case "exactly":
+      identityString += `id=${identityParam.colors.join("")}`;
       break;
 
-    case 'including':
-      identityString += `id>=${identityParam.colors.join('')}`;
+    case "including":
+      identityString += `id>=${identityParam.colors.join("")}`;
       break;
 
-    case 'at_most':
-      identityString += `id<=${identityParam.colors.join('')}`;
+    case "at_most":
+      identityString += `id<=${identityParam.colors.join("")}`;
       break;
 
     default:
       break;
   }
 
-  identityString += ')';
+  identityString += ")";
   return identityString;
 };
 
 const generateCommanderString = commanderParam => {
-  return `(commander:${commanderParam.join('')})`;
+  return `(commander:${commanderParam.join("")})`;
 };
 
 const generateManaCostString = manaCostParam => {
@@ -142,160 +142,164 @@ const generateManaCostString = manaCostParam => {
 };
 
 const generateCmcString = cmcParam => {
-  if (cmcParam.value === '') {
-    return '';
+  if (cmcParam.value === "") {
+    return "";
   }
   return `(cmc${comparisonMap[cmcParam.comparison]}${cmcParam.value})`;
 };
 
 const generateFormatsString = formatsParam => {
   if (formatsParam.length === 0) {
-    return '';
+    return "";
   }
-  let formatsString = '(';
+  let formatsString = "(";
 
   formatsParam.map(item => {
     formatsString += `${item.legality}:${item.format}`;
   });
 
-  formatsString += ')';
+  formatsString += ")";
 
   return formatsString;
 };
 
 const generateSetString = setParam => {
   if (setParam.length === 0) {
-    return '';
+    return "";
   }
 
-  let setString = '(';
+  let setString = "(";
 
   setString += setParam
     .map(set => {
       return `set:${set.trim()}`;
     })
-    .join(' OR ');
+    .join(" OR ");
 
-  setString += ')';
+  setString += ")";
 
   return setString;
 };
 
 const generateRarityString = rarityParam => {
   if (rarityParam.length === 0) {
-    return '';
+    return "";
   }
-  let rarityString = '(';
+  let rarityString = "(";
 
   rarityTerms = rarityParam.map(rarity => {
     return `rarity:${rarity}`;
   });
 
-  rarityString += rarityTerms.join(' or ');
-  rarityString += ')';
+  rarityString += rarityTerms.join(" or ");
+  rarityString += ")";
 
   return rarityString;
 };
 
 const generatePowerString = powerParam => {
-  if (powerParam.value === '') {
-    return '';
+  if (powerParam.value === "") {
+    return "";
   }
   return `(pow${comparisonMap[powerParam.comparison]}${powerParam.value})`;
 };
 
 const generateToughnessString = toughnessParam => {
-  if (toughnessParam.value === '') {
-    return '';
+  if (toughnessParam.value === "") {
+    return "";
   }
   return `(tou${comparisonMap[toughnessParam.comparison]}${toughnessParam.value})`;
 };
 
 const generateLoyaltyString = loyaltyParam => {
-  if (loyaltyParam.value === '') {
-    return '';
+  if (loyaltyParam.value === "") {
+    return "";
   }
   return `(loy${comparisonMap[loyaltyParam.comparison]}${loyaltyParam.value})`;
 };
 
 const generateIsString = isParam => {
+  isParam = isParam.filter(term => {
+    return term !== "funny";
+  });
+
   if (isParam.length === 0) {
-    return '';
+    return "";
   }
 
-  let isString = '(';
+  let isString = "(";
 
   isTerms = isParam.map(term => {
     return `is:${term}`;
   });
 
-  isString += isTerms.join(' ');
-  isString += ')';
+  isString += isTerms.join(" ");
+  isString += ")";
   return isString;
 };
 
 const generateSearchString = searchParams => {
-  let searchString = '';
+  let searchString = "";
 
   Object.keys(searchParams).map(param => {
     switch (param) {
-      case 'name':
+      case "name":
         searchString += generateNameString(searchParams.name);
         break;
 
-      case 'oracle':
+      case "oracle":
         searchString += generateOracleTextString(searchParams.oracle);
         break;
 
-      case 'type_line':
+      case "type_line":
         searchString += generateTypeLineString(searchParams.type_line);
         break;
 
-      case 'colors':
+      case "colors":
         searchString += generateColorsString(searchParams.colors);
         break;
 
-      case 'identity':
+      case "identity":
         searchString += generateIdentityString(searchParams.identity);
         break;
 
-      case 'commander':
+      case "commander":
         searchString += generateCommanderString(searchParams.commander);
         break;
 
-      case 'mana_cost':
+      case "mana_cost":
         searchString += generateManaCostString(searchParams.mana_cost);
         break;
 
-      case 'cmc':
+      case "cmc":
         searchString += generateCmcString(searchParams.cmc);
         break;
 
-      case 'formats':
+      case "formats":
         searchString += generateFormatsString(searchParams.formats);
         break;
 
-      case 'set':
+      case "set":
         searchString += generateSetString(searchParams.set);
         break;
 
-      case 'rarity':
+      case "rarity":
         searchString += generateRarityString(searchParams.rarity);
         break;
 
-      case 'power':
+      case "power":
         searchString += generatePowerString(searchParams.power);
         break;
 
-      case 'toughness':
+      case "toughness":
         searchString += generateToughnessString(searchParams.toughness);
         break;
 
-      case 'loyalty':
+      case "loyalty":
         searchString += generateLoyaltyString(searchParams.loyalty);
         break;
 
-      case 'is':
+      case "is":
         searchString += generateIsString(searchParams.is);
         break;
 
@@ -303,6 +307,8 @@ const generateSearchString = searchParams => {
         break;
     }
   });
+
+  searchString += searchParams.is && searchParams.is.includes("funny") ? " include:funny" : " not:funny";
 
   return searchString;
 };
