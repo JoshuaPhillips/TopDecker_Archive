@@ -1,22 +1,24 @@
+import { calculateCardAllowance } from "./calculateCardAllowance";
+
 export const generateCardList = (deck, listToUpdate, updateMode, updatedCard) => {
   let { cardList, format } = deck;
   let newDeck = {
     ...deck
   };
 
-  const maximumCardAllowance = format === 'commander' ? 1 : 4;
+  const maximumCardAllowance = calculateCardAllowance(updatedCard, format);
 
   const matchingCardIndex = cardList.findIndex(({ card }) => {
     return card.scryfall_id === updatedCard.scryfall_id;
   });
 
   switch (updateMode) {
-    case 'add':
+    case "add":
       if (matchingCardIndex === -1) {
         newDeck.cardList.push({
           card: updatedCard,
-          mainDeckCount: listToUpdate === 'mainDeck' ? 1 : 0,
-          sideboardCount: listToUpdate === 'sideboard' ? 1 : 0
+          mainDeckCount: listToUpdate === "mainDeck" ? 1 : 0,
+          sideboardCount: listToUpdate === "sideboard" ? 1 : 0
         });
         break;
       } else if (
@@ -29,7 +31,7 @@ export const generateCardList = (deck, listToUpdate, updateMode, updatedCard) =>
       }
       break;
 
-    case 'remove':
+    case "remove":
       if (matchingCardIndex === -1) {
         break;
       } else if (
@@ -44,7 +46,7 @@ export const generateCardList = (deck, listToUpdate, updateMode, updatedCard) =>
       }
       break;
 
-    case 'playset':
+    case "playset":
       if (matchingCardIndex === -1) {
         newDeck.cardList.push({
           card: updatedCard,
@@ -61,7 +63,7 @@ export const generateCardList = (deck, listToUpdate, updateMode, updatedCard) =>
       }
       break;
 
-    case 'transferToSideboard':
+    case "transferToSideboard":
       if (matchingCardIndex === -1) {
         break;
       } else {
@@ -70,7 +72,7 @@ export const generateCardList = (deck, listToUpdate, updateMode, updatedCard) =>
       }
       break;
 
-    case 'transferToMainDeck':
+    case "transferToMainDeck":
       if (matchingCardIndex === -1) {
         break;
       } else {
@@ -79,7 +81,7 @@ export const generateCardList = (deck, listToUpdate, updateMode, updatedCard) =>
       }
       break;
 
-    case 'delete':
+    case "delete":
       if (matchingCardIndex === -1) {
         break;
       } else {

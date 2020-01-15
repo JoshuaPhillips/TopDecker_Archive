@@ -91,10 +91,10 @@ const sortByRarity = cardList => {
   let sortedCardList = cardList.sort(({ card: cardA }, { card: cardB }) => {
     const rarityIndexDifference =
       rarities.findIndex(rarity => {
-        return rarity === cardA.rarity;
+        return rarity === cardB.rarity;
       }) -
       rarities.findIndex(rarity => {
-        return rarity === cardB.rarity;
+        return rarity === cardA.rarity;
       });
 
     if (rarityIndexDifference === 0) {

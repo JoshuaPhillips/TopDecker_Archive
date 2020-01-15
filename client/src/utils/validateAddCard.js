@@ -1,27 +1,22 @@
+import { calculateCardAllowance } from "./calculateCardAllowance";
+
 export const validateAddCard = (deck, card, list) => {
   const { format, cardList, commander } = deck;
   const { scryfall_id, legalities } = card;
-  const maxCardAllowance = format === 'commander' ? 1 : 4;
+  const maxCardAllowance = calculateCardAllowance(card, deck.format);
 
-  let totalMainDeckCount = format === 'commander' ? 1 : 0;
   let totalSideboardCount = 0;
 
   cardList.forEach(card => {
-    totalMainDeckCount += card.mainDeckCount;
     totalSideboardCount += card.sideboardCount;
   });
 
   // if card is outright not allowed or not allowed in this format
-  if (legalities[format] === 'not_legal' || legalities[format] === 'banned') {
+  if (legalities[format] === "not_legal" || legalities[format] === "banned") {
     return false;
   }
 
-  // if the list to be adjusted is full already
-  if (list === 'mainDeck' && totalMainDeckCount >= (format === 'commander' ? 100 : 60)) {
-    return false;
-  }
-
-  if (list === 'sideboard' && totalSideboardCount >= 15) {
+  if (list === "sideboard" && totalSideboardCount >= 15) {
     return false;
   }
 
@@ -30,7 +25,7 @@ export const validateAddCard = (deck, card, list) => {
   });
 
   // if card doesn't fit the commander's color identity, or if it's the commander itself
-  if (format === 'commander') {
+  if (format === "commander") {
     if (card.scryfall_id === commander.scryfall_id) {
       return false;
     }

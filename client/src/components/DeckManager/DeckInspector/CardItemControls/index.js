@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCrown, faPlus, faTimes, faMinus, faExchangeAlt } from "@fortawesome/free-solid-svg-icons";
 
 import { StyledCardItemControls } from "./styles";
+import { calculateCardAllowance } from "../../../../utils/calculateCardAllowance";
 
 const CardItemControls = props => {
   const {
@@ -23,6 +24,7 @@ const CardItemControls = props => {
       <FontAwesomeIcon icon={faCrown} fixedWidth />
     </div>
   );
+
   const deleteControls = (
     <div>
       <button type='button' onClick={() => updateCardListHandler(deck, type, "remove", card)}>
@@ -42,8 +44,8 @@ const CardItemControls = props => {
       <button
         type='button'
         disabled={
-          mainDeckCount + sideboardCount === 4 ||
-          (type === "mainDeck" ? totalMainDeckCount >= 60 : totalSideboardCount >= 15)
+          mainDeckCount + sideboardCount === calculateCardAllowance(card, deck.format) ||
+          (type === "sidebaord" && totalSideboardCount >= 15)
         }
         onClick={() => updateCardListHandler(deck, type, "add", card)}>
         <FontAwesomeIcon icon={faPlus} fixedWidth />
