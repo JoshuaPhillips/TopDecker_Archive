@@ -6,12 +6,7 @@ import { useQuery, useMutation } from "@apollo/react-hooks";
 import { GET_COMMANDER_SEARCH_RESULTS, CREATE_NEW_DECK } from "./graphql";
 
 import { FormatSelectionWrapper, AddDeckFormButtonsWrapper } from "./styles";
-import {
-  FormRow,
-  FormRowTitle,
-  FormRowContent,
-  TextInput
-} from "../../../shared/Forms";
+import { FormRow, FormRowTitle, FormRowContent, TextInput } from "../../../shared/Forms";
 import { Button } from "../../../shared/Buttons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -22,35 +17,31 @@ const AddDeckForm = props => {
   const [format, setFormat] = useState("standard");
   const [commander, setCommander] = useState({ name: "", id: "" });
   const [commanderSearchResults, setCommanderSearchResults] = useState([]);
+  const [creatingDeck, setCreatingDeck] = useState(false);
 
   const { cancelAddDeckHandler } = props;
 
-  const GetCommanderSearchResultsQueryResponse = useQuery(
-    GET_COMMANDER_SEARCH_RESULTS,
-    {
-      skip: !commander.name || commander.name.length <= 2,
-      variables: {
-        searchParams: {
-          name: commander.name,
-          is: "commander"
-        }
-      },
-      onCompleted() {
-        const {
-          cards
-        } = GetCommanderSearchResultsQueryResponse.data.searchCards;
-
-        const results = cards.map(card => {
-          return {
-            label: card.name,
-            value: card.scryfall_id
-          };
-        });
-
-        setCommanderSearchResults(results);
+  const GetCommanderSearchResultsQueryResponse = useQuery(GET_COMMANDER_SEARCH_RESULTS, {
+    skip: !commander.name || commander.name.length <= 2,
+    variables: {
+      searchParams: {
+        name: commander.name,
+        is: "commander"
       }
+    },
+    onCompleted() {
+      const { cards } = GetCommanderSearchResultsQueryResponse.data.searchCards;
+
+      const results = cards.map(card => {
+        return {
+          label: card.name,
+          value: card.scryfall_id
+        };
+      });
+
+      setCommanderSearchResults(results);
     }
-  );
+  });
 
   const [CreateNewDeckMutation] = useMutation(CREATE_NEW_DECK, {
     variables: {
@@ -65,6 +56,11 @@ const AddDeckForm = props => {
     }
   });
 
+  const createNewDeck = () => {
+    setCreatingDeck(true);
+    CreateNewDeckMutation();
+  };
+
   const checkFormValidity = () => {
     if (name.length < 4) {
       return false;
@@ -72,11 +68,7 @@ const AddDeckForm = props => {
 
     switch (format) {
       case "commander":
-        if (
-          commander.id === "" ||
-          commander.id === null ||
-          commander.id === undefined
-        ) {
+        if (commander.id === "" || commander.id === null || commander.id === undefined) {
           return false;
         }
         break;
@@ -122,14 +114,14 @@ const AddDeckForm = props => {
       <form>
         <FormRow>
           <FormRowTitle>
-            <label htmlFor="name">Name</label>
+            <label htmlFor='name'>Name</label>
           </FormRowTitle>
           <FormRowContent>
             <TextInput
-              type="text"
-              id="name"
+              type='text'
+              id='name'
               value={name}
-              placeholder="Minimum 4 characters"
+              placeholder='Minimum 4 characters'
               onChange={e => setName(e.target.value)}
             />
           </FormRowContent>
@@ -137,26 +129,17 @@ const AddDeckForm = props => {
 
         <FormRow>
           <FormRowTitle>
-            <label htmlFor="format">Format</label>
+            <label htmlFor='format'>Format</label>
           </FormRowTitle>
           <FormRowContent>
             <FormatSelectionWrapper>
-              <Checkbox
-                selected={format === "standard"}
-                onClick={() => setFormat("standard")}
-              >
+              <Checkbox selected={format === "standard"} onClick={() => setFormat("standard")}>
                 Standard
               </Checkbox>
-              <Checkbox
-                selected={format === "modern"}
-                onClick={() => setFormat("modern")}
-              >
+              <Checkbox selected={format === "modern"} onClick={() => setFormat("modern")}>
                 Modern
               </Checkbox>
-              <Checkbox
-                selected={format === "commander"}
-                onClick={() => setFormat("commander")}
-              >
+              <Checkbox selected={format === "commander"} onClick={() => setFormat("commander")}>
                 Commander
               </Checkbox>
             </FormatSelectionWrapper>
@@ -166,32 +149,29 @@ const AddDeckForm = props => {
         {format === "commander" && (
           <FormRow>
             <FormRowTitle>
-              <label htmlFor="commander">Commander</label>
+              <label htmlFor='commander'>Commander</label>
             </FormRowTitle>
             <FormRowContent>
               <Select
-                id="commander"
+                id='commander'
                 onChange={handleCommanderOptionSelect}
                 onInputChange={handleCommanderInputChange}
                 options={commanderSearchResults}
                 isClearable
-                placeholder="Name of your Commander?"
+                placeholder='Name of your Commander?'
                 noOptionsMessage={() => "No Results Found."}
               />
             </FormRowContent>
           </FormRow>
         )}
       </form>
+
       <AddDeckFormButtonsWrapper>
-        <Button
-          type="button"
-          disabled={!checkFormValidity()}
-          onClick={() => CreateNewDeckMutation()}
-        >
+        <Button type='button' disabled={!checkFormValidity() || creatingDeck} onClick={() => createNewDeck()}>
           <FontAwesomeIcon icon={faPlus} fixedWidth />
-          Create
+          {creatingDeck ? "Loading..." : "Create"}
         </Button>
-        <Button type="button" onClick={() => cancelAddDeckHandler()}>
+        <Button type='button' onClick={() => cancelAddDeckHandler()} disabled={creatingDeck}>
           <FontAwesomeIcon icon={faTimes} fixedWidth />
           Cancel
         </Button>
