@@ -29,10 +29,7 @@ export const CardColorSelectionButton = styled.button.attrs(() => ({
 }))`
     color: ${props => props.theme.colors.deepBlue}
     
-    border: ${props =>
-      props.selected
-        ? `2px solid ${props.theme.colors.deepBlue}`
-        : `${props.theme.borders.thick}`};
+    border: ${props => (props.selected ? `2px solid ${props.theme.colors.deepBlue}` : `${props.theme.borders.thick}`)};
     
     box-shadow: ${props => (props.selected ? `1px 3px 8px lightgrey` : "none")}
     display: flex;
@@ -84,6 +81,10 @@ export const SearchFormRarityWrapper = styled.div`
 
 export const SearchFormSubmitButtonWrapper = styled.div`
   margin-left: 1.5rem;
+
+  button {
+    margin-right: 1rem;
+  }
 `;
 
 export const SearchResultsWrapper = styled.div`
