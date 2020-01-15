@@ -27,8 +27,7 @@ const TextModeCardItem = props => {
         <>
           <TextModeCardItemHeader>
             <p>{card.name.trim()}</p>
-            {card.mana_cost && card.mana_cost.length !== 0 && convertTextToSymbols(card.mana_cost)}
-            {card.mana_cost && card.mana_cost.length === 0 && "-"}
+            {card.mana_cost && card.mana_cost.length !== 0 && <span>{convertTextToSymbols(card.mana_cost)}</span>}
           </TextModeCardItemHeader>
           <TextModeCardItemContent>
             <div>
@@ -58,7 +57,7 @@ const TextModeCardItem = props => {
             <React.Fragment key={`${card.scryfall_id}__${card_face.name}`}>
               <TextModeCardItemHeader>
                 <p>{card_face.name}</p>
-                {card_face.mana_cost.length !== 0 ? convertTextToSymbols(card_face.mana_cost) : "-"}
+                {card_face.mana_cost.length !== 0 && <span>convertTextToSymbols(card_face.mana_cost)}</span>}
               </TextModeCardItemHeader>
               <TextModeCardItemContent>
                 <div>

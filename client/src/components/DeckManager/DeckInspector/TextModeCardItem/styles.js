@@ -85,10 +85,10 @@ export const TextModeCardItemHeader = styled.div`
     min-width: 40%;
     border: none;
     padding: none;
+  }
 
-    &:last-child {
-      text-align: right;
-    }
+  span {
+    text-align: right;
   }
 `;
 

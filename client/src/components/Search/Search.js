@@ -12,7 +12,6 @@ const Search = props => {
   let deck = null;
   if (props.location.state) {
     deck = props.location.state.deck;
-    console.log(deck);
   }
 
   return (

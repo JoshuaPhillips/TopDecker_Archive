@@ -2,11 +2,7 @@ import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faClipboard,
-  faArrowLeft,
-  faFileExport
-} from "@fortawesome/free-solid-svg-icons";
+import { faClipboard, faArrowLeft, faFileExport } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 
 import { capitalise } from "../../utils/capitalise";
@@ -19,15 +15,11 @@ import { Button } from "../../shared/Buttons";
 const generateExportString = deck => {
   let exportString = "";
 
-  console.log(deck.cardList);
-
   if (deck.format === "commander") {
     if (!deck.commander) {
       return;
     }
-    exportString += `1 ${
-      deck.commander.name
-    } (${deck.commander.set.toUpperCase()}) ${
+    exportString += `1 ${deck.commander.name} (${deck.commander.set.toUpperCase()}) ${
       deck.commander.collector_number
     }\n`;
   }
@@ -37,9 +29,7 @@ const generateExportString = deck => {
       return;
     }
     if (mainDeckCount !== 0) {
-      exportString += `${mainDeckCount} ${
-        card.name
-      } (${card.set.toUpperCase()}) ${card.collector_number}\n`;
+      exportString += `${mainDeckCount} ${card.name} (${card.set.toUpperCase()}) ${card.collector_number}\n`;
     }
   });
 
@@ -50,9 +40,7 @@ const generateExportString = deck => {
       return;
     }
     if (sideboardCount !== 0) {
-      exportString += `${sideboardCount} ${
-        card.name
-      } (${card.set.toUpperCase()}) ${card.collector_number}\n`;
+      exportString += `${sideboardCount} ${card.name} (${card.set.toUpperCase()}) ${card.collector_number}\n`;
     }
   });
 
@@ -114,20 +102,14 @@ const Export = props => {
           </FormRow>
         )}
 
-        <ExportTextArea
-          ref={textAreaElement}
-          defaultValue={generateExportString(deck)}
-        />
+        <ExportTextArea ref={textAreaElement} defaultValue={generateExportString(deck)} />
       </form>
-      <Button
-        type="button"
-        onClick={() => copyExportToClipboard(textAreaElement.current.value)}
-      >
+      <Button type='button' onClick={() => copyExportToClipboard(textAreaElement.current.value)}>
         <FontAwesomeIcon icon={faClipboard} fixedWidth />
         Copy
       </Button>
       <Link to={`/decks/${deck.id}`}>
-        <Button type="button">
+        <Button type='button'>
           <FontAwesomeIcon icon={faArrowLeft} fixedWidth />
           Back to Deck
         </Button>

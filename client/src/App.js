@@ -36,8 +36,6 @@ toast.configure({
 
 const screenTooSmall = matchMedia("(max-width: 1200px)").matches;
 
-console.log(screenTooSmall);
-
 const App = () => {
   const GetAuthDataQueryResponse = useQuery(GET_AUTH_DATA, { fetchPolicy: "cache-only" });
 
