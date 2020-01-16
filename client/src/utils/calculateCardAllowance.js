@@ -15,8 +15,6 @@ export const calculateCardAllowance = (card, format) => {
     return uniqueRuleCardIds[card.scryfall_id];
   }
 
-  console.log(card.name.match(basicLandPattern) !== null);
-
   // is it a basic land?
   if (card.name.match(basicLandPattern) !== null) {
     return Infinity;

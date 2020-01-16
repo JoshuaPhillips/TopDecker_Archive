@@ -15,23 +15,22 @@ export const StyledDeckManagerSidebar = styled.aside`
   border-bottom: ${props => props.theme.borders.thick};
 `;
 
-export const QuickSearchContainer = styled.div`
+export const SidebarContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 75%;
 `;
 
-export const QuickSearchListSelectionWrapper = styled(ModeToggleContainer)`
+export const SidebarListSelectionWrapper = styled(ModeToggleContainer)`
   margin: 1rem 0;
 `;
 
-export const QuickSearchResultsContainer = styled.div`
+export const SidebarResultsContainer = styled.div`
   border-top: 1px solid lightgrey;
   border-bottom: 1px solid lightgrey;
   border: 2px dashed lightgrey;
   overflow-y: scroll;
   margin-bottom: 1rem;
-  padding: 0.5rem 0;
 
   h1 {
     font-weight: ${props => props.theme.fonts.weights.bold};
@@ -46,7 +45,7 @@ export const QuickSearchResultsContainer = styled.div`
   }
 `;
 
-export const QuickSearchFormContainer = styled.div`
+export const SidebarFormContainer = styled.div`
   margin-top: auto;
   input {
     width: 100%;
@@ -54,7 +53,7 @@ export const QuickSearchFormContainer = styled.div`
   }
 `;
 
-export const QuickSearchFormButtonsWrapper = styled.div`
+export const SidebarFormButtonsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;

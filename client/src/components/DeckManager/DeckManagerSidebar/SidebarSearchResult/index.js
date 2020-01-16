@@ -7,7 +7,7 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 import { StyledSidebarSearchResult } from "./styles";
 
-const QuickSearchResult = props => {
+const SidebarSearchResult = props => {
   const { deck, card, list, addCardHandler, selectResult } = props;
 
   const available = validateAddCard(deck, card, list);
@@ -33,4 +33,4 @@ const QuickSearchResult = props => {
   );
 };
 
-export default QuickSearchResult;
+export default SidebarSearchResult;

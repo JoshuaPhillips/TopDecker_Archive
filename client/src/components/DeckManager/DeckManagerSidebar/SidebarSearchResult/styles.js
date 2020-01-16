@@ -3,12 +3,12 @@ import styled from "styled-components";
 export const StyledSidebarSearchResult = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   padding: 0.5rem 1rem;
   border-top: 1px dashed lightgrey;
   cursor: pointer;
   transition: 0.1s all ease-in-out;
-  color: ${props =>
-    props.unavailable ? "lightgrey" : props.theme.colors.deepBlue}
+  color: ${props => (props.unavailable ? "lightgrey" : props.theme.colors.deepBlue)}
   user-select: none;
 
   &:first-child {
@@ -16,12 +16,8 @@ export const StyledSidebarSearchResult = styled.div`
   }
 
   &:hover {
-    background-color: ${props =>
-      props.unavailable
-        ? props.theme.colors.whiteSmoke
-        : props.theme.colors.deepBlue};
-    color: ${props =>
-      props.unavailable ? "lightgrey" : props.theme.colors.whiteSmoke};
+    background-color: ${props => (props.unavailable ? props.theme.colors.whiteSmoke : props.theme.colors.deepBlue)};
+    color: ${props => (props.unavailable ? "lightgrey" : props.theme.colors.whiteSmoke)};
   }
 
   .SidebarSearchResultHeader {

@@ -16,12 +16,12 @@ import { capitalise } from "../../../utils/capitalise";
 
 import {
   StyledDeckManagerSidebar,
-  QuickSearchContainer,
-  QuickSearchListSelectionWrapper,
+  SidebarContainer,
+  SidebarListSelectionWrapper,
   OtherDecksContainer,
-  QuickSearchResultsContainer,
-  QuickSearchFormContainer,
-  QuickSearchFormButtonsWrapper
+  SidebarResultsContainer,
+  SidebarFormContainer,
+  SidebarFormButtonsWrapper
 } from "./styles";
 import { SectionHeader } from "../../../shared/Headers";
 import { Button } from "../../../shared/Buttons";
@@ -42,6 +42,7 @@ const DeckManagerSidebar = props => {
   const [selectedResult, setSelectedResult] = useState(null);
 
   const searchCards = async submitEvent => {
+    const exactNameMatchPattern = new RegExp(`^${nameSearch}$`, "i");
     submitEvent.preventDefault();
     setLoadingResults(true);
 
@@ -61,7 +62,15 @@ const DeckManagerSidebar = props => {
         toast.error(error.message);
       });
     } else {
-      setSearchResults(data.searchCards.cards);
+      const exactMatches = data.searchCards.cards.filter(card => {
+        return card.name.match(exactNameMatchPattern) !== null;
+      });
+
+      const nonExactMatches = data.searchCards.cards.filter(card => {
+        return card.name.match(exactNameMatchPattern) === null;
+      });
+
+      setSearchResults([...exactMatches, ...nonExactMatches]);
       setLoadingResults(false);
     }
   };
@@ -85,14 +94,14 @@ const DeckManagerSidebar = props => {
 
   return (
     <StyledDeckManagerSidebar>
-      <QuickSearchContainer>
+      <SidebarContainer>
         <div>
           <SectionHeader>
             <FontAwesomeIcon icon={faSearch} fixedWidth />
             Quick Search
           </SectionHeader>
           {format !== "commander" && (
-            <QuickSearchListSelectionWrapper>
+            <SidebarListSelectionWrapper>
               <button type='button' disabled={selectedList === "mainDeck"} onClick={() => setSelectedList("mainDeck")}>
                 Main Deck
               </button>
@@ -102,10 +111,10 @@ const DeckManagerSidebar = props => {
                 onClick={() => setSelectedList("sideboard")}>
                 Sideboard
               </button>
-            </QuickSearchListSelectionWrapper>
+            </SidebarListSelectionWrapper>
           )}
         </div>
-        <QuickSearchResultsContainer>
+        <SidebarResultsContainer>
           {selectedResult ? (
             <Card card={selectedResult} />
           ) : searchResults.length === 0 ? (
@@ -137,8 +146,8 @@ const DeckManagerSidebar = props => {
               )}
             </>
           )}
-        </QuickSearchResultsContainer>
-        <QuickSearchFormContainer>
+        </SidebarResultsContainer>
+        <SidebarFormContainer>
           <form onSubmit={searchCards}>
             <TextInput
               type='text'
@@ -147,7 +156,7 @@ const DeckManagerSidebar = props => {
               onChange={e => setNameSearch(e.target.value)}
             />
 
-            <QuickSearchFormButtonsWrapper>
+            <SidebarFormButtonsWrapper>
               <Button type='submit' disabled={nameSearch.length < 3}>
                 <FontAwesomeIcon icon={faSearch} fixedWidth />
                 {loadingResults ? "Searching..." : "Search"}
@@ -171,10 +180,10 @@ const DeckManagerSidebar = props => {
                     Clear
                   </Button>
                 ))}
-            </QuickSearchFormButtonsWrapper>
+            </SidebarFormButtonsWrapper>
           </form>
-        </QuickSearchFormContainer>
-      </QuickSearchContainer>
+        </SidebarFormContainer>
+      </SidebarContainer>
 
       <OtherDecksContainer>
         {GetUserDecksQueryResponse.loading && <Spinner />}

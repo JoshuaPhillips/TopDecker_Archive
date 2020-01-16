@@ -3,6 +3,7 @@ import { calculateCardAllowance } from "./calculateCardAllowance";
 export const validateAddCard = (deck, card, list) => {
   const { format, cardList, commander } = deck;
   const { scryfall_id, legalities } = card;
+
   const maxCardAllowance = calculateCardAllowance(card, deck.format);
 
   let totalSideboardCount = 0;
