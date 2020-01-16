@@ -63,7 +63,7 @@ export const SidebarFormButtonsWrapper = styled.div`
   button {
     padding: 0.5rem 0;
     margin-bottom: 0.5rem;
-    width: calc(50% - 0.25rem);
+    width: 100%;
   }
 `;
 

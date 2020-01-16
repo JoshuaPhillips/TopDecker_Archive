@@ -23,7 +23,6 @@ import {
   SidebarFormContainer,
   SidebarFormButtonsWrapper
 } from "./styles";
-import { SectionHeader } from "../../../shared/Headers";
 import { Button } from "../../../shared/Buttons";
 import { TextInput } from "../../../shared/Forms";
 
@@ -44,6 +43,11 @@ const DeckManagerSidebar = props => {
   const searchCards = async submitEvent => {
     const exactNameMatchPattern = new RegExp(`^${nameSearch}$`, "i");
     submitEvent.preventDefault();
+
+    if (loadingResults) {
+      return;
+    }
+
     setLoadingResults(true);
 
     const { data, errors } = await client.query({
@@ -96,10 +100,17 @@ const DeckManagerSidebar = props => {
     <StyledDeckManagerSidebar>
       <SidebarContainer>
         <div>
-          <SectionHeader>
-            <FontAwesomeIcon icon={faSearch} fixedWidth />
-            Quick Search
-          </SectionHeader>
+          <form style={{ display: "flex" }} onSubmit={e => searchCards(e)}>
+            <TextInput
+              type='text'
+              placeholder='SEARCH FOR A CARD...'
+              value={nameSearch}
+              onChange={e => setNameSearch(e.target.value)}
+            />
+            <Button type='submit' disabled={nameSearch.length < 3}>
+              <FontAwesomeIcon icon={faSearch} fixedWidth />
+            </Button>
+          </form>
           {format !== "commander" && (
             <SidebarListSelectionWrapper>
               <button type='button' disabled={selectedList === "mainDeck"} onClick={() => setSelectedList("mainDeck")}>
@@ -148,40 +159,26 @@ const DeckManagerSidebar = props => {
           )}
         </SidebarResultsContainer>
         <SidebarFormContainer>
-          <form onSubmit={searchCards}>
-            <TextInput
-              type='text'
-              placeholder='Card Name...'
-              value={nameSearch}
-              onChange={e => setNameSearch(e.target.value)}
-            />
-
-            <SidebarFormButtonsWrapper>
-              <Button type='submit' disabled={nameSearch.length < 3}>
-                <FontAwesomeIcon icon={faSearch} fixedWidth />
-                {loadingResults ? "Searching..." : "Search"}
-              </Button>
-
-              {searchResults.length !== 0 &&
-                (selectedResult ? (
-                  <Button type='button' onClick={() => setSelectedResult(null)}>
-                    <FontAwesomeIcon icon={faArrowLeft} fixedWidth />
-                    Back
-                  </Button>
-                ) : (
-                  <Button
-                    type='button'
-                    onClick={() => {
-                      setNameSearch("");
-                      setSelectedResult(null);
-                      setSearchResults([]);
-                    }}>
-                    <FontAwesomeIcon icon={faEraser} fixedWidth />
-                    Clear
-                  </Button>
-                ))}
-            </SidebarFormButtonsWrapper>
-          </form>
+          <SidebarFormButtonsWrapper>
+            {searchResults.length !== 0 &&
+              (selectedResult ? (
+                <Button type='button' onClick={() => setSelectedResult(null)}>
+                  <FontAwesomeIcon icon={faArrowLeft} fixedWidth />
+                  Back
+                </Button>
+              ) : (
+                <Button
+                  type='button'
+                  onClick={() => {
+                    setNameSearch("");
+                    setSelectedResult(null);
+                    setSearchResults([]);
+                  }}>
+                  <FontAwesomeIcon icon={faEraser} fixedWidth />
+                  Clear
+                </Button>
+              ))}
+          </SidebarFormButtonsWrapper>
         </SidebarFormContainer>
       </SidebarContainer>
 
