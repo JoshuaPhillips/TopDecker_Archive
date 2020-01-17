@@ -103,7 +103,7 @@ const DeckManagerSidebar = props => {
           <form style={{ display: "flex" }} onSubmit={e => searchCards(e)}>
             <TextInput
               type='text'
-              placeholder='SEARCH FOR A CARD...'
+              placeholder='Search for a card...'
               value={nameSearch}
               onChange={e => setNameSearch(e.target.value)}
             />
@@ -130,7 +130,7 @@ const DeckManagerSidebar = props => {
             <Card card={selectedResult} />
           ) : searchResults.length === 0 ? (
             <>
-              <h1>Search for a card name below.</h1>
+              <h1>Search for a card name above.</h1>
               <p>Only cards that match your deck's format (and commander if there is one) will be shown.</p>
             </>
           ) : (
