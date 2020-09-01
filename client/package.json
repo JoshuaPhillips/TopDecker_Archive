@@ -30,7 +30,7 @@
     "react-select": "^3.0.4",
     "react-slide-toggle": "^0.2.6",
     "react-toastify": "^5.4.0",
-    "serialize-javascript": "^2.1.1",
+    "serialize-javascript": "^3.1.0",
     "styled-components": "^4.4.0"
   },
   "scripts": {
